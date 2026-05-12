@@ -1096,11 +1096,22 @@ async function generateReflection(){
 
 // =================== CAMERA OVERLAY ===================
 async function findPreviousPhotoPath(){
-  // Always re-fetch the data log first to get the freshest reference photo from GitHub
+  // Priority 1: just-captured photo in the current draft (not yet saved)
+  if(state.draft.le&&state.draft.le.photoDataUrl){
+    return{dataUrl:state.draft.le.photoDataUrl,date:today(),label:'today (just taken)'};
+  }
+  // Re-fetch data log for freshest reference
   try{if(isConfigured())await pullData()}catch(e){console.warn('pullData for camera failed',e)}
   const t=today();
+  // Priority 2: today's already-saved photo (re-shoot reference)
+  const todayEntry=state.data.entries[t];
+  if(todayEntry&&todayEntry.photo){
+    return{path:todayEntry.photo,date:t,label:'today'};
+  }
+  // Priority 3: most recent prior photo
   const photoEntries=Object.entries(state.data.entries).filter(([d,e])=>e.photo&&d!==t).sort((a,b)=>b[0].localeCompare(a[0]));
-  return photoEntries.length>0?{path:photoEntries[0][1].photo,date:photoEntries[0][0]}:null;
+  if(photoEntries.length===0)return null;
+  return{path:photoEntries[0][1].photo,date:photoEntries[0][0],label:fmtDate(photoEntries[0][0])};
 }
 async function openCameraOverlay(onCapture){
   let stream=null,facing='user',overlayUrl=null;
@@ -1165,16 +1176,17 @@ async function openCameraOverlay(onCapture){
   hintEl.textContent='Looking for your last photo to overlay…';
   findPreviousPhotoPath().then(async ref=>{
     if(!ref){hintEl.textContent='First photo — future shots will overlay this one';return}
-    hintEl.textContent='Loading ghost from '+fmtDate(ref.date)+'…';
+    hintEl.textContent='Loading ghost from '+(ref.label||fmtDate(ref.date))+'…';
+    let dataUrl=ref.dataUrl;
     try{
-      const dataUrl=await downloadPhoto(ref.path);
+      if(!dataUrl)dataUrl=await downloadPhoto(ref.path);
       if(!dataUrl){hintEl.textContent='Could not load ghost photo';return}
       overlayUrl=dataUrl;
       overlay.src=dataUrl;
       overlay.style.opacity='0.30';
       controlsRow.style.display='flex';
       toggleBtn.style.opacity='1';toggleBtn.disabled=false;toggleBtn.textContent='Hide';
-      hintEl.textContent='Match your pose to the faded image (from '+fmtDate(ref.date)+')';
+      hintEl.textContent='Match your pose to the faded image (from '+(ref.label||fmtDate(ref.date))+')';
       statusEl.textContent='Ghost overlay ON';
       let visible=true;
       toggleBtn.addEventListener('click',()=>{visible=!visible;overlay.style.opacity=visible?(opSlider.value/100):'0';toggleBtn.textContent=visible?'Hide':'Show';statusEl.textContent=visible?'Ghost overlay ON':'Ghost OFF'});
