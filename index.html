@@ -1095,72 +1095,107 @@ async function generateReflection(){
 // BOOT
 
 // =================== CAMERA OVERLAY ===================
-async function findPreviousPhotoUrl(){
+async function findPreviousPhotoPath(){
+  // Always re-fetch the data log first to get the freshest reference photo from GitHub
+  try{if(isConfigured())await pullData()}catch(e){console.warn('pullData for camera failed',e)}
   const t=today();
-  const photoDates=Object.entries(state.data.entries).filter(([d,e])=>e.photo&&d!==t).sort((a,b)=>b[0].localeCompare(a[0]));
-  if(photoDates.length===0)return null;
-  const path=photoDates[0][1].photo;
-  return await downloadPhoto(path);
+  const photoEntries=Object.entries(state.data.entries).filter(([d,e])=>e.photo&&d!==t).sort((a,b)=>b[0].localeCompare(a[0]));
+  return photoEntries.length>0?{path:photoEntries[0][1].photo,date:photoEntries[0][0]}:null;
 }
 async function openCameraOverlay(onCapture){
-  const prevUrl=await findPreviousPhotoUrl();
-  let stream=null,facing='user';
+  let stream=null,facing='user',overlayUrl=null;
   const modal=document.createElement('div');
   modal.style.cssText='position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;animation:fade-in 0.2s';
   modal.innerHTML=`
-<div style="display:flex;justify-content:space-between;align-items:center;padding:max(16px,env(safe-area-inset-top)) 20px 12px;background:rgba(0,0,0,0.6);color:white">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:max(16px,env(safe-area-inset-top)) 20px 12px;background:rgba(0,0,0,0.6);color:white;flex-shrink:0">
   <button id="cam-x" style="width:44px;height:44px;border-radius:22px;background:rgba(255,255,255,0.15);color:white;font-size:22px;font-weight:700">×</button>
-  <div style="font-weight:600;font-size:14px">${prevUrl?'Ghost overlay ON':'No previous photo'}</div>
+  <div id="cam-status" style="font-weight:600;font-size:13px;text-align:center;flex:1;padding:0 12px">Loading…</div>
   <button id="cam-flip" style="width:44px;height:44px;border-radius:22px;background:rgba(255,255,255,0.15);color:white;font-size:18px">⟲</button>
 </div>
 <div style="flex:1;position:relative;overflow:hidden;background:#111">
   <video id="cam-v" autoplay playsinline muted style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000"></video>
-  ${prevUrl?`<img id="cam-overlay" src="${prevUrl}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.30;pointer-events:none;mix-blend-mode:normal">`:''}
-  <div id="cam-loading" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:white;font-size:14px;background:rgba(0,0,0,0.5)">Starting camera…</div>
+  <img id="cam-overlay" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;pointer-events:none;transition:opacity 0.3s">
+  <div id="cam-msg" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;font-size:14px;background:rgba(0,0,0,0.7);padding:24px;text-align:center;line-height:1.6"><div style="font-size:40px;margin-bottom:12px">📷</div><div id="cam-msg-text">Requesting camera access…</div></div>
 </div>
-<div style="padding:16px 20px calc(20px + env(safe-area-inset-bottom));background:rgba(0,0,0,0.85);color:white">
-  ${prevUrl?`<div style="display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:12px"><span style="font-size:12px">Ghost opacity</span><input id="cam-op" type="range" min="0" max="80" value="30" style="flex:1;max-width:200px"><span id="cam-opv" style="font-size:12px;width:32px">30%</span></div>`:''}
+<div style="padding:16px 20px calc(20px + env(safe-area-inset-bottom));background:rgba(0,0,0,0.85);color:white;flex-shrink:0">
+  <div id="cam-controls-row" style="display:none;align-items:center;gap:10px;justify-content:center;margin-bottom:12px"><span style="font-size:12px;width:70px;text-align:right">Ghost</span><input id="cam-op" type="range" min="0" max="80" value="30" style="flex:1;max-width:200px"><span id="cam-opv" style="font-size:12px;width:32px">30%</span></div>
   <div style="display:flex;justify-content:center;align-items:center;gap:24px">
-    <div style="width:60px"></div>
-    <button id="cam-shoot" style="width:80px;height:80px;border-radius:50%;background:white;border:5px solid rgba(255,255,255,0.4);transition:transform 0.1s"></button>
-    <button id="cam-toggle" style="width:60px;height:36px;border-radius:18px;background:rgba(255,255,255,0.15);color:white;font-size:12px;font-weight:600">${prevUrl?'Hide ghost':'No ghost'}</button>
+    <button id="cam-fallback" style="width:60px;height:36px;border-radius:18px;background:rgba(255,255,255,0.15);color:white;font-size:11px">Gallery</button>
+    <button id="cam-shoot" style="width:80px;height:80px;border-radius:50%;background:white;border:5px solid rgba(255,255,255,0.4)"></button>
+    <button id="cam-toggle" style="width:60px;height:36px;border-radius:18px;background:rgba(255,255,255,0.15);color:white;font-size:11px;opacity:0.4" disabled>Ghost</button>
   </div>
-  <p style="text-align:center;font-size:11px;color:rgba(255,255,255,0.6);margin-top:14px">${prevUrl?'Match your pose to the faded image':'First photo — future shots will overlay this one'}</p>
+  <p id="cam-hint" style="text-align:center;font-size:11px;color:rgba(255,255,255,0.6);margin-top:14px">Loading…</p>
 </div>`;
   document.body.appendChild(modal);
-  const v=modal.querySelector('#cam-v');
-  const loadEl=modal.querySelector('#cam-loading');
-  const overlay=modal.querySelector('#cam-overlay');
+  const v=modal.querySelector('#cam-v'),overlay=modal.querySelector('#cam-overlay');
+  const statusEl=modal.querySelector('#cam-status'),hintEl=modal.querySelector('#cam-hint');
+  const msgBox=modal.querySelector('#cam-msg'),msgText=modal.querySelector('#cam-msg-text');
+  const controlsRow=modal.querySelector('#cam-controls-row'),toggleBtn=modal.querySelector('#cam-toggle');
+  const opSlider=modal.querySelector('#cam-op'),opVal=modal.querySelector('#cam-opv');
   const cleanup=()=>{if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}};
   const startCamera=async()=>{
     cleanup();
+    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+      msgText.textContent='Your browser does not support camera access. Use Gallery instead.';
+      return false;
+    }
+    msgText.textContent='Requesting camera access…';
+    msgBox.style.display='flex';
     try{
       stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:facing,width:{ideal:1920},height:{ideal:1080}},audio:false});
       v.srcObject=stream;
-      loadEl.style.display='none';
+      await v.play().catch(()=>{});
+      msgBox.style.display='none';
+      statusEl.textContent=overlayUrl?'Ghost overlay ON':'Camera ready';
+      return true;
     }catch(e){
-      loadEl.textContent='Camera unavailable — '+e.message;
+      const err=e.name||'';
+      let msg='Camera failed: '+(e.message||err);
+      if(err==='NotAllowedError'||err==='PermissionDeniedError')msg='Camera permission denied. Grant access in browser/app settings, or use Gallery.';
+      else if(err==='NotFoundError')msg='No camera found on this device.';
+      else if(err==='NotReadableError')msg='Camera is in use by another app. Close it and try again.';
+      msgText.textContent=msg;
+      statusEl.textContent='Camera unavailable';
+      return false;
     }
   };
+  // Start camera immediately
+  startCamera();
+  // Fetch ghost photo in background
+  hintEl.textContent='Looking for your last photo to overlay…';
+  findPreviousPhotoPath().then(async ref=>{
+    if(!ref){hintEl.textContent='First photo — future shots will overlay this one';return}
+    hintEl.textContent='Loading ghost from '+fmtDate(ref.date)+'…';
+    try{
+      const dataUrl=await downloadPhoto(ref.path);
+      if(!dataUrl){hintEl.textContent='Could not load ghost photo';return}
+      overlayUrl=dataUrl;
+      overlay.src=dataUrl;
+      overlay.style.opacity='0.30';
+      controlsRow.style.display='flex';
+      toggleBtn.style.opacity='1';toggleBtn.disabled=false;toggleBtn.textContent='Hide';
+      hintEl.textContent='Match your pose to the faded image (from '+fmtDate(ref.date)+')';
+      statusEl.textContent='Ghost overlay ON';
+      let visible=true;
+      toggleBtn.addEventListener('click',()=>{visible=!visible;overlay.style.opacity=visible?(opSlider.value/100):'0';toggleBtn.textContent=visible?'Hide':'Show';statusEl.textContent=visible?'Ghost overlay ON':'Ghost OFF'});
+      opSlider.addEventListener('input',e=>{const v=parseInt(e.target.value,10);if(visible)overlay.style.opacity=String(v/100);opVal.textContent=v+'%'});
+    }catch(e){hintEl.textContent='Could not load ghost photo: '+e.message}
+  });
   modal.querySelector('#cam-x').addEventListener('click',()=>{cleanup();modal.remove()});
   modal.querySelector('#cam-flip').addEventListener('click',()=>{facing=facing==='user'?'environment':'user';startCamera()});
-  const opSlider=modal.querySelector('#cam-op');
-  const opVal=modal.querySelector('#cam-opv');
-  if(opSlider&&overlay){opSlider.addEventListener('input',e=>{const v=parseInt(e.target.value,10);overlay.style.opacity=String(v/100);opVal.textContent=v+'%'})}
-  const toggleBtn=modal.querySelector('#cam-toggle');
-  if(toggleBtn&&overlay){
-    let visible=true;
-    toggleBtn.addEventListener('click',()=>{visible=!visible;overlay.style.display=visible?'block':'none';toggleBtn.textContent=visible?'Hide ghost':'Show ghost'});
-  }
-  modal.querySelector('#cam-shoot').addEventListener('click',async()=>{
+  // Gallery fallback uses file input
+  modal.querySelector('#cam-fallback').addEventListener('click',()=>{
+    const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+    inp.addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const u=await compressImage(f);cleanup();modal.remove();onCapture(u)}catch(err){toast('Photo error: '+err.message,'error')}});
+    inp.click();
+  });
+  modal.querySelector('#cam-shoot').addEventListener('click',()=>{
     if(!stream){toast('Camera not ready','error');return}
     const c=document.createElement('canvas');
     c.width=v.videoWidth||1080;c.height=v.videoHeight||1920;
     const ctx=c.getContext('2d');
-    // If front camera, mirror horizontally so the saved photo matches what user saw
     if(facing==='user'){ctx.translate(c.width,0);ctx.scale(-1,1)}
     ctx.drawImage(v,0,0,c.width,c.height);
-    // Compress
     const maxDim=1080;
     let w=c.width,hgt=c.height;
     if(w>hgt&&w>maxDim){hgt=Math.round(hgt*maxDim/w);w=maxDim}
@@ -1171,7 +1206,6 @@ async function openCameraOverlay(onCapture){
     cleanup();modal.remove();
     onCapture(dataUrl);
   });
-  startCamera();
 }
 
 // =================== FOOD PICKER ===================
