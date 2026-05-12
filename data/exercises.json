@@ -1,0 +1,534 @@
+{
+  "version": 1,
+  "updatedAt": "2026-05-12",
+  "note": "Bodyweight exercise library with progressive variants. SVG illustrations are simple line-figures for visual reference.",
+  "categories": {
+    "push": "Push (chest/shoulders/triceps)",
+    "pull": "Pull (back/biceps)",
+    "legs": "Lower body",
+    "core": "Core",
+    "cardio": "Cardio/mobility",
+    "warmup": "Warm-up"
+  },
+  "exercises": [
+    {
+      "id": "pushup",
+      "name": "Pushup",
+      "category": "push",
+      "muscles": ["chest", "shoulders", "triceps", "core"],
+      "variants": [
+        {
+          "id": "wall",
+          "name": "Wall pushup",
+          "level": 1,
+          "description": "Standing pushup against a wall. Easiest entry point — start here if a knee pushup feels intimidating.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"180\" y1=\"40\" x2=\"180\" y2=\"170\" stroke=\"#7C8497\" stroke-width=\"4\"/><circle cx=\"80\" cy=\"60\" r=\"12\" fill=\"#ED7A4D\"/><rect x=\"75\" y=\"70\" width=\"10\" height=\"40\" fill=\"#ED7A4D\" rx=\"5\"/><line x1=\"85\" y1=\"75\" x2=\"175\" y2=\"55\" stroke=\"#ED7A4D\" stroke-width=\"8\" stroke-linecap=\"round\"/><line x1=\"85\" y1=\"85\" x2=\"175\" y2=\"65\" stroke=\"#ED7A4D\" stroke-width=\"8\" stroke-linecap=\"round\"/><line x1=\"75\" y1=\"108\" x2=\"60\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"8\" stroke-linecap=\"round\"/><line x1=\"85\" y1=\"108\" x2=\"95\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"8\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Stand arm's length from a wall, feet flat on floor",
+            "Place palms shoulder-width on the wall at shoulder height",
+            "Keep body straight from head to heels — no sagging hips, no piked butt",
+            "Lower your chest toward the wall slowly (2 seconds down)",
+            "Push back to start, breathing out on effort"
+          ],
+          "commonMistakes": [
+            "Standing too close — should feel some load when leaning in",
+            "Letting hips sag forward (engage core like a plank)",
+            "Flaring elbows wide — aim for ~45° from torso"
+          ]
+        },
+        {
+          "id": "incline",
+          "name": "Incline pushup (counter/table)",
+          "level": 2,
+          "description": "Pushup with hands on a counter, table, or sturdy chair. Bridge between wall and floor.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"110\" y=\"110\" width=\"80\" height=\"6\" fill=\"#1A1F2E\"/><rect x=\"115\" y=\"116\" width=\"4\" height=\"54\" fill=\"#1A1F2E\"/><rect x=\"180\" y=\"116\" width=\"4\" height=\"54\" fill=\"#1A1F2E\"/><circle cx=\"50\" cy=\"100\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"58\" y1=\"108\" x2=\"100\" y2=\"125\" stroke=\"#ED7A4D\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"100\" y1=\"125\" x2=\"165\" y2=\"155\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"105\" y1=\"118\" x2=\"125\" y2=\"110\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"110\" y1=\"125\" x2=\"130\" y2=\"112\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Hands shoulder-width on a sturdy surface — kitchen counter is perfect height",
+            "Walk feet back until body forms a straight diagonal line",
+            "Tighten core and glutes throughout the movement",
+            "Lower chest to the surface (3-count down), push up (1-count up)"
+          ],
+          "commonMistakes": [
+            "Using too-low a surface before you're ready (jumps difficulty too much)",
+            "Letting head jut forward — keep neck neutral",
+            "Half-reps — chest should nearly touch the surface"
+          ]
+        },
+        {
+          "id": "knee",
+          "name": "Knee pushup",
+          "level": 3,
+          "description": "Floor pushup from the knees. About 50% of bodyweight loaded vs. a standard pushup.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"40\" cy=\"110\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"48\" y1=\"118\" x2=\"85\" y2=\"145\" stroke=\"#ED7A4D\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"85\" y1=\"145\" x2=\"140\" y2=\"155\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/><circle cx=\"145\" cy=\"153\" r=\"8\" fill=\"#1A1F2E\"/><line x1=\"45\" y1=\"125\" x2=\"50\" y2=\"155\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"55\" y1=\"130\" x2=\"60\" y2=\"155\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Lie face down, place palms shoulder-width, slightly below shoulders",
+            "Place knees on the floor (use a folded towel if it hurts)",
+            "Form a straight line from head through shoulders to knees",
+            "Lower chest to within fist-distance of floor, push up",
+            "Cross ankles or keep feet on floor — either works"
+          ],
+          "commonMistakes": [
+            "Hips sagging or piking — keep that head-to-knee line",
+            "Half-reps from the top — chest must come close to the floor",
+            "Elbows flaring wide — keep them ~45° from your sides"
+          ]
+        },
+        {
+          "id": "standard",
+          "name": "Standard pushup",
+          "level": 4,
+          "description": "Full bodyweight pushup. The classic. Foundational upper-body movement.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"35\" cy=\"115\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"43\" y1=\"123\" x2=\"110\" y2=\"140\" stroke=\"#ED7A4D\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"110\" y1=\"140\" x2=\"180\" y2=\"155\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"40\" y1=\"130\" x2=\"45\" y2=\"155\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"50\" y1=\"135\" x2=\"55\" y2=\"155\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Hands shoulder-width, slightly below shoulder line",
+            "Feet together or slightly apart",
+            "Body forms a rigid plank from head to heels — squeeze glutes and brace core",
+            "Lower chest to ~fist-height above floor (3 seconds), push up (1-2 seconds)",
+            "Look at floor 6 inches in front of hands, not at the wall"
+          ],
+          "commonMistakes": [
+            "Sagging hips → re-engage core, squeeze glutes",
+            "Piked hips → drop them, brace stronger",
+            "Head pokes forward — keep neck neutral and ears over shoulders",
+            "Rushing the eccentric (lowering) — slow it down to build strength"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "squat",
+      "name": "Bodyweight squat",
+      "category": "legs",
+      "muscles": ["quadriceps", "glutes", "hamstrings", "core"],
+      "variants": [
+        {
+          "id": "half",
+          "name": "Half squat (chair-assisted)",
+          "level": 1,
+          "description": "Quarter to half-depth squat, optionally tapping a chair on the way down.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"100\" cy=\"40\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"92\" y=\"54\" width=\"16\" height=\"40\" fill=\"#ED7A4D\" rx=\"8\"/><rect x=\"88\" y=\"94\" width=\"24\" height=\"30\" fill=\"#ED7A4D\" rx=\"5\"/><line x1=\"90\" y1=\"124\" x2=\"75\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"110\" y1=\"124\" x2=\"125\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"92\" y1=\"60\" x2=\"60\" y2=\"100\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"108\" y1=\"60\" x2=\"140\" y2=\"100\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Stand with feet shoulder-width, toes slightly turned out",
+            "Hinge at hips and bend knees together, lower until thighs are halfway down",
+            "Optional: have a chair behind you, tap it lightly on each rep — don't sit",
+            "Keep knees in line with toes, weight in heels and mid-foot",
+            "Chest up, gaze forward"
+          ],
+          "commonMistakes": [
+            "Knees caving inward — push knees out, in line with toes",
+            "Heels lifting — drive through whole foot",
+            "Sitting on the chair → just tap it, don't rest"
+          ]
+        },
+        {
+          "id": "standard",
+          "name": "Bodyweight squat",
+          "level": 2,
+          "description": "Full bodyweight squat to parallel (thighs flat) or below.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"100\" cy=\"60\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"92\" y=\"74\" width=\"16\" height=\"35\" fill=\"#ED7A4D\" rx=\"8\"/><rect x=\"88\" y=\"109\" width=\"24\" height=\"25\" fill=\"#ED7A4D\" rx=\"5\"/><line x1=\"90\" y1=\"134\" x2=\"60\" y2=\"135\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"110\" y1=\"134\" x2=\"140\" y2=\"135\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"60\" y1=\"135\" x2=\"65\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"140\" y1=\"135\" x2=\"135\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"92\" y1=\"80\" x2=\"75\" y2=\"55\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"108\" y1=\"80\" x2=\"125\" y2=\"55\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Feet shoulder-width, toes turned out ~15-30°",
+            "Initiate by pushing hips back AND knees forward simultaneously",
+            "Lower until hip crease is at or below knees (full depth) — or as deep as comfortable",
+            "Drive through full foot, push the floor away to stand up",
+            "Slight arm reach forward helps balance"
+          ],
+          "commonMistakes": [
+            "Stopping at half-depth — go deeper if mobility allows",
+            "Rounding lower back at bottom (\"butt wink\") — slight forward lean is OK, rounding is not",
+            "Knees collapsing inward — actively push them out"
+          ]
+        },
+        {
+          "id": "deep",
+          "name": "Deep / paused squat",
+          "level": 3,
+          "description": "Full-depth squat with 2-3 second pause at the bottom.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"100\" cy=\"80\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"92\" y=\"94\" width=\"16\" height=\"28\" fill=\"#ED7A4D\" rx=\"8\"/><rect x=\"86\" y=\"122\" width=\"28\" height=\"25\" fill=\"#ED7A4D\" rx=\"5\"/><line x1=\"86\" y1=\"147\" x2=\"55\" y2=\"165\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"114\" y1=\"147\" x2=\"145\" y2=\"165\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"55\" y1=\"165\" x2=\"50\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"145\" y1=\"165\" x2=\"150\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"92\" y1=\"100\" x2=\"75\" y2=\"75\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"108\" y1=\"100\" x2=\"125\" y2=\"75\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Same setup as standard squat",
+            "Lower to full ass-to-grass depth (heels stay planted)",
+            "Pause 2-3 seconds at the bottom, maintaining tightness",
+            "Drive up explosively",
+            "If you can't reach full depth with heels down, work on ankle mobility separately"
+          ],
+          "commonMistakes": [
+            "Bouncing out of the bottom (defeats the pause's purpose)",
+            "Heels lifting → ankle mobility limited, regress to standard",
+            "Losing brace at bottom — keep core engaged throughout"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lunge",
+      "name": "Reverse lunge",
+      "category": "legs",
+      "muscles": ["quadriceps", "glutes", "hamstrings"],
+      "variants": [
+        {
+          "id": "static",
+          "name": "Static lunge (split squat)",
+          "level": 1,
+          "description": "Lunge with feet stationary — easier balance than stepping back.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"100\" cy=\"60\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"92\" y=\"74\" width=\"16\" height=\"50\" fill=\"#ED7A4D\" rx=\"8\"/><line x1=\"100\" y1=\"124\" x2=\"70\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"70\" y1=\"160\" x2=\"60\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"100\" y1=\"124\" x2=\"140\" y2=\"150\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"140\" y1=\"150\" x2=\"145\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Stand in a split stance — one foot forward, one back (~2 feet apart)",
+            "Lower until both knees are at 90° — back knee close to floor",
+            "Front knee tracks over front foot (don't let it cave in)",
+            "Push through front heel to stand back up",
+            "Hold onto a wall or chair for balance if needed"
+          ],
+          "commonMistakes": [
+            "Front knee shoots forward past toes — shift weight back to heel",
+            "Back knee slamming the floor — control the descent",
+            "Stance too short — step further apart"
+          ]
+        },
+        {
+          "id": "standard",
+          "name": "Reverse lunge",
+          "level": 2,
+          "description": "Step backward into a lunge, return to start. Less knee strain than forward lunges.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"90\" cy=\"60\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"82\" y=\"74\" width=\"16\" height=\"40\" fill=\"#ED7A4D\" rx=\"8\"/><line x1=\"90\" y1=\"114\" x2=\"90\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"90\" y1=\"114\" x2=\"160\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"160\" y1=\"160\" x2=\"165\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"82\" y1=\"80\" x2=\"70\" y2=\"110\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"98\" y1=\"80\" x2=\"110\" y2=\"110\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Start standing tall, feet together",
+            "Step one leg back ~2 feet, lowering until both knees are ~90°",
+            "Step back to start, alternate or do all reps on one side",
+            "Keep torso upright — don't lean forward",
+            "Drive through the FRONT heel to return to start"
+          ],
+          "commonMistakes": [
+            "Stepping too short — back knee should land far behind hip",
+            "Front knee diving inward — keep it over the second toe",
+            "Crashing the back knee — control the descent (2-3s down)"
+          ]
+        },
+        {
+          "id": "walking",
+          "name": "Walking lunge",
+          "level": 3,
+          "description": "Continuous forward-stepping lunges. Higher coordination and balance demand.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"110\" cy=\"60\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"102\" y=\"74\" width=\"16\" height=\"40\" fill=\"#ED7A4D\" rx=\"8\"/><line x1=\"110\" y1=\"114\" x2=\"155\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"155\" y1=\"160\" x2=\"165\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"110\" y1=\"114\" x2=\"70\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"70\" y1=\"160\" x2=\"60\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Step forward into a lunge, lower to 90°/90°",
+            "Drive through the front heel and step the back foot forward into the next lunge",
+            "Keep torso upright the whole time",
+            "Take a long enough step that the front knee stays over the toe"
+          ],
+          "commonMistakes": [
+            "Forward knee shoots past the toes — take a longer step",
+            "Torso tipping forward — engage core, stack ribcage over hips"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "plank",
+      "name": "Plank",
+      "category": "core",
+      "muscles": ["core", "shoulders", "glutes"],
+      "variants": [
+        {
+          "id": "knee",
+          "name": "Knee plank",
+          "level": 1,
+          "description": "Forearm plank from the knees. Builds core endurance with less load.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"35\" cy=\"115\" r=\"12\" fill=\"#ED7A4D\"/><rect x=\"30\" y=\"140\" width=\"30\" height=\"8\" fill=\"#ED7A4D\" rx=\"4\"/><line x1=\"35\" y1=\"127\" x2=\"45\" y2=\"144\" stroke=\"#ED7A4D\" stroke-width=\"6\"/><line x1=\"55\" y1=\"125\" x2=\"125\" y2=\"148\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/><circle cx=\"135\" cy=\"148\" r=\"10\" fill=\"#1A1F2E\"/></svg>",
+          "formTips": [
+            "Forearms flat on floor, elbows under shoulders, fists shoulder-width",
+            "Knees on floor (use a folded towel for cushioning)",
+            "Body straight from head to knees — no sagging",
+            "Squeeze glutes, brace core like you're about to take a punch",
+            "Hold for time (start 15-20s, build to 45s)"
+          ],
+          "commonMistakes": [
+            "Sagging hips — lift them, squeeze glutes",
+            "Holding breath — breathe shallow but steady",
+            "Lifting head — keep neck neutral, look at floor"
+          ]
+        },
+        {
+          "id": "standard",
+          "name": "Standard plank",
+          "level": 2,
+          "description": "Full forearm plank. The benchmark core exercise.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"30\" cy=\"120\" r=\"12\" fill=\"#ED7A4D\"/><rect x=\"25\" y=\"148\" width=\"30\" height=\"8\" fill=\"#ED7A4D\" rx=\"4\"/><line x1=\"30\" y1=\"132\" x2=\"40\" y2=\"152\" stroke=\"#ED7A4D\" stroke-width=\"6\"/><line x1=\"55\" y1=\"128\" x2=\"175\" y2=\"152\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Forearms flat, elbows under shoulders",
+            "Toes on floor, body in a straight line from head to heels",
+            "Pull elbows toward toes (subtle squeeze) — activates core deeper",
+            "Keep glutes squeezed and breathe steadily",
+            "Build duration gradually: 20s → 30s → 45s → 60s+"
+          ],
+          "commonMistakes": [
+            "Hips sagging or piking — fix the line",
+            "Shoulders by ears — keep them down and back",
+            "Holding too long with bad form — stop when form breaks"
+          ]
+        },
+        {
+          "id": "side",
+          "name": "Side plank",
+          "level": 3,
+          "description": "Plank on one forearm, body sideways. Builds obliques and lateral stability.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"40\" cy=\"100\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"40\" y1=\"112\" x2=\"160\" y2=\"165\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"40\" y1=\"112\" x2=\"40\" y2=\"165\" stroke=\"#ED7A4D\" stroke-width=\"6\"/><line x1=\"40\" y1=\"165\" x2=\"55\" y2=\"165\" stroke=\"#ED7A4D\" stroke-width=\"6\"/></svg>",
+          "formTips": [
+            "Lie on one side, forearm flat, elbow under shoulder",
+            "Stack feet (or stagger top foot in front for easier balance)",
+            "Lift hips off floor, body in a straight diagonal line",
+            "Free arm extended up or hand on hip",
+            "Hold 15-30s per side, then switch"
+          ],
+          "commonMistakes": [
+            "Hips dropping — lift higher, squeeze obliques",
+            "Body rotating — keep top hip stacked over bottom hip",
+            "Shoulder collapsing — push the floor away with bottom forearm"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bridge",
+      "name": "Glute bridge",
+      "category": "legs",
+      "muscles": ["glutes", "hamstrings", "core"],
+      "variants": [
+        {
+          "id": "standard",
+          "name": "Glute bridge",
+          "level": 1,
+          "description": "Hip lift from supine position. Best beginner posterior-chain exercise.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"170\" cy=\"140\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"50\" y1=\"100\" x2=\"160\" y2=\"140\" stroke=\"#ED7A4D\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"50\" y1=\"100\" x2=\"45\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"60\" y1=\"110\" x2=\"30\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"160\" y1=\"140\" x2=\"180\" y2=\"160\" stroke=\"#ED7A4D\" stroke-width=\"6\"/></svg>",
+          "formTips": [
+            "Lie on back, knees bent, feet flat on floor, hip-width apart",
+            "Feet close enough to butt that you can almost touch heels with fingertips",
+            "Push through heels to lift hips until body is straight from shoulders to knees",
+            "Squeeze glutes HARD at the top (pause 2 seconds)",
+            "Lower with control"
+          ],
+          "commonMistakes": [
+            "Pushing through toes instead of heels — keep weight in heels",
+            "Hyperextending lower back — stop when hips are level, not higher",
+            "Going through the motions — actively squeeze glutes at the top"
+          ]
+        },
+        {
+          "id": "single-leg",
+          "name": "Single-leg glute bridge",
+          "level": 2,
+          "description": "Glute bridge with one foot off the floor. Doubles the load on the working glute.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"170\" cy=\"125\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"50\" y1=\"90\" x2=\"160\" y2=\"125\" stroke=\"#ED7A4D\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"50\" y1=\"90\" x2=\"45\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"60\" y1=\"100\" x2=\"30\" y2=\"60\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Setup like standard bridge",
+            "Extend one leg straight up (or hold straight out parallel to floor)",
+            "Lift hips using only the planted leg",
+            "Keep hips LEVEL — don't let the lifted side drop",
+            "Switch sides each set"
+          ],
+          "commonMistakes": [
+            "Hips drop on the lifted side — focus on keeping them level",
+            "Cheating with lower back — drive through the planted heel",
+            "Going too fast — slow tempo (3s up, 3s down)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "row",
+      "name": "Doorway row",
+      "category": "pull",
+      "muscles": ["back", "biceps", "core"],
+      "variants": [
+        {
+          "id": "standard",
+          "name": "Doorway row (towel)",
+          "level": 1,
+          "description": "Body row using a sturdy door and towel for grip. Best home-gym pull alternative.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"170\" y=\"20\" width=\"6\" height=\"160\" fill=\"#1A1F2E\"/><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"50\" cy=\"100\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"50\" y1=\"112\" x2=\"50\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"58\" y1=\"95\" x2=\"170\" y2=\"95\" stroke=\"#ED7A4D\" stroke-width=\"8\" stroke-linecap=\"round\"/><line x1=\"58\" y1=\"105\" x2=\"170\" y2=\"105\" stroke=\"#ED7A4D\" stroke-width=\"8\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Loop a sturdy towel around a door handle — handles on BOTH sides for safety",
+            "Stand close to door, grab both ends of the towel",
+            "Walk feet forward and lean back until arms are straight",
+            "Pull chest toward door, elbows back and squeeze shoulder blades together",
+            "Lower with control, body straight throughout"
+          ],
+          "commonMistakes": [
+            "Door not closing securely — TEST it's locked tight before loading",
+            "Jerking with hips — pull with back, not momentum",
+            "Half-reps from the top — go all the way to chest-to-door"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deadbug",
+      "name": "Dead bug",
+      "category": "core",
+      "muscles": ["core", "hip flexors"],
+      "variants": [
+        {
+          "id": "standard",
+          "name": "Dead bug",
+          "level": 1,
+          "description": "Anti-extension core exercise. Lying on back, alternating opposite arm and leg.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"35\" cy=\"130\" r=\"12\" fill=\"#ED7A4D\"/><rect x=\"42\" y=\"125\" width=\"60\" height=\"12\" fill=\"#ED7A4D\" rx=\"4\"/><line x1=\"55\" y1=\"125\" x2=\"55\" y2=\"50\" stroke=\"#ED7A4D\" stroke-width=\"8\" stroke-linecap=\"round\"/><line x1=\"95\" y1=\"125\" x2=\"160\" y2=\"55\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"75\" y1=\"137\" x2=\"30\" y2=\"110\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"95\" y1=\"137\" x2=\"100\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Lie on back, arms straight up over chest, knees bent and lifted (90° hip and knee)",
+            "Lower opposite arm and leg slowly toward floor (keeping leg straight as you lower)",
+            "KEEP lower back pressed firmly to the floor the entire time",
+            "Return to start, switch sides",
+            "Slow and controlled — 3-4 seconds per rep"
+          ],
+          "commonMistakes": [
+            "Lower back arching — only lower as far as you can maintain floor contact",
+            "Rushing — defeats the purpose entirely",
+            "Holding breath — exhale as you lower the limbs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wallsit",
+      "name": "Wall sit",
+      "category": "legs",
+      "muscles": ["quadriceps", "glutes"],
+      "variants": [
+        {
+          "id": "standard",
+          "name": "Wall sit",
+          "level": 2,
+          "description": "Isometric squat hold against a wall. Brutal at duration.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"170\" y=\"20\" width=\"8\" height=\"160\" fill=\"#1A1F2E\"/><line x1=\"10\" y1=\"180\" x2=\"190\" y2=\"180\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"155\" cy=\"60\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"147\" y=\"74\" width=\"16\" height=\"35\" fill=\"#ED7A4D\" rx=\"8\"/><line x1=\"155\" y1=\"109\" x2=\"110\" y2=\"109\" stroke=\"#1A1F2E\" stroke-width=\"12\" stroke-linecap=\"round\"/><line x1=\"110\" y1=\"109\" x2=\"110\" y2=\"180\" stroke=\"#1A1F2E\" stroke-width=\"12\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Back flat against wall, slide down until thighs are parallel to floor",
+            "Knees over ankles (90° at knee and hip)",
+            "Feet flat, weight evenly distributed",
+            "Arms relaxed at sides or crossed over chest",
+            "Hold for time (start 20-30s, build to 60s+)"
+          ],
+          "commonMistakes": [
+            "Knees past toes — slide further down the wall to get feet out",
+            "Lifting heels — keep them planted",
+            "Resting hands on thighs — they help; keep them off for true difficulty"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "superman",
+      "name": "Superman hold",
+      "category": "core",
+      "muscles": ["lower back", "glutes", "shoulders"],
+      "variants": [
+        {
+          "id": "standard",
+          "name": "Superman hold",
+          "level": 1,
+          "description": "Lying face-down, lift arms and legs together. Strengthens posterior chain.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"30\" cy=\"140\" r=\"10\" fill=\"#ED7A4D\"/><line x1=\"38\" y1=\"138\" x2=\"5\" y2=\"110\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"40\" y1=\"140\" x2=\"160\" y2=\"140\" stroke=\"#ED7A4D\" stroke-width=\"12\" stroke-linecap=\"round\"/><line x1=\"160\" y1=\"140\" x2=\"195\" y2=\"110\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Lie face-down on floor, arms extended overhead, legs straight",
+            "Simultaneously lift arms, chest, and legs off the floor",
+            "Squeeze glutes and lower back",
+            "Hold for 5-10 seconds, lower with control",
+            "Keep neck neutral — don't crank your head up"
+          ],
+          "commonMistakes": [
+            "Yanking the neck up — eyes look at the floor",
+            "Lifting only legs OR only arms — do both together for full effect",
+            "Holding breath — breathe normally throughout the hold"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "birddog",
+      "name": "Bird dog",
+      "category": "core",
+      "muscles": ["core", "lower back", "glutes"],
+      "variants": [
+        {
+          "id": "standard",
+          "name": "Bird dog",
+          "level": 1,
+          "description": "On all fours, extend opposite arm and leg. Anti-rotation core exercise.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"45\" cy=\"95\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"55\" y1=\"100\" x2=\"5\" y2=\"100\" stroke=\"#ED7A4D\" stroke-width=\"8\" stroke-linecap=\"round\"/><line x1=\"55\" y1=\"105\" x2=\"140\" y2=\"105\" stroke=\"#ED7A4D\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"50\" y1=\"107\" x2=\"50\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"140\" y1=\"105\" x2=\"190\" y2=\"105\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"130\" y1=\"107\" x2=\"130\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "On hands and knees, hands under shoulders, knees under hips",
+            "Brace core to maintain a neutral spine — imagine a glass of water on your back",
+            "Simultaneously extend one arm forward AND the opposite leg backward",
+            "Both should be parallel to the floor — no higher",
+            "Hold 2 seconds, return to start, switch sides"
+          ],
+          "commonMistakes": [
+            "Spine rotating — keep hips level (the imaginary glass shouldn't tip)",
+            "Lifting limbs too high — parallel to floor is the limit",
+            "Rushing — slow, deliberate movement is the point"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mountain",
+      "name": "Mountain climbers",
+      "category": "cardio",
+      "muscles": ["core", "shoulders", "legs", "cardio"],
+      "variants": [
+        {
+          "id": "slow",
+          "name": "Slow mountain climbers",
+          "level": 1,
+          "description": "From plank position, alternate knees toward chest at a controlled pace.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"35\" cy=\"105\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"35\" y1=\"117\" x2=\"35\" y2=\"160\" stroke=\"#ED7A4D\" stroke-width=\"6\"/><line x1=\"43\" y1=\"110\" x2=\"160\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"160\" y1=\"160\" x2=\"185\" y2=\"165\" stroke=\"#1A1F2E\" stroke-width=\"8\"/><line x1=\"105\" y1=\"135\" x2=\"85\" y2=\"100\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Start in a high plank (arms extended, hands under shoulders)",
+            "Pull one knee toward chest, foot off floor",
+            "Return that leg, simultaneously bring the other knee in",
+            "Keep hips LOW — don't pike up",
+            "Slow tempo: 1 second per leg"
+          ],
+          "commonMistakes": [
+            "Hips bouncing high — keep them level with shoulders",
+            "Going too fast and losing form — slow down",
+            "Hands too far forward — keep them under shoulders"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stepup",
+      "name": "Step-up",
+      "category": "legs",
+      "muscles": ["quadriceps", "glutes", "hamstrings"],
+      "variants": [
+        {
+          "id": "standard",
+          "name": "Step-up",
+          "level": 1,
+          "description": "Step up onto a sturdy bench/chair, alternate legs.",
+          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"100\" y=\"110\" width=\"90\" height=\"50\" fill=\"#1A1F2E\"/><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"60\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"62\" y=\"74\" width=\"16\" height=\"40\" fill=\"#ED7A4D\" rx=\"8\"/><line x1=\"70\" y1=\"114\" x2=\"130\" y2=\"108\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"70\" y1=\"114\" x2=\"50\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+          "formTips": [
+            "Find a sturdy step, chair, or bench (knee-height ideal for beginners)",
+            "Step up with one foot, drive through that heel to bring the other up",
+            "Step back down with control, alternate or do all reps on one side",
+            "Don't push off the bottom foot — make the top leg do the work",
+            "Light hand on a wall for balance if needed"
+          ],
+          "commonMistakes": [
+            "Using bottom leg to push off — defeats the exercise",
+            "Stepping onto an unstable surface — your knees will thank you for choosing stable",
+            "Slamming the bottom foot down — control the descent"
+          ]
+        }
+      ]
+    }
+  ],
+  "warmup": [
+    {"name": "Arm circles", "duration": "30s each direction", "instructions": "Standing, swing arms in big circles forward, then backward. Loosens shoulders."},
+    {"name": "Leg swings", "duration": "10 per side", "instructions": "Hold a wall, swing one leg forward and back. Then swing it across the body. Switch sides."},
+    {"name": "Hip circles", "duration": "5 per direction", "instructions": "Hands on hips, big circles with hips — like hula hoop."},
+    {"name": "Jumping jacks (low impact)", "duration": "30 seconds", "instructions": "Step out to the side instead of jumping if knees are sensitive."},
+    {"name": "Slow squats", "duration": "10 reps", "instructions": "Body-weight, controlled. Primes lower body for the workout."}
+  ]
+}
