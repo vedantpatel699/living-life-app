@@ -142,6 +142,18 @@ const SUPPLEMENTS=[
   {id:'b12',name:'Methylcobalamin B12',dose:'500 µg',timing:'sublingual, anytime',color:'mint',ini:'B'},
   {id:'omega3',name:'Algal omega-3',dose:'500 mg EPA+DHA',timing:'with breakfast',color:'sky',ini:'O'},
 ];
+
+// =================== PLAN HELPERS ===================
+function todayPlanDay(){
+  // Returns the plan day for today based on currentWeek + dayOfWeek
+  if(!DB.plan)return null;
+  const week=currentWeek();
+  const dow=dayOfWeek(); // Mon=0..Sun=6
+  const wk=DB.plan.weeks.find(w=>w.week===week)||DB.plan.weeks[DB.plan.weeks.length-1];
+  if(!wk)return null;
+  const day=wk.days.find(d=>d.day===dow+1);
+  return day?{...day,weekInfo:wk}:null;
+}
 // =================== DATABASE LOADERS ===================
 const DB_BASE='https://raw.githubusercontent.com/vedantpatel699/living-life-app/main/data/';
 const DB={foods:null,exercises:null,supplements:null,c25k:null,foodsBySlug:{}};
@@ -159,7 +171,7 @@ async function loadDB(name){
     return DB[name];
   }catch(e){console.warn('DB load',name,e);return null}
 }
-async function loadAllDB(){await Promise.all(['foods','exercises','supplements','c25k'].map(loadDB))}
+async function loadAllDB(){await Promise.all(['foods','exercises','supplements','c25k','plan'].map(loadDB))}
 
 // Today's supplement schedule
 function todaySuppSchedule(){
@@ -185,48 +197,26 @@ function todaySuppSchedule(){
 }
 
 // Generate today's recommendation (Claude-powered or rule-based fallback)
-async function generateTodayRec(force=false){
-  const cacheKey='rec-'+today();
-  if(!force){
-    const cached=localStorage.getItem(cacheKey);
-    if(cached){try{return JSON.parse(cached)}catch(e){}}
+function generateTodayRec(){
+  const planDay=todayPlanDay(),sched=todaySchedule(),streak=calcStreak();
+  if(planDay){
+    return {
+      headline:planDay.name,
+      body:`${planDay.weekInfo.focus}${planDay.notes?' — '+planDay.notes:''}`,
+      action:planDay.type==='routine'?'workout':planDay.type==='c25k'?'c25k':planDay.type==='walk'?'logRun':planDay.type==='rest'?'logEntry':'logEntry',
+      actionLabel:planDay.type==='routine'?'Begin '+(planDay.routine?'Routine '+planDay.routine:'workout'):planDay.type==='c25k'?'Start C25K':planDay.type==='walk'?'Log walk':planDay.type==='rest'?'Log rest day':'Log today',
+      planDay,
+      source:'plan',
+    };
   }
-  const sched=todaySchedule(),stats=weightStats(),streak=calcStreak();
-  // Rule-based default rec
-  const ruleRec={
+  // Fallback if plan not loaded yet
+  return {
     headline:sched.activity,
-    body:`Phase ${currentPhase()} · Week ${currentWeek()} · ${PHASES[currentPhase()].name}. ${streak>0?'🔥 '+streak+'-day streak — keep it going.':'Start the streak today.'}`,
+    body:`Phase ${currentPhase()} · Week ${currentWeek()} · ${PHASES[currentPhase()].name}. ${streak>0?'🔥 '+streak+'-day streak.':'Build the habit.'}`,
     action:sched.type==='routine'?'workout':sched.type==='c25k'?'c25k':sched.type==='walk'?'logRun':'logEntry',
     actionLabel:sched.type==='routine'?'Begin workout':sched.type==='c25k'?'Start C25K':sched.type==='walk'?'Log walk':'Log today',
     source:'rules',
   };
-  if(!hasClaudeKey())return ruleRec;
-  // Try Claude for personalized rec
-  try{
-    const recent=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,7).map(([d,e])=>({d,weight:e.weight,activities:e.activities,energy:e.energy,sleep:e.sleep}));
-    const sys=`You are Vedant's fitness coach. Generate today's recommendation in JSON format. Be brief, warm, specific. 
-
-Output ONLY valid JSON with these keys:
-{"headline": "Short title (3-5 words)", "body": "1-2 sentence body grounded in his data", "action": "workout|c25k|logRun|logEntry|coach", "actionLabel": "Button text"}
-
-Context:
-- Phase ${currentPhase()} · Week ${currentWeek()}
-- Today scheduled: ${sched.activity}
-- Streak: ${streak} days
-- 7-day weight trend: ${stats?.avgNow?.toFixed(1)||'—'} kg (change ${stats?.weekChange?.toFixed(2)||'—'})
-- Last 7 days: ${JSON.stringify(recent)}
-
-Rules: If recent energy is low (<3 average) or notes mention soreness/fatigue, suggest rest or lighter session. If they've missed 2+ days, gently address it. Otherwise endorse the schedule.`;
-    const t=await callClaude([{role:'user',content:"Today's recommendation please."}],sys,500);
-    const json=t.match(/\{[\s\S]*\}/)?.[0];
-    if(json){
-      const rec=JSON.parse(json);
-      rec.source='ai';
-      localStorage.setItem(cacheKey,JSON.stringify(rec));
-      return rec;
-    }
-  }catch(e){console.warn('AI rec failed',e)}
-  return ruleRec;
 }
 
 const PHASES={1:{name:'Foundation',weeks:'1-4'},2:{name:'Build',weeks:'5-12'},3:{name:'Sustain',weeks:'13+'}};
@@ -419,7 +409,8 @@ function renderToday(){
       <div class="card" style="margin-bottom:0"><div class="flabel">WEEK Δ</div><div style="font-size:26px;font-weight:700;margin-top:4px;color:${stats?.weekChange<0?'var(--success)':stats?.weekChange>0?'#B58A0F':'var(--ink)'}">${stats?.weekChange!=null?(stats.weekChange>0?'+':'')+stats.weekChange.toFixed(2)+' kg':'—'}</div><div class="tiny muted">vs. prior week</div></div>
     </div>
     ${streak>0?`<div style="background:linear-gradient(135deg,var(--coral),#E25E2D);color:white;border-radius:var(--r-lg);padding:16px 20px;margin-top:12px;position:relative;overflow:hidden"><div style="position:relative;z-index:1"><div style="font-size:28px">🔥</div><div style="font-size:20px;font-weight:700;margin-top:2px">${streak} day streak</div><div class="tiny" style="opacity:0.9">${entry?'Logged today — keep it going.':'Log today to keep it going.'}</div></div><div style="position:absolute;right:-30px;top:-30px;width:130px;height:130px;background:rgba(255,255,255,0.15);border-radius:50%"></div></div>`:''}
-    <button class="btn btn-secondary btn-full mt-4" id="t-log" style="padding:18px"><span style="font-size:20px;font-weight:700">＋</span> <span>Log today (weight, photo, meals)</span></button>
+    ${state.healthSteps!=null?`<div class="card-flat" style="margin-top:12px;display:flex;align-items:center;gap:12px"><div style="width:40px;height:40px;background:var(--sky-s);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--sky)">👟</div><div style="flex:1"><div style="font-weight:700;font-size:18px">${state.healthSteps.toLocaleString()} steps</div><div class="tiny muted">From Health Connect · Garmin</div></div></div>`:''}
+<button class="btn btn-secondary btn-full mt-4" id="t-log" style="padding:18px"><span style="font-size:20px;font-weight:700">＋</span> <span>Log today (weight, photo, meals)</span></button>
     <h2 class="sec">SUPPLEMENTS</h2>
     <div class="card-flat" id="t-supps" style="display:flex;align-items:center;gap:12px;cursor:pointer">
       <div style="flex:1"><div style="font-weight:600">${todaySuppCount()} of ${SUPPLEMENTS.length} taken</div><div class="tiny muted">${suppStreak()>0?'🔥 '+suppStreak()+'-day streak':'Tap to check off today'}</div></div>
@@ -433,7 +424,7 @@ function bindToday(){
   document.getElementById('t-start')?.addEventListener('click',()=>go());
   document.getElementById('t-rec-go')?.addEventListener('click',()=>go(state.todayRec?.action));
   // Async load today's recommendation
-  if(!state.todayRec){generateTodayRec().then(rec=>{state.todayRec=rec;if(state.screen==='today')render()}).catch(()=>{})}
+  if(!state.todayRec){state.todayRec=generateTodayRec();if(state.todayRec.headline!=='Loading…')render()}
   document.getElementById('t-log')?.addEventListener('click',()=>setScreen('logEntry'));
   document.getElementById('t-supps')?.addEventListener('click',()=>setScreen('supplements'));
   document.getElementById('t-coach')?.addEventListener('click',()=>setScreen('coach'));
@@ -612,7 +603,7 @@ function renderWorkout(){
 </div>
 <h2 class="sec">TODAY'S MOVES</h2>
 <div style="display:flex;flex-direction:column;gap:10px">
-${r.exercises.map((ex,i)=>{const adj=state.data.adjustments[ex.id]||{};const reps=adj.targetReps||ex.defaultReps;const variant=adj.variant||ex.variants[0];return `<div class="card-flat" style="display:flex;gap:14px;align-items:center"><div style="width:44px;height:44px;border-radius:14px;background:${colorMap[ex.color]};display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px">${i+1}</div><div style="flex:1;min-width:0"><div style="font-weight:600">${escapeHtml(ex.name)}${variant!==ex.variants[0]?' · '+variant:''}</div><div class="tiny muted">${ex.sets} × ${reps}${ex.unit==='sec'?' sec':' reps'} · ${ex.restSec}s rest</div></div></div>`}).join('')}
+${r.exercises.map((ex,i)=>{const adj=state.data.adjustments[ex.id]||{};const reps=adj.targetReps||ex.defaultReps;const variant=adj.variant||ex.variants[0];return `<div class="card-flat w-exrow" data-eid="${ex.id}" data-vid="${variant}" style="display:flex;gap:14px;align-items:center;cursor:pointer"><div style="width:44px;height:44px;border-radius:14px;background:${colorMap[ex.color]};display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px">${i+1}</div><div style="flex:1;min-width:0"><div style="font-weight:600">${escapeHtml(ex.name)}${variant!==ex.variants[0]?' · '+variant:''}</div><div class="tiny muted">${ex.sets} × ${reps}${ex.unit==='sec'?' sec':' reps'} · tap for video + form tips</div></div><div style="font-size:18px;color:var(--muted)">▶</div></div>`}).join('')}
 </div>
 <button class="btn btn-primary btn-full" id="w-start2" style="margin:24px 0 12px">Start workout</button>
 <button class="btn btn-secondary btn-full" id="w-swap">Swap to different routine</button>
@@ -625,6 +616,7 @@ function bindWorkout(){
   document.getElementById('w-start')?.addEventListener('click',start);
   document.getElementById('w-start2')?.addEventListener('click',start);
   document.getElementById('w-swap')?.addEventListener('click',()=>{const c=state.workoutRoutine||'A';state.workoutRoutine=c==='A'?'B':c==='B'?'C':'A';render()});
+  document.querySelectorAll('.w-exrow').forEach(r=>r.addEventListener('click',()=>openExerciseDetail(r.dataset.eid,r.dataset.vid)));
 }
 
 function renderSession(){
@@ -648,6 +640,7 @@ function renderSession(){
 </div>
 <h1 style="font-size:28px;font-weight:700;letter-spacing:-0.01em;margin-top:16px">${escapeHtml(ex.name)}</h1>
 <p class="muted" style="margin-top:4px">Target: ${targetReps}${ex.unit==='sec'?' sec':' reps'} · ${variant!==ex.variants[0]?variant+' · ':''}controlled tempo</p>
+<button class="btn btn-secondary btn-sm" id="ses-video" style="margin-top:8px;padding:8px 14px;font-size:13px">▶ Watch demo + form tips</button>
 <div class="flabel" style="margin-top:24px">SET PROGRESS</div>
 <div style="display:flex;gap:12px;margin-top:10px">${Array.from({length:ex.sets},(_,i)=>{const done=i<s.setIdx,cur=i===s.setIdx;return `<div style="width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;${done?'background:var(--success);color:white':cur?'background:var(--cta);color:white':'background:var(--surface-white);color:var(--muted);border:2px solid var(--border)'}">${done?'✓':(i+1)}</div>`}).join('')}</div>
 <div class="tiny muted mt-2">Set ${s.setIdx+1} of ${ex.sets} · Tap when finished</div>
@@ -668,6 +661,7 @@ function bindSession(){
     }else{setScreen('rest')}
   });
   document.getElementById('ses-skip')?.addEventListener('click',()=>{const s=state.workoutSession,r=ROUTINES[s.routineKey];s.exerciseIdx+=1;s.setIdx=0;if(s.exerciseIdx>=r.exercises.length)setScreen('complete');else render()});
+  document.getElementById('ses-video')?.addEventListener('click',()=>{const s=state.workoutSession,r=ROUTINES[s.routineKey],ex=r.exercises[s.exerciseIdx],adj=state.data.adjustments[ex.id]||{};openExerciseDetail(ex.id,adj.variant||ex.variants[0])});
   keepScreenOn();
 }
 
@@ -1163,11 +1157,95 @@ function openCustomFood(onSave){
   document.body.appendChild(modal);
 }
 
+
+// =================== EXERCISE DETAIL + VIDEO ===================
+function openExerciseDetail(exerciseId, variantId){
+  if(!DB.exercises){toast('Exercise database loading…','');loadDB('exercises').then(()=>openExerciseDetail(exerciseId,variantId));return}
+  const ex=DB.exercises.exercises.find(x=>x.id===exerciseId);
+  if(!ex){toast('Exercise not found','error');return}
+  const variant=variantId?ex.variants.find(v=>v.id===variantId):ex.variants[0];
+  if(!variant){toast('Variant not found','error');return}
+  const embedSrc=`https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(variant.videoSearch||variant.name)}`;
+  const modal=document.createElement('div');modal.className='modal-bg';
+  modal.innerHTML=`<div class="modal" style="padding:0;overflow:hidden;display:flex;flex-direction:column">
+  <div style="padding:14px 20px 0;display:flex;justify-content:space-between;align-items:center"><div><h2 style="font-size:18px;font-weight:700">${escapeHtml(variant.name)}</h2><p class="tiny muted">Level ${variant.level}/4 · ${escapeHtml(ex.muscles.join(' · '))}</p></div><button id="xd-x" class="back-btn" style="width:36px;height:36px;font-size:16px">×</button></div>
+  <div style="padding:12px 16px;flex:1;overflow-y:auto">
+  <div style="position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:var(--r-md);overflow:hidden;margin-bottom:14px">
+  <iframe id="xd-iframe" src="${embedSrc}" style="position:absolute;inset:0;width:100%;height:100%;border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+  <p style="font-size:14px;color:var(--muted);line-height:1.5">${escapeHtml(variant.description||'')}</p>
+  <h3 style="margin-top:18px;font-size:13px;font-weight:700;letter-spacing:0.05em;color:var(--ink);text-transform:uppercase">FORM TIPS</h3>
+  <ul style="margin-top:10px;padding-left:20px;line-height:1.7;font-size:14px">${(variant.formTips||[]).map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul>
+  <h3 style="margin-top:18px;font-size:13px;font-weight:700;letter-spacing:0.05em;color:var(--danger);text-transform:uppercase">COMMON MISTAKES</h3>
+  <ul style="margin-top:10px;padding-left:20px;line-height:1.7;font-size:14px">${(variant.commonMistakes||[]).map(t=>`<li>${escapeHtml(t)}</li>`).join('')}</ul>
+  <a href="${escapeHtml(variant.videoUrl||embedSrc)}" target="_blank" rel="noopener" style="display:inline-block;margin-top:16px;padding:10px 16px;background:var(--surface-cream);border-radius:20px;font-size:13px;font-weight:600;color:var(--ink);text-decoration:none">▶ Open in YouTube</a>
+  </div>
+  </div>`;
+  modal.addEventListener('click',e=>{if(e.target===modal)modal.remove()});
+  modal.querySelector('#xd-x').addEventListener('click',()=>modal.remove());
+  document.body.appendChild(modal);
+}
+
+// =================== HEALTH CONNECT (Capacitor / Android) ===================
+let healthConnectReady=false;
+async function setupHealthConnect(){
+  if(!IS_NATIVE)return false;
+  const HC=window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health;
+  if(!HC){console.warn('Health Connect plugin not available');return false}
+  try{
+    const avail=await HC.isHealthAvailable?.();
+    if(avail&&!avail.available){console.warn('Health Connect not available on this device');return false}
+    const perms=['STEPS','HEART_RATE','SLEEP','ACTIVE_CALORIES_BURNED','DISTANCE','EXERCISE'];
+    await HC.requestHealthPermissions?.({permissions:perms});
+    healthConnectReady=true;
+    return true;
+  }catch(e){console.warn('HC setup failed',e);return false}
+}
+async function readTodaySteps(){
+  if(!IS_NATIVE||!healthConnectReady)return null;
+  const HC=window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health;
+  if(!HC)return null;
+  const start=new Date();start.setHours(0,0,0,0);
+  const end=new Date();
+  try{
+    const r=await HC.queryAggregated?.({startDate:start.toISOString(),endDate:end.toISOString(),dataType:'steps',bucket:'day'});
+    const agg=r?.aggregatedData?.[0];
+    return agg?Math.round(agg.value||0):null;
+  }catch(e){console.warn('readSteps',e);return null}
+}
+async function readTodayHR(){
+  if(!IS_NATIVE||!healthConnectReady)return null;
+  const HC=window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health;
+  if(!HC)return null;
+  const start=new Date();start.setHours(0,0,0,0);
+  const end=new Date();
+  try{
+    const r=await HC.queryAggregated?.({startDate:start.toISOString(),endDate:end.toISOString(),dataType:'heart-rate',bucket:'day'});
+    return r?.aggregatedData?.[0]?.value||null;
+  }catch(e){return null}
+}
+async function readLastSleep(){
+  if(!IS_NATIVE||!healthConnectReady)return null;
+  const HC=window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health;
+  if(!HC)return null;
+  const end=new Date(),start=new Date(end.getTime()-36*3600*1000);
+  try{
+    const r=await HC.querySleep?.({startDate:start.toISOString(),endDate:end.toISOString()});
+    const sessions=r?.sleepData||[];
+    if(sessions.length===0)return null;
+    const last=sessions[sessions.length-1];
+    const hrs=(new Date(last.endDate)-new Date(last.startDate))/3600000;
+    return Math.round(hrs*10)/10;
+  }catch(e){return null}
+}
+
+
 loadLocal();
 if(isConfigured())state.screen='today';else state.screen='welcome';
 setStatusTime();setInterval(setStatusTime,30000);
 render();
-loadAllDB().then(()=>render());
+loadAllDB().then(()=>{state.todayRec=null;render()});
+if(IS_NATIVE)setupHealthConnect().then(ok=>{if(ok)readTodaySteps().then(s=>{if(s!=null){state.healthSteps=s;render()}})});
 if(isConfigured())pullData().then(()=>render()).catch(e=>console.warn('boot sync failed',e));
 </script>
 </body>
