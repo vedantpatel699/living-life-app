@@ -1,0 +1,180 @@
+{
+  "version": 1,
+  "updatedAt": "2026-05-12",
+  "note": "Comprehensive 12-week back-to-fit plan for Vedant. Phase 1 (weeks 1-4): foundation. Phase 2 (weeks 5-12): build with C25K. Each day has specific prescription. Strength sessions reference routine IDs (A/B/C from exercises.json); progression is rule-engine-driven per-exercise (RPE adjustments).",
+  "phases": {
+    "1": {"name": "Foundation", "weeks": [1, 4], "summary": "Build daily habit. Walk + bodyweight strength. Don't get hurt. Lose 1-3 kg."},
+    "2": {"name": "Build", "weeks": [5, 12], "summary": "Real strength + start running (C25K). Lose 4-6 kg."},
+    "3": {"name": "Sustain", "weeks": [13], "summary": "Lock it in. Reach healthy BMI. Then maintain."}
+  },
+  "weeks": [
+    {
+      "week": 1,
+      "phase": 1,
+      "focus": "Just show up — every day. Form > intensity. Walks at conversational pace. Strength sessions are gentle introductions.",
+      "days": [
+        {"day": 1, "label": "Mon", "type": "walk", "name": "Easy walk", "duration": 30, "intensity": "easy", "notes": "Conversational pace. Outside if possible. This is the first day of the rest of your life."},
+        {"day": 2, "label": "Tue", "type": "routine", "name": "Routine A — Push & Legs (gentle intro)", "routine": "A", "intensity": "easy", "notes": "Start with WALL pushups if knee pushups feel hard. Half-depth squats are fine. Form is everything today."},
+        {"day": 3, "label": "Wed", "type": "walk", "name": "Easy walk", "duration": 30, "intensity": "easy", "notes": "Recover from yesterday. Same pace as Monday."},
+        {"day": 4, "label": "Thu", "type": "routine", "name": "Routine B — Pull & Core (gentle intro)", "routine": "B", "intensity": "easy", "notes": "First time doing doorway rows? Test the door is closed tight. Plank from knees is honest, not weak."},
+        {"day": 5, "label": "Fri", "type": "walk", "name": "Easy walk", "duration": 30, "intensity": "easy", "notes": "End-of-week walk. Notice how your body feels. Keep notes."},
+        {"day": 6, "label": "Sat", "type": "routine", "name": "Routine C — Full-body finisher", "routine": "C", "intensity": "moderate", "notes": "Bookend the first week strong. Move through it without rushing."},
+        {"day": 7, "label": "Sun", "type": "rest", "name": "Rest day", "notes": "Gentle walk if you want, but no obligation. Sleep, water, nutrition."}
+      ]
+    },
+    {
+      "week": 2,
+      "phase": 1,
+      "focus": "Same structure, slightly more confident. Aim for 1-2 reps more on each exercise vs. last week.",
+      "days": [
+        {"day": 1, "label": "Mon", "type": "walk", "name": "Easy walk", "duration": 30, "intensity": "easy"},
+        {"day": 2, "label": "Tue", "type": "routine", "name": "Routine A", "routine": "A", "intensity": "moderate", "notes": "Try +1 rep per set if last week felt manageable."},
+        {"day": 3, "label": "Wed", "type": "walk", "name": "Easy walk", "duration": 30, "intensity": "easy"},
+        {"day": 4, "label": "Thu", "type": "routine", "name": "Routine B", "routine": "B", "intensity": "moderate"},
+        {"day": 5, "label": "Fri", "type": "walk", "name": "Easy walk", "duration": 35, "intensity": "easy", "notes": "Add 5 minutes today."},
+        {"day": 6, "label": "Sat", "type": "routine", "name": "Routine C", "routine": "C", "intensity": "moderate"},
+        {"day": 7, "label": "Sun", "type": "rest", "name": "Rest day"}
+      ]
+    },
+    {
+      "week": 3,
+      "phase": 1,
+      "focus": "By now habit is forming. If something felt easy last week, the rule engine will have proposed +1 rep — apply it.",
+      "days": [
+        {"day": 1, "label": "Mon", "type": "walk", "name": "Brisk walk", "duration": 35, "intensity": "moderate", "notes": "Pick up the pace slightly — should still be able to talk, but rather you wouldn't."},
+        {"day": 2, "label": "Tue", "type": "routine", "name": "Routine A", "routine": "A", "intensity": "moderate"},
+        {"day": 3, "label": "Wed", "type": "walk", "name": "Easy walk", "duration": 30, "intensity": "easy"},
+        {"day": 4, "label": "Thu", "type": "routine", "name": "Routine B", "routine": "B", "intensity": "moderate"},
+        {"day": 5, "label": "Fri", "type": "walk", "name": "Brisk walk", "duration": 35, "intensity": "moderate"},
+        {"day": 6, "label": "Sat", "type": "routine", "name": "Routine C", "routine": "C", "intensity": "moderate", "notes": "Push effort up a notch — RPE 7-8 territory on the last set."},
+        {"day": 7, "label": "Sun", "type": "rest", "name": "Rest day"}
+      ]
+    },
+    {
+      "week": 4,
+      "phase": 1,
+      "focus": "Final foundation week. Next week C25K starts — get a real pair of running shoes if you don't have them.",
+      "days": [
+        {"day": 1, "label": "Mon", "type": "walk", "name": "Brisk walk", "duration": 40, "intensity": "moderate", "notes": "Last 5 min — pick up the pace. Get used to feeling slightly out of breath."},
+        {"day": 2, "label": "Tue", "type": "routine", "name": "Routine A", "routine": "A", "intensity": "moderate"},
+        {"day": 3, "label": "Wed", "type": "walk", "name": "Brisk walk", "duration": 35, "intensity": "moderate"},
+        {"day": 4, "label": "Thu", "type": "routine", "name": "Routine B", "routine": "B", "intensity": "moderate"},
+        {"day": 5, "label": "Fri", "type": "walk", "name": "Brisk walk", "duration": 40, "intensity": "moderate"},
+        {"day": 6, "label": "Sat", "type": "routine", "name": "Routine C", "routine": "C", "intensity": "hard", "notes": "Test the upper-end of effort. RPE 8. Form first, intensity second."},
+        {"day": 7, "label": "Sun", "type": "rest", "name": "Rest day", "notes": "Plan running shoes purchase + Monday's C25K Week 1 Day 1 mentally."}
+      ]
+    },
+    {
+      "week": 5,
+      "phase": 2,
+      "focus": "C25K begins. Mon/Wed/Fri = run days, Tue/Thu/Sat = strength + walk. The walks during runs are LOAD MANAGEMENT — don't skip them.",
+      "days": [
+        {"day": 1, "label": "Mon", "type": "c25k", "name": "C25K W1 D1 — Run 60s/Walk 90s × 8", "c25kWeek": 1, "c25kDay": 1, "intensity": "easy", "notes": "Run pace = could-just-barely-hold-a-conversation. SLOW. Knee twinges? Stop early — listen to joints."},
+        {"day": 2, "label": "Tue", "type": "routine", "name": "Routine A + 10 min walk", "routine": "A", "intensity": "moderate", "notes": "Lighter session — your legs will be a bit sore from yesterday."},
+        {"day": 3, "label": "Wed", "type": "c25k", "name": "C25K W1 D2", "c25kWeek": 1, "c25kDay": 2, "intensity": "easy"},
+        {"day": 4, "label": "Thu", "type": "routine", "name": "Routine B + 10 min walk", "routine": "B", "intensity": "moderate"},
+        {"day": 5, "label": "Fri", "type": "c25k", "name": "C25K W1 D3", "c25kWeek": 1, "c25kDay": 3, "intensity": "easy"},
+        {"day": 6, "label": "Sat", "type": "routine", "name": "Routine A — repeat (variety)", "routine": "A", "intensity": "moderate", "notes": "Doing A twice this week. Routine C gets a week off — your legs need recovery."},
+        {"day": 7, "label": "Sun", "type": "rest", "name": "Rest day", "notes": "Especially important this week — first running week is hard on tissues."}
+      ]
+    },
+    {
+      "week": 6,
+      "phase": 2,
+      "focus": "Run intervals get 50% longer. Strength sessions continue. Don't try to make up for missed days by doubling up.",
+      "days": [
+        {"day": 1, "label": "Mon", "type": "c25k", "name": "C25K W2 D1 — Run 90s/Walk 2min × 6", "c25kWeek": 2, "c25kDay": 1, "intensity": "moderate"},
+        {"day": 2, "label": "Tue", "type": "routine", "name": "Routine A", "routine": "A", "intensity": "moderate"},
+        {"day": 3, "label": "Wed", "type": "c25k", "name": "C25K W2 D2", "c25kWeek": 2, "c25kDay": 2, "intensity": "moderate"},
+        {"day": 4, "label": "Thu", "type": "routine", "name": "Routine B", "routine": "B", "intensity": "moderate"},
+        {"day": 5, "label": "Fri", "type": "c25k", "name": "C25K W2 D3", "c25kWeek": 2, "c25kDay": 3, "intensity": "moderate"},
+        {"day": 6, "label": "Sat", "type": "routine", "name": "Routine C", "routine": "C", "intensity": "moderate"},
+        {"day": 7, "label": "Sun", "type": "rest", "name": "Rest day"}
+      ]
+    },
+    {
+      "week": 7,
+      "phase": 2,
+      "focus": "First taste of 3-minute runs. If last week felt brutal, repeat C25K Week 2 instead — that's a real option.",
+      "days": [
+        {"day": 1, "label": "Mon", "type": "c25k", "name": "C25K W3 D1 — Mixed 90s/3min intervals", "c25kWeek": 3, "c25kDay": 1, "intensity": "moderate"},
+        {"day": 2, "label": "Tue", "type": "routine", "name": "Routine A", "routine": "A", "intensity": "moderate"},
+        {"day": 3, "label": "Wed", "type": "c25k", "name": "C25K W3 D2", "c25kWeek": 3, "c25kDay": 2, "intensity": "moderate"},
+        {"day": 4, "label": "Thu", "type": "routine", "name": "Routine B", "routine": "B", "intensity": "moderate"},
+        {"day": 5, "label": "Fri", "type": "c25k", "name": "C25K W3 D3", "c25kWeek": 3, "c25kDay": 3, "intensity": "moderate"},
+        {"day": 6, "label": "Sat", "type": "routine", "name": "Routine C", "routine": "C", "intensity": "moderate"},
+        {"day": 7, "label": "Sun", "type": "rest", "name": "Rest day"}
+      ]
+    },
+    {
+      "week": 8,
+      "phase": 2,
+      "focus": "5 minutes of continuous running enters the picture. Real running is here.",
+      "days": [
+        {"day": 1, "label": "Mon", "type": "c25k", "name": "C25K W4 D1 — 3+5+3+5 min runs", "c25kWeek": 4, "c25kDay": 1, "intensity": "moderate"},
+        {"day": 2, "label": "Tue", "type": "routine", "name": "Routine A", "routine": "A", "intensity": "moderate"},
+        {"day": 3, "label": "Wed", "type": "c25k", "name": "C25K W4 D2", "c25kWeek": 4, "c25kDay": 2, "intensity": "moderate"},
+        {"day": 4, "label": "Thu", "type": "routine", "name": "Routine B", "routine": "B", "intensity": "moderate"},
+        {"day": 5, "label": "Fri", "type": "c25k", "name": "C25K W4 D3", "c25kWeek": 4, "c25kDay": 3, "intensity": "moderate"},
+        {"day": 6, "label": "Sat", "type": "routine", "name": "Routine C", "routine": "C", "intensity": "moderate"},
+        {"day": 7, "label": "Sun", "type": "rest", "name": "Rest day"}
+      ]
+    },
+    {
+      "week": 9,
+      "phase": 2,
+      "focus": "Day 3 is the famous 20-minute continuous run. Mentally prepare. The first two days of the week build up to it.",
+      "days": [
+        {"day": 1, "label": "Mon", "type": "c25k", "name": "C25K W5 D1 — 5+5+5 min runs", "c25kWeek": 5, "c25kDay": 1, "intensity": "moderate"},
+        {"day": 2, "label": "Tue", "type": "routine", "name": "Routine A (light)", "routine": "A", "intensity": "easy", "notes": "Easy session. Save energy for Wednesday."},
+        {"day": 3, "label": "Wed", "type": "c25k", "name": "C25K W5 D2 — Two 8-min runs", "c25kWeek": 5, "c25kDay": 2, "intensity": "moderate"},
+        {"day": 4, "label": "Thu", "type": "routine", "name": "Routine B (light)", "routine": "B", "intensity": "easy", "notes": "Recovery-focused. Save for Friday."},
+        {"day": 5, "label": "Fri", "type": "c25k", "name": "C25K W5 D3 — 20 MINUTES STRAIGHT", "c25kWeek": 5, "c25kDay": 3, "intensity": "moderate", "notes": "THIS IS THE BIG ONE. Slow pace. Mental more than physical. You can do it."},
+        {"day": 6, "label": "Sat", "type": "walk", "name": "Easy recovery walk", "duration": 30, "intensity": "easy", "notes": "Active recovery from yesterday's milestone."},
+        {"day": 7, "label": "Sun", "type": "rest", "name": "Rest day", "notes": "You ran 20 minutes straight. Internalize that."}
+      ]
+    },
+    {
+      "week": 10,
+      "phase": 2,
+      "focus": "Building toward 25 minutes continuous. Pattern repeats — your body has learned to recover.",
+      "days": [
+        {"day": 1, "label": "Mon", "type": "c25k", "name": "C25K W6 D1", "c25kWeek": 6, "c25kDay": 1, "intensity": "moderate"},
+        {"day": 2, "label": "Tue", "type": "routine", "name": "Routine A", "routine": "A", "intensity": "moderate"},
+        {"day": 3, "label": "Wed", "type": "c25k", "name": "C25K W6 D2", "c25kWeek": 6, "c25kDay": 2, "intensity": "moderate"},
+        {"day": 4, "label": "Thu", "type": "routine", "name": "Routine B", "routine": "B", "intensity": "moderate"},
+        {"day": 5, "label": "Fri", "type": "c25k", "name": "C25K W6 D3 — 25 min straight", "c25kWeek": 6, "c25kDay": 3, "intensity": "moderate"},
+        {"day": 6, "label": "Sat", "type": "routine", "name": "Routine C", "routine": "C", "intensity": "moderate"},
+        {"day": 7, "label": "Sun", "type": "rest", "name": "Rest day"}
+      ]
+    },
+    {
+      "week": 11,
+      "phase": 2,
+      "focus": "Three 25-minute runs this week. You're a runner now even if it doesn't feel like it.",
+      "days": [
+        {"day": 1, "label": "Mon", "type": "c25k", "name": "C25K W7 D1 — 25 min", "c25kWeek": 7, "c25kDay": 1, "intensity": "moderate"},
+        {"day": 2, "label": "Tue", "type": "routine", "name": "Routine A", "routine": "A", "intensity": "moderate"},
+        {"day": 3, "label": "Wed", "type": "c25k", "name": "C25K W7 D2", "c25kWeek": 7, "c25kDay": 2, "intensity": "moderate"},
+        {"day": 4, "label": "Thu", "type": "routine", "name": "Routine B", "routine": "B", "intensity": "moderate"},
+        {"day": 5, "label": "Fri", "type": "c25k", "name": "C25K W7 D3", "c25kWeek": 7, "c25kDay": 3, "intensity": "moderate"},
+        {"day": 6, "label": "Sat", "type": "routine", "name": "Routine C", "routine": "C", "intensity": "moderate"},
+        {"day": 7, "label": "Sun", "type": "rest", "name": "Rest day"}
+      ]
+    },
+    {
+      "week": 12,
+      "phase": 2,
+      "focus": "28 minutes per run. Same effort, slightly longer. Then the final week (13) hits 30 minutes — your 5K.",
+      "days": [
+        {"day": 1, "label": "Mon", "type": "c25k", "name": "C25K W8 D1 — 28 min", "c25kWeek": 8, "c25kDay": 1, "intensity": "moderate"},
+        {"day": 2, "label": "Tue", "type": "routine", "name": "Routine A", "routine": "A", "intensity": "moderate"},
+        {"day": 3, "label": "Wed", "type": "c25k", "name": "C25K W8 D2", "c25kWeek": 8, "c25kDay": 2, "intensity": "moderate"},
+        {"day": 4, "label": "Thu", "type": "routine", "name": "Routine B", "routine": "B", "intensity": "moderate"},
+        {"day": 5, "label": "Fri", "type": "c25k", "name": "C25K W8 D3", "c25kWeek": 8, "c25kDay": 3, "intensity": "moderate"},
+        {"day": 6, "label": "Sat", "type": "routine", "name": "Routine C", "routine": "C", "intensity": "moderate"},
+        {"day": 7, "label": "Sun", "type": "rest", "name": "Rest day", "notes": "Next week: 30 minutes × 3. You finish C25K. Then you build whatever you want from there."}
+      ]
+    }
+  ]
+}
