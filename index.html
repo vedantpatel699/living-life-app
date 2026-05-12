@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b0f14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Living Life">
+<title>Living Life</title>
+<link rel="manifest" href='data:application/manifest+json;charset=utf-8,{"name":"Living Life","short_name":"Living Life","start_url":".","display":"standalone","background_color":"%230b0f14","theme_color":"%230b0f14","icons":[{"src":"data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 192 192%22><rect width=%22192%22 height=%22192%22 rx=%2240%22 fill=%22%2316a34a%22/><text x=%2296%22 y=%22125%22 font-size=%22110%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22700%22>LL</text></svg>","sizes":"192x192","type":"image/svg+xml"}]}'>
+<style>
+:root {
+  --bg: #0b0f14;
+  --bg-2: #131922;
+  --bg-3: #1c2530;
+  --border: #2a3441;
+  --text: #e6edf3;
+  --text-dim: #8b98a8;
+  --text-faint: #5a6776;
+  --accent: #22c55e;
+  --accent-dim: #16a34a;
+  --warn: #f59e0b;
+  --danger: #ef4444;
+  --radius: 14px;
+  --radius-sm: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overscroll-behavior-y: contain; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+#app {
+  max-width: 720px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(11,15,20,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: env(safe-area-inset-top) 16px 0;
+}
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+.logo-dot {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 14px; font-weight: 800;
+}
+.sync-btn {
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 6px;
+}
+.sync-btn.syncing { color: var(--warn); }
+.sync-btn.error { color: var(--danger); border-color: var(--danger); }
+.sync-btn.ok { color: var(--accent); }
+
+main {
+  flex: 1;
+  padding: 16px 16px 100px;
+}
+nav.bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(11,15,20,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+  display: flex;
+  justify-content: space-around;
+  z-index: 10;
+}
+nav.bottom button {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text-faint);
+  padding: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+nav.bottom button.active { color: var(--accent); }
+nav.bottom button svg { width: 22px; height: 22px; }
+
+h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 4px; }
+h2 { font-size: 16px; font-weight: 600; margin: 18px 0 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; font-size: 12px; }
+h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+
+.card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.card-title { font-size: 13px; font-weight: 600; color: var(--text-dim); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+.card-big { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+.card-sub { color: var(--text-dim); font-size: 14px; }
+
+label { display: block; font-size: 13px; font-weight: 600; color: var(--text-dim); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+input[type="text"], input[type="number"], input[type="password"], textarea, select {
+  width: 100%;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 16px;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+input[type="number"] { -moz-appearance: textfield; }
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.05s, background 0.15s;
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary { background: var(--accent); color: white; }
+.btn-primary:hover { background: var(--accent-dim); }
+.btn-primary:disabled { background: var(--bg-3); color: var(--text-faint); cursor: not-allowed; }
+.btn-secondary { background: var(--bg-3); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost { background: transparent; color: var(--text-dim); }
+.btn-danger { background: transparent; color: var(--danger); border: 1px solid var(--danger); }
+.btn-full { width: 100%; }
+.btn-row { display: flex; gap: 10px; margin-top: 16px; }
+.btn-row > .btn { flex: 1; }
+
+.field { margin-bottom: 16px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 9px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+.chip.selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.photo-input {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3/4;
+  max-height: 380px;
+  background: var(--bg-3);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.photo-input img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-input .placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 10px;
+  color: var(--text-dim);
+  font-size: 14px;
+  text-align: center;
+  padding: 20px;
+}
+.photo-input input { display: none; }
+.photo-input .change-overlay {
+  position: absolute; bottom: 12px; right: 12px;
+  background: rgba(0,0,0,0.65); color: white;
+  padding: 6px 12px; border-radius: 999px;
+  font-size: 12px; font-weight: 600;
+}
+
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.stat-grid .card { margin-bottom: 0; }
+
+.entries-list { display: flex; flex-direction: column; gap: 10px; }
+.entry-row {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  cursor: pointer;
+}
+.entry-row:hover { border-color: var(--accent-dim); }
+.entry-thumb {
+  width: 56px; height: 56px;
+  background: var(--bg-3);
+  border-radius: 10px;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-faint);
+  font-size: 11px;
+}
+.entry-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.entry-info { flex: 1; min-width: 0; }
+.entry-date { font-size: 14px; font-weight: 600; }
+.entry-meta { font-size: 13px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.photo-grid .photo-cell {
+  aspect-ratio: 3/4;
+  background: var(--bg-3);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+.photo-grid .photo-cell img { width: 100%; height: 100%; object-fit: cover; }
+.photo-grid .photo-cell .label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.7));
+  padding: 14px 6px 4px;
+  font-size: 10px; font-weight: 600; color: white;
+  text-align: center;
+}
+
+.empty {
+  text-align: center;
+  padding: 50px 20px;
+  color: var(--text-faint);
+}
+.empty svg { width: 48px; height: 48px; margin-bottom: 12px; opacity: 0.5; }
+
+.toast {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 11px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  z-index: 100;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  animation: toast-in 0.2s;
+}
+.toast.success { border-color: var(--accent); color: var(--accent); }
+.toast.error { border-color: var(--danger); color: var(--danger); }
+@keyframes toast-in {
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.modal-bg {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90dvh;
+  overflow-y: auto;
+  padding: 20px;
+}
+.modal img { max-width: 100%; border-radius: var(--radius-sm); display: block; margin: 0 auto; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.modal-close { background: none; border: none; color: var(--text-dim); font-size: 24px; cursor: pointer; padding: 0 6px; }
+
+.chart-wrap { position: relative; height: 240px; }
+.chart-legend { display: flex; gap: 14px; font-size: 12px; color: var(--text-dim); margin-top: 8px; justify-content: center; }
+.chart-legend .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+
+.streak-banner {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex; align-items: center; gap: 14px;
+  color: white;
+  margin-bottom: 12px;
+}
+.streak-banner .flame { font-size: 32px; }
+.streak-banner .info .num { font-size: 22px; font-weight: 700; line-height: 1; }
+.streak-banner .info .lbl { font-size: 13px; opacity: 0.85; }
+
+.notice {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: var(--warn);
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.muted { color: var(--text-dim); }
+.faint { color: var(--text-faint); }
+.tiny { font-size: 12px; }
+hr.sep { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+.energy-row { display: flex; gap: 8px; }
+.energy-row button {
+  flex: 1;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 12px 0;
+  border-radius: var(--radius-sm);
+  font-size: 20px;
+  cursor: pointer;
+}
+.energy-row button.selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+.energy-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-faint); margin-top: 4px; padding: 0 4px; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+@media (min-width: 600px) {
+  main { padding: 24px 24px 100px; }
+  .stat-grid { grid-template-columns: repeat(4, 1fr); }
+  .photo-grid { grid-template-columns: repeat(5, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+<header>
+  <div class="header-row">
+    <div class="logo">
+      <div class="logo-dot">LL</div>
+      <span id="header-title">Living Life</span>
+    </div>
+    <button class="sync-btn" id="sync-btn" onclick="manualSync()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+      <span id="sync-label">Sync</span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Screens render here -->
+</main>
+
+<nav class="bottom">
+  <button data-screen="today" class="active" onclick="navigate('today')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+    Today
+  </button>
+  <button data-screen="progress" onclick="navigate('progress')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    Progress
+  </button>
+  <button data-screen="history" onclick="navigate('history')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    History
+  </button>
+  <button data-screen="settings" onclick="navigate('settings')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    Settings
+  </button>
+</nav>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+// =================== STATE ===================
+const STORAGE_KEY = 'living-life-config';
+const DATA_KEY = 'living-life-data';
+const ACTIVITY_OPTIONS = ['Walk', 'Routine A (push & legs)', 'Routine B (pull & core)', 'Routine C (full body)', 'C25K run', 'Rest day', 'Other'];
+
+let state = {
+  config: { owner: '', repo: '', token: '', branch: 'main' },
+  data: { version: 1, entries: {} },
+  dataSha: null,
+  currentScreen: 'today',
+  draft: {},
+  isSyncing: false,
+  lastSyncError: null,
+  lastSyncOk: null,
+};
+
+// =================== UTILITIES ===================
+function today() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function fmtDate(iso) {
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+}
+function fmtDateLong(iso) {
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+}
+function daysAgo(iso) {
+  const a = new Date(iso + 'T00:00:00');
+  const b = new Date(today() + 'T00:00:00');
+  return Math.round((b - a) / (1000*60*60*24));
+}
+function loadLocal() {
+  try {
+    const c = localStorage.getItem(STORAGE_KEY);
+    if (c) state.config = { ...state.config, ...JSON.parse(c) };
+  } catch(e) {}
+  try {
+    const d = localStorage.getItem(DATA_KEY);
+    if (d) {
+      const parsed = JSON.parse(d);
+      state.data = parsed.data || state.data;
+      state.dataSha = parsed.sha || null;
+    }
+  } catch(e) {}
+}
+function saveLocalConfig() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.config)); }
+function saveLocalData() { localStorage.setItem(DATA_KEY, JSON.stringify({ data: state.data, sha: state.dataSha })); }
+
+function isConfigured() {
+  return state.config.owner && state.config.repo && state.config.token;
+}
+
+function toast(msg, type='') {
+  document.querySelectorAll('.toast').forEach(t => t.remove());
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2800);
+}
+
+function setSyncStatus(status) {
+  const btn = document.getElementById('sync-btn');
+  const label = document.getElementById('sync-label');
+  btn.classList.remove('syncing', 'error', 'ok');
+  if (status === 'syncing') { btn.classList.add('syncing'); label.textContent = 'Syncing…'; }
+  else if (status === 'error') { btn.classList.add('error'); label.textContent = 'Sync error'; }
+  else if (status === 'ok') { btn.classList.add('ok'); label.textContent = 'Synced'; setTimeout(()=>{ label.textContent = 'Sync'; btn.classList.remove('ok'); }, 1800); }
+  else { label.textContent = 'Sync'; }
+}
+
+// =================== GITHUB API ===================
+async function ghRequest(method, path, body) {
+  const url = `https://api.github.com/repos/${state.config.owner}/${state.config.repo}/${path}`;
+  const res = await fetch(url, {
+    method,
+    headers: {
+      'Authorization': `Bearer ${state.config.token}`,
+      'Accept': 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
+      ...(body ? { 'Content-Type': 'application/json' } : {})
+    },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if (res.status === 404) return { notFound: true };
+  if (!res.ok) {
+    const txt = await res.text();
+    throw new Error(`GitHub ${res.status}: ${txt.slice(0, 200)}`);
+  }
+  return res.json();
+}
+
+function b64encodeUtf8(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+function b64decodeUtf8(str) {
+  try { return decodeURIComponent(escape(atob(str.replace(/\s/g, '')))); } catch(e) { return ''; }
+}
+
+async function ghGetFile(path) {
+  const branch = state.config.branch || 'main';
+  return ghRequest('GET', `contents/${encodeURIComponent(path).replace(/%2F/g,'/')}?ref=${branch}`);
+}
+async function ghPutFile(path, contentB64, message, sha) {
+  const branch = state.config.branch || 'main';
+  const body = { message, content: contentB64, branch };
+  if (sha) body.sha = sha;
+  return ghRequest('PUT', `contents/${encodeURIComponent(path).replace(/%2F/g,'/')}`, body);
+}
+
+async function pullData() {
+  setSyncStatus('syncing');
+  state.isSyncing = true;
+  try {
+    const result = await ghGetFile('data/log.json');
+    if (result.notFound) {
+      // First time — file doesn't exist yet
+      state.dataSha = null;
+      saveLocalData();
+      setSyncStatus('ok');
+    } else {
+      const decoded = b64decodeUtf8(result.content);
+      const parsed = JSON.parse(decoded);
+      state.data = parsed;
+      state.dataSha = result.sha;
+      saveLocalData();
+      setSyncStatus('ok');
+    }
+    state.lastSyncError = null;
+    state.lastSyncOk = new Date().toISOString();
+  } catch (e) {
+    state.lastSyncError = e.message;
+    setSyncStatus('error');
+    throw e;
+  } finally {
+    state.isSyncing = false;
+  }
+}
+
+async function pushData() {
+  setSyncStatus('syncing');
+  state.isSyncing = true;
+  try {
+    const content = b64encodeUtf8(JSON.stringify(state.data, null, 2));
+    const result = await ghPutFile('data/log.json', content, `update log ${today()}`, state.dataSha);
+    state.dataSha = result.content.sha;
+    saveLocalData();
+    setSyncStatus('ok');
+    state.lastSyncError = null;
+    state.lastSyncOk = new Date().toISOString();
+  } catch (e) {
+    state.lastSyncError = e.message;
+    setSyncStatus('error');
+    throw e;
+  } finally {
+    state.isSyncing = false;
+  }
+}
+
+async function uploadPhoto(dateIso, dataUrl) {
+  // dataUrl is "data:image/jpeg;base64,...."
+  const b64 = dataUrl.split(',')[1];
+  const path = `data/photos/${dateIso}.jpg`;
+  // Check if exists for SHA
+  let sha = null;
+  try {
+    const existing = await ghGetFile(path);
+    if (existing && !existing.notFound) sha = existing.sha;
+  } catch(e) { /* ignore, treat as new */ }
+  await ghPutFile(path, b64, `photo ${dateIso}`, sha);
+  return path;
+}
+
+async function downloadPhotoAsDataUrl(path) {
+  try {
+    const res = await ghGetFile(path);
+    if (res.notFound) return null;
+    // Photo content is base64 from the API
+    return 'data:image/jpeg;base64,' + res.content.replace(/\s/g, '');
+  } catch(e) {
+    return null;
+  }
+}
+
+async function manualSync() {
+  if (!isConfigured()) {
+    toast('Configure GitHub in Settings first', 'error');
+    navigate('settings');
+    return;
+  }
+  if (state.isSyncing) return;
+  try {
+    await pullData();
+    render();
+    toast('Synced from GitHub', 'success');
+  } catch (e) {
+    toast('Sync failed: ' + e.message, 'error');
+  }
+}
+
+// =================== IMAGE COMPRESSION ===================
+function compressImage(file, maxDim = 1080, quality = 0.82) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > height && width > maxDim) {
+          height = Math.round(height * (maxDim / width));
+          width = maxDim;
+        } else if (height > maxDim) {
+          width = Math.round(width * (maxDim / height));
+          height = maxDim;
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0,0,width,height);
+        ctx.drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve(dataUrl);
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+// =================== STREAK & STATS ===================
+function calcStreak() {
+  let streak = 0;
+  let d = new Date(today() + 'T00:00:00');
+  while (true) {
+    const iso = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    if (state.data.entries[iso]) {
+      streak++;
+      d.setDate(d.getDate() - 1);
+    } else {
+      // If today is not yet logged, streak starts counting from yesterday
+      if (iso === today() && streak === 0) {
+        d.setDate(d.getDate() - 1);
+        continue;
+      }
+      break;
+    }
+  }
+  return streak;
+}
+
+function weightStats() {
+  const entries = Object.entries(state.data.entries)
+    .filter(([d, e]) => typeof e.weight === 'number')
+    .sort((a,b) => a[0].localeCompare(b[0]));
+  if (entries.length === 0) return null;
+  const latest = entries[entries.length - 1];
+  const first = entries[0];
+  // 7-day moving average
+  const avg = (arr) => arr.reduce((s,x)=>s+x,0) / arr.length;
+  const last7 = entries.slice(-7).map(e => e[1].weight);
+  const prev7 = entries.slice(-14, -7).map(e => e[1].weight);
+  const avgNow = last7.length ? avg(last7) : null;
+  const avgPrev = prev7.length ? avg(prev7) : null;
+  return {
+    latest: latest[1].weight,
+    latestDate: latest[0],
+    first: first[1].weight,
+    firstDate: first[0],
+    totalChange: latest[1].weight - first[1].weight,
+    avgNow,
+    avgPrev,
+    weekChange: (avgNow !== null && avgPrev !== null) ? avgNow - avgPrev : null,
+    points: entries.map(([d, e]) => ({ x: d, y: e.weight }))
+  };
+}
+
+// =================== NAVIGATION ===================
+function navigate(screen) {
+  state.currentScreen = screen;
+  document.querySelectorAll('nav.bottom button').forEach(b => {
+    b.classList.toggle('active', b.dataset.screen === screen);
+  });
+  render();
+  window.scrollTo(0, 0);
+}
+
+// =================== RENDER ===================
+function render() {
+  const main = document.getElementById('main');
+  if (!isConfigured() && state.currentScreen !== 'settings') {
+    main.innerHTML = renderWelcome();
+    return;
+  }
+  if (state.currentScreen === 'today') main.innerHTML = renderToday();
+  else if (state.currentScreen === 'progress') main.innerHTML = renderProgress();
+  else if (state.currentScreen === 'history') main.innerHTML = renderHistory();
+  else if (state.currentScreen === 'settings') main.innerHTML = renderSettings();
+
+  // Wire up dynamic things
+  if (state.currentScreen === 'today') bindTodayHandlers();
+  if (state.currentScreen === 'progress') drawWeightChart();
+  if (state.currentScreen === 'history') bindHistoryHandlers();
+  if (state.currentScreen === 'settings') bindSettingsHandlers();
+}
+
+function renderWelcome() {
+  return `
+    <h1>Welcome to Living Life</h1>
+    <p class="muted" style="margin-bottom: 20px;">Track your back-to-fit journey. Your data lives in your own private GitHub repo — nobody else sees it.</p>
+    <div class="card">
+      <h3>Get started</h3>
+      <p class="muted tiny" style="margin-top: 6px; margin-bottom: 14px;">Follow the steps in SETUP.md to create your data repo and token, then open Settings to connect.</p>
+      <button class="btn btn-primary btn-full" onclick="navigate('settings')">Open Settings</button>
+    </div>
+  `;
+}
+
+function renderToday() {
+  const t = today();
+  const existing = state.data.entries[t] || {};
+  // Pull draft if present, else seed from existing
+  if (!state.draft.date || state.draft.date !== t) {
+    state.draft = {
+      date: t,
+      weight: existing.weight ?? '',
+      photoDataUrl: null, // local-only until saved
+      photoPath: existing.photo || null,
+      activities: existing.activities || [],
+      meals: existing.meals || '',
+      notes: existing.notes || '',
+      energy: existing.energy || null,
+      lipomaNote: existing.lipomaNote || '',
+    };
+  }
+
+  return `
+    <h1>${fmtDateLong(t)}</h1>
+    <p class="muted" style="margin-bottom: 16px;">${existing.weight !== undefined ? 'Today already logged — you can update it.' : "Log today's entry below."}</p>
+
+    <div class="card">
+      <label>Weight (kg)</label>
+      <input type="number" inputmode="decimal" id="weight-input" step="0.1" value="${state.draft.weight}" placeholder="e.g. 78.5">
+    </div>
+
+    <div class="card">
+      <label>Daily photo</label>
+      <label class="photo-input" for="photo-file">
+        ${state.draft.photoDataUrl ? `
+          <img id="photo-preview" src="${state.draft.photoDataUrl}" alt="today's photo">
+          <div class="change-overlay">Tap to change</div>
+        ` : state.draft.photoPath ? `
+          <div class="placeholder">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <div style="color: var(--accent); font-weight: 600;">Photo saved for today</div>
+            <div class="tiny">Tap to replace it</div>
+          </div>
+        ` : `
+          <div class="placeholder">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <div><strong>Take photo</strong></div>
+            <div class="tiny">Same time + same light each day works best</div>
+          </div>
+        `}
+        <input type="file" id="photo-file" accept="image/*" capture="environment">
+      </label>
+    </div>
+
+    <div class="card">
+      <label>Activity (tap all that apply)</label>
+      <div class="chip-row" id="activity-chips">
+        ${ACTIVITY_OPTIONS.map(a => `
+          <div class="chip ${state.draft.activities.includes(a) ? 'selected' : ''}" data-activity="${a}">${a}</div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="card">
+      <label>Meals</label>
+      <textarea id="meals-input" placeholder="e.g. Breakfast: eggs and toast. Lunch: dal rice + salad. Dinner: chicken curry, one plate, no seconds.">${state.draft.meals}</textarea>
+    </div>
+
+    <div class="card">
+      <label>Energy / mood today</label>
+      <div class="energy-row" id="energy-row">
+        ${[1,2,3,4,5].map(n => `
+          <button data-energy="${n}" class="${state.draft.energy === n ? 'selected' : ''}">
+            ${['😴','😕','😐','🙂','💪'][n-1]}
+          </button>
+        `).join('')}
+      </div>
+      <div class="energy-labels"><span>Drained</span><span>Great</span></div>
+    </div>
+
+    <div class="card">
+      <label>Notes (anything)</label>
+      <textarea id="notes-input" placeholder="How did it go? Sleep, soreness, cravings, wins, struggles.">${state.draft.notes}</textarea>
+    </div>
+
+    <div class="card">
+      <label>Lipoma note (optional)</label>
+      <textarea id="lipoma-input" placeholder="New lipoma? Size change? Pain? Notes for your GP appointment." style="min-height: 60px;">${state.draft.lipomaNote}</textarea>
+    </div>
+
+    <button class="btn btn-primary btn-full" id="save-btn" style="margin-top: 8px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+      Save & sync
+    </button>
+
+    <p class="tiny faint" style="text-align:center; margin-top: 14px;">Tip: log even on rest days. Adherence matters more than intensity.</p>
+  `;
+}
+
+function renderProgress() {
+  const stats = weightStats();
+  const streak = calcStreak();
+  const entries = Object.entries(state.data.entries);
+  const photoEntries = entries
+    .filter(([d, e]) => e.photo)
+    .sort((a,b) => b[0].localeCompare(a[0]))
+    .slice(0, 15);
+
+  return `
+    <h1>Progress</h1>
+
+    ${streak > 0 ? `
+      <div class="streak-banner">
+        <div class="flame">🔥</div>
+        <div class="info">
+          <div class="num">${streak} day${streak !== 1 ? 's' : ''}</div>
+          <div class="lbl">Logging streak — keep it going</div>
+        </div>
+      </div>
+    ` : ''}
+
+    <div class="stat-grid">
+      <div class="card">
+        <div class="card-title">Current</div>
+        <div class="card-big">${stats?.latest != null ? stats.latest.toFixed(1) + ' kg' : '—'}</div>
+        <div class="card-sub tiny">${stats?.latestDate ? fmtDate(stats.latestDate) : ''}</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Total Δ</div>
+        <div class="card-big" style="color:${stats?.totalChange < 0 ? 'var(--accent)' : stats?.totalChange > 0 ? 'var(--warn)' : 'inherit'}">
+          ${stats?.totalChange != null ? (stats.totalChange > 0 ? '+' : '') + stats.totalChange.toFixed(1) + ' kg' : '—'}
+        </div>
+        <div class="card-sub tiny">since ${stats?.firstDate ? fmtDate(stats.firstDate) : 'start'}</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Last 7d avg</div>
+        <div class="card-big">${stats?.avgNow != null ? stats.avgNow.toFixed(1) + ' kg' : '—'}</div>
+        <div class="card-sub tiny">moving average</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Week change</div>
+        <div class="card-big" style="color:${stats?.weekChange < 0 ? 'var(--accent)' : stats?.weekChange > 0 ? 'var(--warn)' : 'inherit'}">
+          ${stats?.weekChange != null ? (stats.weekChange > 0 ? '+' : '') + stats.weekChange.toFixed(2) + ' kg' : '—'}
+        </div>
+        <div class="card-sub tiny">vs. prior 7d avg</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 16px;">
+      <div class="card-title">Weight trend</div>
+      <div class="chart-wrap">
+        <canvas id="weight-chart"></canvas>
+      </div>
+      <div class="chart-legend">
+        <span><span class="dot" style="background:var(--text-faint)"></span>Daily</span>
+        <span><span class="dot" style="background:var(--accent)"></span>7-day avg</span>
+      </div>
+    </div>
+
+    <h2>Recent photos</h2>
+    ${photoEntries.length === 0 ? `
+      <div class="empty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <div>No photos yet. Start with today's.</div>
+      </div>
+    ` : `
+      <div class="photo-grid" id="photo-grid">
+        ${photoEntries.map(([d, e]) => `
+          <div class="photo-cell" data-date="${d}" data-path="${e.photo}">
+            <div style="width:100%;height:100%;background:var(--bg-3);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-faint)">Loading…</div>
+            <div class="label">${fmtDate(d)}</div>
+          </div>
+        `).join('')}
+      </div>
+    `}
+
+    <p class="tiny faint" style="text-align:center; margin-top: 20px;">Photos load from GitHub — first time may take a moment per image.</p>
+  `;
+}
+
+function renderHistory() {
+  const entries = Object.entries(state.data.entries)
+    .sort((a,b) => b[0].localeCompare(a[0]));
+
+  if (entries.length === 0) {
+    return `
+      <h1>History</h1>
+      <div class="empty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <div>No entries yet. Log today to start your history.</div>
+      </div>
+    `;
+  }
+
+  return `
+    <h1>History</h1>
+    <p class="muted" style="margin-bottom:16px;">${entries.length} entr${entries.length === 1 ? 'y' : 'ies'} logged</p>
+    <div class="entries-list">
+      ${entries.map(([d, e]) => `
+        <div class="entry-row" data-date="${d}">
+          <div class="entry-thumb" data-path="${e.photo || ''}">
+            ${e.photo ? '…' : '—'}
+          </div>
+          <div class="entry-info">
+            <div class="entry-date">${fmtDate(d)} <span class="faint tiny">· ${daysAgo(d)}d ago</span></div>
+            <div class="entry-meta">
+              ${e.weight != null ? e.weight.toFixed(1) + ' kg' : 'no weight'}
+              ${e.activities && e.activities.length ? ' · ' + e.activities.join(', ') : ''}
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderSettings() {
+  const c = state.config;
+  return `
+    <h1>Settings</h1>
+
+    <div class="card">
+      <h3 style="margin-bottom: 4px;">GitHub data repo</h3>
+      <p class="tiny muted" style="margin-bottom: 14px;">Your private repo where weights, photos, and logs are stored. See SETUP.md.</p>
+
+      <div class="field">
+        <label>GitHub username (owner)</label>
+        <input type="text" id="cfg-owner" value="${c.owner}" placeholder="e.g. vedantpatel699" autocomplete="off">
+      </div>
+      <div class="field">
+        <label>Repo name</label>
+        <input type="text" id="cfg-repo" value="${c.repo}" placeholder="e.g. living-life-data" autocomplete="off">
+      </div>
+      <div class="field">
+        <label>Branch</label>
+        <input type="text" id="cfg-branch" value="${c.branch || 'main'}" placeholder="main">
+      </div>
+      <div class="field">
+        <label>Fine-grained personal access token</label>
+        <input type="password" id="cfg-token" value="${c.token}" placeholder="github_pat_..." autocomplete="off">
+        <p class="tiny faint" style="margin-top: 6px;">Stored on this device only (localStorage). Grant repo Contents: read & write.</p>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" id="test-btn">Test connection</button>
+        <button class="btn btn-primary" id="save-config-btn">Save</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom: 8px;">Sync</h3>
+      <p class="tiny muted" style="margin-bottom: 12px;">${state.lastSyncOk ? 'Last synced ' + new Date(state.lastSyncOk).toLocaleString() : 'Not synced yet.'}</p>
+      <button class="btn btn-secondary btn-full" onclick="manualSync()">Pull latest from GitHub</button>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom: 8px;">Data</h3>
+      <p class="tiny muted" style="margin-bottom: 12px;">${Object.keys(state.data.entries).length} entries stored locally.</p>
+      <div class="btn-row">
+        <button class="btn btn-secondary" id="export-btn">Export JSON</button>
+        <button class="btn btn-danger" id="clear-btn">Clear local cache</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom: 8px;">About</h3>
+      <p class="tiny muted">Living Life is a personal fitness tracker for Vedant's back-to-fit journey. Read PLAN.md in the project folder for the workout, running, and nutrition roadmap.</p>
+    </div>
+  `;
+}
+
+// =================== HANDLERS: TODAY ===================
+function bindTodayHandlers() {
+  // Weight
+  document.getElementById('weight-input').addEventListener('input', e => {
+    state.draft.weight = e.target.value === '' ? '' : parseFloat(e.target.value);
+  });
+  // Photo
+  document.getElementById('photo-file').addEventListener('change', async e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    toast('Compressing photo…');
+    try {
+      const dataUrl = await compressImage(file);
+      state.draft.photoDataUrl = dataUrl;
+      // Re-render the today screen so the preview updates and handlers re-bind cleanly
+      render();
+    } catch (err) {
+      toast('Photo error: ' + err.message, 'error');
+    }
+  });
+  // Activities
+  document.querySelectorAll('#activity-chips .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const a = chip.dataset.activity;
+      const idx = state.draft.activities.indexOf(a);
+      if (idx >= 0) state.draft.activities.splice(idx, 1);
+      else state.draft.activities.push(a);
+      chip.classList.toggle('selected');
+    });
+  });
+  // Meals/notes/lipoma
+  document.getElementById('meals-input').addEventListener('input', e => state.draft.meals = e.target.value);
+  document.getElementById('notes-input').addEventListener('input', e => state.draft.notes = e.target.value);
+  document.getElementById('lipoma-input').addEventListener('input', e => state.draft.lipomaNote = e.target.value);
+  // Energy
+  document.querySelectorAll('#energy-row button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.draft.energy = parseInt(btn.dataset.energy, 10);
+      document.querySelectorAll('#energy-row button').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
+  });
+  // Save
+  document.getElementById('save-btn').addEventListener('click', saveDraft);
+}
+
+async function saveDraft() {
+  if (!isConfigured()) { toast('Configure GitHub first', 'error'); navigate('settings'); return; }
+  const btn = document.getElementById('save-btn');
+  btn.disabled = true;
+  btn.innerHTML = 'Saving…';
+  try {
+    const t = state.draft.date;
+    // Upload photo if new
+    let photoPath = state.draft.photoPath;
+    if (state.draft.photoDataUrl) {
+      photoPath = await uploadPhoto(t, state.draft.photoDataUrl);
+    }
+    // Build entry
+    const entry = {};
+    if (state.draft.weight !== '' && state.draft.weight != null && !isNaN(state.draft.weight)) entry.weight = parseFloat(state.draft.weight);
+    if (photoPath) entry.photo = photoPath;
+    if (state.draft.activities.length) entry.activities = state.draft.activities;
+    if (state.draft.meals.trim()) entry.meals = state.draft.meals.trim();
+    if (state.draft.notes.trim()) entry.notes = state.draft.notes.trim();
+    if (state.draft.lipomaNote.trim()) entry.lipomaNote = state.draft.lipomaNote.trim();
+    if (state.draft.energy) entry.energy = state.draft.energy;
+    entry.updatedAt = new Date().toISOString();
+    state.data.entries[t] = entry;
+    await pushData();
+    saveLocalData();
+    state.draft = {};
+    toast('Saved ✓', 'success');
+    render();
+  } catch (e) {
+    toast('Save failed: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// =================== HANDLERS: HISTORY ===================
+function bindHistoryHandlers() {
+  document.querySelectorAll('.entry-row').forEach(row => {
+    row.addEventListener('click', () => openEntryModal(row.dataset.date));
+  });
+  // Load thumbs lazily
+  document.querySelectorAll('.entry-thumb[data-path]').forEach(async (thumb) => {
+    const path = thumb.dataset.path;
+    if (!path) return;
+    const dataUrl = await downloadPhotoAsDataUrl(path);
+    if (dataUrl) thumb.innerHTML = `<img src="${dataUrl}" alt="">`;
+    else thumb.innerHTML = '—';
+  });
+}
+
+async function openEntryModal(date) {
+  const entry = state.data.entries[date];
+  if (!entry) return;
+  let photoHtml = '';
+  if (entry.photo) {
+    photoHtml = `<div id="modal-photo" style="text-align:center;margin-bottom:14px;color:var(--text-faint);">Loading photo…</div>`;
+  }
+  const modal = document.createElement('div');
+  modal.className = 'modal-bg';
+  modal.innerHTML = `
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3>${fmtDateLong(date)}</h3>
+        <button class="modal-close" onclick="this.closest('.modal-bg').remove()">×</button>
+      </div>
+      ${photoHtml}
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+        <div class="card" style="margin:0"><div class="card-title">Weight</div><div class="card-big">${entry.weight != null ? entry.weight.toFixed(1) + ' kg' : '—'}</div></div>
+        <div class="card" style="margin:0"><div class="card-title">Energy</div><div class="card-big">${entry.energy ? ['😴','😕','😐','🙂','💪'][entry.energy-1] : '—'}</div></div>
+      </div>
+      ${entry.activities && entry.activities.length ? `<h3 style="margin-top:14px;">Activity</h3><div class="chip-row" style="margin-top:6px;">${entry.activities.map(a=>`<div class="chip selected">${a}</div>`).join('')}</div>` : ''}
+      ${entry.meals ? `<h3 style="margin-top:14px;">Meals</h3><p class="muted" style="font-size:14px;white-space:pre-wrap;">${escapeHtml(entry.meals)}</p>` : ''}
+      ${entry.notes ? `<h3 style="margin-top:14px;">Notes</h3><p class="muted" style="font-size:14px;white-space:pre-wrap;">${escapeHtml(entry.notes)}</p>` : ''}
+      ${entry.lipomaNote ? `<h3 style="margin-top:14px;">Lipoma note</h3><p class="muted" style="font-size:14px;white-space:pre-wrap;">${escapeHtml(entry.lipomaNote)}</p>` : ''}
+      <button class="btn btn-secondary btn-full" style="margin-top:18px;" onclick="this.closest('.modal-bg').remove()">Close</button>
+    </div>
+  `;
+  modal.addEventListener('click', () => modal.remove());
+  document.body.appendChild(modal);
+  if (entry.photo) {
+    const dataUrl = await downloadPhotoAsDataUrl(entry.photo);
+    const target = document.getElementById('modal-photo');
+    if (target) {
+      if (dataUrl) target.innerHTML = `<img src="${dataUrl}" alt="photo">`;
+      else target.textContent = 'Photo unavailable';
+    }
+  }
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+// =================== HANDLERS: SETTINGS ===================
+function bindSettingsHandlers() {
+  document.getElementById('save-config-btn').addEventListener('click', async () => {
+    state.config.owner = document.getElementById('cfg-owner').value.trim();
+    state.config.repo = document.getElementById('cfg-repo').value.trim();
+    state.config.branch = document.getElementById('cfg-branch').value.trim() || 'main';
+    state.config.token = document.getElementById('cfg-token').value.trim();
+    saveLocalConfig();
+    toast('Settings saved');
+    if (isConfigured()) {
+      try { await pullData(); toast('Connected & synced', 'success'); render(); } catch(e) { toast('Saved, but sync failed: ' + e.message, 'error'); }
+    }
+  });
+  document.getElementById('test-btn').addEventListener('click', async () => {
+    const owner = document.getElementById('cfg-owner').value.trim();
+    const repo = document.getElementById('cfg-repo').value.trim();
+    const token = document.getElementById('cfg-token').value.trim();
+    if (!owner || !repo || !token) { toast('Fill all fields first', 'error'); return; }
+    try {
+      const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
+        headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json' }
+      });
+      if (res.ok) {
+        const j = await res.json();
+        toast(`✓ Connected to ${j.full_name}`, 'success');
+      } else {
+        const t = await res.text();
+        toast(`Error ${res.status}: ${t.slice(0,80)}`, 'error');
+      }
+    } catch (e) { toast('Network error: ' + e.message, 'error'); }
+  });
+  document.getElementById('export-btn').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(state.data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `living-life-export-${today()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+  document.getElementById('clear-btn').addEventListener('click', () => {
+    if (confirm('Clear local cache? Your GitHub data is safe — this only clears this device.')) {
+      localStorage.removeItem(DATA_KEY);
+      state.data = { version: 1, entries: {} };
+      state.dataSha = null;
+      toast('Local cache cleared');
+      render();
+    }
+  });
+}
+
+// =================== CHART ===================
+let chartInstance = null;
+function drawWeightChart() {
+  const stats = weightStats();
+  if (!stats || stats.points.length === 0) {
+    const canvas = document.getElementById('weight-chart');
+    if (canvas) { canvas.parentElement.innerHTML = '<div class="empty" style="padding:30px 10px"><div>Log a few days of weight to see the trend.</div></div>'; }
+    return;
+  }
+  // 7-day moving avg
+  const points = stats.points;
+  const avgPoints = points.map((p, i) => {
+    const window = points.slice(Math.max(0, i - 6), i + 1).map(x => x.y);
+    return { x: p.x, y: window.reduce((s,v)=>s+v,0) / window.length };
+  });
+  const ctx = document.getElementById('weight-chart').getContext('2d');
+  if (chartInstance) chartInstance.destroy();
+  chartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: points.map(p => p.x),
+      datasets: [
+        {
+          label: 'Daily',
+          data: points.map(p => p.y),
+          borderColor: '#5a6776',
+          backgroundColor: '#5a6776',
+          pointRadius: 2.5,
+          pointHoverRadius: 5,
+          borderWidth: 0,
+          showLine: false,
+        },
+        {
+          label: '7-day avg',
+          data: avgPoints.map(p => p.y),
+          borderColor: '#22c55e',
+          backgroundColor: 'rgba(34,197,94,0.15)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 0,
+          borderWidth: 2.5,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1c2530', borderColor: '#2a3441', borderWidth: 1, titleColor: '#e6edf3', bodyColor: '#e6edf3', callbacks: { label: c => `${c.dataset.label}: ${c.parsed.y.toFixed(1)} kg` } } },
+      scales: {
+        x: { ticks: { color: '#5a6776', maxTicksLimit: 6, font: { size: 10 } }, grid: { color: 'rgba(42,52,65,0.4)' } },
+        y: { ticks: { color: '#5a6776', font: { size: 10 }, callback: v => v + 'kg' }, grid: { color: 'rgba(42,52,65,0.4)' } }
+      }
+    }
+  });
+  // Load photo thumbs
+  document.querySelectorAll('#photo-grid .photo-cell').forEach(async (cell) => {
+    const path = cell.dataset.path;
+    cell.addEventListener('click', () => openEntryModal(cell.dataset.date));
+    const dataUrl = await downloadPhotoAsDataUrl(path);
+    if (dataUrl) {
+      const label = cell.querySelector('.label').outerHTML;
+      cell.innerHTML = `<img src="${dataUrl}" alt="">${label}`;
+    }
+  });
+}
+
+// =================== BOOT ===================
+loadLocal();
+render();
+if (isConfigured()) {
+  // Background sync on boot
+  pullData().then(() => render()).catch(e => console.warn('Background sync failed', e));
+}
+</script>
+</body>
+</html>
