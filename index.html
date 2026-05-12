@@ -156,20 +156,22 @@ function todayPlanDay(){
 }
 // =================== DATABASE LOADERS ===================
 const DB_BASE='https://raw.githubusercontent.com/vedantpatel699/living-life-app/main/data/';
-const DB={foods:null,exercises:null,supplements:null,c25k:null,foodsBySlug:{}};
-async function loadDB(name){
-  if(DB[name])return DB[name];
-  try{
-    const r=await fetch(DB_BASE+name+'.json',{cache:'no-cache'});
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    DB[name]=await r.json();
-    if(name==='foods'){
-      // build search index
-      DB.foodsBySlug={};
-      for(const f of DB.foods.foods){DB.foodsBySlug[f.id]=f}
-    }
-    return DB[name];
-  }catch(e){console.warn('DB load',name,e);return null}
+const DB={foods:null,exercises:null,supplements:null,c25k:null,plan:null,foodsBySlug:{},_loading:{},_err:{}};
+function loadDB(name){
+  if(DB[name])return Promise.resolve(DB[name]);
+  if(DB._loading[name])return DB._loading[name];
+  DB._loading[name]=(async()=>{
+    try{
+      const r=await fetch(DB_BASE+name+'.json',{cache:'no-cache'});
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      DB[name]=await r.json();
+      DB._err[name]=null;
+      if(name==='foods'){DB.foodsBySlug={};for(const f of DB.foods.foods){DB.foodsBySlug[f.id]=f}}
+      return DB[name];
+    }catch(e){console.warn('DB load',name,e);DB._err[name]=e.message||String(e);return null}
+    finally{delete DB._loading[name]}
+  })();
+  return DB._loading[name];
 }
 async function loadAllDB(){await Promise.all(['foods','exercises','supplements','c25k','plan'].map(loadDB))}
 
@@ -510,7 +512,8 @@ function renderSettings(){
     <div class="card">
       <div style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-weight:600">${Object.keys(state.data.entries).length} entries</div><div class="tiny muted">On this device + GitHub</div></div></div>
       <div class="btn-row mt-4"><button class="btn btn-secondary" id="s-pull">Pull from GitHub</button><button class="btn btn-secondary" id="s-exp">Export JSON</button></div>
-      <button class="btn btn-danger btn-full mt-2" id="s-clear">Clear local cache</button>
+      <button class="btn btn-secondary btn-full mt-2" id="s-refresh">Refresh databases from GitHub</button>
+        <button class="btn btn-danger btn-full mt-2" id="s-clear">Clear local cache</button>
     </div>
     <h2 class="sec">ABOUT</h2>
     <div class="card"><div style="display:flex;padding:4px 0"><div style="flex:1;font-weight:600">Version</div><div class="muted">${APP_VERSION}</div></div></div>
@@ -524,6 +527,7 @@ function bindSettings(){
   document.getElementById('s-csave')?.addEventListener('click',()=>{state.config.claudeApiKey=document.getElementById('s-ck').value.trim();saveLocalConfig();toast('Claude key saved','success');render()});
   document.getElementById('s-pull')?.addEventListener('click',async()=>{try{await pullData();toast('Synced ✓','success');render()}catch(e){toast('Sync failed: '+e.message,'error')}});
   document.getElementById('s-exp')?.addEventListener('click',()=>{const b=new Blob([JSON.stringify(state.data,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`living-life-${today()}.json`;a.click();URL.revokeObjectURL(u)});
+  document.getElementById('s-refresh')?.addEventListener('click',async()=>{Object.assign(DB,{foods:null,exercises:null,supplements:null,c25k:null,plan:null});await loadAllDB();const failed=Object.entries(DB._err||{}).filter(([k,v])=>v);if(failed.length===0)toast('All databases refreshed ✓','success');else toast('Some failed: '+failed.map(([k])=>k).join(', '),'error');state.todayRec=null;render()});
   document.getElementById('s-clear')?.addEventListener('click',()=>{if(confirm('Clear local cache?')){localStorage.removeItem(DATA_KEY);state.data={version:2,entries:{},workoutHistory:[],adjustments:{},supplements:{},coachConversation:[],weeklyReflections:[]};state.dataSha=null;toast('Cleared');render()}});
 }
 
@@ -537,7 +541,7 @@ function renderLogEntry(){
 <h2 class="sec" style="margin-top:12px">WEIGHT</h2>
 <div class="card-flat" style="display:flex;align-items:center;gap:10px;padding:14px 18px"><input type="number" inputmode="decimal" step="0.1" id="le-w" value="${d.weight}" placeholder="78.5" style="border:none;padding:0;font-size:28px;font-weight:700;background:transparent"><span class="muted" style="font-size:18px;font-weight:600">kg</span></div>
 <h2 class="sec">DAILY PHOTO</h2>
-<label for="le-ph" style="display:block;background:var(--surface-sky);border-radius:var(--r-lg);aspect-ratio:4/3;max-height:240px;border:2px dashed var(--faint);position:relative;overflow:hidden;cursor:pointer">${d.photoDataUrl?`<img src="${d.photoDataUrl}" style="width:100%;height:100%;object-fit:cover">`:d.photoPath?`<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><div style="width:48px;height:48px;background:var(--success);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:24px">✓</div><div style="color:var(--success);font-weight:600">Photo saved for today</div><div class="tiny muted">Tap to replace</div></div>`:`<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><div style="width:60px;height:60px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px">📷</div><div style="font-weight:600">Take photo</div><div class="tiny muted">Same time + same light works best</div></div>`}<input type="file" id="le-ph" accept="image/*" capture="environment" style="display:none"></label>
+<div id="le-ph-wrap" style="display:block;background:var(--surface-sky);border-radius:var(--r-lg);aspect-ratio:4/3;max-height:240px;border:2px dashed var(--faint);position:relative;overflow:hidden;cursor:pointer">${d.photoDataUrl?`<img src="${d.photoDataUrl}" style="width:100%;height:100%;object-fit:cover">`:d.photoPath?`<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><div style="width:48px;height:48px;background:var(--success);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:24px">✓</div><div style="color:var(--success);font-weight:600">Photo saved for today</div><div class="tiny muted">Tap to replace</div></div>`:`<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><div style="width:60px;height:60px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px">📷</div><div style="font-weight:600">Take photo</div><div class="tiny muted">Same time + same light works best</div></div>`}<input type="file" id="le-ph" accept="image/*" capture="environment" style="display:none"></div>
 <h2 class="sec">ACTIVITY</h2>
 <div class="chip-row" id="le-acts">${ACTIVITIES.map(a=>`<div class="chip ${d.activities.includes(a)?'selected':''}" data-a="${escapeHtml(a)}">${escapeHtml(a)}</div>`).join('')}</div>
 <h2 class="sec">🍽 FOODS LOGGED</h2>
@@ -567,6 +571,14 @@ function bindLogEntry(){
   document.getElementById('le-n')?.addEventListener('input',e=>d.notes=e.target.value);
   document.getElementById('le-sl')?.addEventListener('input',e=>d.sleep=e.target.value?parseFloat(e.target.value):null);
   document.getElementById('le-st')?.addEventListener('input',e=>d.steps=e.target.value?parseInt(e.target.value,10):null);
+  document.getElementById('le-ph-wrap')?.addEventListener('click',async()=>{
+    // Try camera overlay first
+    if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+      openCameraOverlay(dataUrl=>{d.photoDataUrl=dataUrl;render()});
+    }else{
+      document.getElementById('le-ph')?.click();
+    }
+  });
   document.getElementById('le-ph')?.addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;toast('Compressing…');try{d.photoDataUrl=await compressImage(f);render()}catch(err){toast('Photo error: '+err.message,'error')}});
   document.querySelectorAll('#le-acts .chip').forEach(c=>c.addEventListener('click',()=>{const a=c.dataset.a;const i=d.activities.indexOf(a);if(i>=0)d.activities.splice(i,1);else d.activities.push(a);c.classList.toggle('selected')}));
   document.querySelectorAll('#le-en .ebtn').forEach(b=>b.addEventListener('click',()=>{d.energy=parseInt(b.dataset.n,10);render()}));
@@ -1081,9 +1093,90 @@ async function generateReflection(){
 }
 
 // BOOT
+
+// =================== CAMERA OVERLAY ===================
+async function findPreviousPhotoUrl(){
+  const t=today();
+  const photoDates=Object.entries(state.data.entries).filter(([d,e])=>e.photo&&d!==t).sort((a,b)=>b[0].localeCompare(a[0]));
+  if(photoDates.length===0)return null;
+  const path=photoDates[0][1].photo;
+  return await downloadPhoto(path);
+}
+async function openCameraOverlay(onCapture){
+  const prevUrl=await findPreviousPhotoUrl();
+  let stream=null,facing='user';
+  const modal=document.createElement('div');
+  modal.style.cssText='position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;animation:fade-in 0.2s';
+  modal.innerHTML=`
+<div style="display:flex;justify-content:space-between;align-items:center;padding:max(16px,env(safe-area-inset-top)) 20px 12px;background:rgba(0,0,0,0.6);color:white">
+  <button id="cam-x" style="width:44px;height:44px;border-radius:22px;background:rgba(255,255,255,0.15);color:white;font-size:22px;font-weight:700">×</button>
+  <div style="font-weight:600;font-size:14px">${prevUrl?'Ghost overlay ON':'No previous photo'}</div>
+  <button id="cam-flip" style="width:44px;height:44px;border-radius:22px;background:rgba(255,255,255,0.15);color:white;font-size:18px">⟲</button>
+</div>
+<div style="flex:1;position:relative;overflow:hidden;background:#111">
+  <video id="cam-v" autoplay playsinline muted style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000"></video>
+  ${prevUrl?`<img id="cam-overlay" src="${prevUrl}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.30;pointer-events:none;mix-blend-mode:normal">`:''}
+  <div id="cam-loading" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:white;font-size:14px;background:rgba(0,0,0,0.5)">Starting camera…</div>
+</div>
+<div style="padding:16px 20px calc(20px + env(safe-area-inset-bottom));background:rgba(0,0,0,0.85);color:white">
+  ${prevUrl?`<div style="display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:12px"><span style="font-size:12px">Ghost opacity</span><input id="cam-op" type="range" min="0" max="80" value="30" style="flex:1;max-width:200px"><span id="cam-opv" style="font-size:12px;width:32px">30%</span></div>`:''}
+  <div style="display:flex;justify-content:center;align-items:center;gap:24px">
+    <div style="width:60px"></div>
+    <button id="cam-shoot" style="width:80px;height:80px;border-radius:50%;background:white;border:5px solid rgba(255,255,255,0.4);transition:transform 0.1s"></button>
+    <button id="cam-toggle" style="width:60px;height:36px;border-radius:18px;background:rgba(255,255,255,0.15);color:white;font-size:12px;font-weight:600">${prevUrl?'Hide ghost':'No ghost'}</button>
+  </div>
+  <p style="text-align:center;font-size:11px;color:rgba(255,255,255,0.6);margin-top:14px">${prevUrl?'Match your pose to the faded image':'First photo — future shots will overlay this one'}</p>
+</div>`;
+  document.body.appendChild(modal);
+  const v=modal.querySelector('#cam-v');
+  const loadEl=modal.querySelector('#cam-loading');
+  const overlay=modal.querySelector('#cam-overlay');
+  const cleanup=()=>{if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}};
+  const startCamera=async()=>{
+    cleanup();
+    try{
+      stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:facing,width:{ideal:1920},height:{ideal:1080}},audio:false});
+      v.srcObject=stream;
+      loadEl.style.display='none';
+    }catch(e){
+      loadEl.textContent='Camera unavailable — '+e.message;
+    }
+  };
+  modal.querySelector('#cam-x').addEventListener('click',()=>{cleanup();modal.remove()});
+  modal.querySelector('#cam-flip').addEventListener('click',()=>{facing=facing==='user'?'environment':'user';startCamera()});
+  const opSlider=modal.querySelector('#cam-op');
+  const opVal=modal.querySelector('#cam-opv');
+  if(opSlider&&overlay){opSlider.addEventListener('input',e=>{const v=parseInt(e.target.value,10);overlay.style.opacity=String(v/100);opVal.textContent=v+'%'})}
+  const toggleBtn=modal.querySelector('#cam-toggle');
+  if(toggleBtn&&overlay){
+    let visible=true;
+    toggleBtn.addEventListener('click',()=>{visible=!visible;overlay.style.display=visible?'block':'none';toggleBtn.textContent=visible?'Hide ghost':'Show ghost'});
+  }
+  modal.querySelector('#cam-shoot').addEventListener('click',async()=>{
+    if(!stream){toast('Camera not ready','error');return}
+    const c=document.createElement('canvas');
+    c.width=v.videoWidth||1080;c.height=v.videoHeight||1920;
+    const ctx=c.getContext('2d');
+    // If front camera, mirror horizontally so the saved photo matches what user saw
+    if(facing==='user'){ctx.translate(c.width,0);ctx.scale(-1,1)}
+    ctx.drawImage(v,0,0,c.width,c.height);
+    // Compress
+    const maxDim=1080;
+    let w=c.width,hgt=c.height;
+    if(w>hgt&&w>maxDim){hgt=Math.round(hgt*maxDim/w);w=maxDim}
+    else if(hgt>maxDim){w=Math.round(w*maxDim/hgt);hgt=maxDim}
+    const c2=document.createElement('canvas');c2.width=w;c2.height=hgt;
+    c2.getContext('2d').drawImage(c,0,0,w,hgt);
+    const dataUrl=c2.toDataURL('image/jpeg',0.85);
+    cleanup();modal.remove();
+    onCapture(dataUrl);
+  });
+  startCamera();
+}
+
 // =================== FOOD PICKER ===================
 function openFoodPicker(onPick){
-  if(!DB.foods){toast('Food database loading…','');loadDB('foods').then(()=>openFoodPicker(onPick));return}
+  if(!DB.foods){toast('Loading foods…','');loadDB('foods').then(r=>{if(r)openFoodPicker(onPick);else toast('Could not load food data — check internet · '+(DB._err.foods||''),'error')});return}
   let query='',cat='all',expanded=null;
   const modal=document.createElement('div');modal.className='modal-bg';
   const render2=()=>{
@@ -1160,7 +1253,7 @@ function openCustomFood(onSave){
 
 // =================== EXERCISE DETAIL + VIDEO ===================
 function openExerciseDetail(exerciseId, variantId){
-  if(!DB.exercises){toast('Exercise database loading…','');loadDB('exercises').then(()=>openExerciseDetail(exerciseId,variantId));return}
+  if(!DB.exercises){toast('Loading exercises…','');loadDB('exercises').then(r=>{if(r)openExerciseDetail(exerciseId,variantId);else toast('Could not load exercise data — check internet · '+(DB._err.exercises||''),'error')});return}
   const ex=DB.exercises.exercises.find(x=>x.id===exerciseId);
   if(!ex){toast('Exercise not found','error');return}
   const variant=variantId?ex.variants.find(v=>v.id===variantId):ex.variants[0];
