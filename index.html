@@ -1096,22 +1096,37 @@ async function generateReflection(){
 
 // =================== CAMERA OVERLAY ===================
 async function findPreviousPhotoPath(){
+  console.log('[ghost] looking for reference photo…');
   // Priority 1: just-captured photo in the current draft (not yet saved)
   if(state.draft.le&&state.draft.le.photoDataUrl){
-    return{dataUrl:state.draft.le.photoDataUrl,date:today(),label:'today (just taken)'};
+    console.log('[ghost] using draft photoDataUrl');
+    return{dataUrl:state.draft.le.photoDataUrl,date:today(),label:'just taken'};
   }
-  // Re-fetch data log for freshest reference
-  try{if(isConfigured())await pullData()}catch(e){console.warn('pullData for camera failed',e)}
+  // Priority 2: photoPath on current draft (today's already-uploaded photo)
+  if(state.draft.le&&state.draft.le.photoPath){
+    console.log('[ghost] using draft photoPath',state.draft.le.photoPath);
+    return{path:state.draft.le.photoPath,date:today(),label:'today'};
+  }
   const t=today();
-  // Priority 2: today's already-saved photo (re-shoot reference)
-  const todayEntry=state.data.entries[t];
-  if(todayEntry&&todayEntry.photo){
-    return{path:todayEntry.photo,date:t,label:'today'};
+  // Priority 3: today's saved entry photo from current state
+  const todayEntryNow=state.data.entries[t];
+  if(todayEntryNow&&todayEntryNow.photo){
+    console.log('[ghost] using state today photo');
+    return{path:todayEntryNow.photo,date:t,label:'today'};
   }
-  // Priority 3: most recent prior photo
-  const photoEntries=Object.entries(state.data.entries).filter(([d,e])=>e.photo&&d!==t).sort((a,b)=>b[0].localeCompare(a[0]));
-  if(photoEntries.length===0)return null;
-  return{path:photoEntries[0][1].photo,date:photoEntries[0][0],label:fmtDate(photoEntries[0][0])};
+  // Priority 4: most recent prior photo from state
+  let entries=Object.entries(state.data.entries).filter(([d,e])=>e.photo).sort((a,b)=>b[0].localeCompare(a[0]));
+  if(entries.length>0){
+    console.log('[ghost] using most-recent state photo',entries[0][0]);
+    return{path:entries[0][1].photo,date:entries[0][0],label:entries[0][0]===t?'today':fmtDate(entries[0][0])};
+  }
+  // Last-ditch: pull from GitHub and re-check
+  console.log('[ghost] no local photos, pulling from GitHub…');
+  try{if(isConfigured())await pullData()}catch(e){console.warn('pullData failed',e)}
+  entries=Object.entries(state.data.entries).filter(([d,e])=>e.photo).sort((a,b)=>b[0].localeCompare(a[0]));
+  if(entries.length===0){console.log('[ghost] no photos found anywhere');return null}
+  console.log('[ghost] after pull, using',entries[0][0]);
+  return{path:entries[0][1].photo,date:entries[0][0],label:entries[0][0]===t?'today':fmtDate(entries[0][0])};
 }
 async function openCameraOverlay(onCapture){
   let stream=null,facing='user',overlayUrl=null;
