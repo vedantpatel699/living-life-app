@@ -1,7 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
   "updatedAt": "2026-05-12",
-  "note": "Bodyweight exercise library with progressive variants. SVG illustrations are simple line-figures for visual reference.",
+  "note": "Bodyweight exercise library. Each variant links to a YouTube search for a real video demo. Recommended channels: Hybrid Calisthenics, FitnessFAQs, Calisthenicmovement, Bodyweight Warrior (Tom Merrick), Athlean-X, ATHLEAN-XX (women), Pamela Reif.",
   "categories": {
     "push": "Push (chest/shoulders/triceps)",
     "pull": "Pull (back/biceps)",
@@ -21,8 +21,9 @@
           "id": "wall",
           "name": "Wall pushup",
           "level": 1,
-          "description": "Standing pushup against a wall. Easiest entry point — start here if a knee pushup feels intimidating.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"180\" y1=\"40\" x2=\"180\" y2=\"170\" stroke=\"#7C8497\" stroke-width=\"4\"/><circle cx=\"80\" cy=\"60\" r=\"12\" fill=\"#ED7A4D\"/><rect x=\"75\" y=\"70\" width=\"10\" height=\"40\" fill=\"#ED7A4D\" rx=\"5\"/><line x1=\"85\" y1=\"75\" x2=\"175\" y2=\"55\" stroke=\"#ED7A4D\" stroke-width=\"8\" stroke-linecap=\"round\"/><line x1=\"85\" y1=\"85\" x2=\"175\" y2=\"65\" stroke=\"#ED7A4D\" stroke-width=\"8\" stroke-linecap=\"round\"/><line x1=\"75\" y1=\"108\" x2=\"60\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"8\" stroke-linecap=\"round\"/><line x1=\"85\" y1=\"108\" x2=\"95\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"8\" stroke-linecap=\"round\"/></svg>",
+          "description": "Standing pushup against a wall. Easiest entry point.",
+          "videoSearch": "wall pushup proper form beginner",
+          "videoUrl": "https://www.youtube.com/results?search_query=wall+pushup+proper+form+beginner",
           "formTips": [
             "Stand arm's length from a wall, feet flat on floor",
             "Place palms shoulder-width on the wall at shoulder height",
@@ -31,7 +32,7 @@
             "Push back to start, breathing out on effort"
           ],
           "commonMistakes": [
-            "Standing too close — should feel some load when leaning in",
+            "Standing too close — should feel real load when leaning in",
             "Letting hips sag forward (engage core like a plank)",
             "Flaring elbows wide — aim for ~45° from torso"
           ]
@@ -41,16 +42,17 @@
           "name": "Incline pushup (counter/table)",
           "level": 2,
           "description": "Pushup with hands on a counter, table, or sturdy chair. Bridge between wall and floor.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"110\" y=\"110\" width=\"80\" height=\"6\" fill=\"#1A1F2E\"/><rect x=\"115\" y=\"116\" width=\"4\" height=\"54\" fill=\"#1A1F2E\"/><rect x=\"180\" y=\"116\" width=\"4\" height=\"54\" fill=\"#1A1F2E\"/><circle cx=\"50\" cy=\"100\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"58\" y1=\"108\" x2=\"100\" y2=\"125\" stroke=\"#ED7A4D\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"100\" y1=\"125\" x2=\"165\" y2=\"155\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"105\" y1=\"118\" x2=\"125\" y2=\"110\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"110\" y1=\"125\" x2=\"130\" y2=\"112\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "incline pushup tutorial Hybrid Calisthenics",
+          "videoUrl": "https://www.youtube.com/results?search_query=incline+pushup+tutorial+Hybrid+Calisthenics",
           "formTips": [
             "Hands shoulder-width on a sturdy surface — kitchen counter is perfect height",
             "Walk feet back until body forms a straight diagonal line",
-            "Tighten core and glutes throughout the movement",
+            "Tighten core and glutes throughout",
             "Lower chest to the surface (3-count down), push up (1-count up)"
           ],
           "commonMistakes": [
-            "Using too-low a surface before you're ready (jumps difficulty too much)",
-            "Letting head jut forward — keep neck neutral",
+            "Using too-low a surface before you're ready",
+            "Head jutting forward — keep neck neutral",
             "Half-reps — chest should nearly touch the surface"
           ]
         },
@@ -58,18 +60,19 @@
           "id": "knee",
           "name": "Knee pushup",
           "level": 3,
-          "description": "Floor pushup from the knees. About 50% of bodyweight loaded vs. a standard pushup.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"40\" cy=\"110\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"48\" y1=\"118\" x2=\"85\" y2=\"145\" stroke=\"#ED7A4D\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"85\" y1=\"145\" x2=\"140\" y2=\"155\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/><circle cx=\"145\" cy=\"153\" r=\"8\" fill=\"#1A1F2E\"/><line x1=\"45\" y1=\"125\" x2=\"50\" y2=\"155\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"55\" y1=\"130\" x2=\"60\" y2=\"155\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "description": "Floor pushup from the knees. About 50% of bodyweight loaded vs. standard.",
+          "videoSearch": "knee pushup form FitnessFAQs",
+          "videoUrl": "https://www.youtube.com/results?search_query=knee+pushup+form+FitnessFAQs",
           "formTips": [
             "Lie face down, place palms shoulder-width, slightly below shoulders",
-            "Place knees on the floor (use a folded towel if it hurts)",
+            "Knees on floor (use a folded towel if it hurts)",
             "Form a straight line from head through shoulders to knees",
             "Lower chest to within fist-distance of floor, push up",
             "Cross ankles or keep feet on floor — either works"
           ],
           "commonMistakes": [
-            "Hips sagging or piking — keep that head-to-knee line",
-            "Half-reps from the top — chest must come close to the floor",
+            "Hips sagging or piking",
+            "Half-reps from the top",
             "Elbows flaring wide — keep them ~45° from your sides"
           ]
         },
@@ -78,19 +81,20 @@
           "name": "Standard pushup",
           "level": 4,
           "description": "Full bodyweight pushup. The classic. Foundational upper-body movement.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"35\" cy=\"115\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"43\" y1=\"123\" x2=\"110\" y2=\"140\" stroke=\"#ED7A4D\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"110\" y1=\"140\" x2=\"180\" y2=\"155\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"40\" y1=\"130\" x2=\"45\" y2=\"155\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"50\" y1=\"135\" x2=\"55\" y2=\"155\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "perfect pushup form Hybrid Calisthenics",
+          "videoUrl": "https://www.youtube.com/results?search_query=perfect+pushup+form+Hybrid+Calisthenics",
           "formTips": [
             "Hands shoulder-width, slightly below shoulder line",
             "Feet together or slightly apart",
             "Body forms a rigid plank from head to heels — squeeze glutes and brace core",
             "Lower chest to ~fist-height above floor (3 seconds), push up (1-2 seconds)",
-            "Look at floor 6 inches in front of hands, not at the wall"
+            "Look at floor 6 inches in front of hands"
           ],
           "commonMistakes": [
             "Sagging hips → re-engage core, squeeze glutes",
             "Piked hips → drop them, brace stronger",
-            "Head pokes forward — keep neck neutral and ears over shoulders",
-            "Rushing the eccentric (lowering) — slow it down to build strength"
+            "Head pokes forward — keep neck neutral",
+            "Rushing the eccentric (lowering)"
           ]
         }
       ]
@@ -106,11 +110,12 @@
           "name": "Half squat (chair-assisted)",
           "level": 1,
           "description": "Quarter to half-depth squat, optionally tapping a chair on the way down.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"100\" cy=\"40\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"92\" y=\"54\" width=\"16\" height=\"40\" fill=\"#ED7A4D\" rx=\"8\"/><rect x=\"88\" y=\"94\" width=\"24\" height=\"30\" fill=\"#ED7A4D\" rx=\"5\"/><line x1=\"90\" y1=\"124\" x2=\"75\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"110\" y1=\"124\" x2=\"125\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"92\" y1=\"60\" x2=\"60\" y2=\"100\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"108\" y1=\"60\" x2=\"140\" y2=\"100\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "chair assisted squat beginner",
+          "videoUrl": "https://www.youtube.com/results?search_query=chair+assisted+squat+beginner",
           "formTips": [
             "Stand with feet shoulder-width, toes slightly turned out",
             "Hinge at hips and bend knees together, lower until thighs are halfway down",
-            "Optional: have a chair behind you, tap it lightly on each rep — don't sit",
+            "Optional: have a chair behind you, tap it on each rep — don't sit",
             "Keep knees in line with toes, weight in heels and mid-foot",
             "Chest up, gaze forward"
           ],
@@ -125,7 +130,8 @@
           "name": "Bodyweight squat",
           "level": 2,
           "description": "Full bodyweight squat to parallel (thighs flat) or below.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"100\" cy=\"60\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"92\" y=\"74\" width=\"16\" height=\"35\" fill=\"#ED7A4D\" rx=\"8\"/><rect x=\"88\" y=\"109\" width=\"24\" height=\"25\" fill=\"#ED7A4D\" rx=\"5\"/><line x1=\"90\" y1=\"134\" x2=\"60\" y2=\"135\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"110\" y1=\"134\" x2=\"140\" y2=\"135\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"60\" y1=\"135\" x2=\"65\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"140\" y1=\"135\" x2=\"135\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"92\" y1=\"80\" x2=\"75\" y2=\"55\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"108\" y1=\"80\" x2=\"125\" y2=\"55\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "bodyweight squat proper form Hybrid Calisthenics",
+          "videoUrl": "https://www.youtube.com/results?search_query=bodyweight+squat+proper+form+Hybrid+Calisthenics",
           "formTips": [
             "Feet shoulder-width, toes turned out ~15-30°",
             "Initiate by pushing hips back AND knees forward simultaneously",
@@ -135,7 +141,7 @@
           ],
           "commonMistakes": [
             "Stopping at half-depth — go deeper if mobility allows",
-            "Rounding lower back at bottom (\"butt wink\") — slight forward lean is OK, rounding is not",
+            "Rounding lower back at bottom (\"butt wink\")",
             "Knees collapsing inward — actively push them out"
           ]
         },
@@ -144,7 +150,8 @@
           "name": "Deep / paused squat",
           "level": 3,
           "description": "Full-depth squat with 2-3 second pause at the bottom.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"100\" cy=\"80\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"92\" y=\"94\" width=\"16\" height=\"28\" fill=\"#ED7A4D\" rx=\"8\"/><rect x=\"86\" y=\"122\" width=\"28\" height=\"25\" fill=\"#ED7A4D\" rx=\"5\"/><line x1=\"86\" y1=\"147\" x2=\"55\" y2=\"165\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"114\" y1=\"147\" x2=\"145\" y2=\"165\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"55\" y1=\"165\" x2=\"50\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"145\" y1=\"165\" x2=\"150\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"92\" y1=\"100\" x2=\"75\" y2=\"75\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"108\" y1=\"100\" x2=\"125\" y2=\"75\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "paused squat technique",
+          "videoUrl": "https://www.youtube.com/results?search_query=paused+bodyweight+squat+technique",
           "formTips": [
             "Same setup as standard squat",
             "Lower to full ass-to-grass depth (heels stay planted)",
@@ -153,7 +160,7 @@
             "If you can't reach full depth with heels down, work on ankle mobility separately"
           ],
           "commonMistakes": [
-            "Bouncing out of the bottom (defeats the pause's purpose)",
+            "Bouncing out of the bottom",
             "Heels lifting → ankle mobility limited, regress to standard",
             "Losing brace at bottom — keep core engaged throughout"
           ]
@@ -171,7 +178,8 @@
           "name": "Static lunge (split squat)",
           "level": 1,
           "description": "Lunge with feet stationary — easier balance than stepping back.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"100\" cy=\"60\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"92\" y=\"74\" width=\"16\" height=\"50\" fill=\"#ED7A4D\" rx=\"8\"/><line x1=\"100\" y1=\"124\" x2=\"70\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"70\" y1=\"160\" x2=\"60\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"100\" y1=\"124\" x2=\"140\" y2=\"150\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"140\" y1=\"150\" x2=\"145\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "split squat form Athlean-X",
+          "videoUrl": "https://www.youtube.com/results?search_query=split+squat+form+Athlean-X",
           "formTips": [
             "Stand in a split stance — one foot forward, one back (~2 feet apart)",
             "Lower until both knees are at 90° — back knee close to floor",
@@ -190,7 +198,8 @@
           "name": "Reverse lunge",
           "level": 2,
           "description": "Step backward into a lunge, return to start. Less knee strain than forward lunges.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"90\" cy=\"60\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"82\" y=\"74\" width=\"16\" height=\"40\" fill=\"#ED7A4D\" rx=\"8\"/><line x1=\"90\" y1=\"114\" x2=\"90\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"90\" y1=\"114\" x2=\"160\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"160\" y1=\"160\" x2=\"165\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"82\" y1=\"80\" x2=\"70\" y2=\"110\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"98\" y1=\"80\" x2=\"110\" y2=\"110\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "reverse lunge proper form",
+          "videoUrl": "https://www.youtube.com/results?search_query=reverse+lunge+proper+form",
           "formTips": [
             "Start standing tall, feet together",
             "Step one leg back ~2 feet, lowering until both knees are ~90°",
@@ -200,16 +209,17 @@
           ],
           "commonMistakes": [
             "Stepping too short — back knee should land far behind hip",
-            "Front knee diving inward — keep it over the second toe",
-            "Crashing the back knee — control the descent (2-3s down)"
+            "Front knee diving inward",
+            "Crashing the back knee — control the descent"
           ]
         },
         {
           "id": "walking",
           "name": "Walking lunge",
           "level": 3,
-          "description": "Continuous forward-stepping lunges. Higher coordination and balance demand.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"110\" cy=\"60\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"102\" y=\"74\" width=\"16\" height=\"40\" fill=\"#ED7A4D\" rx=\"8\"/><line x1=\"110\" y1=\"114\" x2=\"155\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"155\" y1=\"160\" x2=\"165\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"110\" y1=\"114\" x2=\"70\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"70\" y1=\"160\" x2=\"60\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+          "description": "Continuous forward-stepping lunges. Higher coordination demand.",
+          "videoSearch": "walking lunge form",
+          "videoUrl": "https://www.youtube.com/results?search_query=walking+lunge+form",
           "formTips": [
             "Step forward into a lunge, lower to 90°/90°",
             "Drive through the front heel and step the back foot forward into the next lunge",
@@ -218,7 +228,7 @@
           ],
           "commonMistakes": [
             "Forward knee shoots past the toes — take a longer step",
-            "Torso tipping forward — engage core, stack ribcage over hips"
+            "Torso tipping forward — engage core"
           ]
         }
       ]
@@ -234,7 +244,8 @@
           "name": "Knee plank",
           "level": 1,
           "description": "Forearm plank from the knees. Builds core endurance with less load.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"35\" cy=\"115\" r=\"12\" fill=\"#ED7A4D\"/><rect x=\"30\" y=\"140\" width=\"30\" height=\"8\" fill=\"#ED7A4D\" rx=\"4\"/><line x1=\"35\" y1=\"127\" x2=\"45\" y2=\"144\" stroke=\"#ED7A4D\" stroke-width=\"6\"/><line x1=\"55\" y1=\"125\" x2=\"125\" y2=\"148\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/><circle cx=\"135\" cy=\"148\" r=\"10\" fill=\"#1A1F2E\"/></svg>",
+          "videoSearch": "knee plank beginner form",
+          "videoUrl": "https://www.youtube.com/results?search_query=knee+plank+beginner+form",
           "formTips": [
             "Forearms flat on floor, elbows under shoulders, fists shoulder-width",
             "Knees on floor (use a folded towel for cushioning)",
@@ -245,7 +256,7 @@
           "commonMistakes": [
             "Sagging hips — lift them, squeeze glutes",
             "Holding breath — breathe shallow but steady",
-            "Lifting head — keep neck neutral, look at floor"
+            "Lifting head — keep neck neutral"
           ]
         },
         {
@@ -253,7 +264,8 @@
           "name": "Standard plank",
           "level": 2,
           "description": "Full forearm plank. The benchmark core exercise.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"30\" cy=\"120\" r=\"12\" fill=\"#ED7A4D\"/><rect x=\"25\" y=\"148\" width=\"30\" height=\"8\" fill=\"#ED7A4D\" rx=\"4\"/><line x1=\"30\" y1=\"132\" x2=\"40\" y2=\"152\" stroke=\"#ED7A4D\" stroke-width=\"6\"/><line x1=\"55\" y1=\"128\" x2=\"175\" y2=\"152\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "proper plank form Athlean-X",
+          "videoUrl": "https://www.youtube.com/results?search_query=proper+plank+form+Athlean-X",
           "formTips": [
             "Forearms flat, elbows under shoulders",
             "Toes on floor, body in a straight line from head to heels",
@@ -272,7 +284,8 @@
           "name": "Side plank",
           "level": 3,
           "description": "Plank on one forearm, body sideways. Builds obliques and lateral stability.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"40\" cy=\"100\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"40\" y1=\"112\" x2=\"160\" y2=\"165\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"40\" y1=\"112\" x2=\"40\" y2=\"165\" stroke=\"#ED7A4D\" stroke-width=\"6\"/><line x1=\"40\" y1=\"165\" x2=\"55\" y2=\"165\" stroke=\"#ED7A4D\" stroke-width=\"6\"/></svg>",
+          "videoSearch": "side plank tutorial",
+          "videoUrl": "https://www.youtube.com/results?search_query=side+plank+tutorial",
           "formTips": [
             "Lie on one side, forearm flat, elbow under shoulder",
             "Stack feet (or stagger top foot in front for easier balance)",
@@ -299,7 +312,8 @@
           "name": "Glute bridge",
           "level": 1,
           "description": "Hip lift from supine position. Best beginner posterior-chain exercise.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"170\" cy=\"140\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"50\" y1=\"100\" x2=\"160\" y2=\"140\" stroke=\"#ED7A4D\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"50\" y1=\"100\" x2=\"45\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"60\" y1=\"110\" x2=\"30\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"160\" y1=\"140\" x2=\"180\" y2=\"160\" stroke=\"#ED7A4D\" stroke-width=\"6\"/></svg>",
+          "videoSearch": "glute bridge form Athlean-X",
+          "videoUrl": "https://www.youtube.com/results?search_query=glute+bridge+form+Athlean-X",
           "formTips": [
             "Lie on back, knees bent, feet flat on floor, hip-width apart",
             "Feet close enough to butt that you can almost touch heels with fingertips",
@@ -308,8 +322,8 @@
             "Lower with control"
           ],
           "commonMistakes": [
-            "Pushing through toes instead of heels — keep weight in heels",
-            "Hyperextending lower back — stop when hips are level, not higher",
+            "Pushing through toes instead of heels",
+            "Hyperextending lower back — stop when hips are level",
             "Going through the motions — actively squeeze glutes at the top"
           ]
         },
@@ -318,7 +332,8 @@
           "name": "Single-leg glute bridge",
           "level": 2,
           "description": "Glute bridge with one foot off the floor. Doubles the load on the working glute.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"170\" cy=\"125\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"50\" y1=\"90\" x2=\"160\" y2=\"125\" stroke=\"#ED7A4D\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"50\" y1=\"90\" x2=\"45\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"60\" y1=\"100\" x2=\"30\" y2=\"60\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "single leg glute bridge form",
+          "videoUrl": "https://www.youtube.com/results?search_query=single+leg+glute+bridge+form",
           "formTips": [
             "Setup like standard bridge",
             "Extend one leg straight up (or hold straight out parallel to floor)",
@@ -327,7 +342,7 @@
             "Switch sides each set"
           ],
           "commonMistakes": [
-            "Hips drop on the lifted side — focus on keeping them level",
+            "Hips drop on the lifted side",
             "Cheating with lower back — drive through the planted heel",
             "Going too fast — slow tempo (3s up, 3s down)"
           ]
@@ -345,7 +360,8 @@
           "name": "Doorway row (towel)",
           "level": 1,
           "description": "Body row using a sturdy door and towel for grip. Best home-gym pull alternative.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"170\" y=\"20\" width=\"6\" height=\"160\" fill=\"#1A1F2E\"/><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"50\" cy=\"100\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"50\" y1=\"112\" x2=\"50\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"58\" y1=\"95\" x2=\"170\" y2=\"95\" stroke=\"#ED7A4D\" stroke-width=\"8\" stroke-linecap=\"round\"/><line x1=\"58\" y1=\"105\" x2=\"170\" y2=\"105\" stroke=\"#ED7A4D\" stroke-width=\"8\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "doorway row towel home workout",
+          "videoUrl": "https://www.youtube.com/results?search_query=doorway+row+towel+home+workout",
           "formTips": [
             "Loop a sturdy towel around a door handle — handles on BOTH sides for safety",
             "Stand close to door, grab both ends of the towel",
@@ -372,7 +388,8 @@
           "name": "Dead bug",
           "level": 1,
           "description": "Anti-extension core exercise. Lying on back, alternating opposite arm and leg.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"35\" cy=\"130\" r=\"12\" fill=\"#ED7A4D\"/><rect x=\"42\" y=\"125\" width=\"60\" height=\"12\" fill=\"#ED7A4D\" rx=\"4\"/><line x1=\"55\" y1=\"125\" x2=\"55\" y2=\"50\" stroke=\"#ED7A4D\" stroke-width=\"8\" stroke-linecap=\"round\"/><line x1=\"95\" y1=\"125\" x2=\"160\" y2=\"55\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"75\" y1=\"137\" x2=\"30\" y2=\"110\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"95\" y1=\"137\" x2=\"100\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "dead bug exercise form Athlean-X",
+          "videoUrl": "https://www.youtube.com/results?search_query=dead+bug+exercise+form+Athlean-X",
           "formTips": [
             "Lie on back, arms straight up over chest, knees bent and lifted (90° hip and knee)",
             "Lower opposite arm and leg slowly toward floor (keeping leg straight as you lower)",
@@ -399,7 +416,8 @@
           "name": "Wall sit",
           "level": 2,
           "description": "Isometric squat hold against a wall. Brutal at duration.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"170\" y=\"20\" width=\"8\" height=\"160\" fill=\"#1A1F2E\"/><line x1=\"10\" y1=\"180\" x2=\"190\" y2=\"180\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"155\" cy=\"60\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"147\" y=\"74\" width=\"16\" height=\"35\" fill=\"#ED7A4D\" rx=\"8\"/><line x1=\"155\" y1=\"109\" x2=\"110\" y2=\"109\" stroke=\"#1A1F2E\" stroke-width=\"12\" stroke-linecap=\"round\"/><line x1=\"110\" y1=\"109\" x2=\"110\" y2=\"180\" stroke=\"#1A1F2E\" stroke-width=\"12\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "wall sit proper form",
+          "videoUrl": "https://www.youtube.com/results?search_query=wall+sit+proper+form",
           "formTips": [
             "Back flat against wall, slide down until thighs are parallel to floor",
             "Knees over ankles (90° at knee and hip)",
@@ -426,7 +444,8 @@
           "name": "Superman hold",
           "level": 1,
           "description": "Lying face-down, lift arms and legs together. Strengthens posterior chain.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"160\" x2=\"190\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"30\" cy=\"140\" r=\"10\" fill=\"#ED7A4D\"/><line x1=\"38\" y1=\"138\" x2=\"5\" y2=\"110\" stroke=\"#ED7A4D\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"40\" y1=\"140\" x2=\"160\" y2=\"140\" stroke=\"#ED7A4D\" stroke-width=\"12\" stroke-linecap=\"round\"/><line x1=\"160\" y1=\"140\" x2=\"195\" y2=\"110\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "superman exercise tutorial",
+          "videoUrl": "https://www.youtube.com/results?search_query=superman+exercise+tutorial",
           "formTips": [
             "Lie face-down on floor, arms extended overhead, legs straight",
             "Simultaneously lift arms, chest, and legs off the floor",
@@ -436,7 +455,7 @@
           ],
           "commonMistakes": [
             "Yanking the neck up — eyes look at the floor",
-            "Lifting only legs OR only arms — do both together for full effect",
+            "Lifting only legs OR only arms — do both together",
             "Holding breath — breathe normally throughout the hold"
           ]
         }
@@ -453,7 +472,8 @@
           "name": "Bird dog",
           "level": 1,
           "description": "On all fours, extend opposite arm and leg. Anti-rotation core exercise.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"45\" cy=\"95\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"55\" y1=\"100\" x2=\"5\" y2=\"100\" stroke=\"#ED7A4D\" stroke-width=\"8\" stroke-linecap=\"round\"/><line x1=\"55\" y1=\"105\" x2=\"140\" y2=\"105\" stroke=\"#ED7A4D\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"50\" y1=\"107\" x2=\"50\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"6\" stroke-linecap=\"round\"/><line x1=\"140\" y1=\"105\" x2=\"190\" y2=\"105\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"130\" y1=\"107\" x2=\"130\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"6\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "bird dog exercise form Athlean-X",
+          "videoUrl": "https://www.youtube.com/results?search_query=bird+dog+exercise+form+Athlean-X",
           "formTips": [
             "On hands and knees, hands under shoulders, knees under hips",
             "Brace core to maintain a neutral spine — imagine a glass of water on your back",
@@ -462,7 +482,7 @@
             "Hold 2 seconds, return to start, switch sides"
           ],
           "commonMistakes": [
-            "Spine rotating — keep hips level (the imaginary glass shouldn't tip)",
+            "Spine rotating — keep hips level",
             "Lifting limbs too high — parallel to floor is the limit",
             "Rushing — slow, deliberate movement is the point"
           ]
@@ -480,7 +500,8 @@
           "name": "Slow mountain climbers",
           "level": 1,
           "description": "From plank position, alternate knees toward chest at a controlled pace.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"35\" cy=\"105\" r=\"12\" fill=\"#ED7A4D\"/><line x1=\"35\" y1=\"117\" x2=\"35\" y2=\"160\" stroke=\"#ED7A4D\" stroke-width=\"6\"/><line x1=\"43\" y1=\"110\" x2=\"160\" y2=\"160\" stroke=\"#1A1F2E\" stroke-width=\"14\" stroke-linecap=\"round\"/><line x1=\"160\" y1=\"160\" x2=\"185\" y2=\"165\" stroke=\"#1A1F2E\" stroke-width=\"8\"/><line x1=\"105\" y1=\"135\" x2=\"85\" y2=\"100\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "slow mountain climbers tutorial",
+          "videoUrl": "https://www.youtube.com/results?search_query=slow+mountain+climbers+tutorial",
           "formTips": [
             "Start in a high plank (arms extended, hands under shoulders)",
             "Pull one knee toward chest, foot off floor",
@@ -507,7 +528,8 @@
           "name": "Step-up",
           "level": 1,
           "description": "Step up onto a sturdy bench/chair, alternate legs.",
-          "image": "<svg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"100\" y=\"110\" width=\"90\" height=\"50\" fill=\"#1A1F2E\"/><line x1=\"10\" y1=\"170\" x2=\"190\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"60\" r=\"14\" fill=\"#ED7A4D\"/><rect x=\"62\" y=\"74\" width=\"16\" height=\"40\" fill=\"#ED7A4D\" rx=\"8\"/><line x1=\"70\" y1=\"114\" x2=\"130\" y2=\"108\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/><line x1=\"70\" y1=\"114\" x2=\"50\" y2=\"170\" stroke=\"#1A1F2E\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+          "videoSearch": "step up exercise form Athlean-X",
+          "videoUrl": "https://www.youtube.com/results?search_query=step+up+exercise+form+Athlean-X",
           "formTips": [
             "Find a sturdy step, chair, or bench (knee-height ideal for beginners)",
             "Step up with one foot, drive through that heel to bring the other up",
@@ -517,7 +539,7 @@
           ],
           "commonMistakes": [
             "Using bottom leg to push off — defeats the exercise",
-            "Stepping onto an unstable surface — your knees will thank you for choosing stable",
+            "Stepping onto an unstable surface — your knees will thank you for stable",
             "Slamming the bottom foot down — control the descent"
           ]
         }
@@ -525,10 +547,11 @@
     }
   ],
   "warmup": [
-    {"name": "Arm circles", "duration": "30s each direction", "instructions": "Standing, swing arms in big circles forward, then backward. Loosens shoulders."},
-    {"name": "Leg swings", "duration": "10 per side", "instructions": "Hold a wall, swing one leg forward and back. Then swing it across the body. Switch sides."},
-    {"name": "Hip circles", "duration": "5 per direction", "instructions": "Hands on hips, big circles with hips — like hula hoop."},
-    {"name": "Jumping jacks (low impact)", "duration": "30 seconds", "instructions": "Step out to the side instead of jumping if knees are sensitive."},
+    {"name": "Arm circles", "duration": "30s each direction", "instructions": "Standing, swing arms in big circles forward, then backward. Loosens shoulders.", "videoSearch": "arm circles warmup"},
+    {"name": "Leg swings", "duration": "10 per side", "instructions": "Hold a wall, swing one leg forward and back. Then swing it across the body. Switch sides.", "videoSearch": "leg swings warmup"},
+    {"name": "Hip circles", "duration": "5 per direction", "instructions": "Hands on hips, big circles with hips — like hula hoop.", "videoSearch": "hip circles warmup"},
+    {"name": "Jumping jacks (low impact)", "duration": "30 seconds", "instructions": "Step out to the side instead of jumping if knees are sensitive.", "videoSearch": "low impact jumping jacks"},
     {"name": "Slow squats", "duration": "10 reps", "instructions": "Body-weight, controlled. Primes lower body for the workout."}
   ]
 }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
