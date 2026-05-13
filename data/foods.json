@@ -444,6 +444,49 @@
         "confidence": "high",
         "note": "Two standard-sized laddus are visible in the container, typically weighing approximately 35g each."
       }
+    },
+    {
+      "id": "doritos-sweet-heat-chili",
+      "name": "Doritos Sweet Heat Chili",
+      "category": "snack",
+      "kcal": 494,
+      "protein": 7.1,
+      "carbs": 63.5,
+      "fat": 24.7,
+      "fiber": 3.5,
+      "sat_fat": 3.5,
+      "sugar": 3.5,
+      "sodium_mg": 600,
+      "potassium_mg": 212,
+      "calcium_mg": 141,
+      "iron_mg": 0.6,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (85g)",
+          "g": 85,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 snack bag (28g)",
+          "g": 28
+        },
+        {
+          "n": "1 large bowl (150g)",
+          "g": 150
+        }
+      ],
+      "photoEstimate": {
+        "grams": 85,
+        "confidence": "medium",
+        "note": "Standard cereal-sized bowl typically holds approximately 3 servings of tortilla chips when full."
+      }
     }
   ]
 }
