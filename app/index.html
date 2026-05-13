@@ -389,6 +389,29 @@ function renderToday(){
 ${shift?`<div class="card-flat" style="margin-top:12px;padding:10px 12px;display:flex;gap:10px;align-items:center;background:var(--sky-s)"><div style="font-size:18px">🌙</div><div style="flex:1"><div class="tiny" style="font-weight:600;color:var(--sky)">SHIFT DAY · Workout window</div><div class="tiny muted">9:30 PM (pre-shift) · 30-40 min strength · See SHIFT_WORK.md</div></div></div>`:''}
 </div>`;
 })()}
+    ${(()=>{
+  const todayEntry=state.data.entries[today()]||{};
+  const waterFoods=(todayEntry.foods||[]).filter(f=>f.foodId==='calgary-tap-water');
+  const ml=waterFoods.reduce((s,f)=>s+(f.grams||0),0);
+  const glassCount=Math.round(ml/250);
+  const goal=state.profile.waterGoalMl||2500;
+  const pct=Math.min(100,(ml/goal)*100);
+  const cups=8;const filled=Math.min(cups,Math.round((ml/goal)*cups));
+  return `<div class="card" style="margin-top:12px;padding:16px 18px;background:linear-gradient(135deg,#EAF4FB,#F8FAFB)">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+<div><div class="flabel" style="margin:0;color:var(--sky)">💧 HYDRATION</div><div style="font-weight:700;font-size:22px;margin-top:2px">${ml.toLocaleString()} <span style="font-size:14px;font-weight:500;color:var(--muted)">/ ${goal.toLocaleString()} ml</span></div><div class="tiny muted">${glassCount} glass${glassCount===1?'':'es'} · ${ml>=goal?'goal hit ✓':Math.max(0,goal-ml)+' ml to goal'}</div></div>
+<div style="text-align:right"><div class="tiny muted">CALGARY TAP</div><div class="tiny" style="color:var(--sky);font-weight:600">${Math.round(56*ml/100)} mg Ca · ${Math.round(16*ml/100)} mg Mg</div></div>
+</div>
+<div style="display:flex;gap:4px;margin-bottom:12px">${Array.from({length:cups},(_,i)=>`<div style="flex:1;aspect-ratio:1;background:${i<filled?'var(--sky)':'rgba(115,178,224,0.15)'};border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;color:${i<filled?'white':'rgba(115,178,224,0.5)'}">💧</div>`).join('')}</div>
+<div style="height:6px;background:rgba(115,178,224,0.2);border-radius:3px;overflow:hidden;margin-bottom:12px"><div style="height:100%;width:${pct}%;background:var(--sky);transition:width 0.3s"></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+<button id="t-water-glass" class="t-water-btn" style="background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:12px 8px;font-size:13px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px"><span style="font-size:16px">＋ 250 ml</span><span class="tiny muted" style="font-weight:400">Glass</span></button>
+<button id="t-water-bottle" class="t-water-btn" style="background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:12px 8px;font-size:13px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px"><span style="font-size:16px">＋ 500 ml</span><span class="tiny muted" style="font-weight:400">Bottle</span></button>
+<button id="t-water-custom" class="t-water-btn" style="background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:12px 8px;font-size:13px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px"><span style="font-size:16px">＋ Custom</span><span class="tiny muted" style="font-weight:400">Tap to enter</span></button>
+</div>
+${ml>0?`<button id="t-water-undo" style="margin-top:8px;width:100%;background:transparent;color:var(--muted);font-size:12px;padding:6px;border-radius:8px">↶ Undo last glass</button>`:''}
+</div>`;
+})()}
     <div class="grid-2" style="margin-top:12px">
       <div class="card" style="margin-bottom:0"><div class="flabel">CURRENT</div><div style="font-size:26px;font-weight:700;margin-top:4px">${stats?.latest!=null?stats.latest.toFixed(1)+' kg':'—'}</div><div class="tiny muted">${stats?.avgNow!=null?'7-day avg '+stats.avgNow.toFixed(1):'no data yet'}</div></div>
       <div class="card" style="margin-bottom:0"><div class="flabel">WEEK Δ</div><div style="font-size:26px;font-weight:700;margin-top:4px;color:${stats?.weekChange<0?'var(--success)':stats?.weekChange>0?'#B58A0F':'var(--ink)'}">${stats?.weekChange!=null?(stats.weekChange>0?'+':'')+stats.weekChange.toFixed(2)+' kg':'—'}</div><div class="tiny muted">vs. prior week</div></div>
@@ -412,6 +435,45 @@ function bindToday(){
   document.getElementById('t-coach')?.addEventListener('click',()=>setScreen('coach'));
   document.getElementById('t-avatar')?.addEventListener('click',()=>setScreen('settings'));
   document.getElementById('t-hcsync')?.addEventListener('click',async(e)=>{e.stopPropagation();const btn=e.currentTarget;btn.textContent='Syncing…';try{const hc=await syncHealthConnect();if(hc){toast('Health Connect synced ✓','success');render()}else toast('HC not available (web mode)','error')}catch(err){toast('Sync failed: '+err.message,'error')}});
+  // Water quick-add buttons
+  document.getElementById('t-water-glass')?.addEventListener('click',()=>addWaterEntry(250));
+  document.getElementById('t-water-bottle')?.addEventListener('click',()=>addWaterEntry(500));
+  document.getElementById('t-water-custom')?.addEventListener('click',()=>{const v=prompt('How many ml?','750');if(!v)return;const ml=parseInt(v,10);if(!ml||ml<=0||ml>3000){toast('Enter 1-3000 ml','error');return}addWaterEntry(ml)});
+  document.getElementById('t-water-undo')?.addEventListener('click',()=>undoLastWater());
+}
+
+// =================== WATER TRACKING ===================
+function addWaterEntry(ml){
+  if(!ml||ml<=0)return;
+  const t=today();
+  const e=state.data.entries[t]||{};
+  e.foods=e.foods||[];
+  // Calgary Tap Water nutrient profile per 100g (= 100ml)
+  const W={kcal:0,protein:0,carbs:0,fat:0,sodium_mg:2,potassium_mg:1,calcium_mg:56,magnesium_mg:16};
+  const f=ml/100;
+  const portionName=ml===250?'1 glass (250ml)':ml===500?'1 bottle (500ml)':ml===240?'1 cup (240ml)':ml===1000?'1 liter (1000ml)':ml+'ml (custom)';
+  e.foods.push({foodId:'calgary-tap-water',name:'Calgary Tap Water',portionName,grams:ml,kcal:0,protein:0,carbs:0,fat:0,sodium_mg:+(W.sodium_mg*f).toFixed(2),potassium_mg:+(W.potassium_mg*f).toFixed(2),calcium_mg:+(W.calcium_mg*f).toFixed(1),magnesium_mg:+(W.magnesium_mg*f).toFixed(1)});
+  e.updatedAt=nowIso();
+  state.data.entries[t]=e;
+  saveLocalData();
+  nativeHaptic('light');
+  render();
+  // Best-effort background sync
+  pushData().catch(err=>console.warn('water sync',err));
+}
+function undoLastWater(){
+  const t=today();
+  const e=state.data.entries[t];
+  if(!e||!e.foods)return;
+  for(let i=e.foods.length-1;i>=0;i--){
+    if(e.foods[i].foodId==='calgary-tap-water'){e.foods.splice(i,1);break}
+  }
+  if(e.foods.length===0)delete e.foods;
+  e.updatedAt=nowIso();
+  saveLocalData();
+  nativeHaptic('light');
+  render();
+  pushData().catch(err=>console.warn('water sync',err));
 }
 
 function renderProgress(){
@@ -464,9 +526,32 @@ function bindHistory(){
 function openEntryModal(d){
   const e=state.data.entries[d];if(!e)return;
   const m=document.createElement('div');m.className='modal-bg';
-  m.innerHTML=`<div class="modal"><div class="modal-handle"></div><h2 style="font-size:20px;font-weight:700">${fmtDateLong(d)}</h2>${e.photo?'<div id="mp" style="margin:16px 0;text-align:center;min-height:100px;background:var(--surface-sky);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;color:var(--faint)">Loading photo…</div>':''}<div class="grid-2 mt-4"><div class="card-flat"><div class="flabel">Weight</div><div style="font-size:22px;font-weight:700">${e.weight!=null?e.weight.toFixed(1)+' kg':'—'}</div></div><div class="card-flat"><div class="flabel">Energy</div><div style="font-size:22px">${e.energy?['😴','😕','😐','🙂','💪'][e.energy-1]:'—'}</div></div></div>${e.activities&&e.activities.length?`<h3 class="mt-4">Activity</h3><div class="chip-row mt-2">${e.activities.map(a=>`<div class="chip selected">${escapeHtml(a)}</div>`).join('')}</div>`:''}${e.meals?`<h3 class="mt-4">Meals</h3><p class="muted" style="white-space:pre-wrap;margin-top:6px">${escapeHtml(e.meals)}</p>`:''}${e.notes?`<h3 class="mt-4">Notes</h3><p class="muted" style="white-space:pre-wrap;margin-top:6px">${escapeHtml(e.notes)}</p>`:''}<button class="btn btn-secondary btn-full mt-4" id="mc">Close</button></div>`;
+  const foodList=(e.foods||[]).map(f=>`<div class="tiny muted" style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border-l)"><span>${escapeHtml(f.name)} · ${escapeHtml(f.portionName)}</span><span>${f.kcal} kcal · ${(f.protein||0).toFixed(1)}g P</span></div>`).join('');
+  const totalKcal=(e.foods||[]).reduce((s,f)=>s+(f.kcal||0),0);
+  m.innerHTML=`<div class="modal"><div class="modal-handle"></div>
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
+<h2 style="font-size:20px;font-weight:700">${fmtDateLong(d)}</h2>
+<div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" id="me-edit">✎ Edit</button><button id="mc" class="back-btn" style="width:36px;height:36px;font-size:16px">×</button></div>
+</div>
+<div class="tiny muted">${daysAgo(d)}d ago${daysAgo(d)===0?' (today)':''}</div>
+${e.photo?'<div id="mp" style="margin:16px 0;text-align:center;min-height:100px;background:var(--surface-sky);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;color:var(--faint)">Loading photo…</div>':''}
+<div class="grid-2 mt-4">
+<div class="card-flat"><div class="flabel">Weight</div><div style="font-size:22px;font-weight:700">${e.weight!=null?e.weight.toFixed(1)+' kg':'—'}</div></div>
+<div class="card-flat"><div class="flabel">Energy</div><div style="font-size:22px">${e.energy?['😴','😕','😐','🙂','💪'][e.energy-1]:'—'}</div></div>
+</div>
+${e.activities&&e.activities.length?`<h3 class="mt-4" style="font-size:14px;font-weight:700">Activity</h3><div class="chip-row mt-2">${e.activities.map(a=>`<div class="chip selected">${escapeHtml(a)}</div>`).join('')}</div>`:''}
+${e.foods&&e.foods.length?`<h3 class="mt-4" style="font-size:14px;font-weight:700">Foods (${totalKcal} kcal)</h3><div class="mt-2">${foodList}</div>`:''}
+${e.meals?`<h3 class="mt-4" style="font-size:14px;font-weight:700">Meal notes</h3><p class="muted" style="white-space:pre-wrap;margin-top:6px;font-size:13px">${escapeHtml(e.meals)}</p>`:''}
+${e.notes?`<h3 class="mt-4" style="font-size:14px;font-weight:700">Notes</h3><p class="muted" style="white-space:pre-wrap;margin-top:6px;font-size:13px">${escapeHtml(e.notes)}</p>`:''}
+${e.sleep?`<div class="tiny muted mt-4">😴 ${e.sleep} h sleep</div>`:''}
+${e.steps?`<div class="tiny muted mt-1">👟 ${e.steps.toLocaleString()} steps</div>`:''}
+<button class="btn btn-primary btn-full mt-4" id="me-edit2">✎ Edit this day</button>
+</div>`;
   m.addEventListener('click',ev=>{if(ev.target===m)m.remove()});
   m.querySelector('#mc').addEventListener('click',()=>m.remove());
+  const goEdit=()=>{m.remove();setScreen('logEntry',{editingDate:d})};
+  m.querySelector('#me-edit').addEventListener('click',goEdit);
+  m.querySelector('#me-edit2').addEventListener('click',goEdit);
   document.body.appendChild(m);
   if(e.photo)downloadPhoto(e.photo).then(u=>{const t=document.getElementById('mp');if(t&&u)t.innerHTML=`<img src="${u}" style="max-width:100%;border-radius:var(--r-md)">`});
 }
@@ -533,10 +618,12 @@ function bindSettings(){
 
 // Placeholders (filled in next Edits)
 function renderLogEntry(){
-  const t=today(),existing=state.data.entries[t]||{};
-  if(!state.draft.le){state.draft.le={weight:existing.weight??'',photoDataUrl:null,photoPath:existing.photo||null,activities:existing.activities?[...existing.activities]:[],meals:existing.meals||'',notes:existing.notes||'',energy:existing.energy||null,sleep:existing.sleep||null,steps:existing.steps||null,foods:existing.foods?[...existing.foods]:[]}}
+  const t=state.editingDate||today();
+  const isEdit=t!==today();
+  const existing=state.data.entries[t]||{};
+  if(!state.draft.le){state.draft.le={weight:existing.weight??'',photoDataUrl:null,photoPath:existing.photo||null,activities:existing.activities?[...existing.activities]:[],meals:existing.meals||'',notes:existing.notes||'',energy:existing.energy||null,sleep:existing.sleep||null,steps:existing.steps||null,foods:existing.foods?JSON.parse(JSON.stringify(existing.foods)):[]}}
   const d=state.draft.le;
-  return `<div class="top-bar"><button class="back-btn" id="le-back">←</button><div class="title-block"><h1>Log today</h1><div class="subtitle">${fmtDateLong(t)}</div></div></div>
+  return `<div class="top-bar"><button class="back-btn" id="le-back">←</button><div class="title-block"><h1>${isEdit?'Edit entry':'Log today'}</h1><div class="subtitle">${fmtDateLong(t)}${isEdit?' · '+daysAgo(t)+'d ago':''}</div></div></div>
 <div style="padding:8px 4px">
 <h2 class="sec" style="margin-top:12px">WEIGHT</h2>
 <div class="card-flat" style="display:flex;align-items:center;gap:10px;padding:14px 18px"><input type="number" inputmode="decimal" step="0.1" id="le-w" value="${d.weight}" placeholder="78.5" style="border:none;padding:0;font-size:28px;font-weight:700;background:transparent"><span class="muted" style="font-size:18px;font-weight:600">kg</span></div>
@@ -545,7 +632,7 @@ function renderLogEntry(){
 <h2 class="sec">ACTIVITY</h2>
 <div class="chip-row" id="le-acts">${ACTIVITIES.map(a=>`<div class="chip ${d.activities.includes(a)?'selected':''}" data-a="${escapeHtml(a)}">${escapeHtml(a)}</div>`).join('')}</div>
 <h2 class="sec">🍽 FOODS LOGGED</h2>
-${(()=>{const fs=d.foods||[];const totK=fs.reduce((s,f)=>s+(f.kcal||0),0);const totP=fs.reduce((s,f)=>s+(f.protein||0),0);return `<div class="card-flat" style="padding:10px 12px;display:flex;align-items:center;gap:12px;margin-bottom:8px"><div style="flex:1"><div style="font-weight:700;font-size:18px">${totK} kcal</div><div class="tiny muted">${totP.toFixed(1)} g protein${fs.length?' · '+fs.length+' items':' · nothing logged yet'}</div></div><button class="btn btn-primary btn-sm" id="le-addfood" style="padding:8px 14px;font-size:13px">+ Add food</button></div>${fs.length?`<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px">${fs.map((f,i)=>`<div class="le-fr" style="background:var(--surface-white);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${escapeHtml(f.name)}</div><div class="tiny muted">${escapeHtml(f.portionName)} · ${f.kcal} kcal · ${(f.protein||0).toFixed(1)}g P</div></div><button class="le-fdel" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:14px">×</button></div>`).join('')}</div>`:''}`})()}
+${(()=>{const fs=d.foods||[];const totK=fs.reduce((s,f)=>s+(f.kcal||0),0);const totP=fs.reduce((s,f)=>s+(f.protein||0),0);return `<div class="card-flat" style="padding:10px 12px;display:flex;align-items:center;gap:12px;margin-bottom:8px"><div style="flex:1"><div style="font-weight:700;font-size:18px">${totK} kcal</div><div class="tiny muted">${totP.toFixed(1)} g protein${fs.length?' · '+fs.length+' items':' · nothing logged yet'}</div></div><button class="btn btn-primary btn-sm" id="le-addfood" style="padding:8px 14px;font-size:13px">+ Add food</button></div>${fs.length?`<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px">${fs.map((f,i)=>`<div class="le-fr" data-i="${i}" style="background:var(--surface-white);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${escapeHtml(f.name)}</div><div class="tiny muted">${escapeHtml(f.portionName)} · ${f.kcal} kcal · ${(f.protein||0).toFixed(1)}g P</div></div><button class="le-fedit" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:13px" title="Edit grams">✎</button><button class="le-fdel" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:14px">×</button></div>`).join('')}</div>`:''}`})()}
 <h2 class="sec">MEAL NOTES</h2>
 <textarea id="le-m" placeholder="Breakfast: paneer paratha. Lunch: dal-rice + salad. Dinner: chicken curry, one plate.">${escapeHtml(d.meals)}</textarea>
 <h2 class="sec">ENERGY</h2>
@@ -563,11 +650,13 @@ ${(()=>{const fs=d.foods||[];const totK=fs.reduce((s,f)=>s+(f.kcal||0),0);const 
 }
 function bindLogEntry(){
   const d=state.draft.le;
-  document.getElementById('le-back')?.addEventListener('click',()=>setScreen('today'));
+  const editDate=state.editingDate||today();
+  document.getElementById('le-back')?.addEventListener('click',()=>{state.editingDate=null;state.draft={};setScreen(editDate===today()?'today':'history')});
   document.getElementById('le-w')?.addEventListener('input',e=>d.weight=e.target.value===''?'':parseFloat(e.target.value));
   document.getElementById('le-m')?.addEventListener('input',e=>d.meals=e.target.value);
   document.getElementById('le-addfood')?.addEventListener('click',()=>openFoodPicker(f=>{d.foods=d.foods||[];d.foods.push(f);render()}));
-  document.querySelectorAll('.le-fdel').forEach(b=>b.addEventListener('click',()=>{const i=parseInt(b.dataset.i,10);d.foods.splice(i,1);render()}));
+  document.querySelectorAll('.le-fdel').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const i=parseInt(b.dataset.i,10);d.foods.splice(i,1);render()}));
+  document.querySelectorAll('.le-fedit').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const i=parseInt(b.dataset.i,10);openEditFoodGrams(d.foods[i],updated=>{d.foods[i]=updated;render()})}));
   document.getElementById('le-n')?.addEventListener('input',e=>d.notes=e.target.value);
   document.getElementById('le-sl')?.addEventListener('input',e=>d.sleep=e.target.value?parseFloat(e.target.value):null);
   document.getElementById('le-st')?.addEventListener('input',e=>d.steps=e.target.value?parseInt(e.target.value,10):null);
@@ -584,7 +673,12 @@ function bindLogEntry(){
   document.querySelectorAll('#le-en .ebtn').forEach(b=>b.addEventListener('click',()=>{d.energy=parseInt(b.dataset.n,10);render()}));
   document.getElementById('le-save')?.addEventListener('click',async()=>{
     const btn=document.getElementById('le-save');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Saving…';
-    try{let pp=d.photoPath;if(d.photoDataUrl)pp=await uploadPhoto(today(),d.photoDataUrl);
+    const saveDate=state.editingDate||today();
+    const isEdit=saveDate!==today();
+    try{
+      // Preserve hc + run + other server-only fields that weren't surfaced in the UI
+      const orig=state.data.entries[saveDate]||{};
+      let pp=d.photoPath;if(d.photoDataUrl)pp=await uploadPhoto(saveDate,d.photoDataUrl);
       const entry={};
       if(d.weight!==''&&d.weight!=null&&!isNaN(d.weight))entry.weight=parseFloat(d.weight);
       if(pp)entry.photo=pp;
@@ -595,12 +689,46 @@ function bindLogEntry(){
       if(d.sleep)entry.sleep=d.sleep;
       if(d.steps)entry.steps=d.steps;
       if(d.foods&&d.foods.length)entry.foods=d.foods;
+      // Preserve fields the edit form didn't touch
+      ['hc','run','workout'].forEach(k=>{if(orig[k]!==undefined)entry[k]=orig[k]});
       entry.updatedAt=nowIso();
-      state.data.entries[today()]=entry;
+      state.data.entries[saveDate]=entry;
       await pushData();
-      toast('Saved ✓','success');state.draft={};setScreen('today');
+      toast(isEdit?'Updated ✓':'Saved ✓','success');state.draft={};state.editingDate=null;setScreen(isEdit?'history':'today');
     }catch(e){toast('Save failed: '+e.message,'error');btn.disabled=false;btn.innerHTML='Save & sync'}
   });
+}
+
+// =================== EDIT FOOD GRAMS ===================
+function openEditFoodGrams(food,onSave){
+  const modal=document.createElement('div');modal.className='modal-bg';
+  // Re-derive per-100g values from the entry: divide stored values by (grams/100)
+  const g0=food.grams||100;
+  const per100={kcal:food.kcal/(g0/100),protein:(food.protein||0)/(g0/100)};
+  ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug'].forEach(k=>{if(food[k]!==undefined)per100[k]=food[k]/(g0/100)});
+  modal.innerHTML=`<div class="modal" style="max-width:420px"><div class="modal-handle"></div>
+<h2 style="font-size:18px;font-weight:700;margin-bottom:4px">Edit grams</h2>
+<p class="tiny muted">${escapeHtml(food.name)}</p>
+<div class="field mt-4"><div class="flabel">Grams</div><div style="display:flex;align-items:center;gap:10px"><input type="number" id="efg-g" inputmode="decimal" step="1" min="1" value="${g0}" style="font-size:26px;font-weight:700;border:none;background:transparent;padding:0;flex:1"><span class="muted" style="font-size:18px;font-weight:600">g</span></div></div>
+<div class="card-flat" id="efg-preview" style="padding:10px 12px;display:flex;justify-content:space-between;align-items:center;margin-top:8px"><div><div class="tiny muted">New values</div><div style="font-weight:700;font-size:16px" id="efg-kcal">${food.kcal} kcal</div></div><div class="tiny muted" id="efg-prot">${(food.protein||0).toFixed(1)} g protein</div></div>
+<div class="btn-row mt-4"><button class="btn btn-secondary" id="efg-x">Cancel</button><button class="btn btn-primary" id="efg-save">Save</button></div>
+</div>`;
+  modal.addEventListener('click',e=>{if(e.target===modal)modal.remove()});
+  const inp=modal.querySelector('#efg-g');
+  const updatePreview=()=>{const g=parseFloat(inp.value)||0;const k=Math.round(per100.kcal*g/100);const p=(per100.protein*g/100);modal.querySelector('#efg-kcal').textContent=k+' kcal';modal.querySelector('#efg-prot').textContent=p.toFixed(1)+' g protein'};
+  inp.addEventListener('input',updatePreview);
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter')modal.querySelector('#efg-save').click()});
+  modal.querySelector('#efg-x').addEventListener('click',()=>modal.remove());
+  modal.querySelector('#efg-save').addEventListener('click',()=>{
+    const g=parseFloat(inp.value);
+    if(!g||g<=0){toast('Enter grams > 0','error');return}
+    const updated={...food,grams:g,portionName:g+'g (custom)',kcal:Math.round(per100.kcal*g/100),protein:+(per100.protein*g/100).toFixed(1)};
+    ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug'].forEach(k=>{if(per100[k]!==undefined)updated[k]=+(per100[k]*g/100).toFixed(2)});
+    onSave(updated);
+    modal.remove();
+  });
+  document.body.appendChild(modal);
+  setTimeout(()=>{inp.focus();inp.select()},80);
 }
 async function callClaude(messages,sys,maxTok=1500){
   if(!state.config.claudeApiKey)throw new Error('No Claude API key');
@@ -1015,7 +1143,7 @@ ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found
 </div>
 <button class="btn btn-secondary btn-full mt-2" id="fp-custom">+ Add custom food</button>
 </div>`;
-    modal.querySelector('#fp-q').addEventListener('input',e=>{query=e.target.value;render2();modal.querySelector('#fp-q').focus()});
+    modal.querySelector('#fp-q').addEventListener('input',e=>{const pos=e.target.selectionStart;query=e.target.value;render2();const inp=modal.querySelector('#fp-q');inp.focus();try{inp.setSelectionRange(pos,pos)}catch(_){}});
     modal.querySelector('#fp-x').addEventListener('click',()=>modal.remove());
     modal.querySelectorAll('.chip[data-c]').forEach(c=>c.addEventListener('click',()=>{cat=c.dataset.c;render2()}));
     modal.querySelectorAll('.fp-food').forEach(el=>el.addEventListener('click',e=>{if(e.target.closest('.fp-port')||e.target.closest('.fp-expand')||e.target.closest('.fp-customrow')||e.target.tagName==='INPUT'||e.target.tagName==='BUTTON')return;expanded=expanded===el.dataset.id?null:el.dataset.id;render2()}));
@@ -1229,5 +1357,4 @@ if(IS_NATIVE){setupHealthConnect().then(ok=>{if(ok){syncHealthConnect().then(hc=
 if(isConfigured())pullData().then(()=>render()).catch(e=>console.warn('boot sync failed',e));
 </script>
 </body>
-</html>p">Export JSON</button></div>
-      <button class="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+</html>
