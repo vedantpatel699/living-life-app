@@ -311,6 +311,53 @@
         "confidence": "high",
         "note": "Standard Tim Hortons donut serving size is approximately 71g for cake-based donuts."
       }
+    },
+    {
+      "id": "tim-hortons-vanilla-cold-brew-medium",
+      "name": "Tim Hortons Vanilla Cold Brew",
+      "category": "beverage",
+      "kcal": 35,
+      "protein": 0.2,
+      "carbs": 7.3,
+      "fat": 0.6,
+      "fiber": 0,
+      "sat_fat": 0.4,
+      "sugar": 7.0,
+      "sodium_mg": 13,
+      "potassium_mg": 40,
+      "calcium_mg": 8,
+      "iron_mg": 0,
+      "magnesium_mg": 2,
+      "zinc_mg": 0,
+      "vit_a_iu": 15,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (447g)",
+          "g": 447,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 medium cup (447g)",
+          "g": 447
+        },
+        {
+          "n": "1 small cup (286g)",
+          "g": 286
+        },
+        {
+          "n": "1 large cup (574g)",
+          "g": 574
+        }
+      ],
+      "photoEstimate": {
+        "grams": 447,
+        "confidence": "high",
+        "note": "Standard Tim Hortons medium cold brew volume is approximately 15 fluid ounces (447ml/g)."
+      }
     }
   ]
 }
