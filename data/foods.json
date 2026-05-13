@@ -225,6 +225,49 @@
         "confidence": "high",
         "note": "Standard frozen fry serving size is ~85g; 30 fries typically weigh between 85g and 120g depending on thickness."
       }
+    },
+    {
+      "id": "green-grapes",
+      "name": "Green Grapes",
+      "category": "fruit",
+      "kcal": 69,
+      "protein": 0.72,
+      "carbs": 18.1,
+      "fat": 0.16,
+      "fiber": 0.9,
+      "sat_fat": 0.05,
+      "sugar": 15.5,
+      "sodium_mg": 2,
+      "potassium_mg": 191,
+      "calcium_mg": 10,
+      "iron_mg": 0.36,
+      "magnesium_mg": 7,
+      "zinc_mg": 0.07,
+      "vit_a_iu": 66,
+      "vit_c_mg": 3.2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 2,
+      "portions": [
+        {
+          "n": "as in photo (12 grapes)",
+          "g": 60,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 cup (approx. 30 grapes)",
+          "g": 151
+        },
+        {
+          "n": "1 serving (approx. 20 grapes)",
+          "g": 100
+        }
+      ],
+      "photoEstimate": {
+        "grams": 60,
+        "confidence": "high",
+        "note": "Prompt specifies 12 grapes; average grape weight is ~5g per unit."
+      }
     }
   ]
 }
