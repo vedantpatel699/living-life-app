@@ -358,6 +358,49 @@
         "confidence": "high",
         "note": "Standard Tim Hortons medium cold brew volume is approximately 15 fluid ounces (447ml/g)."
       }
+    },
+    {
+      "id": "vadilal-veg-spring-rolls",
+      "name": "Vadilal Veg Spring Rolls",
+      "category": "prepared",
+      "kcal": 192,
+      "protein": 2.8,
+      "carbs": 40.9,
+      "fat": 1.9,
+      "fiber": 2.7,
+      "sat_fat": 1.6,
+      "sugar": 8.3,
+      "sodium_mg": 207,
+      "potassium_mg": 86.7,
+      "calcium_mg": 293.3,
+      "iron_mg": 3.0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "5 pieces (75g)",
+          "g": 75,
+          "fromPhoto": true
+        },
+        {
+          "n": "2 pieces (30g)",
+          "g": 30
+        },
+        {
+          "n": "1 full pack (300g)",
+          "g": 300
+        }
+      ],
+      "photoEstimate": {
+        "grams": 75,
+        "confidence": "high",
+        "note": "The user consumed 5 pieces; labels image_746673.png and image_74665b.png indicate a 30g serving size for 2 pieces."
+      }
     }
   ]
 }
