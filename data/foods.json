@@ -1,182 +1,230 @@
 {
- "version": 2,
- "updatedAt": "2026-05-13",
- "note": "Indian lacto-vegetarian food database. Starts empty \u2014 Vedant builds it via Gemini food-photo recognition. See FOOD_RECOGNITION.md.",
- "categories": {
-  "grain": "Grains & Breads",
-  "lentil": "Lentils & Legumes",
-  "dairy": "Dairy",
-  "vegetable": "Vegetables",
-  "fruit": "Fruits",
-  "nuts": "Nuts & Seeds",
-  "snack": "Snacks",
-  "sweet": "Sweets",
-  "beverage": "Beverages",
-  "supplement": "Protein Supplements",
-  "prepared": "Prepared Dishes",
-  "fat": "Fats & Oils",
-  "other": "Other"
- },
- "nutrientSchema": {
-  "kcal": {
-   "unit": "kcal",
-   "label": "Energy"
+  "version": 2,
+  "updatedAt": "2026-05-12",
+  "note": "Indian lacto-vegetarian food database. Starts empty — Vedant builds it via Gemini food-photo recognition. See FOOD_RECOGNITION.md.",
+  "categories": {
+    "grain": "Grains & Breads",
+    "lentil": "Lentils & Legumes",
+    "dairy": "Dairy",
+    "vegetable": "Vegetables",
+    "fruit": "Fruits",
+    "nuts": "Nuts & Seeds",
+    "snack": "Snacks",
+    "sweet": "Sweets",
+    "beverage": "Beverages",
+    "supplement": "Protein Supplements",
+    "prepared": "Prepared Dishes",
+    "fat": "Fats & Oils",
+    "other": "Other"
   },
-  "protein": {
-   "unit": "g",
-   "label": "Protein"
+  "nutrientSchema": {
+    "kcal": {
+      "unit": "kcal",
+      "label": "Energy"
+    },
+    "protein": {
+      "unit": "g",
+      "label": "Protein"
+    },
+    "carbs": {
+      "unit": "g",
+      "label": "Carbs"
+    },
+    "fat": {
+      "unit": "g",
+      "label": "Fat"
+    },
+    "fiber": {
+      "unit": "g",
+      "label": "Fiber"
+    },
+    "sat_fat": {
+      "unit": "g",
+      "label": "Saturated fat"
+    },
+    "sugar": {
+      "unit": "g",
+      "label": "Sugar"
+    },
+    "sodium_mg": {
+      "unit": "mg",
+      "label": "Sodium"
+    },
+    "potassium_mg": {
+      "unit": "mg",
+      "label": "Potassium"
+    },
+    "calcium_mg": {
+      "unit": "mg",
+      "label": "Calcium"
+    },
+    "iron_mg": {
+      "unit": "mg",
+      "label": "Iron"
+    },
+    "magnesium_mg": {
+      "unit": "mg",
+      "label": "Magnesium"
+    },
+    "zinc_mg": {
+      "unit": "mg",
+      "label": "Zinc"
+    },
+    "vit_a_iu": {
+      "unit": "IU",
+      "label": "Vitamin A"
+    },
+    "vit_c_mg": {
+      "unit": "mg",
+      "label": "Vitamin C"
+    },
+    "vit_d_iu": {
+      "unit": "IU",
+      "label": "Vitamin D"
+    },
+    "vit_b12_ug": {
+      "unit": "µg",
+      "label": "Vitamin B12"
+    },
+    "folate_ug": {
+      "unit": "µg",
+      "label": "Folate"
+    }
   },
-  "carbs": {
-   "unit": "g",
-   "label": "Carbs"
+  "dv": {
+    "kcal": {
+      "target": 2000,
+      "max": 2300,
+      "label": "kcal (fat-loss target)"
+    },
+    "protein": {
+      "target": 130,
+      "min": 110,
+      "max": 160,
+      "label": "g (1.6-1.8 g/kg)"
+    },
+    "carbs": {
+      "target": 225,
+      "min": 130,
+      "max": 325,
+      "label": "g"
+    },
+    "fat": {
+      "target": 65,
+      "min": 45,
+      "max": 80,
+      "label": "g"
+    },
+    "fiber": {
+      "target": 38,
+      "min": 30,
+      "label": "g"
+    },
+    "sat_fat": {
+      "target": 20,
+      "max": 22,
+      "label": "g (≤10% kcal)"
+    },
+    "sugar": {
+      "target": 50,
+      "max": 50,
+      "label": "g added"
+    },
+    "sodium_mg": {
+      "target": 2000,
+      "max": 2300,
+      "label": "mg"
+    },
+    "potassium_mg": {
+      "target": 3400,
+      "min": 2500,
+      "label": "mg"
+    },
+    "calcium_mg": {
+      "target": 1000,
+      "label": "mg"
+    },
+    "iron_mg": {
+      "target": 8,
+      "label": "mg (adult male)"
+    },
+    "magnesium_mg": {
+      "target": 400,
+      "label": "mg"
+    },
+    "zinc_mg": {
+      "target": 11,
+      "label": "mg"
+    },
+    "vit_a_iu": {
+      "target": 3000,
+      "label": "IU"
+    },
+    "vit_c_mg": {
+      "target": 90,
+      "label": "mg"
+    },
+    "vit_d_iu": {
+      "target": 1500,
+      "min": 600,
+      "label": "IU (Canadian context)"
+    },
+    "vit_b12_ug": {
+      "target": 2.4,
+      "label": "µg (veg = supplement)"
+    },
+    "folate_ug": {
+      "target": 400,
+      "label": "µg"
+    }
   },
-  "fat": {
-   "unit": "g",
-   "label": "Fat"
-  },
-  "fiber": {
-   "unit": "g",
-   "label": "Fiber"
-  },
-  "sat_fat": {
-   "unit": "g",
-   "label": "Saturated fat"
-  },
-  "sugar": {
-   "unit": "g",
-   "label": "Sugar"
-  },
-  "sodium_mg": {
-   "unit": "mg",
-   "label": "Sodium"
-  },
-  "potassium_mg": {
-   "unit": "mg",
-   "label": "Potassium"
-  },
-  "calcium_mg": {
-   "unit": "mg",
-   "label": "Calcium"
-  },
-  "iron_mg": {
-   "unit": "mg",
-   "label": "Iron"
-  },
-  "magnesium_mg": {
-   "unit": "mg",
-   "label": "Magnesium"
-  },
-  "zinc_mg": {
-   "unit": "mg",
-   "label": "Zinc"
-  },
-  "vit_a_iu": {
-   "unit": "IU",
-   "label": "Vitamin A"
-  },
-  "vit_c_mg": {
-   "unit": "mg",
-   "label": "Vitamin C"
-  },
-  "vit_d_iu": {
-   "unit": "IU",
-   "label": "Vitamin D"
-  },
-  "vit_b12_ug": {
-   "unit": "\u00b5g",
-   "label": "Vitamin B12"
-  },
-  "folate_ug": {
-   "unit": "\u00b5g",
-   "label": "Folate"
-  }
- },
- "dv": {
-  "kcal": {
-   "target": 2000,
-   "max": 2300,
-   "label": "kcal (fat-loss target)"
-  },
-  "protein": {
-   "target": 130,
-   "min": 110,
-   "max": 160,
-   "label": "g (1.6-1.8 g/kg)"
-  },
-  "carbs": {
-   "target": 225,
-   "min": 130,
-   "max": 325,
-   "label": "g"
-  },
-  "fat": {
-   "target": 65,
-   "min": 45,
-   "max": 80,
-   "label": "g"
-  },
-  "fiber": {
-   "target": 38,
-   "min": 30,
-   "label": "g"
-  },
-  "sat_fat": {
-   "target": 20,
-   "max": 22,
-   "label": "g (\u226410% kcal)"
-  },
-  "sugar": {
-   "target": 50,
-   "max": 50,
-   "label": "g added"
-  },
-  "sodium_mg": {
-   "target": 2000,
-   "max": 2300,
-   "label": "mg"
-  },
-  "potassium_mg": {
-   "target": 3400,
-   "min": 2500,
-   "label": "mg"
-  },
-  "calcium_mg": {
-   "target": 1000,
-   "label": "mg"
-  },
-  "iron_mg": {
-   "target": 8,
-   "label": "mg (adult male)"
-  },
-  "magnesium_mg": {
-   "target": 400,
-   "label": "mg"
-  },
-  "zinc_mg": {
-   "target": 11,
-   "label": "mg"
-  },
-  "vit_a_iu": {
-   "target": 3000,
-   "label": "IU"
-  },
-  "vit_c_mg": {
-   "target": 90,
-   "label": "mg"
-  },
-  "vit_d_iu": {
-   "target": 1500,
-   "min": 600,
-   "label": "IU (Canadian context)"
-  },
-  "vit_b12_ug": {
-   "target": 2.4,
-   "label": "\u00b5g (veg = supplement)"
-  },
-  "folate_ug": {
-   "target": 400,
-   "label": "\u00b5g"
-  }
- },
- "foods": []
+  "foods": [
+    {
+      "id": "mccain-masala-fries",
+      "name": "McCain Masala Fries",
+      "category": "prepared",
+      "kcal": 165,
+      "protein": 2.4,
+      "carbs": 24.7,
+      "fat": 8.2,
+      "fiber": 2.4,
+      "sat_fat": 0.6,
+      "sugar": 1.2,
+      "sodium_mg": 376,
+      "potassium_mg": 294,
+      "calcium_mg": 12,
+      "iron_mg": 0.6,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (85g)",
+          "g": 85,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 serving (85g)",
+          "g": 85
+        },
+        {
+          "n": "half plate (~30 fries) (115g)",
+          "g": 115
+        },
+        {
+          "n": "full bag (650g)",
+          "g": 650
+        }
+      ],
+      "photoEstimate": {
+        "grams": 85,
+        "confidence": "high",
+        "note": "Standard frozen fry serving size is ~85g; 30 fries typically weigh between 85g and 120g depending on thickness."
+      }
+    }
+  ]
 }
