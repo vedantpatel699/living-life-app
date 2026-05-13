@@ -487,6 +487,49 @@
         "confidence": "medium",
         "note": "Standard cereal-sized bowl typically holds approximately 3 servings of tortilla chips when full."
       }
+    },
+    {
+      "id": "dal-dhokli-toor",
+      "name": "Dal Dhokli (Toor Dal)",
+      "category": "prepared",
+      "kcal": 142,
+      "protein": 5.2,
+      "carbs": 23.5,
+      "fat": 3.8,
+      "fiber": 4.2,
+      "sat_fat": 1.2,
+      "sugar": 1.5,
+      "sodium_mg": 290,
+      "potassium_mg": 195,
+      "calcium_mg": 38,
+      "iron_mg": 1.4,
+      "magnesium_mg": 45,
+      "zinc_mg": 0.8,
+      "vit_a_iu": 135,
+      "vit_c_mg": 1.8,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 32,
+      "portions": [
+        {
+          "n": "as in photo (380g)",
+          "g": 380,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        },
+        {
+          "n": "1 bowl (250g)",
+          "g": 250
+        }
+      ],
+      "photoEstimate": {
+        "grams": 380,
+        "confidence": "medium",
+        "note": "Image a941d5c5-0396-47fb-b2f6-74f6db6050ca shows a standard 18oz rectangular glass container approximately 75% full, measured against the visible spoon."
+      }
     }
   ]
 }
