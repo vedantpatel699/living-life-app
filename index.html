@@ -238,7 +238,7 @@ const softMap={coral:'var(--coral-s)',mint:'var(--mint-s)',sky:'var(--sky-s)',su
 const state={
   screen:'welcome',
   config:{githubOwner:'vedantpatel699',githubRepo:'living-life-data',githubToken:'',branch:'main',claudeApiKey:'',claudeModel:'claude-sonnet-4-6',stravaToken:'',startDate:null},
-  profile:{name:'',age:28,heightCm:167,sex:'male',startWeight:78,goalWeight:70,goalDate:''},
+  profile:{name:'',age:28,heightCm:167,sex:'male',startWeight:78,goalWeight:70,goalDate:'',shiftDays:[]},
   data:{version:2,entries:{},workoutHistory:[],adjustments:{},supplements:{},coachConversation:[],weeklyReflections:[]},
   dataSha:null,draft:{},workoutSession:null,runSession:null,isSyncing:false,lastSyncOk:null,
 };
@@ -256,6 +256,10 @@ function currentPhase(){if(!state.config.startDate)return 1;const days=Math.floo
 function currentWeek(){if(!state.config.startDate)return 1;const days=Math.floor((Date.now()-new Date(state.config.startDate).getTime())/86400000);return Math.floor(days/7)+1}
 function todaySchedule(){const p=currentPhase();const t=WEEKLY_TEMPLATE[p>=2?2:1];return t[dayOfWeek()]}
 function isConfigured(){return state.config.githubOwner&&state.config.githubRepo&&state.config.githubToken}
+function isShiftDay(d){const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];const today=days[dayOfWeek(d||new Date())];return(state.profile.shiftDays||[]).includes(today)}
+function bmrPerMin(){const p=state.profile;const bmr=10*p.startWeight+6.25*p.heightCm-5*p.age+(p.sex==='female'?-161:5);return bmr/1440}
+function bmrSoFarToday(){const now=new Date();const minsSinceMidnight=now.getHours()*60+now.getMinutes();return Math.round(bmrPerMin()*minsSinceMidnight)}
+function fullBmr(){return Math.round(bmrPerMin()*1440)}
 function hasClaudeKey(){return!!state.config.claudeApiKey}
 
 function toast(msg,type=''){document.querySelectorAll('.toast').forEach(t=>t.remove());const t=document.createElement('div');t.className='toast '+type;t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
@@ -405,7 +409,44 @@ function renderToday(){
       <div><div class="muted tiny">${fmtDateLong(t)}</div><h1 style="font-size:26px;font-weight:700;letter-spacing:-0.01em;margin-top:2px">Hi, ${escapeHtml(state.profile.name||'there')} 👋</h1></div>
       <button id="t-avatar" style="width:48px;height:48px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px">${(state.profile.name||'V')[0].toUpperCase()}</button>
     </div>
-    ${(()=>{const rec=state.todayRec;if(!rec){return `<div class="card-tinted" style="position:relative;overflow:hidden;min-height:200px;margin-top:12px"><div style="position:relative;z-index:2;max-width:65%"><div class="chip-pill dark mb-2">TODAY</div><h2 style="font-size:24px;font-weight:700;margin-top:6px">${escapeHtml(sched.activity)}</h2><p class="muted tiny" style="margin-top:6px">Phase ${phase} · Week ${week} · ${PHASES[phase].name}</p><button class="btn btn-primary btn-sm mt-4" id="t-start">▶ Start now</button></div><div style="position:absolute;right:-10px;top:20px;width:110px;height:110px;background:var(--coral);border-radius:50%"></div><div style="position:absolute;right:70px;top:10px;width:22px;height:22px;background:var(--sun);border-radius:50%"></div></div>`}return `<div class="card-tinted" style="position:relative;overflow:hidden;min-height:200px;margin-top:12px"><div style="position:relative;z-index:2;max-width:75%"><div class="chip-pill dark mb-2" style="display:inline-flex;align-items:center;gap:6px">${rec.source==='ai'?'<span style="color:var(--sun)">✦</span> AI COACH':'TODAY'}</div><h2 style="font-size:22px;font-weight:700;margin-top:6px;letter-spacing:-0.01em">${escapeHtml(rec.headline)}</h2><p class="muted tiny" style="margin-top:6px;line-height:1.5">${escapeHtml(rec.body)}</p><button class="btn btn-primary btn-sm mt-4" id="t-rec-go">▶ ${escapeHtml(rec.actionLabel||'Start')}</button></div><div style="position:absolute;right:-10px;top:20px;width:110px;height:110px;background:var(--coral);border-radius:50%"></div><div style="position:absolute;right:70px;top:10px;width:22px;height:22px;background:var(--sun);border-radius:50%"></div></div>`})()}
+    ${(()=>{
+  const hc=getHCToday()||{};
+  const bmrSoFar=bmrSoFarToday();
+  const activeOut=Math.round(hc.active_calories||0);
+  const totalOut=bmrSoFar+activeOut;
+  const todayEntry=state.data.entries[today()]||{};
+  const foods=todayEntry.foods||[];
+  const caloriesIn=foods.reduce((s,f)=>s+(f.kcal||0),0);
+  const net=caloriesIn-totalOut;
+  const shift=isShiftDay();
+  const target=shift?2400:2000;
+  const tdeeTarget=fullBmr()+(shift?500:300);
+  const pctIn=Math.min(100,(caloriesIn/target)*100);
+  const pctOut=Math.min(100,(totalOut/tdeeTarget)*100);
+  return `<div class="card" style="margin-top:12px;padding:18px 18px">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+<div><div class="flabel" style="margin:0">ENERGY · ${shift?'SHIFT DAY':'OFF DAY'}</div><div style="font-weight:700;font-size:22px;margin-top:2px;color:${net<0?'var(--success)':net>200?'#B58A0F':'var(--ink)'}">${net>0?'+':''}${net} kcal</div><div class="tiny muted">${net<0?'in deficit ✓':net===0?'balanced':'in surplus'}</div></div>
+<div style="text-align:right"><div class="tiny muted">Target net</div><div style="font-weight:600;font-size:15px">${(shift?-400:-300).toLocaleString()}</div><div class="tiny muted">~0.5 kg/wk loss</div></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div style="background:var(--success-s);border-radius:14px;padding:12px 14px">
+<div class="flabel" style="margin:0;color:var(--success)">CALORIES OUT</div>
+<div style="font-weight:700;font-size:20px;margin-top:4px">${totalOut.toLocaleString()}</div>
+<div class="tiny" style="color:var(--success);margin-top:2px">• ${bmrSoFar} resting</div>
+<div class="tiny" style="color:var(--success);margin-top:1px">• ${activeOut} active</div>
+<div style="height:4px;background:rgba(77,168,105,0.2);border-radius:2px;margin-top:8px;overflow:hidden"><div style="height:100%;width:${pctOut}%;background:var(--success);transition:width 0.3s"></div></div>
+</div>
+<div style="background:var(--coral-s);border-radius:14px;padding:12px 14px">
+<div class="flabel" style="margin:0;color:var(--coral)">CALORIES IN</div>
+<div style="font-weight:700;font-size:20px;margin-top:4px">${caloriesIn.toLocaleString()}</div>
+<div class="tiny" style="color:var(--coral);margin-top:2px">• ${foods.length} item${foods.length===1?'':'s'}</div>
+<div class="tiny" style="color:var(--coral);margin-top:1px">• of ${target} target</div>
+<div style="height:4px;background:rgba(237,122,77,0.2);border-radius:2px;margin-top:8px;overflow:hidden"><div style="height:100%;width:${pctIn}%;background:var(--coral);transition:width 0.3s"></div></div>
+</div>
+</div>
+${shift?`<div class="card-flat" style="margin-top:12px;padding:10px 12px;display:flex;gap:10px;align-items:center;background:var(--sky-s)"><div style="font-size:18px">🌙</div><div style="flex:1"><div class="tiny" style="font-weight:600;color:var(--sky)">SHIFT DAY · Workout window</div><div class="tiny muted">9:30 PM (pre-shift) · 30-40 min strength · See SHIFT_WORK.md</div></div></div>`:''}
+</div>`;
+})()}
     <div class="grid-2" style="margin-top:12px">
       <div class="card" style="margin-bottom:0"><div class="flabel">CURRENT</div><div style="font-size:26px;font-weight:700;margin-top:4px">${stats?.latest!=null?stats.latest.toFixed(1)+' kg':'—'}</div><div class="tiny muted">${stats?.avgNow!=null?'7-day avg '+stats.avgNow.toFixed(1):'no data yet'}</div></div>
       <div class="card" style="margin-bottom:0"><div class="flabel">WEEK Δ</div><div style="font-size:26px;font-weight:700;margin-top:4px;color:${stats?.weekChange<0?'var(--success)':stats?.weekChange>0?'#B58A0F':'var(--ink)'}">${stats?.weekChange!=null?(stats.weekChange>0?'+':'')+stats.weekChange.toFixed(2)+' kg':'—'}</div><div class="tiny muted">vs. prior week</div></div>
@@ -422,11 +463,8 @@ function renderToday(){
   </div>`;
 }
 function bindToday(){
-  const go=action=>{const s=todaySchedule();const a=action||(s.type==='routine'?'workout':s.type==='c25k'?'c25k':s.type==='walk'?'logRun':'logEntry');if(a==='workout')setScreen('workout',{workoutRoutine:s.routine});else setScreen(a)};
-  document.getElementById('t-start')?.addEventListener('click',()=>go());
-  document.getElementById('t-rec-go')?.addEventListener('click',()=>go(state.todayRec?.action));
-  // Async load today's recommendation
-  if(!state.todayRec){state.todayRec=generateTodayRec();if(state.todayRec.headline!=='Loading…')render()}
+  // Energy view replaces the routine card — no start-now button on Today anymore
+  // Users do workouts in Home Workout app; this app tracks via Health Connect.
   document.getElementById('t-log')?.addEventListener('click',()=>setScreen('logEntry'));
   document.getElementById('t-supps')?.addEventListener('click',()=>setScreen('supplements'));
   document.getElementById('t-coach')?.addEventListener('click',()=>setScreen('coach'));
@@ -493,7 +531,15 @@ function openEntryModal(d){
 
 function renderSettings(){
   return `<div style="padding:0 4px"><h1 class="pt" style="padding-top:14px">Settings</h1>
-    <div class="card mt-4"><div style="display:flex;align-items:center;gap:14px"><div style="width:56px;height:56px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:22px">${(state.profile.name||'V')[0].toUpperCase()}</div><div style="flex:1"><div style="font-weight:700;font-size:16px">${escapeHtml(state.profile.name||'You')}</div><div class="tiny muted">Goal: ${state.profile.goalWeight||'—'} kg${state.profile.goalDate?' by '+fmtDate(state.profile.goalDate):''}</div></div><button class="btn btn-secondary btn-sm" id="ed-p">Edit</button></div></div>
+    <div class="card mt-4"><div style="display:flex;align-items:center;gap:14px"><div style="width:56px;height:56px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:22px">${(state.profile.name||'V')[0].toUpperCase()}</div><div style="flex:1"><div style="font-weight:700;font-size:16px">${escapeHtml(state.profile.name||'You')}</div><div class="tiny muted">Goal: ${state.profile.goalWeight||'—'} kg${state.profile.goalDate?' by '+fmtDate(state.profile.goalDate):''}</div></div><button class="btn btn-secondary btn-sm" id="ed-p">Edit</button></div>
+<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border-l)">
+<div class="flabel">AMAZON SHIFT DAYS</div>
+<div class="chip-row" id="shift-chips" style="margin-top:8px">
+${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="chip ${(state.profile.shiftDays||[]).includes(d)?'selected':''}" data-day="${d}" style="padding:8px 14px">${d}</div>`).join('')}
+</div>
+<p class="tiny faint mt-2">Toggle days you work 1:20-11:30 AM. App adjusts targets, workout timing, sleep guidance.</p>
+</div>
+</div>
     <h2 class="sec">SYNC</h2>
     <div class="card">
       <div style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-weight:600">GitHub data repo</div><div class="tiny muted">${state.lastSyncOk?'Synced '+fmtDateTime(state.lastSyncOk):'Not synced yet'}</div></div></div>
@@ -524,6 +570,15 @@ function renderSettings(){
 }
 function bindSettings(){
   document.getElementById('ed-p')?.addEventListener('click',()=>{state.draft={onbStep:1,profile:{...state.profile}};setScreen('onboarding')});
+  document.querySelectorAll('#shift-chips .chip').forEach(c=>c.addEventListener('click',()=>{
+    const d=c.dataset.day;
+    state.profile.shiftDays=state.profile.shiftDays||[];
+    const i=state.profile.shiftDays.indexOf(d);
+    if(i>=0)state.profile.shiftDays.splice(i,1);
+    else state.profile.shiftDays.push(d);
+    saveLocalConfig();
+    c.classList.toggle('selected');
+  }));
   document.getElementById('s-save')?.addEventListener('click',async()=>{state.config.githubOwner=document.getElementById('s-u').value.trim();state.config.githubRepo=document.getElementById('s-r').value.trim();state.config.githubToken=document.getElementById('s-t').value.trim();saveLocalConfig();toast('Saved','success');if(isConfigured()){try{await pullData();toast('Connected ✓','success');render()}catch(e){toast('Saved but sync failed: '+e.message,'error')}}});
   document.getElementById('s-test')?.addEventListener('click',async()=>{const o=document.getElementById('s-u').value.trim(),r=document.getElementById('s-r').value.trim(),t=document.getElementById('s-t').value.trim();if(!o||!r||!t){toast('Fill all fields','error');return}try{const res=await fetch(`https://api.github.com/repos/${o}/${r}`,{headers:{'Authorization':`Bearer ${t}`,'Accept':'application/vnd.github+json'}});if(res.ok){const j=await res.json();toast('✓ '+j.full_name,'success')}else{toast('Error '+res.status,'error')}}catch(e){toast('Network error','error')}});
   document.getElementById('s-csave')?.addEventListener('click',()=>{state.config.claudeApiKey=document.getElementById('s-ck').value.trim();saveLocalConfig();toast('Claude key saved','success');render()});
