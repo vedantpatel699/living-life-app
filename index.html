@@ -1260,7 +1260,7 @@ ${Object.entries(cats).map(([k,v])=>`<div class="chip ${cat===k?'selected':''}" 
 <div id="fp-list" style="overflow-y:auto;flex:1;max-height:55dvh;display:flex;flex-direction:column;gap:6px">
 ${filtered.slice(0,40).map(f=>`<div class="fp-food" data-id="${f.id}" style="background:var(--surface-white);border-radius:var(--r-sm);padding:12px 14px;cursor:pointer;border:1.5px solid ${expanded===f.id?'var(--ink)':'transparent'}">
 <div style="display:flex;justify-content:space-between;align-items:center"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:14px">${escapeHtml(f.name)}</div><div class="tiny muted">${f.kcal} kcal · ${f.protein}g P · per 100g</div></div><div style="font-size:18px;color:var(--muted)">${expanded===f.id?'▾':'▸'}</div></div>
-${expanded===f.id?`<div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">${(f.portions||[{n:'100g',g:100}]).map((p,pi)=>{const kcal=Math.round(f.kcal*p.g/100),prot=(f.protein*p.g/100).toFixed(1);return `<button class="fp-port" data-fid="${f.id}" data-pi="${pi}" data-g="${p.g}" data-kcal="${kcal}" data-prot="${prot}" style="background:var(--surface-cream);border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;font-size:13px"><span style="font-weight:600">${escapeHtml(p.n)}</span><span class="muted">+${kcal} kcal · ${prot}g P</span></button>`}).join('')}</div>`:''}
+${expanded===f.id?`<div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">${(f.portions||[{n:'100g',g:100}]).map((p,pi)=>{const kcal=Math.round(f.kcal*p.g/100),prot=(f.protein*p.g/100).toFixed(1);return `<button class="fp-port" data-fid="${f.id}" data-pi="${pi}" data-g="${p.g}" data-kcal="${kcal}" data-prot="${prot}" style="background:var(--surface-cream);border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;font-size:13px"><span style="font-weight:600">${escapeHtml(p.n)}</span><span class="muted">+${kcal} kcal · ${prot}g P</span></button>`}).join('')}<div style="background:var(--surface-cream);border-radius:8px;padding:10px 12px;display:flex;gap:6px;align-items:center"><span style="font-size:13px;font-weight:600;flex-shrink:0">Custom:</span><input type="number" inputmode="decimal" class="fp-gin" data-fid="${f.id}" placeholder="grams" min="1" step="1" style="flex:1;padding:6px 8px;font-size:13px;border:1px solid var(--border);border-radius:6px;background:white;min-width:0;width:60px"><button class="fp-gadd" data-fid="${f.id}" style="background:var(--cta);color:white;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;flex-shrink:0">+ Add</button></div></div>`:''}
 </div>`).join('')}
 ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found</p></div>':''}
 </div>
@@ -1273,9 +1273,28 @@ ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found
     modal.querySelectorAll('.fp-port').forEach(b=>b.addEventListener('click',()=>{
       const f=[...DB.foods.foods,...(state.data.customFoods||[])].find(x=>x.id===b.dataset.fid);
       const p=f.portions[parseInt(b.dataset.pi,10)];
-      onPick({foodId:f.id,name:f.name,portionName:p.n,grams:p.g,kcal:parseInt(b.dataset.kcal,10),protein:parseFloat(b.dataset.prot)});
+      const g=p.g;
+      const entry={foodId:f.id,name:f.name,portionName:p.n,grams:g,kcal:parseInt(b.dataset.kcal,10),protein:parseFloat(b.dataset.prot)};
+      ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug'].forEach(k=>{if(f[k])entry[k]=Math.round(f[k]*g/100*100)/100});
+      onPick(entry);
       modal.remove();
     }));
+    modal.querySelectorAll('.fp-gadd').forEach(b=>b.addEventListener('click',()=>{
+      const fid=b.dataset.fid;
+      const inp=modal.querySelector('.fp-gin[data-fid="'+fid+'"]');
+      const g=parseFloat(inp.value);
+      if(!g||g<=0){inp.focus();return}
+      const f=[...DB.foods.foods,...(state.data.customFoods||[])].find(x=>x.id===fid);
+      const kcal=Math.round((f.kcal||0)*g/100);
+      const prot=Math.round((f.protein||0)*g/100*10)/10;
+      // Calculate all available nutrients
+      const entry={foodId:f.id,name:f.name,portionName:g+'g (custom)',grams:g,kcal,protein:prot};
+      ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug'].forEach(k=>{if(f[k])entry[k]=Math.round(f[k]*g/100*100)/100});
+      onPick(entry);
+      modal.remove();
+    }));
+    // Enter key on the custom input triggers add
+    modal.querySelectorAll('.fp-gin').forEach(inp=>inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();const btn=modal.querySelector('.fp-gadd[data-fid="'+inp.dataset.fid+'"]');btn?.click()}}));
     modal.querySelector('#fp-custom').addEventListener('click',()=>{
       openCustomFood(food=>{state.data.customFoods=state.data.customFoods||[];state.data.customFoods.push(food);saveLocalData();expanded=food.id;render2()});
     });
