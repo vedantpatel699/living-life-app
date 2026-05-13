@@ -175,23 +175,28 @@ function loadDB(name){
 }
 async function loadAllDB(){await Promise.all(['foods','exercises','supplements','c25k','plan'].map(loadDB))}
 
-// Today's supplement schedule
+// Today's supplement schedule — picks shift schedule on shift days, daily schedule otherwise
 function todaySuppSchedule(){
   if(!DB.supplements)return null;
   const phase=currentPhase(),week=currentWeek();
   const sched=todaySchedule();
-  const isTrainingDay=sched.type==='routine'||sched.type==='c25k';
+  const shift=isShiftDay();
+  const isTrainingDay=sched.type==='routine'||sched.type==='c25k'||shift;
   const isRunDay=sched.type==='c25k';
-  const slots=DB.supplements.dailySchedule.map(slot=>{
+  // On shift days, prefer shiftSchedule if defined
+  const source=(shift&&DB.supplements.shiftSchedule)?DB.supplements.shiftSchedule:DB.supplements.dailySchedule;
+  const slots=source.map(slot=>{
     const items=slot.include.map(id=>{
       const s=DB.supplements.supplements.find(x=>x.id===id);
       if(!s)return null;
-      if(s.phaseFromWeek&&week<s.phaseFromWeek*0+1&&phase<2&&s.id==='electrolytes')return null;
+      // Electrolytes only on actual workout/run days
+      if(s.id==='electrolytes'&&!isTrainingDay)return null;
       if(s.frequency==='training-days-only'&&!isTrainingDay)return null;
       if(s.frequency==='run-days-only'&&!isRunDay)return null;
       return s;
     }).filter(Boolean);
     if(slot.conditional==='training-day'&&!isTrainingDay)return null;
+    if(slot.conditional==='workout-day'&&!isTrainingDay)return null;
     if(items.length===0)return null;
     return{...slot,items};
   }).filter(Boolean);
@@ -1097,7 +1102,7 @@ function renderSupplements(){
   }):SUPPLEMENTS;
   const taken=allItems.filter(s=>supp[s.id]).length;
   const streak=suppStreak();
-  return `<div class="top-bar"><button class="back-btn" id="sp-back">←</button><div class="title-block"><h1>Supplements</h1><div class="subtitle">${fmtDateLong(t)}</div></div></div>
+  return `<div class="top-bar"><button class="back-btn" id="sp-back">←</button><div class="title-block"><h1>Supplements</h1><div class="subtitle">${fmtDateLong(t)} · ${isShiftDay()?'🌙 Shift day schedule':'☀ Off day schedule'}</div></div></div>
 <div style="padding:4px 4px 40px">
 <div class="card-tinted" style="display:flex;align-items:center;gap:16px;margin-top:12px">
 <div style="font-size:32px">🔥</div>
