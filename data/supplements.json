@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-12",
-  "note": "Daily supplement protocol tailored to Vedant — Indian lacto-veg in Canada, BMI ~28, beginner lifter + runner. Doses per SUPPLEMENTS.md evidence base.",
+  "updatedAt": "2026-05-13",
+  "note": "Daily supplement protocol tailored to Vedant \u2014 Indian lacto-veg in Canada, BMI ~28, beginner lifter + runner. Doses per SUPPLEMENTS.md evidence base.",
   "supplements": [
     {
       "id": "creatine",
@@ -19,7 +19,7 @@
       "frequency": "daily",
       "phaseFromWeek": 1,
       "conditional": null,
-      "sideEffects": "Mildly raises serum creatinine on blood tests — tell your GP you supplement.",
+      "sideEffects": "Mildly raises serum creatinine on blood tests \u2014 tell your GP you supplement.",
       "notes": "Skip loading phase. Stir into water, coffee, or shake.",
       "monthlyCostCAD": "8-15"
     },
@@ -59,7 +59,7 @@
       "frequency": "daily",
       "phaseFromWeek": 1,
       "conditional": null,
-      "notes": "Fat-soluble — take with breakfast containing fat (paneer, paratha, nuts).",
+      "notes": "Fat-soluble \u2014 take with breakfast containing fat (paneer, paratha, nuts).",
       "monthlyCostCAD": "2-5"
     },
     {
@@ -69,8 +69,8 @@
       "color": "mint",
       "category": "tier1",
       "purpose": "~62% of vegetarians have low B12. Dairy alone isn't enough.",
-      "dose": "500 µg",
-      "unit": "µg",
+      "dose": "500 \u00b5g",
+      "unit": "\u00b5g",
       "form": "Sublingual or oral tablet",
       "timing": "anytime",
       "scheduleSlot": "morning",
@@ -78,7 +78,7 @@
       "frequency": "daily",
       "phaseFromWeek": 1,
       "conditional": null,
-      "altSchedule": "2500 µg once weekly works too",
+      "altSchedule": "2500 \u00b5g once weekly works too",
       "monthlyCostCAD": "3-8"
     },
     {
@@ -98,7 +98,7 @@
       "frequency": "daily",
       "phaseFromWeek": 1,
       "conditional": null,
-      "notes": "Verify EPA+DHA totals on label — don't fall for products quoting only total omega-3 (mostly flax-ALA filler).",
+      "notes": "Verify EPA+DHA totals on label \u2014 don't fall for products quoting only total omega-3 (mostly flax-ALA filler).",
       "monthlyCostCAD": "15-25"
     },
     {
@@ -123,7 +123,7 @@
     {
       "id": "caffeine",
       "name": "Caffeine (coffee or pill)",
-      "icon": "☕",
+      "icon": "\u2615",
       "color": "coral",
       "category": "tier3",
       "purpose": "Strong evidence for endurance + sprint performance. 3-6 mg/kg pre-workout.",
@@ -144,35 +144,97 @@
     {
       "slot": "morning",
       "time": "with breakfast (~7-9 AM)",
-      "icon": "☀",
+      "icon": "\u2600",
       "label": "Morning",
-      "include": ["d3", "b12", "omega3"]
+      "include": [
+        "d3",
+        "b12",
+        "omega3"
+      ]
     },
     {
       "slot": "pre-workout",
       "time": "~45 min before workout (training days only)",
-      "icon": "⚡",
+      "icon": "\u26a1",
       "label": "Pre-workout",
-      "include": ["caffeine", "electrolytes"],
+      "include": [
+        "caffeine",
+        "electrolytes"
+      ],
       "conditional": "training-day"
     },
     {
       "slot": "post-workout",
       "time": "within 1 hour after workout",
-      "icon": "💪",
+      "icon": "\ud83d\udcaa",
       "label": "Post-workout",
-      "include": ["creatine", "whey"]
+      "include": [
+        "creatine",
+        "whey"
+      ]
     }
   ],
   "weekly": [
     {
       "id": "bloodtest",
       "name": "Quarterly blood test",
-      "icon": "🩸",
+      "icon": "\ud83e\ude78",
       "frequency": "every 3 months",
-      "tests": ["25-hydroxyvitamin D", "B12 + homocysteine", "Ferritin", "TSH", "HbA1c", "Lipid panel", "LFT", "Creatinine + eGFR"],
+      "tests": [
+        "25-hydroxyvitamin D",
+        "B12 + homocysteine",
+        "Ferritin",
+        "TSH",
+        "HbA1c",
+        "Lipid panel",
+        "LFT",
+        "Creatinine + eGFR"
+      ],
       "where": "LifeLabs, Dynacare, or via GP requisition",
       "costCAD": "30-80 per test out-of-pocket; covered if GP orders"
     }
-  ]
+  ],
+  "shiftSchedule": [
+    {
+      "slot": "wake-up",
+      "time": "~12:30 AM (your wake-up)",
+      "icon": "\ud83c\udf19",
+      "label": "Wake-up",
+      "include": [
+        "creatine",
+        "b12"
+      ]
+    },
+    {
+      "slot": "mid-shift",
+      "time": "~5:30 AM (mid-shift meal)",
+      "icon": "\ud83e\udd6a",
+      "label": "Mid-shift meal",
+      "include": [
+        "d3",
+        "omega3",
+        "whey"
+      ]
+    },
+    {
+      "slot": "shift-caffeine",
+      "time": "first 4h of shift only (cutoff 5:30 AM)",
+      "icon": "\u2615",
+      "label": "Shift caffeine",
+      "include": [
+        "caffeine"
+      ]
+    },
+    {
+      "slot": "pre-workout",
+      "time": "~9:00 PM (pre-9:30 PM workout)",
+      "icon": "\ud83d\udcaa",
+      "label": "Pre-workout",
+      "include": [
+        "electrolytes"
+      ],
+      "conditional": "workout-day"
+    }
+  ],
+  "shiftNote": "Shift days use a flipped schedule. Caffeine cutoff is 5:30 AM (6h before 12:30 PM sleep). D3+omega3 with mid-shift meal (has fat). Creatine with wake-up. Whey with mid-shift OR post-workout (10 PM)."
 }
