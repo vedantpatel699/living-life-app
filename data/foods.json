@@ -268,6 +268,49 @@
         "confidence": "high",
         "note": "Prompt specifies 12 grapes; average grape weight is ~5g per unit."
       }
+    },
+    {
+      "id": "tim-hortons-double-chocolate-donut",
+      "name": "Tim Hortons Double Chocolate Donut",
+      "category": "sweet",
+      "kcal": 437,
+      "protein": 4.2,
+      "carbs": 39.4,
+      "fat": 29.6,
+      "fiber": 1.4,
+      "sat_fat": 14.1,
+      "sugar": 19.7,
+      "sodium_mg": 296,
+      "potassium_mg": 221,
+      "calcium_mg": 28,
+      "iron_mg": 3.8,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (71g)",
+          "g": 71,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 serving (71g)",
+          "g": 71
+        },
+        {
+          "n": "100g portion (100g)",
+          "g": 100
+        }
+      ],
+      "photoEstimate": {
+        "grams": 71,
+        "confidence": "high",
+        "note": "Standard Tim Hortons donut serving size is approximately 71g for cake-based donuts."
+      }
     }
   ]
 }
