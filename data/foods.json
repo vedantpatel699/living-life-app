@@ -401,6 +401,49 @@
         "confidence": "high",
         "note": "The user consumed 5 pieces; labels image_746673.png and image_74665b.png indicate a 30g serving size for 2 pieces."
       }
+    },
+    {
+      "id": "besan-laddu",
+      "name": "Besan Laddu",
+      "category": "sweet",
+      "kcal": 492,
+      "protein": 7.4,
+      "carbs": 56.2,
+      "fat": 26.5,
+      "fiber": 3.1,
+      "sat_fat": 15.2,
+      "sugar": 38.4,
+      "sodium_mg": 45,
+      "potassium_mg": 210,
+      "calcium_mg": 28,
+      "iron_mg": 1.8,
+      "magnesium_mg": 42,
+      "zinc_mg": 0.9,
+      "vit_a_iu": 320,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 84,
+      "portions": [
+        {
+          "n": "as in photo (70g)",
+          "g": 70,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 piece (35g)",
+          "g": 35
+        },
+        {
+          "n": "small serving (105g)",
+          "g": 105
+        }
+      ],
+      "photoEstimate": {
+        "grams": 70,
+        "confidence": "high",
+        "note": "Two standard-sized laddus are visible in the container, typically weighing approximately 35g each."
+      }
     }
   ]
 }
