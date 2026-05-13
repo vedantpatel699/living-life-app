@@ -1261,9 +1261,9 @@ ${Object.entries(cats).map(([k,v])=>`<div class="chip ${cat===k?'selected':''}" 
 ${filtered.slice(0,40).map(f=>`<div class="fp-food" data-id="${f.id}" style="background:var(--surface-white);border-radius:var(--r-sm);padding:12px 14px;cursor:pointer;border:1.5px solid ${expanded===f.id?'var(--ink)':'transparent'}">
 <div style="display:flex;justify-content:space-between;align-items:center"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:14px">${escapeHtml(f.name)}</div><div class="tiny muted">${f.kcal} kcal · ${f.protein}g P · per 100g</div></div><div style="font-size:18px;color:var(--muted)">${expanded===f.id?'▾':'▸'}</div></div>
 ${expanded===f.id?(()=>{
-  // Pick a single representative serving: prefer fromPhoto, else first non-100g, else first
+  // Pick the standard "1 serving" portion: first NON-photo, NON-100g entry; else fallback
   const all=(f.portions||[{n:'100g',g:100}]);
-  let serving=all.find(p=>p.fromPhoto)||all.find(p=>p.g!==100)||all[0];
+  let serving=all.find(p=>!p.fromPhoto&&p.g!==100)||all.find(p=>!p.fromPhoto)||all[0];
   const pi=all.indexOf(serving);
   const kcal=Math.round((f.kcal||0)*serving.g/100),prot=((f.protein||0)*serving.g/100).toFixed(1);
   return `<div class="fp-expand" style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
