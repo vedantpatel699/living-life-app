@@ -1,1097 +1,1557 @@
 {
- "version": 2,
- "updatedAt": "2026-05-13",
- "note": "Indian lacto-vegetarian food database. Starts empty — Vedant builds it via Gemini food-photo recognition. See FOOD_RECOGNITION.md.",
- "categories": {
-  "grain": "Grains & Breads",
-  "lentil": "Lentils & Legumes",
-  "dairy": "Dairy",
-  "vegetable": "Vegetables",
-  "fruit": "Fruits",
-  "nuts": "Nuts & Seeds",
-  "snack": "Snacks",
-  "sweet": "Sweets",
-  "beverage": "Beverages",
-  "supplement": "Protein Supplements",
-  "prepared": "Prepared Dishes",
-  "fat": "Fats & Oils",
-  "other": "Other"
- },
- "nutrientSchema": {
-  "kcal": {
-   "unit": "kcal",
-   "label": "Energy"
+  "version": 3,
+  "updatedAt": "2026-05-12",
+  "note": "Indian lacto-vegetarian food database (v3 schema: leucine, selenium, GI, source, prep, tags). See FOOD_RECOGNITION.md.",
+  "categories": {
+    "grain": "Grains & Breads",
+    "lentil": "Lentils & Legumes",
+    "dairy": "Dairy",
+    "vegetable": "Vegetables",
+    "fruit": "Fruits",
+    "nuts": "Nuts & Seeds",
+    "snack": "Snacks",
+    "sweet": "Sweets",
+    "beverage": "Beverages",
+    "supplement": "Protein Supplements",
+    "prepared": "Prepared Dishes",
+    "fat": "Fats & Oils",
+    "other": "Other"
   },
-  "protein": {
-   "unit": "g",
-   "label": "Protein"
-  },
-  "carbs": {
-   "unit": "g",
-   "label": "Carbs"
-  },
-  "fat": {
-   "unit": "g",
-   "label": "Fat"
-  },
-  "fiber": {
-   "unit": "g",
-   "label": "Fiber"
-  },
-  "sat_fat": {
-   "unit": "g",
-   "label": "Saturated fat"
-  },
-  "sugar": {
-   "unit": "g",
-   "label": "Sugar"
-  },
-  "sodium_mg": {
-   "unit": "mg",
-   "label": "Sodium"
-  },
-  "potassium_mg": {
-   "unit": "mg",
-   "label": "Potassium"
-  },
-  "calcium_mg": {
-   "unit": "mg",
-   "label": "Calcium"
-  },
-  "iron_mg": {
-   "unit": "mg",
-   "label": "Iron"
-  },
-  "magnesium_mg": {
-   "unit": "mg",
-   "label": "Magnesium"
-  },
-  "zinc_mg": {
-   "unit": "mg",
-   "label": "Zinc"
-  },
-  "vit_a_iu": {
-   "unit": "IU",
-   "label": "Vitamin A"
-  },
-  "vit_c_mg": {
-   "unit": "mg",
-   "label": "Vitamin C"
-  },
-  "vit_d_iu": {
-   "unit": "IU",
-   "label": "Vitamin D"
-  },
-  "vit_b12_ug": {
-   "unit": "µg",
-   "label": "Vitamin B12"
-  },
-  "folate_ug": {
-   "unit": "µg",
-   "label": "Folate"
-  }
- },
- "dv": {
-  "kcal": {
-   "target": 2000,
-   "max": 2300,
-   "label": "kcal (fat-loss target)"
-  },
-  "protein": {
-   "target": 130,
-   "min": 110,
-   "max": 160,
-   "label": "g (1.6-1.8 g/kg)"
-  },
-  "carbs": {
-   "target": 225,
-   "min": 130,
-   "max": 325,
-   "label": "g"
-  },
-  "fat": {
-   "target": 65,
-   "min": 45,
-   "max": 80,
-   "label": "g"
-  },
-  "fiber": {
-   "target": 38,
-   "min": 30,
-   "label": "g"
-  },
-  "sat_fat": {
-   "target": 20,
-   "max": 22,
-   "label": "g (≤10% kcal)"
-  },
-  "sugar": {
-   "target": 50,
-   "max": 50,
-   "label": "g added"
-  },
-  "sodium_mg": {
-   "target": 2000,
-   "max": 2300,
-   "label": "mg"
-  },
-  "potassium_mg": {
-   "target": 3400,
-   "min": 2500,
-   "label": "mg"
-  },
-  "calcium_mg": {
-   "target": 1000,
-   "label": "mg"
-  },
-  "iron_mg": {
-   "target": 8,
-   "label": "mg (adult male)"
-  },
-  "magnesium_mg": {
-   "target": 400,
-   "label": "mg"
-  },
-  "zinc_mg": {
-   "target": 11,
-   "label": "mg"
-  },
-  "vit_a_iu": {
-   "target": 3000,
-   "label": "IU"
-  },
-  "vit_c_mg": {
-   "target": 90,
-   "label": "mg"
-  },
-  "vit_d_iu": {
-   "target": 1500,
-   "min": 600,
-   "label": "IU (Canadian context)"
-  },
-  "vit_b12_ug": {
-   "target": 2.4,
-   "label": "µg (veg = supplement)"
-  },
-  "folate_ug": {
-   "target": 400,
-   "label": "µg"
-  }
- },
- "foods": [
-  {
-   "id": "mccain-masala-fries",
-   "name": "McCain Masala Fries",
-   "category": "prepared",
-   "kcal": 165,
-   "protein": 2.4,
-   "carbs": 24.7,
-   "fat": 8.2,
-   "fiber": 2.4,
-   "sat_fat": 0.6,
-   "sugar": 1.2,
-   "sodium_mg": 376,
-   "potassium_mg": 294,
-   "calcium_mg": 12,
-   "iron_mg": 0.6,
-   "magnesium_mg": 0,
-   "zinc_mg": 0,
-   "vit_a_iu": 0,
-   "vit_c_mg": 0,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 0,
-   "portions": [
-    {
-     "n": "as in photo (85g)",
-     "g": 85,
-     "fromPhoto": true
+  "nutrientSchema": {
+    "kcal": {
+      "unit": "kcal",
+      "label": "Energy"
     },
-    {
-     "n": "1 serving (85g)",
-     "g": 85
+    "protein": {
+      "unit": "g",
+      "label": "Protein"
     },
-    {
-     "n": "half plate (~30 fries) (115g)",
-     "g": 115
+    "carbs": {
+      "unit": "g",
+      "label": "Carbs"
     },
-    {
-     "n": "full bag (650g)",
-     "g": 650
+    "fat": {
+      "unit": "g",
+      "label": "Fat"
+    },
+    "fiber": {
+      "unit": "g",
+      "label": "Fiber"
+    },
+    "sat_fat": {
+      "unit": "g",
+      "label": "Saturated fat"
+    },
+    "sugar": {
+      "unit": "g",
+      "label": "Sugar"
+    },
+    "sodium_mg": {
+      "unit": "mg",
+      "label": "Sodium"
+    },
+    "potassium_mg": {
+      "unit": "mg",
+      "label": "Potassium"
+    },
+    "calcium_mg": {
+      "unit": "mg",
+      "label": "Calcium"
+    },
+    "iron_mg": {
+      "unit": "mg",
+      "label": "Iron"
+    },
+    "magnesium_mg": {
+      "unit": "mg",
+      "label": "Magnesium"
+    },
+    "zinc_mg": {
+      "unit": "mg",
+      "label": "Zinc"
+    },
+    "vit_a_iu": {
+      "unit": "IU",
+      "label": "Vitamin A"
+    },
+    "vit_c_mg": {
+      "unit": "mg",
+      "label": "Vitamin C"
+    },
+    "vit_d_iu": {
+      "unit": "IU",
+      "label": "Vitamin D"
+    },
+    "vit_b12_ug": {
+      "unit": "µg",
+      "label": "Vitamin B12"
+    },
+    "folate_ug": {
+      "unit": "µg",
+      "label": "Folate"
+    },
+    "leucine_g": {
+      "unit": "g",
+      "label": "Leucine"
+    },
+    "selenium_ug": {
+      "unit": "µg",
+      "label": "Selenium"
+    },
+    "glycemic_index": {
+      "unit": "GI",
+      "label": "Glycemic Index"
     }
-   ],
-   "photoEstimate": {
-    "grams": 85,
-    "confidence": "high",
-    "note": "Standard frozen fry serving size is ~85g; 30 fries typically weigh between 85g and 120g depending on thickness."
-   }
   },
-  {
-   "id": "green-grapes",
-   "name": "Green Grapes",
-   "category": "fruit",
-   "kcal": 69,
-   "protein": 0.72,
-   "carbs": 18.1,
-   "fat": 0.16,
-   "fiber": 0.9,
-   "sat_fat": 0.05,
-   "sugar": 15.5,
-   "sodium_mg": 2,
-   "potassium_mg": 191,
-   "calcium_mg": 10,
-   "iron_mg": 0.36,
-   "magnesium_mg": 7,
-   "zinc_mg": 0.07,
-   "vit_a_iu": 66,
-   "vit_c_mg": 3.2,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 2,
-   "portions": [
-    {
-     "n": "as in photo (12 grapes)",
-     "g": 60,
-     "fromPhoto": true
+  "dv": {
+    "kcal": {
+      "target": 2000,
+      "max": 2300,
+      "label": "kcal (fat-loss target)"
     },
-    {
-     "n": "1 cup (approx. 30 grapes)",
-     "g": 151
+    "protein": {
+      "target": 130,
+      "min": 110,
+      "max": 160,
+      "label": "g (1.6-1.8 g/kg)"
     },
-    {
-     "n": "1 serving (approx. 20 grapes)",
-     "g": 100
+    "carbs": {
+      "target": 225,
+      "min": 130,
+      "max": 325,
+      "label": "g"
+    },
+    "fat": {
+      "target": 65,
+      "min": 45,
+      "max": 80,
+      "label": "g"
+    },
+    "fiber": {
+      "target": 38,
+      "min": 30,
+      "label": "g"
+    },
+    "sat_fat": {
+      "target": 20,
+      "max": 22,
+      "label": "g (≤10% kcal)"
+    },
+    "sugar": {
+      "target": 50,
+      "max": 50,
+      "label": "g added"
+    },
+    "sodium_mg": {
+      "target": 2000,
+      "max": 2300,
+      "label": "mg"
+    },
+    "potassium_mg": {
+      "target": 3400,
+      "min": 2500,
+      "label": "mg"
+    },
+    "calcium_mg": {
+      "target": 1000,
+      "label": "mg"
+    },
+    "iron_mg": {
+      "target": 8,
+      "label": "mg (adult male)"
+    },
+    "magnesium_mg": {
+      "target": 400,
+      "label": "mg"
+    },
+    "zinc_mg": {
+      "target": 11,
+      "label": "mg"
+    },
+    "vit_a_iu": {
+      "target": 3000,
+      "label": "IU"
+    },
+    "vit_c_mg": {
+      "target": 90,
+      "label": "mg"
+    },
+    "vit_d_iu": {
+      "target": 1500,
+      "min": 600,
+      "label": "IU (Canadian context)"
+    },
+    "vit_b12_ug": {
+      "target": 2.4,
+      "label": "µg (veg = supplement)"
+    },
+    "folate_ug": {
+      "target": 400,
+      "label": "µg"
+    },
+    "leucine_g": {
+      "target": 10,
+      "min": 8,
+      "label": "g (2.5g × 4 meals)"
+    },
+    "selenium_ug": {
+      "target": 55,
+      "label": "µg"
+    },
+    "glycemic_load": {
+      "target": 100,
+      "max": 120,
+      "label": "daily GL"
     }
-   ],
-   "photoEstimate": {
-    "grams": 60,
-    "confidence": "high",
-    "note": "Prompt specifies 12 grapes; average grape weight is ~5g per unit."
-   }
   },
-  {
-   "id": "tim-hortons-double-chocolate-donut",
-   "name": "Tim Hortons Double Chocolate Donut",
-   "category": "sweet",
-   "kcal": 437,
-   "protein": 4.2,
-   "carbs": 39.4,
-   "fat": 29.6,
-   "fiber": 1.4,
-   "sat_fat": 14.1,
-   "sugar": 19.7,
-   "sodium_mg": 296,
-   "potassium_mg": 221,
-   "calcium_mg": 28,
-   "iron_mg": 3.8,
-   "magnesium_mg": 0,
-   "zinc_mg": 0,
-   "vit_a_iu": 0,
-   "vit_c_mg": 0,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 0,
-   "portions": [
+  "foods": [
     {
-     "n": "as in photo (71g)",
-     "g": 71,
-     "fromPhoto": true
+      "id": "mccain-masala-fries",
+      "name": "McCain Masala Fries",
+      "category": "prepared",
+      "kcal": 165,
+      "protein": 2.4,
+      "carbs": 24.7,
+      "fat": 8.2,
+      "fiber": 2.4,
+      "sat_fat": 0.6,
+      "sugar": 1.2,
+      "sodium_mg": 376,
+      "potassium_mg": 294,
+      "calcium_mg": 12,
+      "iron_mg": 0.6,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (85g)",
+          "g": 85,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 serving (85g)",
+          "g": 85
+        },
+        {
+          "n": "half plate (~30 fries) (115g)",
+          "g": 115
+        },
+        {
+          "n": "full bag (650g)",
+          "g": 650
+        }
+      ],
+      "photoEstimate": {
+        "grams": 85,
+        "confidence": "high",
+        "note": "Standard frozen fry serving size is ~85g; 30 fries typically weigh between 85g and 120g depending on thickness."
+      },
+      "leucine_g": 0.14,
+      "selenium_ug": 0.5,
+      "glycemic_index": 75,
+      "source": {
+        "type": "label",
+        "citation": "McCain Masala Fries package, India",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "McCain",
+      "tags": [
+        "high_gi",
+        "fried",
+        "low_protein",
+        "frozen"
+      ]
     },
     {
-     "n": "1 serving (71g)",
-     "g": 71
+      "id": "green-grapes",
+      "name": "Green Grapes",
+      "category": "fruit",
+      "kcal": 69,
+      "protein": 0.72,
+      "carbs": 18.1,
+      "fat": 0.16,
+      "fiber": 0.9,
+      "sat_fat": 0.05,
+      "sugar": 15.5,
+      "sodium_mg": 2,
+      "potassium_mg": 191,
+      "calcium_mg": 10,
+      "iron_mg": 0.36,
+      "magnesium_mg": 7,
+      "zinc_mg": 0.07,
+      "vit_a_iu": 66,
+      "vit_c_mg": 3.2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 2,
+      "portions": [
+        {
+          "n": "as in photo (12 grapes)",
+          "g": 60,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 cup (approx. 30 grapes)",
+          "g": 151
+        },
+        {
+          "n": "1 serving (approx. 20 grapes)",
+          "g": 100
+        }
+      ],
+      "photoEstimate": {
+        "grams": 60,
+        "confidence": "high",
+        "note": "Prompt specifies 12 grapes; average grape weight is ~5g per unit."
+      },
+      "leucine_g": 0.03,
+      "selenium_ug": 0.1,
+      "glycemic_index": 46,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 174683 (grapes, raw, green)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "fruit",
+        "low_protein",
+        "medium_gi"
+      ]
     },
     {
-     "n": "100g portion (100g)",
-     "g": 100
+      "id": "tim-hortons-double-chocolate-donut",
+      "name": "Tim Hortons Double Chocolate Donut",
+      "category": "sweet",
+      "kcal": 437,
+      "protein": 4.2,
+      "carbs": 39.4,
+      "fat": 29.6,
+      "fiber": 1.4,
+      "sat_fat": 14.1,
+      "sugar": 19.7,
+      "sodium_mg": 296,
+      "potassium_mg": 221,
+      "calcium_mg": 28,
+      "iron_mg": 3.8,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (71g)",
+          "g": 71,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 serving (71g)",
+          "g": 71
+        },
+        {
+          "n": "100g portion (100g)",
+          "g": 100
+        }
+      ],
+      "photoEstimate": {
+        "grams": 71,
+        "confidence": "high",
+        "note": "Standard Tim Hortons donut serving size is approximately 71g for cake-based donuts."
+      },
+      "leucine_g": 0.3,
+      "selenium_ug": 15,
+      "glycemic_index": 75,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons nutrition guide approximation",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "high_sugar",
+        "high_gi",
+        "low_protein",
+        "ultra_processed"
+      ]
+    },
+    {
+      "id": "tim-hortons-vanilla-cold-brew-medium",
+      "name": "Tim Hortons Vanilla Cold Brew",
+      "category": "beverage",
+      "kcal": 35,
+      "protein": 0.2,
+      "carbs": 7.3,
+      "fat": 0.6,
+      "fiber": 0,
+      "sat_fat": 0.4,
+      "sugar": 7.0,
+      "sodium_mg": 13,
+      "potassium_mg": 40,
+      "calcium_mg": 8,
+      "iron_mg": 0,
+      "magnesium_mg": 2,
+      "zinc_mg": 0,
+      "vit_a_iu": 15,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (447g)",
+          "g": 447,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 medium cup (447g)",
+          "g": 447
+        },
+        {
+          "n": "1 small cup (286g)",
+          "g": 286
+        },
+        {
+          "n": "1 large cup (574g)",
+          "g": 574
+        }
+      ],
+      "photoEstimate": {
+        "grams": 447,
+        "confidence": "high",
+        "note": "Standard Tim Hortons medium cold brew volume is approximately 15 fluid ounces (447ml/g)."
+      },
+      "leucine_g": 0.02,
+      "selenium_ug": 0.1,
+      "glycemic_index": null,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons nutrition guide",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "uncooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "beverage",
+        "added_sugar"
+      ]
+    },
+    {
+      "id": "vadilal-veg-spring-rolls",
+      "name": "Vadilal Veg Spring Rolls",
+      "category": "prepared",
+      "kcal": 192,
+      "protein": 2.8,
+      "carbs": 40.9,
+      "fat": 1.9,
+      "fiber": 2.7,
+      "sat_fat": 1.6,
+      "sugar": 8.3,
+      "sodium_mg": 207,
+      "potassium_mg": 86.7,
+      "calcium_mg": 293.3,
+      "iron_mg": 3.0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "5 pieces (75g)",
+          "g": 75,
+          "fromPhoto": true
+        },
+        {
+          "n": "2 pieces (30g)",
+          "g": 30
+        },
+        {
+          "n": "1 full pack (300g)",
+          "g": 300
+        }
+      ],
+      "photoEstimate": {
+        "grams": 75,
+        "confidence": "high",
+        "note": "The user consumed 5 pieces; labels image_746673.png and image_74665b.png indicate a 30g serving size for 2 pieces."
+      },
+      "leucine_g": 0.2,
+      "selenium_ug": 10,
+      "glycemic_index": 70,
+      "source": {
+        "type": "label",
+        "citation": "Vadilal Veg Spring Rolls package",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": "Vadilal",
+      "tags": [
+        "frozen",
+        "fried",
+        "high_gi"
+      ]
+    },
+    {
+      "id": "besan-laddu",
+      "name": "Besan Laddu",
+      "category": "sweet",
+      "kcal": 492,
+      "protein": 7.4,
+      "carbs": 56.2,
+      "fat": 26.5,
+      "fiber": 3.1,
+      "sat_fat": 15.2,
+      "sugar": 38.4,
+      "sodium_mg": 45,
+      "potassium_mg": 210,
+      "calcium_mg": 28,
+      "iron_mg": 1.8,
+      "magnesium_mg": 42,
+      "zinc_mg": 0.9,
+      "vit_a_iu": 320,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 84,
+      "portions": [
+        {
+          "n": "as in photo (70g)",
+          "g": 70,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 piece (35g)",
+          "g": 35
+        },
+        {
+          "n": "small serving (105g)",
+          "g": 105
+        }
+      ],
+      "photoEstimate": {
+        "grams": 70,
+        "confidence": "high",
+        "note": "Two standard-sized laddus are visible in the container, typically weighing approximately 35g each."
+      },
+      "leucine_g": 0.56,
+      "selenium_ug": 9,
+      "glycemic_index": 52,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 besan laddu (ghee, sugar, besan)",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "roasted",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "indian_sweet",
+        "high_sugar",
+        "high_fat",
+        "legume"
+      ]
+    },
+    {
+      "id": "doritos-sweet-heat-chili",
+      "name": "Doritos Sweet Heat Chili",
+      "category": "snack",
+      "kcal": 494,
+      "protein": 7.1,
+      "carbs": 63.5,
+      "fat": 24.7,
+      "fiber": 3.5,
+      "sat_fat": 3.5,
+      "sugar": 3.5,
+      "sodium_mg": 600,
+      "potassium_mg": 212,
+      "calcium_mg": 141,
+      "iron_mg": 0.6,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (85g)",
+          "g": 85,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 snack bag (28g)",
+          "g": 28
+        },
+        {
+          "n": "1 large bowl (150g)",
+          "g": 150
+        }
+      ],
+      "photoEstimate": {
+        "grams": 85,
+        "confidence": "medium",
+        "note": "Standard cereal-sized bowl typically holds approximately 3 servings of tortilla chips when full."
+      },
+      "leucine_g": 0.53,
+      "selenium_ug": 4,
+      "glycemic_index": 72,
+      "source": {
+        "type": "label",
+        "citation": "Frito-Lay Doritos Sweet Heat Chili pack",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Doritos",
+      "tags": [
+        "snack",
+        "high_sodium",
+        "high_gi",
+        "ultra_processed"
+      ]
+    },
+    {
+      "id": "dal-dhokli-toor",
+      "name": "Dal Dhokli (Toor Dal)",
+      "category": "prepared",
+      "kcal": 142,
+      "protein": 5.2,
+      "carbs": 23.5,
+      "fat": 3.8,
+      "fiber": 4.2,
+      "sat_fat": 1.2,
+      "sugar": 1.5,
+      "sodium_mg": 290,
+      "potassium_mg": 195,
+      "calcium_mg": 38,
+      "iron_mg": 1.4,
+      "magnesium_mg": 45,
+      "zinc_mg": 0.8,
+      "vit_a_iu": 135,
+      "vit_c_mg": 1.8,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 32,
+      "portions": [
+        {
+          "n": "as in photo (380g)",
+          "g": 380,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        },
+        {
+          "n": "1 bowl (250g)",
+          "g": 250
+        }
+      ],
+      "photoEstimate": {
+        "grams": 380,
+        "confidence": "medium",
+        "note": "Image a941d5c5-0396-47fb-b2f6-74f6db6050ca shows a standard 18oz rectangular glass container approximately 75% full, measured against the visible spoon."
+      },
+      "leucine_g": 0.39,
+      "selenium_ug": 12,
+      "glycemic_index": 52,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 dal dhokli (toor + wheat)",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "complete",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "complete_protein",
+        "complementary",
+        "home_cooked"
+      ]
+    },
+    {
+      "id": "calgary-tap-water",
+      "name": "Calgary Tap Water",
+      "category": "beverage",
+      "kcal": 0,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 0,
+      "sodium_mg": 2,
+      "potassium_mg": 1,
+      "calcium_mg": 56,
+      "iron_mg": 0,
+      "magnesium_mg": 16,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "1 glass (250ml)",
+          "g": 250
+        },
+        {
+          "n": "1 bottle (500ml)",
+          "g": 500
+        },
+        {
+          "n": "1 cup (240ml)",
+          "g": 240
+        },
+        {
+          "n": "1 liter (1000ml)",
+          "g": 1000
+        }
+      ],
+      "photoEstimate": {
+        "grams": 250,
+        "confidence": "high",
+        "note": "Standard 250ml glass of clear liquid; water density 1g/ml."
+      },
+      "leucine_g": 0,
+      "selenium_ug": 0,
+      "glycemic_index": null,
+      "source": {
+        "type": "label",
+        "citation": "City of Calgary water quality report 2024",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "water",
+        "beverage",
+        "zero_kcal"
+      ]
+    },
+    {
+      "id": "vachon-mega-brownie-candies",
+      "name": "Vachon Mega Brownie with Candies",
+      "category": "sweet",
+      "kcal": 458,
+      "protein": 4.7,
+      "carbs": 66.4,
+      "fat": 19.6,
+      "fiber": 2.8,
+      "sat_fat": 3.7,
+      "sugar": 47.7,
+      "sodium_mg": 402,
+      "potassium_mg": 140,
+      "calcium_mg": 19,
+      "iron_mg": 3.3,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (107g)",
+          "g": 107,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 brownie (107g)",
+          "g": 107
+        },
+        {
+          "n": "half brownie (53.5g)",
+          "g": 53.5
+        }
+      ],
+      "photoEstimate": {
+        "grams": 107,
+        "confidence": "high",
+        "note": "The packaging in file 9e9b4c33-3127-46b3-ba8d-f3d60996173e explicitly states the net weight is 107g."
+      },
+      "leucine_g": 0.35,
+      "selenium_ug": 10,
+      "glycemic_index": 70,
+      "source": {
+        "type": "label",
+        "citation": "Vachon Mega Brownie pack",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": "Vachon",
+      "tags": [
+        "packaged_sweet",
+        "high_sugar",
+        "ultra_processed"
+      ]
+    },
+    {
+      "id": "lays-chile-limon-chips",
+      "name": "Lay's Chile Limón Flavour Chips",
+      "category": "snack",
+      "kcal": 536,
+      "protein": 7.1,
+      "carbs": 53.6,
+      "fat": 32.1,
+      "fiber": 3.6,
+      "sat_fat": 10.7,
+      "sugar": 3.6,
+      "sodium_mg": 679,
+      "potassium_mg": 1214,
+      "calcium_mg": 0,
+      "iron_mg": 1.3,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (50g)",
+          "g": 50,
+          "fromPhoto": true
+        },
+        {
+          "n": "small bag (28g)",
+          "g": 28
+        },
+        {
+          "n": "large bag (165g)",
+          "g": 165
+        }
+      ],
+      "photoEstimate": {
+        "grams": 50,
+        "confidence": "medium",
+        "note": "The bag in file 8be7e788-b4ea-4d33-9cf2-dea6fe104cee is a standard individual snack size, typically ranging from 40g to 55g based on hand scale."
+      },
+      "leucine_g": 0.43,
+      "selenium_ug": 3,
+      "glycemic_index": 75,
+      "source": {
+        "type": "label",
+        "citation": "Lay's Chile Limón pack",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Lay's",
+      "tags": [
+        "snack",
+        "fried",
+        "high_sodium",
+        "ultra_processed",
+        "high_gi"
+      ]
+    },
+    {
+      "id": "sqwincher-zero-qwikstik-orange",
+      "name": "Sqwincher Zero QwikStik Orange",
+      "category": "beverage",
+      "kcal": 167,
+      "protein": 0,
+      "carbs": 33.3,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 0,
+      "sodium_mg": 1333,
+      "potassium_mg": 1167,
+      "calcium_mg": 0,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 400,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (3g)",
+          "g": 3,
+          "fromPhoto": true
+        },
+        {
+          "n": "two sticks (6g)",
+          "g": 6
+        },
+        {
+          "n": "1 stick in 500ml water (503g)",
+          "g": 503
+        }
+      ],
+      "photoEstimate": {
+        "grams": 3,
+        "confidence": "high",
+        "note": "The packaging explicitly states a net weight of 3g."
+      },
+      "leucine_g": 0,
+      "selenium_ug": 0,
+      "glycemic_index": null,
+      "source": {
+        "type": "label",
+        "citation": "Sqwincher Zero QwikStik label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "uncooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "Sqwincher",
+      "tags": [
+        "electrolyte",
+        "beverage",
+        "sugar_free",
+        "post_shift_anchor"
+      ]
+    },
+    {
+      "id": "aw-masala-veggie-burger",
+      "name": "A&W Masala Veggie Burger",
+      "category": "prepared",
+      "kcal": 222,
+      "protein": 5.4,
+      "carbs": 26.6,
+      "fat": 10.4,
+      "fiber": 2.3,
+      "sat_fat": 1.4,
+      "sugar": 4.5,
+      "sodium_mg": 482,
+      "potassium_mg": 140,
+      "calcium_mg": 36,
+      "iron_mg": 1.6,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 2.7,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (222g)",
+          "g": 222,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 burger (222g)",
+          "g": 222
+        },
+        {
+          "n": "half burger (111g)",
+          "g": 111
+        }
+      ],
+      "photoEstimate": {
+        "grams": 222,
+        "confidence": "high",
+        "note": "Receipt 899e0b40-2165-4681-9d5c-fcb30eaea560 lists 1 Masala Veggie; standard A&W serving size is approximately 222g."
+      },
+      "leucine_g": 0.43,
+      "selenium_ug": 15,
+      "glycemic_index": 60,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "A&W Canada Masala Veggie Burger estimate",
+        "confidence": "low"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": "A&W",
+      "tags": [
+        "restaurant",
+        "veggie_burger",
+        "low_confidence"
+      ]
+    },
+    {
+      "id": "aw-spicy-piri-potato-buddy",
+      "name": "A&W Spicy Piri Potato Buddy",
+      "category": "prepared",
+      "kcal": 285,
+      "protein": 4.6,
+      "carbs": 29.2,
+      "fat": 16.9,
+      "fiber": 2.3,
+      "sat_fat": 2.3,
+      "sugar": 3.1,
+      "sodium_mg": 531,
+      "potassium_mg": 315,
+      "calcium_mg": 15,
+      "iron_mg": 0.8,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 4.6,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (130g)",
+          "g": 130,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 sandwich (130g)",
+          "g": 130
+        },
+        {
+          "n": "100g serving",
+          "g": 100
+        }
+      ],
+      "photoEstimate": {
+        "grams": 130,
+        "confidence": "high",
+        "note": "Receipt 899e0b40-2165-4681-9d5c-fcb30eaea560 lists 1 Spicy Piri Potato Buddy; standard A&W Buddy-sized sandwich is approximately 130g."
+      },
+      "leucine_g": 0.32,
+      "selenium_ug": 12,
+      "glycemic_index": 65,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "A&W Canada Spicy Piri Potato Buddy estimate",
+        "confidence": "low"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "A&W",
+      "tags": [
+        "restaurant",
+        "fried",
+        "low_confidence"
+      ]
+    },
+    {
+      "id": "instant-masala-noodles",
+      "name": "Instant Masala Noodles",
+      "category": "prepared",
+      "kcal": 160,
+      "protein": 3.2,
+      "carbs": 21.0,
+      "fat": 7.1,
+      "fiber": 0.8,
+      "sat_fat": 3.3,
+      "sugar": 0.5,
+      "sodium_mg": 380,
+      "potassium_mg": 65,
+      "calcium_mg": 15,
+      "iron_mg": 1.2,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (240g)",
+          "g": 240,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        },
+        {
+          "n": "1 pack prepared (280g)",
+          "g": 280
+        }
+      ],
+      "photoEstimate": {
+        "grams": 240,
+        "confidence": "medium",
+        "note": "Standard ceramic bowl roughly 14cm diameter, filled about two-thirds with prepared noodles and light broth."
+      },
+      "leucine_g": 0.24,
+      "selenium_ug": 15,
+      "glycemic_index": 67,
+      "source": {
+        "type": "label",
+        "citation": "Maggi / generic masala noodles label",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "packaged",
+        "high_sodium",
+        "ultra_processed"
+      ]
+    },
+    {
+      "id": "vegetable-masala-rice-peanuts",
+      "name": "Vegetable Masala Rice with Peanuts",
+      "category": "prepared",
+      "kcal": 165,
+      "protein": 4.2,
+      "carbs": 26.5,
+      "fat": 5.1,
+      "fiber": 2.8,
+      "sat_fat": 0.8,
+      "sugar": 1.2,
+      "sodium_mg": 280,
+      "potassium_mg": 145,
+      "calcium_mg": 22,
+      "iron_mg": 1.1,
+      "magnesium_mg": 25,
+      "zinc_mg": 0.7,
+      "vit_a_iu": 340,
+      "vit_c_mg": 4.5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 32,
+      "portions": [
+        {
+          "n": "as in photo (320g)",
+          "g": 320,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        },
+        {
+          "n": "1 full plate (400g)",
+          "g": 400
+        }
+      ],
+      "photoEstimate": {
+        "grams": 320,
+        "confidence": "high",
+        "note": "The steel plate in b14f4b22-a400-43c7-9fba-719a72f3ad3c is piled high with masala rice, appearing to be approximately 1.5 to 2 cups in volume."
+      },
+      "leucine_g": 0.32,
+      "selenium_ug": 10,
+      "glycemic_index": 65,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 vegetable masala rice (recipe-built)",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "rice",
+        "home_cooked"
+      ]
+    },
+    {
+      "id": "plain-yogurt-full-fat",
+      "name": "Plain Yogurt",
+      "category": "dairy",
+      "kcal": 61,
+      "protein": 3.5,
+      "carbs": 4.7,
+      "fat": 3.3,
+      "fiber": 0,
+      "sat_fat": 2.1,
+      "sugar": 4.7,
+      "sodium_mg": 46,
+      "potassium_mg": 155,
+      "calcium_mg": 121,
+      "iron_mg": 0.1,
+      "magnesium_mg": 12,
+      "zinc_mg": 0.6,
+      "vit_a_iu": 99,
+      "vit_c_mg": 0.5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.4,
+      "folate_ug": 7,
+      "portions": [
+        {
+          "n": "as in photo (175g)",
+          "g": 175,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        },
+        {
+          "n": "1 cup (245g)",
+          "g": 245
+        }
+      ],
+      "photoEstimate": {
+        "grams": 175,
+        "confidence": "high",
+        "note": "Standard breakfast bowl in 0384379e-7df2-4ef8-8d9a-73a9f4b2cc05 is approximately half-full, containing about 3/4 cup or 175g of yogurt."
+      },
+      "leucine_g": 0.33,
+      "selenium_ug": 2.2,
+      "glycemic_index": 36,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 171284 (yogurt, plain, whole)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "fermented",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "dairy",
+        "fermented",
+        "low_gi",
+        "probiotic",
+        "staple"
+      ]
+    },
+    {
+      "id": "furlani-garlic-toast",
+      "name": "Furlani Garlic Toast",
+      "category": "prepared",
+      "kcal": 375,
+      "protein": 7.5,
+      "carbs": 42.5,
+      "fat": 20.0,
+      "fiber": 2.5,
+      "sat_fat": 5.0,
+      "sugar": 2.5,
+      "sodium_mg": 575,
+      "potassium_mg": 75,
+      "calcium_mg": 25,
+      "iron_mg": 2.2,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (80g)",
+          "g": 80,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 slice (40g)",
+          "g": 40
+        },
+        {
+          "n": "full box (320g)",
+          "g": 320
+        }
+      ],
+      "photoEstimate": {
+        "grams": 80,
+        "confidence": "high",
+        "note": "Two standard thick-cut slices of Furlani garlic toast on a small plate in aff60995-a982-4f09-9e8b-baff33d6eea4, approximately 40g per slice."
+      },
+      "leucine_g": 0.56,
+      "selenium_ug": 30,
+      "glycemic_index": 70,
+      "source": {
+        "type": "label",
+        "citation": "Furlani Garlic Toast pack",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Furlani",
+      "tags": [
+        "frozen",
+        "bread",
+        "high_gi"
+      ]
+    },
+    {
+      "id": "great-value-milk-chocolate-almonds",
+      "name": "Great Value Milk Chocolate Almonds",
+      "category": "snack",
+      "kcal": 550,
+      "protein": 10.0,
+      "carbs": 55.0,
+      "fat": 32.5,
+      "fiber": 5.0,
+      "sat_fat": 15.0,
+      "sugar": 45.0,
+      "sodium_mg": 38,
+      "potassium_mg": 375,
+      "calcium_mg": 188,
+      "iron_mg": 5.6,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "portions": [
+        {
+          "n": "as in photo (22g)",
+          "g": 22,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 piece (4.4g)",
+          "g": 4.4
+        },
+        {
+          "n": "1 serving (40g)",
+          "g": 40
+        }
+      ],
+      "photoEstimate": {
+        "grams": 22,
+        "confidence": "high",
+        "note": "There are 5 pieces visible in the hand; based on the label in 429d0384-6829-4a89-a121-57300f94efc4, 9 pieces weigh 40g, making 5 pieces approximately 22g."
+      },
+      "leucine_g": 0.8,
+      "selenium_ug": 4,
+      "glycemic_index": 35,
+      "source": {
+        "type": "label",
+        "citation": "Great Value Milk Chocolate Almonds pack (Walmart)",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "roasted",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": "Great Value",
+      "tags": [
+        "snack",
+        "high_sugar",
+        "nuts",
+        "low_gi"
+      ]
+    },
+    {
+      "id": "gulab-jamun",
+      "name": "Gulab Jamun",
+      "category": "sweet",
+      "kcal": 323,
+      "protein": 5.1,
+      "carbs": 52.4,
+      "fat": 11.2,
+      "fiber": 0.5,
+      "sat_fat": 6.8,
+      "sugar": 41.3,
+      "sodium_mg": 98,
+      "potassium_mg": 115,
+      "calcium_mg": 132,
+      "iron_mg": 0.4,
+      "magnesium_mg": 15,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 210,
+      "vit_c_mg": 0.2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.3,
+      "folate_ug": 4,
+      "portions": [
+        {
+          "n": "as in photo (45g)",
+          "g": 45,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 piece (45g)",
+          "g": 45
+        },
+        {
+          "n": "1 serving (2 pieces with syrup, 120g)",
+          "g": 120
+        }
+      ],
+      "photoEstimate": {
+        "grams": 45,
+        "confidence": "high",
+        "note": "A single medium-sized gulab jamun held in hand typically weighs between 40-50 grams."
+      },
+      "leucine_g": 0.48,
+      "selenium_ug": 5,
+      "glycemic_index": 75,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 gulab jamun (khoya, ghee, sugar syrup)",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "indian_sweet",
+        "high_sugar",
+        "fried",
+        "dairy"
+      ]
+    },
+    {
+      "id": "gujarati-style-aloo-paratha",
+      "name": "Gujarati Style Aloo Paratha",
+      "category": "prepared",
+      "kcal": 240,
+      "protein": 5.2,
+      "carbs": 36.8,
+      "fat": 8.1,
+      "fiber": 3.4,
+      "sat_fat": 2.2,
+      "sugar": 1.5,
+      "sodium_mg": 380,
+      "potassium_mg": 260,
+      "calcium_mg": 28,
+      "iron_mg": 1.8,
+      "magnesium_mg": 32,
+      "zinc_mg": 0.6,
+      "vit_a_iu": 110,
+      "vit_c_mg": 6.2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 24,
+      "portions": [
+        {
+          "n": "as in photo (1.5 parathas, 165g)",
+          "g": 165,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 medium paratha (110g)",
+          "g": 110
+        },
+        {
+          "n": "1 plate (2 parathas, 220g)",
+          "g": 220
+        }
+      ],
+      "photoEstimate": {
+        "grams": 165,
+        "confidence": "high",
+        "note": "Prompt specifies 1.5 parathas; a standard home-cooked stuffed aloo paratha typically weighs approximately 110g."
+      },
+      "leucine_g": 0.45,
+      "selenium_ug": 25,
+      "glycemic_index": 62,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 aloo paratha (gujarati recipe variant)",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "wheat",
+        "home_cooked"
+      ]
     }
-   ],
-   "photoEstimate": {
-    "grams": 71,
-    "confidence": "high",
-    "note": "Standard Tim Hortons donut serving size is approximately 71g for cake-based donuts."
-   }
-  },
-  {
-   "id": "tim-hortons-vanilla-cold-brew-medium",
-   "name": "Tim Hortons Vanilla Cold Brew",
-   "category": "beverage",
-   "kcal": 35,
-   "protein": 0.2,
-   "carbs": 7.3,
-   "fat": 0.6,
-   "fiber": 0,
-   "sat_fat": 0.4,
-   "sugar": 7.0,
-   "sodium_mg": 13,
-   "potassium_mg": 40,
-   "calcium_mg": 8,
-   "iron_mg": 0,
-   "magnesium_mg": 2,
-   "zinc_mg": 0,
-   "vit_a_iu": 15,
-   "vit_c_mg": 0,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 0,
-   "portions": [
-    {
-     "n": "as in photo (447g)",
-     "g": 447,
-     "fromPhoto": true
-    },
-    {
-     "n": "1 medium cup (447g)",
-     "g": 447
-    },
-    {
-     "n": "1 small cup (286g)",
-     "g": 286
-    },
-    {
-     "n": "1 large cup (574g)",
-     "g": 574
-    }
-   ],
-   "photoEstimate": {
-    "grams": 447,
-    "confidence": "high",
-    "note": "Standard Tim Hortons medium cold brew volume is approximately 15 fluid ounces (447ml/g)."
-   }
-  },
-  {
-   "id": "vadilal-veg-spring-rolls",
-   "name": "Vadilal Veg Spring Rolls",
-   "category": "prepared",
-   "kcal": 192,
-   "protein": 2.8,
-   "carbs": 40.9,
-   "fat": 1.9,
-   "fiber": 2.7,
-   "sat_fat": 1.6,
-   "sugar": 8.3,
-   "sodium_mg": 207,
-   "potassium_mg": 86.7,
-   "calcium_mg": 293.3,
-   "iron_mg": 3.0,
-   "magnesium_mg": 0,
-   "zinc_mg": 0,
-   "vit_a_iu": 0,
-   "vit_c_mg": 0,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 0,
-   "portions": [
-    {
-     "n": "5 pieces (75g)",
-     "g": 75,
-     "fromPhoto": true
-    },
-    {
-     "n": "2 pieces (30g)",
-     "g": 30
-    },
-    {
-     "n": "1 full pack (300g)",
-     "g": 300
-    }
-   ],
-   "photoEstimate": {
-    "grams": 75,
-    "confidence": "high",
-    "note": "The user consumed 5 pieces; labels image_746673.png and image_74665b.png indicate a 30g serving size for 2 pieces."
-   }
-  },
-  {
-   "id": "besan-laddu",
-   "name": "Besan Laddu",
-   "category": "sweet",
-   "kcal": 492,
-   "protein": 7.4,
-   "carbs": 56.2,
-   "fat": 26.5,
-   "fiber": 3.1,
-   "sat_fat": 15.2,
-   "sugar": 38.4,
-   "sodium_mg": 45,
-   "potassium_mg": 210,
-   "calcium_mg": 28,
-   "iron_mg": 1.8,
-   "magnesium_mg": 42,
-   "zinc_mg": 0.9,
-   "vit_a_iu": 320,
-   "vit_c_mg": 0,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 84,
-   "portions": [
-    {
-     "n": "as in photo (70g)",
-     "g": 70,
-     "fromPhoto": true
-    },
-    {
-     "n": "1 piece (35g)",
-     "g": 35
-    },
-    {
-     "n": "small serving (105g)",
-     "g": 105
-    }
-   ],
-   "photoEstimate": {
-    "grams": 70,
-    "confidence": "high",
-    "note": "Two standard-sized laddus are visible in the container, typically weighing approximately 35g each."
-   }
-  },
-  {
-   "id": "doritos-sweet-heat-chili",
-   "name": "Doritos Sweet Heat Chili",
-   "category": "snack",
-   "kcal": 494,
-   "protein": 7.1,
-   "carbs": 63.5,
-   "fat": 24.7,
-   "fiber": 3.5,
-   "sat_fat": 3.5,
-   "sugar": 3.5,
-   "sodium_mg": 600,
-   "potassium_mg": 212,
-   "calcium_mg": 141,
-   "iron_mg": 0.6,
-   "magnesium_mg": 0,
-   "zinc_mg": 0,
-   "vit_a_iu": 0,
-   "vit_c_mg": 0,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 0,
-   "portions": [
-    {
-     "n": "as in photo (85g)",
-     "g": 85,
-     "fromPhoto": true
-    },
-    {
-     "n": "1 snack bag (28g)",
-     "g": 28
-    },
-    {
-     "n": "1 large bowl (150g)",
-     "g": 150
-    }
-   ],
-   "photoEstimate": {
-    "grams": 85,
-    "confidence": "medium",
-    "note": "Standard cereal-sized bowl typically holds approximately 3 servings of tortilla chips when full."
-   }
-  },
-  {
-   "id": "dal-dhokli-toor",
-   "name": "Dal Dhokli (Toor Dal)",
-   "category": "prepared",
-   "kcal": 142,
-   "protein": 5.2,
-   "carbs": 23.5,
-   "fat": 3.8,
-   "fiber": 4.2,
-   "sat_fat": 1.2,
-   "sugar": 1.5,
-   "sodium_mg": 290,
-   "potassium_mg": 195,
-   "calcium_mg": 38,
-   "iron_mg": 1.4,
-   "magnesium_mg": 45,
-   "zinc_mg": 0.8,
-   "vit_a_iu": 135,
-   "vit_c_mg": 1.8,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 32,
-   "portions": [
-    {
-     "n": "as in photo (380g)",
-     "g": 380,
-     "fromPhoto": true
-    },
-    {
-     "n": "1 katori (150g)",
-     "g": 150
-    },
-    {
-     "n": "1 bowl (250g)",
-     "g": 250
-    }
-   ],
-   "photoEstimate": {
-    "grams": 380,
-    "confidence": "medium",
-    "note": "Image a941d5c5-0396-47fb-b2f6-74f6db6050ca shows a standard 18oz rectangular glass container approximately 75% full, measured against the visible spoon."
-   }
-  },
-  {
-   "id": "calgary-tap-water",
-   "name": "Calgary Tap Water",
-   "category": "beverage",
-   "kcal": 0,
-   "protein": 0,
-   "carbs": 0,
-   "fat": 0,
-   "fiber": 0,
-   "sat_fat": 0,
-   "sugar": 0,
-   "sodium_mg": 2,
-   "potassium_mg": 1,
-   "calcium_mg": 56,
-   "iron_mg": 0,
-   "magnesium_mg": 16,
-   "zinc_mg": 0,
-   "vit_a_iu": 0,
-   "vit_c_mg": 0,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 0,
-   "portions": [
-    {
-     "n": "1 glass (250ml)",
-     "g": 250
-    },
-    {
-     "n": "1 bottle (500ml)",
-     "g": 500
-    },
-    {
-     "n": "1 cup (240ml)",
-     "g": 240
-    },
-    {
-     "n": "1 liter (1000ml)",
-     "g": 1000
-    }
-   ],
-   "photoEstimate": {
-    "grams": 250,
-    "confidence": "high",
-    "note": "Standard 250ml glass of clear liquid; water density 1g/ml."
-   }
-  },
-  {
-   "id": "vachon-mega-brownie-candies",
-   "name": "Vachon Mega Brownie with Candies",
-   "category": "sweet",
-   "kcal": 458,
-   "protein": 4.7,
-   "carbs": 66.4,
-   "fat": 19.6,
-   "fiber": 2.8,
-   "sat_fat": 3.7,
-   "sugar": 47.7,
-   "sodium_mg": 402,
-   "potassium_mg": 140,
-   "calcium_mg": 19,
-   "iron_mg": 3.3,
-   "magnesium_mg": 0,
-   "zinc_mg": 0,
-   "vit_a_iu": 0,
-   "vit_c_mg": 0,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 0,
-   "portions": [
-    {
-     "n": "as in photo (107g)",
-     "g": 107,
-     "fromPhoto": true
-    },
-    {
-     "n": "1 brownie (107g)",
-     "g": 107
-    },
-    {
-     "n": "half brownie (53.5g)",
-     "g": 53.5
-    }
-   ],
-   "photoEstimate": {
-    "grams": 107,
-    "confidence": "high",
-    "note": "The packaging in file 9e9b4c33-3127-46b3-ba8d-f3d60996173e explicitly states the net weight is 107g."
-   }
-  },
-  {
-   "id": "lays-chile-limon-chips",
-   "name": "Lay's Chile Limón Flavour Chips",
-   "category": "snack",
-   "kcal": 536,
-   "protein": 7.1,
-   "carbs": 53.6,
-   "fat": 32.1,
-   "fiber": 3.6,
-   "sat_fat": 10.7,
-   "sugar": 3.6,
-   "sodium_mg": 679,
-   "potassium_mg": 1214,
-   "calcium_mg": 0,
-   "iron_mg": 1.3,
-   "magnesium_mg": 0,
-   "zinc_mg": 0,
-   "vit_a_iu": 0,
-   "vit_c_mg": 0,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 0,
-   "portions": [
-    {
-     "n": "as in photo (50g)",
-     "g": 50,
-     "fromPhoto": true
-    },
-    {
-     "n": "small bag (28g)",
-     "g": 28
-    },
-    {
-     "n": "large bag (165g)",
-     "g": 165
-    }
-   ],
-   "photoEstimate": {
-    "grams": 50,
-    "confidence": "medium",
-    "note": "The bag in file 8be7e788-b4ea-4d33-9cf2-dea6fe104cee is a standard individual snack size, typically ranging from 40g to 55g based on hand scale."
-   }
-  },
-  {
-   "id": "sqwincher-zero-qwikstik-orange",
-   "name": "Sqwincher Zero QwikStik Orange",
-   "category": "beverage",
-   "kcal": 167,
-   "protein": 0,
-   "carbs": 33.3,
-   "fat": 0,
-   "fiber": 0,
-   "sat_fat": 0,
-   "sugar": 0,
-   "sodium_mg": 1333,
-   "potassium_mg": 1167,
-   "calcium_mg": 0,
-   "iron_mg": 0,
-   "magnesium_mg": 0,
-   "zinc_mg": 0,
-   "vit_a_iu": 0,
-   "vit_c_mg": 400,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 0,
-   "portions": [
-    {
-     "n": "as in photo (3g)",
-     "g": 3,
-     "fromPhoto": true
-    },
-    {
-     "n": "two sticks (6g)",
-     "g": 6
-    },
-    {
-     "n": "1 stick in 500ml water (503g)",
-     "g": 503
-    }
-   ],
-   "photoEstimate": {
-    "grams": 3,
-    "confidence": "high",
-    "note": "The packaging explicitly states a net weight of 3g."
-   }
-  },
-  {
-   "id": "aw-masala-veggie-burger",
-   "name": "A&W Masala Veggie Burger",
-   "category": "prepared",
-   "kcal": 222,
-   "protein": 5.4,
-   "carbs": 26.6,
-   "fat": 10.4,
-   "fiber": 2.3,
-   "sat_fat": 1.4,
-   "sugar": 4.5,
-   "sodium_mg": 482,
-   "potassium_mg": 140,
-   "calcium_mg": 36,
-   "iron_mg": 1.6,
-   "magnesium_mg": 0,
-   "zinc_mg": 0,
-   "vit_a_iu": 0,
-   "vit_c_mg": 2.7,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 0,
-   "portions": [
-    {
-     "n": "as in photo (222g)",
-     "g": 222,
-     "fromPhoto": true
-    },
-    {
-     "n": "1 burger (222g)",
-     "g": 222
-    },
-    {
-     "n": "half burger (111g)",
-     "g": 111
-    }
-   ],
-   "photoEstimate": {
-    "grams": 222,
-    "confidence": "high",
-    "note": "Receipt 899e0b40-2165-4681-9d5c-fcb30eaea560 lists 1 Masala Veggie; standard A&W serving size is approximately 222g."
-   }
-  },
-  {
-   "id": "aw-spicy-piri-potato-buddy",
-   "name": "A&W Spicy Piri Potato Buddy",
-   "category": "prepared",
-   "kcal": 285,
-   "protein": 4.6,
-   "carbs": 29.2,
-   "fat": 16.9,
-   "fiber": 2.3,
-   "sat_fat": 2.3,
-   "sugar": 3.1,
-   "sodium_mg": 531,
-   "potassium_mg": 315,
-   "calcium_mg": 15,
-   "iron_mg": 0.8,
-   "magnesium_mg": 0,
-   "zinc_mg": 0,
-   "vit_a_iu": 0,
-   "vit_c_mg": 4.6,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 0,
-   "portions": [
-    {
-     "n": "as in photo (130g)",
-     "g": 130,
-     "fromPhoto": true
-    },
-    {
-     "n": "1 sandwich (130g)",
-     "g": 130
-    },
-    {
-     "n": "100g serving",
-     "g": 100
-    }
-   ],
-   "photoEstimate": {
-    "grams": 130,
-    "confidence": "high",
-    "note": "Receipt 899e0b40-2165-4681-9d5c-fcb30eaea560 lists 1 Spicy Piri Potato Buddy; standard A&W Buddy-sized sandwich is approximately 130g."
-   }
-  },
-  {
-   "id": "instant-masala-noodles",
-   "name": "Instant Masala Noodles",
-   "category": "prepared",
-   "kcal": 160,
-   "protein": 3.2,
-   "carbs": 21.0,
-   "fat": 7.1,
-   "fiber": 0.8,
-   "sat_fat": 3.3,
-   "sugar": 0.5,
-   "sodium_mg": 380,
-   "potassium_mg": 65,
-   "calcium_mg": 15,
-   "iron_mg": 1.2,
-   "magnesium_mg": 0,
-   "zinc_mg": 0,
-   "vit_a_iu": 0,
-   "vit_c_mg": 0,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 0,
-   "portions": [
-    {
-     "n": "as in photo (240g)",
-     "g": 240,
-     "fromPhoto": true
-    },
-    {
-     "n": "1 katori (150g)",
-     "g": 150
-    },
-    {
-     "n": "1 pack prepared (280g)",
-     "g": 280
-    }
-   ],
-   "photoEstimate": {
-    "grams": 240,
-    "confidence": "medium",
-    "note": "Standard ceramic bowl roughly 14cm diameter, filled about two-thirds with prepared noodles and light broth."
-   }
-  },
-  {
-   "id": "vegetable-masala-rice-peanuts",
-   "name": "Vegetable Masala Rice with Peanuts",
-   "category": "prepared",
-   "kcal": 165,
-   "protein": 4.2,
-   "carbs": 26.5,
-   "fat": 5.1,
-   "fiber": 2.8,
-   "sat_fat": 0.8,
-   "sugar": 1.2,
-   "sodium_mg": 280,
-   "potassium_mg": 145,
-   "calcium_mg": 22,
-   "iron_mg": 1.1,
-   "magnesium_mg": 25,
-   "zinc_mg": 0.7,
-   "vit_a_iu": 340,
-   "vit_c_mg": 4.5,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 32,
-   "portions": [
-    {
-     "n": "as in photo (320g)",
-     "g": 320,
-     "fromPhoto": true
-    },
-    {
-     "n": "1 katori (150g)",
-     "g": 150
-    },
-    {
-     "n": "1 full plate (400g)",
-     "g": 400
-    }
-   ],
-   "photoEstimate": {
-    "grams": 320,
-    "confidence": "high",
-    "note": "The steel plate in b14f4b22-a400-43c7-9fba-719a72f3ad3c is piled high with masala rice, appearing to be approximately 1.5 to 2 cups in volume."
-   }
-  },
-  {
-   "id": "plain-yogurt-full-fat",
-   "name": "Plain Yogurt",
-   "category": "dairy",
-   "kcal": 61,
-   "protein": 3.5,
-   "carbs": 4.7,
-   "fat": 3.3,
-   "fiber": 0,
-   "sat_fat": 2.1,
-   "sugar": 4.7,
-   "sodium_mg": 46,
-   "potassium_mg": 155,
-   "calcium_mg": 121,
-   "iron_mg": 0.1,
-   "magnesium_mg": 12,
-   "zinc_mg": 0.6,
-   "vit_a_iu": 99,
-   "vit_c_mg": 0.5,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0.4,
-   "folate_ug": 7,
-   "portions": [
-    {
-     "n": "as in photo (175g)",
-     "g": 175,
-     "fromPhoto": true
-    },
-    {
-     "n": "1 katori (150g)",
-     "g": 150
-    },
-    {
-     "n": "1 cup (245g)",
-     "g": 245
-    }
-   ],
-   "photoEstimate": {
-    "grams": 175,
-    "confidence": "high",
-    "note": "Standard breakfast bowl in 0384379e-7df2-4ef8-8d9a-73a9f4b2cc05 is approximately half-full, containing about 3/4 cup or 175g of yogurt."
-   }
-  },
-  {
-   "id": "furlani-garlic-toast",
-   "name": "Furlani Garlic Toast",
-   "category": "prepared",
-   "kcal": 375,
-   "protein": 7.5,
-   "carbs": 42.5,
-   "fat": 20.0,
-   "fiber": 2.5,
-   "sat_fat": 5.0,
-   "sugar": 2.5,
-   "sodium_mg": 575,
-   "potassium_mg": 75,
-   "calcium_mg": 25,
-   "iron_mg": 2.2,
-   "magnesium_mg": 0,
-   "zinc_mg": 0,
-   "vit_a_iu": 0,
-   "vit_c_mg": 0,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 0,
-   "portions": [
-    {
-     "n": "as in photo (80g)",
-     "g": 80,
-     "fromPhoto": true
-    },
-    {
-     "n": "1 slice (40g)",
-     "g": 40
-    },
-    {
-     "n": "full box (320g)",
-     "g": 320
-    }
-   ],
-   "photoEstimate": {
-    "grams": 80,
-    "confidence": "high",
-    "note": "Two standard thick-cut slices of Furlani garlic toast on a small plate in aff60995-a982-4f09-9e8b-baff33d6eea4, approximately 40g per slice."
-   }
-  },
-  {
-   "id": "great-value-milk-chocolate-almonds",
-   "name": "Great Value Milk Chocolate Almonds",
-   "category": "snack",
-   "kcal": 550,
-   "protein": 10.0,
-   "carbs": 55.0,
-   "fat": 32.5,
-   "fiber": 5.0,
-   "sat_fat": 15.0,
-   "sugar": 45.0,
-   "sodium_mg": 38,
-   "potassium_mg": 375,
-   "calcium_mg": 188,
-   "iron_mg": 5.6,
-   "magnesium_mg": 0,
-   "zinc_mg": 0,
-   "vit_a_iu": 0,
-   "vit_c_mg": 0,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 0,
-   "portions": [
-    {
-     "n": "as in photo (22g)",
-     "g": 22,
-     "fromPhoto": true
-    },
-    {
-     "n": "1 piece (4.4g)",
-     "g": 4.4
-    },
-    {
-     "n": "1 serving (40g)",
-     "g": 40
-    }
-   ],
-   "photoEstimate": {
-    "grams": 22,
-    "confidence": "high",
-    "note": "There are 5 pieces visible in the hand; based on the label in 429d0384-6829-4a89-a121-57300f94efc4, 9 pieces weigh 40g, making 5 pieces approximately 22g."
-   }
-  },
-  {
-   "id": "gulab-jamun",
-   "name": "Gulab Jamun",
-   "category": "sweet",
-   "kcal": 323,
-   "protein": 5.1,
-   "carbs": 52.4,
-   "fat": 11.2,
-   "fiber": 0.5,
-   "sat_fat": 6.8,
-   "sugar": 41.3,
-   "sodium_mg": 98,
-   "potassium_mg": 115,
-   "calcium_mg": 132,
-   "iron_mg": 0.4,
-   "magnesium_mg": 15,
-   "zinc_mg": 0.5,
-   "vit_a_iu": 210,
-   "vit_c_mg": 0.2,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0.3,
-   "folate_ug": 4,
-   "portions": [
-    {
-     "n": "as in photo (45g)",
-     "g": 45,
-     "fromPhoto": true
-    },
-    {
-     "n": "1 piece (45g)",
-     "g": 45
-    },
-    {
-     "n": "1 serving (2 pieces with syrup, 120g)",
-     "g": 120
-    }
-   ],
-   "photoEstimate": {
-    "grams": 45,
-    "confidence": "high",
-    "note": "A single medium-sized gulab jamun held in hand typically weighs between 40-50 grams."
-   }
-  },
-  {
-   "id": "gujarati-style-aloo-paratha",
-   "name": "Gujarati Style Aloo Paratha",
-   "category": "prepared",
-   "kcal": 240,
-   "protein": 5.2,
-   "carbs": 36.8,
-   "fat": 8.1,
-   "fiber": 3.4,
-   "sat_fat": 2.2,
-   "sugar": 1.5,
-   "sodium_mg": 380,
-   "potassium_mg": 260,
-   "calcium_mg": 28,
-   "iron_mg": 1.8,
-   "magnesium_mg": 32,
-   "zinc_mg": 0.6,
-   "vit_a_iu": 110,
-   "vit_c_mg": 6.2,
-   "vit_d_iu": 0,
-   "vit_b12_ug": 0,
-   "folate_ug": 24,
-   "portions": [
-    {
-     "n": "as in photo (1.5 parathas, 165g)",
-     "g": 165,
-     "fromPhoto": true
-    },
-    {
-     "n": "1 medium paratha (110g)",
-     "g": 110
-    },
-    {
-     "n": "1 plate (2 parathas, 220g)",
-     "g": 220
-    }
-   ],
-   "photoEstimate": {
-    "grams": 165,
-    "confidence": "high",
-    "note": "Prompt specifies 1.5 parathas; a standard home-cooked stuffed aloo paratha typically weighs approximately 110g."
-   }
-  }
- ]
+  ]
 }
