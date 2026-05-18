@@ -1367,8 +1367,10 @@ async function syncHealthConnect(dateIso){
   const e=state.data.entries[date]||{};
   e.hc=hc;
   e.hcSyncedAt=nowIso();
-  // Auto-populate weight from HC if not manually set
-  if(hc.weight&&!e.weight)e.weight=Math.round(hc.weight*10)/10;
+  // Note: we intentionally do NOT auto-populate entry.weight from HC.
+  // Weight is manual-only — the app remains the source of truth and writes
+  // back to HC via writeWeightToHC on save. HC weight is still recorded
+  // under entry.hc.weight for reference / future trend cross-checks.
   state.data.entries[date]=e;
   saveLocalData();
   state.lastHcSyncAt=nowIso();
@@ -1449,10 +1451,3 @@ if(IS_NATIVE){
     const last=state.data.entries[today()]?.hcSyncedAt;
     const stale=!last||((Date.now()-new Date(last).getTime())>12*3600*1000);
     const job=stale?syncHealthConnectRange(7):syncHealthConnect();
-    Promise.resolve(job).then(r=>{render()});
-  });
-}
-if(isConfigured())pullData().then(()=>render()).catch(e=>console.warn('boot sync failed',e));
-</script>
-</body>
-</html>
