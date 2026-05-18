@@ -392,7 +392,9 @@ ${shift?`<div class="card-flat" style="margin-top:12px;padding:10px 12px;display
     ${(()=>{
   const todayEntry=state.data.entries[today()]||{};
   const waterFoods=(todayEntry.foods||[]).filter(f=>f.foodId==='calgary-tap-water');
-  const ml=waterFoods.reduce((s,f)=>s+(f.grams||0),0);
+  const appMl=waterFoods.reduce((s,f)=>s+(f.grams||0),0);
+  const hcMl=hcWaterToday();
+  const ml=Math.max(appMl,hcMl); // take the bigger of in-app or HC (avoid double-counting)
   const glassCount=Math.round(ml/250);
   const goal=state.profile.waterGoalMl||2500;
   const pct=Math.min(100,(ml/goal)*100);
@@ -458,8 +460,9 @@ function addWaterEntry(ml){
   saveLocalData();
   nativeHaptic('light');
   render();
-  // Best-effort background sync
+  // Best-effort background syncs (don't block UI)
   pushData().catch(err=>console.warn('water sync',err));
+  writeHydrationToHC(ml,t).catch(()=>{});
 }
 function undoLastWater(){
   const t=today();
@@ -488,6 +491,22 @@ function renderProgress(){
     </div>
     <div class="card mt-4"><div style="display:flex;justify-content:space-between;align-items:center"><h3>Weight trend</h3><div class="chip-pill" style="background:var(--surface-cream)">30 days</div></div>
       <div style="height:200px;margin-top:14px;position:relative"><canvas id="w-chart"></canvas></div></div>
+    ${(()=>{
+      const rhr=hcAvg('resting_heart_rate',7);
+      const sleep=hcSleepAvg(7);
+      const stepsW=hcWeekTotal('steps');
+      const activeW=hcWeekTotal('active_calories');
+      const vo2=hcAvg('vo2_max',14);
+      const hasAny=rhr||sleep||stepsW||activeW||vo2;
+      if(!hasAny)return '';
+      const items=[];
+      if(rhr)items.push(['❤️','Resting HR',Math.round(rhr)+' bpm','7-day avg']);
+      if(sleep)items.push(['😴','Sleep',sleep.toFixed(1)+' h','7-day avg']);
+      if(stepsW)items.push(['👟','Steps',Math.round(stepsW).toLocaleString(),'last 7 days']);
+      if(activeW)items.push(['🔥','Active kcal',Math.round(activeW).toLocaleString(),'last 7 days']);
+      if(vo2)items.push(['🫁','VO₂max',vo2.toFixed(1),'14-day avg']);
+      return `<h2 class="sec">HEALTH CONNECT TRENDS</h2><div class="card"><div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">${items.map(([e,l,v,sub])=>`<div style="display:flex;align-items:flex-start;gap:8px"><div style="font-size:20px;flex-shrink:0">${e}</div><div style="min-width:0"><div class="tiny muted">${l}</div><div style="font-weight:700;font-size:16px;line-height:1.1">${v}</div><div class="tiny faint">${sub}</div></div></div>`).join('')}</div></div>`;
+    })()}
     <h2 class="sec">WEEKLY REFLECTION</h2>
     <div class="card-tinted">
       <div style="display:flex;gap:12px;align-items:flex-start">
@@ -543,8 +562,9 @@ ${e.activities&&e.activities.length?`<h3 class="mt-4" style="font-size:14px;font
 ${e.foods&&e.foods.length?`<h3 class="mt-4" style="font-size:14px;font-weight:700">Foods (${totalKcal} kcal)</h3><div class="mt-2">${foodList}</div>`:''}
 ${e.meals?`<h3 class="mt-4" style="font-size:14px;font-weight:700">Meal notes</h3><p class="muted" style="white-space:pre-wrap;margin-top:6px;font-size:13px">${escapeHtml(e.meals)}</p>`:''}
 ${e.notes?`<h3 class="mt-4" style="font-size:14px;font-weight:700">Notes</h3><p class="muted" style="white-space:pre-wrap;margin-top:6px;font-size:13px">${escapeHtml(e.notes)}</p>`:''}
-${e.sleep?`<div class="tiny muted mt-4">😴 ${e.sleep} h sleep</div>`:''}
-${e.steps?`<div class="tiny muted mt-1">👟 ${e.steps.toLocaleString()} steps</div>`:''}
+${e.sleep?`<div class="tiny muted mt-4">😴 ${e.sleep} h sleep (manual)</div>`:''}
+${e.steps?`<div class="tiny muted mt-1">👟 ${e.steps.toLocaleString()} steps (manual)</div>`:''}
+${(()=>{const hc=e.hc;if(!hc)return '';const bits=[];if(hc.steps)bits.push(['👟',hc.steps.toLocaleString()+' steps']);if(hc.distance_km)bits.push(['📏',hc.distance_km.toFixed(2)+' km']);if(hc.active_calories)bits.push(['🔥',Math.round(hc.active_calories)+' active kcal']);if(hc.floors_climbed)bits.push(['🏢',hc.floors_climbed+' floors']);if(hc.resting_heart_rate)bits.push(['❤️',Math.round(hc.resting_heart_rate)+' bpm resting']);if(hc.sleep)bits.push(['😴',hc.sleep.hours+' h sleep']);if(hc.vo2_max)bits.push(['🫁','VO₂max '+hc.vo2_max.toFixed(1)]);if(hc.water)bits.push(['💧',Math.round(hc.water)+' ml water']);if(bits.length===0&&!(hc.workouts||[]).length)return '';const wk=(hc.workouts||[]).map(w=>`<div class="tiny muted">· ${escapeHtml(w.title||w.type||'Workout')} · ${Math.round((w.durationSec||0)/60)} min${w.calories?' · '+Math.round(w.calories)+' kcal':''}</div>`).join('');return `<h3 class="mt-4" style="font-size:14px;font-weight:700">Health Connect</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;font-size:12px;color:var(--muted)">${bits.map(([emoji,t])=>`<div>${emoji} ${t}</div>`).join('')}</div>${wk?'<div style="margin-top:8px">'+wk+'</div>':''}`})()}
 <button class="btn btn-primary btn-full mt-4" id="me-edit2">✎ Edit this day</button>
 </div>`;
   m.addEventListener('click',ev=>{if(ev.target===m)m.remove()});
@@ -586,7 +606,9 @@ ${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="chip ${(state.
     <div class="card">
       <div style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-weight:600">${Object.keys(state.data.entries).length} entries</div><div class="tiny muted">On this device + GitHub</div></div></div>
       <div class="btn-row mt-4"><button class="btn btn-secondary" id="s-pull">Pull from GitHub</button><button class="btn btn-secondary" id="s-exp">Export JSON</button></div>
-      <button class="btn btn-secondary btn-full mt-2" id="s-hcsync">Sync Health Connect</button>
+      ${(()=>{const hc=getHCToday();const last=state.data.entries[today()]?.hcSyncedAt;const types=hc?Object.keys(hc.available||{}).length:0;const status=hc?`<div class="tiny" style="color:var(--success);margin-top:8px">● HC connected · ${types} data types · synced ${last?fmtDateTime(last):'today'}</div>`:`<div class="tiny muted" style="margin-top:8px">○ Health Connect not synced yet</div>`;return status})()}
+      <button class="btn btn-secondary btn-full mt-2" id="s-hcsync">↻ Sync Health Connect (today)</button>
+      <button class="btn btn-secondary btn-full mt-2" id="s-hcbackfill">↻↻ Backfill last 7 days</button>
         <button class="btn btn-secondary btn-full mt-2" id="s-refresh">Refresh databases from GitHub</button>
         <button class="btn btn-danger btn-full mt-2" id="s-clear">Clear local cache</button>
     </div>
@@ -611,7 +633,8 @@ function bindSettings(){
   document.getElementById('s-csave')?.addEventListener('click',()=>{state.config.claudeApiKey=document.getElementById('s-ck').value.trim();saveLocalConfig();toast('Claude key saved','success');render()});
   document.getElementById('s-pull')?.addEventListener('click',async()=>{try{await pullData();toast('Synced ✓','success');render()}catch(e){toast('Sync failed: '+e.message,'error')}});
   document.getElementById('s-exp')?.addEventListener('click',()=>{const b=new Blob([JSON.stringify(state.data,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`living-life-${today()}.json`;a.click();URL.revokeObjectURL(u)});
-  document.getElementById('s-hcsync')?.addEventListener('click',async()=>{const btn=document.getElementById('s-hcsync');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Syncing…';const hc=await syncHealthConnect();btn.disabled=false;btn.textContent='Sync Health Connect';if(hc){toast('Synced ✓ · '+Object.keys(hc.available||{}).length+' data types','success');render()}else toast('Not available (need Android app)','error')});
+  document.getElementById('s-hcsync')?.addEventListener('click',async()=>{const btn=document.getElementById('s-hcsync');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Syncing…';const hc=await syncHealthConnect();btn.disabled=false;btn.textContent='↻ Sync Health Connect (today)';if(hc){toast('Synced ✓ · '+Object.keys(hc.available||{}).length+' data types','success');render()}else toast('Not available (need Android app)','error')});
+  document.getElementById('s-hcbackfill')?.addEventListener('click',async()=>{const btn=document.getElementById('s-hcbackfill');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Backfilling 7 days…';const r=await syncHealthConnectRange(7);btn.disabled=false;btn.textContent='↻↻ Backfill last 7 days';toast(`Backfilled ${r.synced}/7 days · ${r.failed} skipped`, r.synced>0?'success':'error');render()});
   document.getElementById('s-refresh')?.addEventListener('click',async()=>{Object.assign(DB,{foods:null,supplements:null});await loadAllDB();const failed=Object.entries(DB._err||{}).filter(([k,v])=>v);if(failed.length===0)toast('Databases refreshed ✓','success');else toast('Some failed: '+failed.map(([k])=>k).join(', '),'error');render()});
   document.getElementById('s-clear')?.addEventListener('click',()=>{if(confirm('Clear local cache?')){localStorage.removeItem(DATA_KEY);state.data={version:2,entries:{},supplements:{},coachConversation:[],weeklyReflections:[]};state.dataSha=null;toast('Cleared');render()}});
 }
@@ -694,6 +717,8 @@ function bindLogEntry(){
       entry.updatedAt=nowIso();
       state.data.entries[saveDate]=entry;
       await pushData();
+      // Best-effort: mirror weight to Health Connect so other apps (Garmin, Pixel scale, etc.) see it
+      if(entry.weight)writeWeightToHC(entry.weight,saveDate).catch(()=>{});
       toast(isEdit?'Updated ✓':'Saved ✓','success');state.draft={};state.editingDate=null;setScreen(isEdit?'history':'today');
     }catch(e){toast('Save failed: '+e.message,'error');btn.disabled=false;btn.innerHTML='Save & sync'}
   });
@@ -1213,10 +1238,42 @@ function openCustomFood(onSave){
 
 // =================== HEALTH CONNECT — COMPREHENSIVE SYNC ===================
 let healthConnectReady=false;
-const HC_PERMS=['STEPS','HEART_RATE','RESTING_HEART_RATE','SLEEP','ACTIVE_CALORIES_BURNED','TOTAL_CALORIES_BURNED','DISTANCE','EXERCISE','WEIGHT','BODY_FAT','HEIGHT','HYDRATION','FLOORS_CLIMBED','OXYGEN_SATURATION','RESPIRATORY_RATE','HEART_RATE_VARIABILITY','VO2_MAX','POWER','SPEED','BLOOD_PRESSURE','BLOOD_GLUCOSE','BODY_TEMPERATURE'];
+const HC_PERMS=['STEPS','HEART_RATE','RESTING_HEART_RATE','SLEEP','ACTIVE_CALORIES_BURNED','TOTAL_CALORIES_BURNED','DISTANCE','EXERCISE','WEIGHT','BODY_FAT','HEIGHT','HYDRATION','FLOORS_CLIMBED','OXYGEN_SATURATION','RESPIRATORY_RATE','HEART_RATE_VARIABILITY','VO2_MAX','POWER','SPEED','BLOOD_PRESSURE','BLOOD_GLUCOSE','BODY_TEMPERATURE','WRITE_WEIGHT','WRITE_HYDRATION'];
 const HC_DATA_TYPES=['steps','distance','active-calories','total-calories','floors-climbed','water','heart-rate','resting-heart-rate','oxygen-saturation','respiratory-rate','heart-rate-variability','vo2-max','weight','body-fat','height','blood-pressure-systolic','blood-pressure-diastolic','blood-glucose','body-temperature'];
 
 function hcPlugin(){return window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health||window.Capacitor?.Plugins?.HealthConnect}
+
+// Write-back helpers. Plugin's exact write API varies across versions; we try multiple shapes.
+async function writeWeightToHC(kg,dateIso){
+  if(!IS_NATIVE)return false;
+  if(!healthConnectReady){const ok=await setupHealthConnect();if(!ok)return false}
+  const HC=hcPlugin();if(!HC||!kg)return false;
+  const ts=new Date(dateIso+'T12:00:00').toISOString();
+  // Try the documented patterns in capacitor-health@8.x and fall through.
+  const attempts=[
+    ()=>HC.write?.({dataType:'weight',value:kg,startDate:ts,endDate:ts}),
+    ()=>HC.writeData?.({dataType:'weight',value:kg,startDate:ts,endDate:ts}),
+    ()=>HC.writeWeight?.({value:kg,date:ts}),
+    ()=>HC.insertWeight?.({weight:kg,timestamp:ts}),
+  ];
+  for(const fn of attempts){
+    try{const r=await fn();if(r!==undefined)return true}catch(e){/* try next */}
+  }
+  return false;
+}
+async function writeHydrationToHC(ml,dateIso){
+  if(!IS_NATIVE||!ml)return false;
+  if(!healthConnectReady){const ok=await setupHealthConnect();if(!ok)return false}
+  const HC=hcPlugin();if(!HC)return false;
+  const ts=new Date().toISOString();
+  const attempts=[
+    ()=>HC.write?.({dataType:'water',value:ml,startDate:ts,endDate:ts}),
+    ()=>HC.writeData?.({dataType:'water',value:ml,startDate:ts,endDate:ts}),
+    ()=>HC.writeHydration?.({volume:ml,date:ts}),
+  ];
+  for(const fn of attempts){try{const r=await fn();if(r!==undefined)return true}catch(e){}}
+  return false;
+}
 async function setupHealthConnect(){
   if(!IS_NATIVE)return false;
   const HC=hcPlugin();
@@ -1314,12 +1371,43 @@ async function syncHealthConnect(dateIso){
   if(hc.weight&&!e.weight)e.weight=Math.round(hc.weight*10)/10;
   state.data.entries[date]=e;
   saveLocalData();
+  state.lastHcSyncAt=nowIso();
   if(isConfigured()){pushData().catch(err=>console.warn('hc push failed',err))}
   return hc;
 }
 
+// Multi-day backfill — useful on first run or after a gap. Syncs N days ending today.
+async function syncHealthConnectRange(days=7){
+  if(!IS_NATIVE)return {synced:0,failed:0};
+  if(!healthConnectReady){const ok=await setupHealthConnect();if(!ok)return {synced:0,failed:0}}
+  let synced=0,failed=0;
+  for(let i=days-1;i>=0;i--){
+    const d=new Date();d.setDate(d.getDate()-i);
+    const iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    try{const r=await syncHealthConnect(iso);if(r)synced++;else failed++}catch(e){failed++}
+  }
+  return {synced,failed};
+}
+
 // Quick reads (kept for UI convenience — pull from cached HC sync)
 function getHCToday(){return state.data.entries[today()]?.hc||null}
+function hcWaterToday(){const hc=getHCToday()||{};return hc.water||0}  // ml from HC if logged elsewhere
+function hcAvg(field,days=7){
+  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,days);
+  const vals=ents.map(([d,e])=>e.hc?.[field]).filter(v=>v!=null&&!isNaN(v));
+  if(vals.length===0)return null;
+  return vals.reduce((s,v)=>s+v,0)/vals.length;
+}
+function hcSleepAvg(days=7){
+  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,days);
+  const vals=ents.map(([d,e])=>e.hc?.sleep?.hours).filter(v=>v!=null);
+  if(vals.length===0)return null;
+  return vals.reduce((s,v)=>s+v,0)/vals.length;
+}
+function hcWeekTotal(field){
+  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,7);
+  return ents.reduce((s,[d,e])=>s+(e.hc?.[field]||0),0);
+}
 
 async function readTodayHR(){
   if(!IS_NATIVE||!healthConnectReady)return null;
@@ -1353,7 +1441,17 @@ if(isConfigured())state.screen='today';else state.screen='welcome';
 setStatusTime();setInterval(setStatusTime,30000);
 render();
 loadAllDB().then(()=>{state.todayRec=null;render()});
-if(IS_NATIVE){setupHealthConnect().then(ok=>{if(ok){syncHealthConnect().then(hc=>{if(hc){state.healthSteps=hc.steps;render()}})}})}
+if(IS_NATIVE){
+  setupHealthConnect().then(ok=>{
+    if(!ok)return;
+    // Decide between single-day and multi-day backfill.
+    // If we haven't synced HC in the last 12 hours, backfill last 7 days. Otherwise just today.
+    const last=state.data.entries[today()]?.hcSyncedAt;
+    const stale=!last||((Date.now()-new Date(last).getTime())>12*3600*1000);
+    const job=stale?syncHealthConnectRange(7):syncHealthConnect();
+    Promise.resolve(job).then(r=>{render()});
+  });
+}
 if(isConfigured())pullData().then(()=>render()).catch(e=>console.warn('boot sync failed',e));
 </script>
 </body>
