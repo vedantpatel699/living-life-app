@@ -220,7 +220,7 @@ const state={
   screen:'welcome',
   config:{githubOwner:'vedantpatel699',githubRepo:'living-life-data',githubToken:'',branch:'main',claudeApiKey:'',claudeModel:'claude-sonnet-4-6',stravaToken:'',startDate:null},
   profile:{name:'',age:28,heightCm:167,sex:'male',startWeight:78,goalWeight:70,goalDate:'',shiftDays:[]},
-  data:{version:2,entries:{},supplements:{},coachConversation:[],weeklyReflections:[]},
+  data:{version:3,entries:{},supplements:{},coachConversation:[],weeklyReflections:[],customFoods:[],healthMarkers:[],gpReviewLog:[],lipomaLog:[],mealTemplates:[],frequencyPattern:{}},
   dataSha:null,draft:{},isSyncing:false,lastSyncOk:null,
 };
 
@@ -279,7 +279,22 @@ function hasClaudeKey(){return!!state.config.claudeApiKey}
 
 function toast(msg,type=''){document.querySelectorAll('.toast').forEach(t=>t.remove());const t=document.createElement('div');t.className='toast '+type;t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
 
-function loadLocal(){try{const c=localStorage.getItem(STORAGE_KEY);if(c){const p=JSON.parse(c);Object.assign(state.config,p.config||{});Object.assign(state.profile,p.profile||{})}}catch(e){}try{const d=localStorage.getItem(DATA_KEY);if(d){const p=JSON.parse(d);state.data=Object.assign(state.data,p.data||{});state.dataSha=p.sha||null}}catch(e){}}
+function loadLocal(){try{const c=localStorage.getItem(STORAGE_KEY);if(c){const p=JSON.parse(c);Object.assign(state.config,p.config||{});Object.assign(state.profile,p.profile||{})}}catch(e){}try{const d=localStorage.getItem(DATA_KEY);if(d){const p=JSON.parse(d);state.data=Object.assign(state.data,p.data||{});state.dataSha=p.sha||null}}catch(e){}migrateData()}
+// Ensure all v3 fields exist on a loaded state.data (idempotent — safe to run any number of times)
+function migrateData(){
+  const d=state.data;
+  d.version=3;
+  if(!d.entries)d.entries={};
+  if(!d.supplements)d.supplements={};
+  if(!d.coachConversation)d.coachConversation=[];
+  if(!d.weeklyReflections)d.weeklyReflections=[];
+  if(!d.customFoods)d.customFoods=[];
+  if(!d.healthMarkers)d.healthMarkers=[];   // Quarterly snapshots: waist, BP, A1c, lipids, D, B12, ferritin
+  if(!d.gpReviewLog)d.gpReviewLog=[];        // 6-month fluoxetine GP reviews
+  if(!d.lipomaLog)d.lipomaLog=[];            // Separate notes log for GP visits
+  if(!d.mealTemplates)d.mealTemplates=[];    // Saved post-shift meal etc.
+  if(!d.frequencyPattern)d.frequencyPattern={}; // Food picker personalization
+}
 function saveLocalConfig(){localStorage.setItem(STORAGE_KEY,JSON.stringify({config:state.config,profile:state.profile}))}
 function saveLocalData(){localStorage.setItem(DATA_KEY,JSON.stringify({data:state.data,sha:state.dataSha}))}
 
@@ -294,7 +309,7 @@ function b64enc(s){return btoa(unescape(encodeURIComponent(s)))}
 function b64dec(s){try{return decodeURIComponent(escape(atob(s.replace(/\s/g,''))))}catch(e){return''}}
 async function ghGetFile(path){const b=state.config.branch||'main';return ghRequest('GET',`contents/${encodeURIComponent(path).replace(/%2F/g,'/')}?ref=${b}`)}
 async function ghPutFile(path,c,m,sha){const b=state.config.branch||'main';const body={message:m,content:c,branch:b};if(sha)body.sha=sha;return ghRequest('PUT',`contents/${encodeURIComponent(path).replace(/%2F/g,'/')}`,body)}
-async function pullData(){if(!isConfigured())throw new Error('Not configured');state.isSyncing=true;try{const r=await ghGetFile('data/log.json');if(r.notFound){state.dataSha=null}else{const parsed=JSON.parse(b64dec(r.content));state.data=Object.assign(state.data,parsed);state.dataSha=r.sha}saveLocalData();state.lastSyncOk=nowIso()}finally{state.isSyncing=false}}
+async function pullData(){if(!isConfigured())throw new Error('Not configured');state.isSyncing=true;try{const r=await ghGetFile('data/log.json');if(r.notFound){state.dataSha=null}else{const parsed=JSON.parse(b64dec(r.content));state.data=Object.assign(state.data,parsed);state.dataSha=r.sha}migrateData();saveLocalData();state.lastSyncOk=nowIso()}finally{state.isSyncing=false}}
 async function pushData(){if(!isConfigured())throw new Error('Not configured');state.isSyncing=true;try{const c=b64enc(JSON.stringify(state.data,null,2));const r=await ghPutFile('data/log.json',c,`update ${today()}`,state.dataSha);state.dataSha=r.content.sha;saveLocalData();state.lastSyncOk=nowIso()}finally{state.isSyncing=false}}
 async function uploadPhoto(d,du){const b64=du.split(',')[1];const path=`data/photos/${d}.jpg`;let sha=null;try{const e=await ghGetFile(path);if(e&&!e.notFound)sha=e.sha}catch(e){}await ghPutFile(path,b64,`photo ${d}`,sha);return path}
 async function downloadPhoto(p){try{const r=await ghGetFile(p);if(r.notFound)return null;return'data:image/jpeg;base64,'+r.content.replace(/\s/g,'')}catch(e){return null}}
@@ -599,6 +614,39 @@ function renderProgress(){
       if(vo2)items.push(['🫁','VO₂max',vo2.toFixed(1),'14-day avg']);
       return `<h2 class="sec">HEALTH CONNECT TRENDS</h2><div class="card"><div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">${items.map(([e,l,v,sub])=>`<div style="display:flex;align-items:flex-start;gap:8px"><div style="font-size:20px;flex-shrink:0">${e}</div><div style="min-width:0"><div class="tiny muted">${l}</div><div style="font-weight:700;font-size:16px;line-height:1.1">${v}</div><div class="tiny faint">${sub}</div></div></div>`).join('')}</div></div>`;
     })()}
+    <h2 class="gf-section">QUARTERLY HEALTH MARKERS</h2>
+    ${(()=>{
+      const hm=state.data.healthMarkers||[];
+      const last=hm[hm.length-1];
+      const monthsSince=last?Math.round((Date.now()-new Date(last.date).getTime())/(86400000*30.4)):null;
+      const stale=monthsSince==null||monthsSince>=3;
+      return `<div class="gf-card">
+        ${last?`<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+          <div>
+            <div class="tiny muted">Last update</div>
+            <div style="font-weight:700;font-size:15px">${fmtDate(last.date)} <span class="tiny faint">· ${monthsSince}mo ago</span></div>
+          </div>
+          ${stale?'<div class="gf-pill warn">Due</div>':'<div class="gf-pill ok">Current</div>'}
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-bottom:12px">
+          ${last.waist_cm?`<div><div class="tiny muted">Waist</div><div style="font-weight:700;font-size:14px">${last.waist_cm} cm</div></div>`:''}
+          ${last.hba1c?`<div><div class="tiny muted">HbA1c</div><div style="font-weight:700;font-size:14px">${last.hba1c}%</div></div>`:''}
+          ${last.vit_d_nmol?`<div><div class="tiny muted">Vit D</div><div style="font-weight:700;font-size:14px">${last.vit_d_nmol} nmol/L</div></div>`:''}
+          ${last.b12_pmol?`<div><div class="tiny muted">B12</div><div style="font-weight:700;font-size:14px">${last.b12_pmol} pmol/L</div></div>`:''}
+          ${last.ferritin?`<div><div class="tiny muted">Ferritin</div><div style="font-weight:700;font-size:14px">${last.ferritin} µg/L</div></div>`:''}
+          ${last.lipid_ldl?`<div><div class="tiny muted">LDL</div><div style="font-weight:700;font-size:14px">${last.lipid_ldl} mmol/L</div></div>`:''}
+          ${last.blood_pressure_sys?`<div><div class="tiny muted">BP</div><div style="font-weight:700;font-size:14px">${last.blood_pressure_sys}/${last.blood_pressure_dia||'—'}</div></div>`:''}
+          ${last.tsh?`<div><div class="tiny muted">TSH</div><div style="font-weight:700;font-size:14px">${last.tsh} mIU/L</div></div>`:''}
+        </div>
+        ${last.notes?`<div class="tiny muted" style="margin-bottom:10px;white-space:pre-wrap">${escapeHtml(last.notes)}</div>`:''}`:`<div style="text-align:center;padding:14px 0">
+          <div style="font-size:32px;margin-bottom:8px">🩺</div>
+          <div style="font-weight:700;font-size:14px">Track for GP visits</div>
+          <div class="tiny muted" style="margin-top:4px">Waist, HbA1c, lipids, vit D, B12, ferritin every 3 months</div>
+        </div>`}
+        <button class="btn btn-secondary btn-full" id="hm-add">${last?'+ Add new lab/measurement':'+ Add first reading'}</button>
+        ${hm.length>1?`<button class="btn btn-ghost btn-full mt-2 tiny" id="hm-history" style="font-size:12px;padding:6px">View history (${hm.length} entries)</button>`:''}
+      </div>`;
+    })()}
     <h2 class="sec">WEEKLY REFLECTION</h2>
     <div class="card-tinted">
       <div style="display:flex;gap:12px;align-items:flex-start">
@@ -620,6 +668,8 @@ function bindProgress(){
   else{grid.innerHTML=photos.map(([d,e])=>`<div class="pcell" data-d="${d}" data-p="${e.photo}" style="aspect-ratio:3/4;background:var(--surface-sky);border-radius:10px;overflow:hidden;position:relative;cursor:pointer"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--faint)">…</div><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.7));padding:14px 6px 4px;font-size:10px;font-weight:600;color:white;text-align:center">${fmtDate(d)}</div></div>`).join('');grid.querySelectorAll('.pcell').forEach(async c=>{const u=await downloadPhoto(c.dataset.p);if(u)c.innerHTML=`<img src="${u}" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.7));padding:14px 6px 4px;font-size:10px;font-weight:600;color:white;text-align:center">${fmtDate(c.dataset.d)}</div>`})}
   document.getElementById('gen-refl')?.addEventListener('click',generateReflection);
   document.getElementById('goto-set')?.addEventListener('click',()=>setScreen('settings'));
+  document.getElementById('hm-add')?.addEventListener('click',()=>openHealthMarkersModal());
+  document.getElementById('hm-history')?.addEventListener('click',()=>openHealthMarkersHistory());
 }
 
 function renderHistory(){
@@ -704,6 +754,36 @@ ${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="chip ${(state.
         <button class="btn btn-secondary btn-full mt-2" id="s-refresh">Refresh databases from GitHub</button>
         <button class="btn btn-danger btn-full mt-2" id="s-clear">Clear local cache</button>
     </div>
+    <h2 class="gf-section">FLUOXETINE GP REVIEW</h2>
+    ${(()=>{
+      const log=state.data.gpReviewLog||[];
+      const last=log[log.length-1];
+      const monthsSince=last?Math.round((Date.now()-new Date(last.date).getTime())/(86400000*30.4)):null;
+      const due=monthsSince==null||monthsSince>=6;
+      return `<div class="gf-card">
+        ${last?`<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+          <div>
+            <div class="tiny muted">Last review</div>
+            <div style="font-weight:700;font-size:14px">${fmtDate(last.date)} <span class="tiny faint">· ${monthsSince}mo ago</span></div>
+            ${last.dose_mg?`<div class="tiny muted" style="margin-top:2px">Dose: ${last.dose_mg} mg/day</div>`:''}
+            ${last.next_appointment?`<div class="tiny" style="margin-top:2px;color:var(--sky)">Next appt: ${fmtDate(last.next_appointment)}</div>`:''}
+          </div>
+          ${due?'<div class="gf-pill warn">Due</div>':'<div class="gf-pill ok">Current</div>'}
+        </div>
+        <div class="tiny muted" style="line-height:1.6">${[
+          last.mood_rating&&'Mood: '+last.mood_rating,
+          last.sexual_function&&'Sexual: '+last.sexual_function,
+          last.agency&&'Agency: '+last.agency,
+        ].filter(Boolean).join(' · ')}</div>
+        ${last.side_effects?`<div class="tiny" style="margin-top:6px;white-space:pre-wrap;font-style:italic">${escapeHtml(last.side_effects)}</div>`:''}`:`<div style="text-align:center;padding:14px 0">
+          <div style="font-size:32px;margin-bottom:8px">💊</div>
+          <div style="font-weight:700;font-size:14px">Track every 6 months</div>
+          <div class="tiny muted" style="margin-top:4px">Mood, side effects, sexual function, agency — for GP visits</div>
+        </div>`}
+        <button class="btn btn-secondary btn-full mt-2" id="gp-add">+ New review</button>
+        ${log.length>1?`<button class="btn btn-ghost btn-full mt-2 tiny" id="gp-history" style="font-size:12px;padding:6px">View history (${log.length})</button>`:''}
+      </div>`;
+    })()}
     <h2 class="sec">DIAGNOSTICS</h2>
     <div class="card" style="font-family:monospace;font-size:11px;line-height:1.6">
       ${(()=>{
@@ -751,6 +831,27 @@ function bindSettings(){
   document.getElementById('s-exp')?.addEventListener('click',()=>{const b=new Blob([JSON.stringify(state.data,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`living-life-${today()}.json`;a.click();URL.revokeObjectURL(u)});
   document.getElementById('s-hcsync')?.addEventListener('click',async()=>{const btn=document.getElementById('s-hcsync');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Syncing…';const hc=await syncHealthConnect();btn.disabled=false;btn.textContent='↻ Sync Health Connect (today)';if(hc){toast('Synced ✓ · '+Object.keys(hc.available||{}).length+' data types','success');render()}else toast('Not available (need Android app)','error')});
   document.getElementById('s-hcbackfill')?.addEventListener('click',async()=>{const btn=document.getElementById('s-hcbackfill');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Backfilling 7 days…';const r=await syncHealthConnectRange(7);btn.disabled=false;btn.textContent='↻↻ Backfill last 7 days';toast(`Backfilled ${r.synced}/7 days · ${r.failed} skipped`, r.synced>0?'success':'error');render()});
+  document.getElementById('gp-add')?.addEventListener('click',()=>openGpReviewModal());
+  document.getElementById('gp-history')?.addEventListener('click',()=>{
+    const log=state.data.gpReviewLog||[];
+    const m=document.createElement('div');m.className='modal-bg';
+    m.innerHTML=`<div class="modal" style="max-width:480px;max-height:90dvh;overflow-y:auto"><div class="modal-handle"></div>
+    <h2 style="font-size:18px;font-weight:700">GP review history</h2>
+    <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+    ${log.slice().reverse().map(e=>`<div class="card-flat" style="padding:10px 12px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px"><div style="font-weight:700;font-size:13px">${fmtDate(e.date)}</div><div class="tiny muted">${daysAgo(e.date)}d ago</div></div>
+      <div class="tiny muted" style="line-height:1.6">${[e.dose_mg&&e.dose_mg+'mg',e.mood_rating,e.sexual_function&&'Sex: '+e.sexual_function,e.agency].filter(Boolean).join(' · ')}</div>
+      ${e.side_effects?`<div class="tiny" style="margin-top:6px;white-space:pre-wrap;font-style:italic">${escapeHtml(e.side_effects)}</div>`:''}
+      ${e.notes?`<div class="tiny" style="margin-top:6px;white-space:pre-wrap">${escapeHtml(e.notes)}</div>`:''}
+      ${e.next_appointment?`<div class="tiny" style="margin-top:6px;color:var(--sky)">Next appt: ${fmtDate(e.next_appointment)}</div>`:''}
+    </div>`).join('')}
+    </div>
+    <button class="btn btn-secondary btn-full mt-4" id="gph-close">Close</button>
+    </div>`;
+    m.addEventListener('click',ev=>{if(ev.target===m)m.remove()});
+    m.querySelector('#gph-close').addEventListener('click',()=>m.remove());
+    document.body.appendChild(m);
+  });
   document.getElementById('s-diag-test')?.addEventListener('click',async()=>{
     const lines=[];
     lines.push('Capacitor: '+(window.Capacitor?'present':'MISSING'));
@@ -767,7 +868,7 @@ function bindSettings(){
     alert(lines.join('\n\n'));
   });
   document.getElementById('s-refresh')?.addEventListener('click',async()=>{Object.assign(DB,{foods:null,supplements:null});await loadAllDB();const failed=Object.entries(DB._err||{}).filter(([k,v])=>v);if(failed.length===0)toast('Databases refreshed ✓','success');else toast('Some failed: '+failed.map(([k])=>k).join(', '),'error');render()});
-  document.getElementById('s-clear')?.addEventListener('click',()=>{if(confirm('Clear local cache?')){localStorage.removeItem(DATA_KEY);state.data={version:2,entries:{},supplements:{},coachConversation:[],weeklyReflections:[]};state.dataSha=null;toast('Cleared');render()}});
+  document.getElementById('s-clear')?.addEventListener('click',()=>{if(confirm('Clear local cache?')){localStorage.removeItem(DATA_KEY);state.data={version:3,entries:{},supplements:{},coachConversation:[],weeklyReflections:[],customFoods:[],healthMarkers:[],gpReviewLog:[],lipomaLog:[],mealTemplates:[],frequencyPattern:{}};state.dataSha=null;toast('Cleared');render()}});
 }
 
 // Placeholders (filled in next Edits)
@@ -1262,6 +1363,178 @@ async function openCameraOverlay(onCapture){
 }
 
 // =================== FOOD PICKER ===================
+
+// =================== QUARTERLY HEALTH MARKERS ===================
+function openHealthMarkersModal(existing){
+  const m=document.createElement('div');m.className='modal-bg';
+  const e=existing||{};
+  m.innerHTML=`<div class="modal" style="max-width:480px;max-height:90dvh;overflow-y:auto"><div class="modal-handle"></div>
+  <h2 style="font-size:20px;font-weight:700;margin-bottom:4px">Quarterly markers</h2>
+  <p class="tiny muted" style="margin-bottom:14px">Bring blood-test results from your GP. Anything you don't have, leave blank.</p>
+  <div class="field"><div class="flabel">Date of measurement</div><input type="date" id="hm-date" value="${e.date||today()}"></div>
+  <h3 class="tiny" style="margin-top:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Body</h3>
+  <div class="grid-2">
+    <div class="field"><div class="flabel">Waist (cm)</div><input type="number" step="0.5" id="hm-waist" value="${e.waist_cm||''}" placeholder="85"></div>
+    <div class="field"><div class="flabel">Weight at lab (kg)</div><input type="number" step="0.1" id="hm-weight" value="${e.weight_kg||''}" placeholder="76.5"></div>
+  </div>
+  <h3 class="tiny" style="margin-top:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Cardiometabolic</h3>
+  <div class="grid-2">
+    <div class="field"><div class="flabel">HbA1c (%)</div><input type="number" step="0.1" id="hm-a1c" value="${e.hba1c||''}" placeholder="5.4"></div>
+    <div class="field"><div class="flabel">Fasting glucose (mmol/L)</div><input type="number" step="0.1" id="hm-glucose" value="${e.fasting_glucose||''}" placeholder="5.0"></div>
+  </div>
+  <div class="grid-2">
+    <div class="field"><div class="flabel">Total chol (mmol/L)</div><input type="number" step="0.1" id="hm-total" value="${e.lipid_total||''}"></div>
+    <div class="field"><div class="flabel">LDL (mmol/L)</div><input type="number" step="0.1" id="hm-ldl" value="${e.lipid_ldl||''}"></div>
+  </div>
+  <div class="grid-2">
+    <div class="field"><div class="flabel">HDL (mmol/L)</div><input type="number" step="0.1" id="hm-hdl" value="${e.lipid_hdl||''}"></div>
+    <div class="field"><div class="flabel">Triglycerides (mmol/L)</div><input type="number" step="0.1" id="hm-tg" value="${e.lipid_tg||''}"></div>
+  </div>
+  <div class="grid-2">
+    <div class="field"><div class="flabel">BP systolic</div><input type="number" id="hm-bps" value="${e.blood_pressure_sys||''}" placeholder="118"></div>
+    <div class="field"><div class="flabel">BP diastolic</div><input type="number" id="hm-bpd" value="${e.blood_pressure_dia||''}" placeholder="76"></div>
+  </div>
+  <h3 class="tiny" style="margin-top:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Nutrients + Thyroid</h3>
+  <div class="grid-2">
+    <div class="field"><div class="flabel">25-OH vit D (nmol/L)</div><input type="number" id="hm-vitd" value="${e.vit_d_nmol||''}" placeholder="75"></div>
+    <div class="field"><div class="flabel">B12 (pmol/L)</div><input type="number" id="hm-b12" value="${e.b12_pmol||''}" placeholder="300"></div>
+  </div>
+  <div class="grid-2">
+    <div class="field"><div class="flabel">Ferritin (µg/L)</div><input type="number" id="hm-fer" value="${e.ferritin||''}" placeholder="60"></div>
+    <div class="field"><div class="flabel">TSH (mIU/L)</div><input type="number" step="0.01" id="hm-tsh" value="${e.tsh||''}" placeholder="1.5"></div>
+  </div>
+  <h3 class="tiny" style="margin-top:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Notes</h3>
+  <div class="field"><textarea id="hm-notes" placeholder="GP comments, symptoms to flag, follow-up plans">${escapeHtml(e.notes||'')}</textarea></div>
+  <div class="btn-row mt-4"><button class="btn btn-secondary" id="hm-cancel">Cancel</button><button class="btn btn-primary" id="hm-save">Save</button></div>
+  </div>`;
+  m.addEventListener('click',ev=>{if(ev.target===m)m.remove()});
+  m.querySelector('#hm-cancel').addEventListener('click',()=>m.remove());
+  m.querySelector('#hm-save').addEventListener('click',async()=>{
+    const v=id=>m.querySelector('#'+id).value;
+    const num=id=>{const x=parseFloat(v(id));return isNaN(x)?null:x};
+    const entry={
+      date:v('hm-date'),
+      waist_cm:num('hm-waist'),
+      weight_kg:num('hm-weight'),
+      hba1c:num('hm-a1c'),
+      fasting_glucose:num('hm-glucose'),
+      lipid_total:num('hm-total'),
+      lipid_ldl:num('hm-ldl'),
+      lipid_hdl:num('hm-hdl'),
+      lipid_tg:num('hm-tg'),
+      blood_pressure_sys:num('hm-bps'),
+      blood_pressure_dia:num('hm-bpd'),
+      vit_d_nmol:num('hm-vitd'),
+      b12_pmol:num('hm-b12'),
+      ferritin:num('hm-fer'),
+      tsh:num('hm-tsh'),
+      notes:v('hm-notes').trim()||null,
+      ts:nowIso(),
+    };
+    // Remove nulls so payload is small
+    Object.keys(entry).forEach(k=>{if(entry[k]==null)delete entry[k]});
+    state.data.healthMarkers=state.data.healthMarkers||[];
+    state.data.healthMarkers.push(entry);
+    state.data.healthMarkers.sort((a,b)=>a.date.localeCompare(b.date));
+    saveLocalData();
+    try{await pushData();toast('Saved ✓','success')}catch(err){toast('Saved locally; sync failed','error')}
+    m.remove();render();
+  });
+  document.body.appendChild(m);
+}
+function openHealthMarkersHistory(){
+  const hm=state.data.healthMarkers||[];
+  const m=document.createElement('div');m.className='modal-bg';
+  m.innerHTML=`<div class="modal" style="max-width:480px;max-height:90dvh;overflow-y:auto"><div class="modal-handle"></div>
+  <h2 style="font-size:18px;font-weight:700">Health markers history</h2>
+  <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+    ${hm.slice().reverse().map(e=>`<div class="card-flat" style="padding:10px 12px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px"><div style="font-weight:700;font-size:13px">${fmtDate(e.date)}</div><div class="tiny muted">${daysAgo(e.date)}d ago</div></div>
+      <div class="tiny muted" style="line-height:1.6">${[
+        e.waist_cm&&`Waist ${e.waist_cm}cm`,
+        e.weight_kg&&`Wt ${e.weight_kg}kg`,
+        e.hba1c&&`A1c ${e.hba1c}%`,
+        e.lipid_ldl&&`LDL ${e.lipid_ldl}`,
+        e.vit_d_nmol&&`D ${e.vit_d_nmol}`,
+        e.b12_pmol&&`B12 ${e.b12_pmol}`,
+        e.ferritin&&`Fer ${e.ferritin}`,
+        e.tsh&&`TSH ${e.tsh}`,
+        e.blood_pressure_sys&&`BP ${e.blood_pressure_sys}/${e.blood_pressure_dia}`,
+      ].filter(Boolean).join(' · ')}</div>
+      ${e.notes?`<div class="tiny" style="margin-top:6px;white-space:pre-wrap">${escapeHtml(e.notes)}</div>`:''}
+    </div>`).join('')}
+  </div>
+  <button class="btn btn-secondary btn-full mt-4" id="hmh-close">Close</button>
+  </div>`;
+  m.addEventListener('click',ev=>{if(ev.target===m)m.remove()});
+  m.querySelector('#hmh-close').addEventListener('click',()=>m.remove());
+  document.body.appendChild(m);
+}
+
+// =================== FLUOXETINE GP REVIEW LOG ===================
+function openGpReviewModal(existing){
+  const e=existing||{};
+  const m=document.createElement('div');m.className='modal-bg';
+  m.innerHTML=`<div class="modal" style="max-width:480px;max-height:90dvh;overflow-y:auto"><div class="modal-handle"></div>
+  <h2 style="font-size:20px;font-weight:700;margin-bottom:4px">Fluoxetine GP review</h2>
+  <p class="tiny muted" style="margin-bottom:14px">NICE recommends ≥6-month review for ongoing antidepressant treatment. Track mood, side effects, and intent for next appointment.</p>
+  <div class="field"><div class="flabel">Date</div><input type="date" id="gp-date" value="${e.date||today()}"></div>
+  <div class="field"><div class="flabel">Current dose (mg/day)</div><input type="number" id="gp-dose" value="${e.dose_mg||''}" placeholder="20"></div>
+  <h3 class="tiny" style="margin-top:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">How are things?</h3>
+  <div class="field"><div class="flabel">Mood (last 2 weeks)</div>
+    <select id="gp-mood" style="padding:12px"><option value="">—</option>
+      <option ${e.mood_rating==='stable'?'selected':''}>stable</option>
+      <option ${e.mood_rating==='improving'?'selected':''}>improving</option>
+      <option ${e.mood_rating==='worsening'?'selected':''}>worsening</option>
+      <option ${e.mood_rating==='mixed'?'selected':''}>mixed</option>
+    </select>
+  </div>
+  <div class="field"><div class="flabel">Side effects noted</div><textarea id="gp-side" placeholder="Sleep impact, GI, sexual, emotional blunting, weight, headaches, anything new">${escapeHtml(e.side_effects||'')}</textarea></div>
+  <div class="field"><div class="flabel">Sexual function (private — PSSD watch)</div>
+    <select id="gp-sex" style="padding:12px"><option value="">—</option>
+      <option ${e.sexual_function==='normal'?'selected':''}>normal</option>
+      <option ${e.sexual_function==='somewhat-affected'?'selected':''}>somewhat affected</option>
+      <option ${e.sexual_function==='significantly-affected'?'selected':''}>significantly affected</option>
+    </select>
+  </div>
+  <div class="field"><div class="flabel">Does the plan still feel like yours?</div>
+    <select id="gp-agency" style="padding:12px"><option value="">—</option>
+      <option ${e.agency==='yes-mine'?'selected':''}>yes, mine</option>
+      <option ${e.agency==='somewhat'?'selected':''}>somewhat</option>
+      <option ${e.agency==='feels-like-chore'?'selected':''}>feels like a chore (amotivational watch)</option>
+    </select>
+  </div>
+  <div class="field"><div class="flabel">Next appointment</div><input type="date" id="gp-next" value="${e.next_appointment||''}"></div>
+  <div class="field"><div class="flabel">Notes for GP</div><textarea id="gp-notes" placeholder="Topics to raise next visit">${escapeHtml(e.notes||'')}</textarea></div>
+  <div class="btn-row mt-4"><button class="btn btn-secondary" id="gp-cancel">Cancel</button><button class="btn btn-primary" id="gp-save">Save</button></div>
+  </div>`;
+  m.addEventListener('click',ev=>{if(ev.target===m)m.remove()});
+  m.querySelector('#gp-cancel').addEventListener('click',()=>m.remove());
+  m.querySelector('#gp-save').addEventListener('click',async()=>{
+    const v=id=>m.querySelector('#'+id).value;
+    const entry={
+      date:v('gp-date'),
+      dose_mg:parseInt(v('gp-dose'),10)||null,
+      mood_rating:v('gp-mood')||null,
+      side_effects:v('gp-side').trim()||null,
+      sexual_function:v('gp-sex')||null,
+      agency:v('gp-agency')||null,
+      next_appointment:v('gp-next')||null,
+      notes:v('gp-notes').trim()||null,
+      ts:nowIso(),
+    };
+    Object.keys(entry).forEach(k=>{if(entry[k]==null)delete entry[k]});
+    state.data.gpReviewLog=state.data.gpReviewLog||[];
+    state.data.gpReviewLog.push(entry);
+    state.data.gpReviewLog.sort((a,b)=>a.date.localeCompare(b.date));
+    saveLocalData();
+    try{await pushData();toast('Saved ✓','success')}catch(err){toast('Saved locally; sync failed','error')}
+    m.remove();render();
+  });
+  document.body.appendChild(m);
+}
+
+
 function openFoodPicker(onPick){
   if(!DB.foods){toast('Loading foods…','');loadDB('foods').then(r=>{if(r)openFoodPicker(onPick);else toast('Could not load food data — check internet · '+(DB._err.foods||''),'error')});return}
   let query='',cat='all',expanded=null;
