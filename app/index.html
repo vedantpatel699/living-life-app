@@ -612,6 +612,31 @@ ${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="chip ${(state.
         <button class="btn btn-secondary btn-full mt-2" id="s-refresh">Refresh databases from GitHub</button>
         <button class="btn btn-danger btn-full mt-2" id="s-clear">Clear local cache</button>
     </div>
+    <h2 class="sec">DIAGNOSTICS</h2>
+    <div class="card" style="font-family:monospace;font-size:11px;line-height:1.6">
+      ${(()=>{
+        const cap=window.Capacitor;
+        const plugins=cap?.Plugins||{};
+        const keys=Object.keys(plugins);
+        const hc=plugins.CapacitorHealth||plugins.Health||plugins.HealthConnect;
+        const isHttps=location.protocol==='https:';
+        const host=location.host||location.hostname||'(file)';
+        const ua=(navigator.userAgent||'').slice(0,80);
+        const rows=[
+          ['Origin',`${location.protocol}//${host}`],
+          ['User-Agent',ua],
+          ['IS_NATIVE',String(IS_NATIVE)],
+          ['window.Capacitor',cap?'present':'<span style="color:var(--danger)">MISSING</span>'],
+          ['Platform',cap?.getPlatform?.()||'(none)'],
+          ['Plugins registered',keys.length?keys.join(', '):'<span style="color:var(--danger)">none</span>'],
+          ['Health plugin',hc?'<span style="color:var(--success)">found</span>':'<span style="color:var(--danger)">missing</span>'],
+          ['healthConnectReady',String(typeof healthConnectReady!=='undefined'?healthConnectReady:'(no var)')],
+          ['Last HC sync',state.lastHcSyncAt||state.data.entries[today()]?.hcSyncedAt||'(never)'],
+        ];
+        return rows.map(([k,v])=>`<div style="display:flex;gap:8px;padding:2px 0;border-bottom:1px dotted var(--border-l)"><div style="width:130px;color:var(--muted);flex-shrink:0">${escapeHtml(k)}</div><div style="flex:1;word-break:break-all">${v}</div></div>`).join('');
+      })()}
+    </div>
+    <button class="btn btn-secondary btn-full mt-2" id="s-diag-test">Run HC connection test</button>
     <h2 class="sec">ABOUT</h2>
     <div class="card"><div style="display:flex;padding:4px 0"><div style="flex:1;font-weight:600">Version</div><div class="muted">${APP_VERSION}</div></div></div>
     <div class="text-center mt-4" style="padding:20px 0"><p class="tiny faint">Living Life — your back-to-fit journey, your data.</p></div>
@@ -635,6 +660,21 @@ function bindSettings(){
   document.getElementById('s-exp')?.addEventListener('click',()=>{const b=new Blob([JSON.stringify(state.data,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`living-life-${today()}.json`;a.click();URL.revokeObjectURL(u)});
   document.getElementById('s-hcsync')?.addEventListener('click',async()=>{const btn=document.getElementById('s-hcsync');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Syncing…';const hc=await syncHealthConnect();btn.disabled=false;btn.textContent='↻ Sync Health Connect (today)';if(hc){toast('Synced ✓ · '+Object.keys(hc.available||{}).length+' data types','success');render()}else toast('Not available (need Android app)','error')});
   document.getElementById('s-hcbackfill')?.addEventListener('click',async()=>{const btn=document.getElementById('s-hcbackfill');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Backfilling 7 days…';const r=await syncHealthConnectRange(7);btn.disabled=false;btn.textContent='↻↻ Backfill last 7 days';toast(`Backfilled ${r.synced}/7 days · ${r.failed} skipped`, r.synced>0?'success':'error');render()});
+  document.getElementById('s-diag-test')?.addEventListener('click',async()=>{
+    const lines=[];
+    lines.push('Capacitor: '+(window.Capacitor?'present':'MISSING'));
+    lines.push('IS_NATIVE: '+IS_NATIVE);
+    lines.push('Platform: '+(window.Capacitor?.getPlatform?.()||'none'));
+    lines.push('Plugins: '+Object.keys(window.Capacitor?.Plugins||{}).join(', '));
+    const HC=hcPlugin();
+    lines.push('hcPlugin(): '+(HC?'found':'null'));
+    if(HC){
+      lines.push('HC methods: '+Object.keys(HC).filter(k=>typeof HC[k]==='function').slice(0,10).join(', '));
+      try{const a=await(HC.isHealthAvailable?.());lines.push('isHealthAvailable: '+JSON.stringify(a))}catch(e){lines.push('isHealthAvailable err: '+e.message)}
+      try{const p=await(HC.requestHealthPermissions?.({permissions:HC_PERMS}));lines.push('requestPerms: '+JSON.stringify(p).slice(0,200))}catch(e){lines.push('requestPerms err: '+e.message)}
+    }
+    alert(lines.join('\n\n'));
+  });
   document.getElementById('s-refresh')?.addEventListener('click',async()=>{Object.assign(DB,{foods:null,supplements:null});await loadAllDB();const failed=Object.entries(DB._err||{}).filter(([k,v])=>v);if(failed.length===0)toast('Databases refreshed ✓','success');else toast('Some failed: '+failed.map(([k])=>k).join(', '),'error');render()});
   document.getElementById('s-clear')?.addEventListener('click',()=>{if(confirm('Clear local cache?')){localStorage.removeItem(DATA_KEY);state.data={version:2,entries:{},supplements:{},coachConversation:[],weeklyReflections:[]};state.dataSha=null;toast('Cleared');render()}});
 }
@@ -1392,62 +1432,4 @@ async function syncHealthConnectRange(days=7){
 }
 
 // Quick reads (kept for UI convenience — pull from cached HC sync)
-function getHCToday(){return state.data.entries[today()]?.hc||null}
-function hcWaterToday(){const hc=getHCToday()||{};return hc.water||0}  // ml from HC if logged elsewhere
-function hcAvg(field,days=7){
-  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,days);
-  const vals=ents.map(([d,e])=>e.hc?.[field]).filter(v=>v!=null&&!isNaN(v));
-  if(vals.length===0)return null;
-  return vals.reduce((s,v)=>s+v,0)/vals.length;
-}
-function hcSleepAvg(days=7){
-  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,days);
-  const vals=ents.map(([d,e])=>e.hc?.sleep?.hours).filter(v=>v!=null);
-  if(vals.length===0)return null;
-  return vals.reduce((s,v)=>s+v,0)/vals.length;
-}
-function hcWeekTotal(field){
-  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,7);
-  return ents.reduce((s,[d,e])=>s+(e.hc?.[field]||0),0);
-}
-
-async function readTodayHR(){
-  if(!IS_NATIVE||!healthConnectReady)return null;
-  const HC=window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health;
-  if(!HC)return null;
-  const start=new Date();start.setHours(0,0,0,0);
-  const end=new Date();
-  try{
-    const r=await HC.queryAggregated?.({startDate:start.toISOString(),endDate:end.toISOString(),dataType:'heart-rate',bucket:'day'});
-    return r?.aggregatedData?.[0]?.value||null;
-  }catch(e){return null}
-}
-async function readLastSleep(){
-  if(!IS_NATIVE||!healthConnectReady)return null;
-  const HC=window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health;
-  if(!HC)return null;
-  const end=new Date(),start=new Date(end.getTime()-36*3600*1000);
-  try{
-    const r=await HC.querySleep?.({startDate:start.toISOString(),endDate:end.toISOString()});
-    const sessions=r?.sleepData||[];
-    if(sessions.length===0)return null;
-    const last=sessions[sessions.length-1];
-    const hrs=(new Date(last.endDate)-new Date(last.startDate))/3600000;
-    return Math.round(hrs*10)/10;
-  }catch(e){return null}
-}
-
-
-loadLocal();
-if(isConfigured())state.screen='today';else state.screen='welcome';
-setStatusTime();setInterval(setStatusTime,30000);
-render();
-loadAllDB().then(()=>{state.todayRec=null;render()});
-if(IS_NATIVE){
-  setupHealthConnect().then(ok=>{
-    if(!ok)return;
-    // Decide between single-day and multi-day backfill.
-    // If we haven't synced HC in the last 12 hours, backfill last 7 days. Otherwise just today.
-    const last=state.data.entries[today()]?.hcSyncedAt;
-    const stale=!last||((Date.now()-new Date(last).getTime())>12*3600*1000);
-    const job=stale?syncHealthConnectRange(7):syncHealthConnect();
+function getHCToday(){return 
