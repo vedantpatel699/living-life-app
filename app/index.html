@@ -619,7 +619,6 @@ ${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="chip ${(state.
         const plugins=cap?.Plugins||{};
         const keys=Object.keys(plugins);
         const hc=plugins.CapacitorHealth||plugins.Health||plugins.HealthConnect;
-        const isHttps=location.protocol==='https:';
         const host=location.host||location.hostname||'(file)';
         const ua=(navigator.userAgent||'').slice(0,80);
         const rows=[
@@ -1432,4 +1431,69 @@ async function syncHealthConnectRange(days=7){
 }
 
 // Quick reads (kept for UI convenience — pull from cached HC sync)
-function getHCToday(){return 
+function getHCToday(){return state.data.entries[today()]?.hc||null}
+function hcWaterToday(){const hc=getHCToday()||{};return hc.water||0}  // ml from HC if logged elsewhere
+function hcAvg(field,days=7){
+  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,days);
+  const vals=ents.map(([d,e])=>e.hc?.[field]).filter(v=>v!=null&&!isNaN(v));
+  if(vals.length===0)return null;
+  return vals.reduce((s,v)=>s+v,0)/vals.length;
+}
+function hcSleepAvg(days=7){
+  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,days);
+  const vals=ents.map(([d,e])=>e.hc?.sleep?.hours).filter(v=>v!=null);
+  if(vals.length===0)return null;
+  return vals.reduce((s,v)=>s+v,0)/vals.length;
+}
+function hcWeekTotal(field){
+  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,7);
+  return ents.reduce((s,[d,e])=>s+(e.hc?.[field]||0),0);
+}
+
+async function readTodayHR(){
+  if(!IS_NATIVE||!healthConnectReady)return null;
+  const HC=window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health;
+  if(!HC)return null;
+  const start=new Date();start.setHours(0,0,0,0);
+  const end=new Date();
+  try{
+    const r=await HC.queryAggregated?.({startDate:start.toISOString(),endDate:end.toISOString(),dataType:'heart-rate',bucket:'day'});
+    return r?.aggregatedData?.[0]?.value||null;
+  }catch(e){return null}
+}
+async function readLastSleep(){
+  if(!IS_NATIVE||!healthConnectReady)return null;
+  const HC=window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health;
+  if(!HC)return null;
+  const end=new Date(),start=new Date(end.getTime()-36*3600*1000);
+  try{
+    const r=await HC.querySleep?.({startDate:start.toISOString(),endDate:end.toISOString()});
+    const sessions=r?.sleepData||[];
+    if(sessions.length===0)return null;
+    const last=sessions[sessions.length-1];
+    const hrs=(new Date(last.endDate)-new Date(last.startDate))/3600000;
+    return Math.round(hrs*10)/10;
+  }catch(e){return null}
+}
+
+
+loadLocal();
+if(isConfigured())state.screen='today';else state.screen='welcome';
+setStatusTime();setInterval(setStatusTime,30000);
+render();
+loadAllDB().then(()=>{state.todayRec=null;render()});
+if(IS_NATIVE){
+  setupHealthConnect().then(ok=>{
+    if(!ok)return;
+    // Decide between single-day and multi-day backfill.
+    // If we haven't synced HC in the last 12 hours, backfill last 7 days. Otherwise just today.
+    const last=state.data.entries[today()]?.hcSyncedAt;
+    const stale=!last||((Date.now()-new Date(last).getTime())>12*3600*1000);
+    const job=stale?syncHealthConnectRange(7):syncHealthConnect();
+    Promise.resolve(job).then(r=>{render()});
+  });
+}
+if(isConfigured())pullData().then(()=>render()).catch(e=>console.warn('boot sync failed',e));
+</script>
+</body>
+</html>
