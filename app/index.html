@@ -98,6 +98,44 @@ nav.bnav .tab.active .lbl{color:var(--ink)}
 .flex{display:flex}.flex-1{flex:1}.gap-2{gap:8px}.gap-3{gap:12px}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+
+/* ==== Google-Fit-style redesign tokens & components ==== */
+:root{
+  --gf-bg:#F5F1E8;
+  --gf-card:#FFFFFF;
+  --gf-card-soft:#FAF6EE;
+  --r-tile:20px;
+  --r-hero:28px;
+  --sh-tile:0 1px 3px rgba(26,31,46,0.04),0 4px 14px rgba(26,31,46,0.04);
+}
+.gf-hero{background:var(--gf-card);border-radius:var(--r-hero);padding:24px 20px 20px;box-shadow:var(--sh-tile);text-align:center;position:relative;overflow:hidden}
+.gf-tile{background:var(--gf-card);border-radius:var(--r-tile);padding:16px 14px;box-shadow:var(--sh-tile);position:relative;overflow:hidden}
+.gf-tile-h{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.gf-tile-v{font-size:24px;font-weight:800;line-height:1;letter-spacing:-0.02em}
+.gf-tile-u{font-size:13px;font-weight:500;color:var(--muted);margin-left:2px}
+.gf-tile-sub{font-size:11px;color:var(--faint);margin-top:4px}
+.gf-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gf-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.gf-num{font-weight:800;letter-spacing:-0.02em;line-height:1}
+.gf-section{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin:24px 4px 10px}
+.gf-card{background:var(--gf-card);border-radius:var(--r-tile);padding:18px;box-shadow:var(--sh-tile);margin-bottom:10px}
+.gf-row{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--gf-card);border-radius:var(--r-tile);box-shadow:var(--sh-tile);cursor:pointer}
+.gf-row:active{transform:scale(0.99)}
+.gf-row-i{width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
+.gf-row-t{flex:1;min-width:0}
+.gf-row-title{font-weight:600;font-size:15px;line-height:1.2}
+.gf-row-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.gf-ring-wrap{width:200px;height:200px;margin:8px auto 12px;position:relative}
+.gf-ring-num{font-size:42px;font-weight:800;letter-spacing:-0.03em;line-height:1}
+.gf-ring-label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:6px}
+.gf-ring-sub{font-size:11px;color:var(--faint);margin-top:2px}
+.gf-mini-stat{display:flex;flex-direction:column;align-items:center;flex:1}
+.gf-mini-val{font-size:18px;font-weight:700;line-height:1}
+.gf-mini-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-top:3px}
+.gf-pill{display:inline-flex;align-items:center;gap:4px;background:var(--surface-cream);padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600;color:var(--muted)}
+.gf-pill.ok{background:var(--success-s);color:var(--success)}
+.gf-pill.warn{background:#FBEBB6;color:#8C6B12}
+.gf-pill.cool{background:var(--sky-s);color:var(--sky)}
 </style>
 </head>
 <body>
@@ -193,6 +231,41 @@ function fmtDateLong(iso){if(!iso)return'';const d=new Date(iso+'T00:00:00');ret
 function fmtDateTime(iso){if(!iso)return'';return new Date(iso).toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}
 function daysAgo(iso){const a=new Date(iso+'T00:00:00'),b=new Date(today()+'T00:00:00');return Math.round((b-a)/86400000)}
 function fmtMinSec(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+
+// =================== GOOGLE-FIT-STYLE COMPONENTS ===================
+function gfRing({value=0,goal=10000,label='',sub='',size=200,color='var(--coral)',track='var(--surface-cream)',thick=14,centerLabel=''}){
+  const r=(size-thick)/2,c=size/2;
+  const circ=2*Math.PI*r;
+  const pct=Math.min(1,goal>0?value/goal:0);
+  const dash=circ*pct;
+  const num=value>=10000?(value/1000).toFixed(1)+'k':Math.round(value).toLocaleString();
+  return `<div class="gf-ring-wrap" style="width:${size}px;height:${size}px">
+<svg viewBox="0 0 ${size} ${size}" style="position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)">
+<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${track}" stroke-width="${thick}"/>
+<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${color}" stroke-width="${thick}" stroke-linecap="round" stroke-dasharray="${dash} ${circ}" style="transition:stroke-dasharray 0.6s ease-out"/>
+</svg>
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 16px">
+<div class="gf-ring-num">${num}</div>
+${centerLabel?`<div class="gf-ring-label">${centerLabel}</div>`:''}
+${label?`<div class="gf-ring-sub">${label}</div>`:''}
+${sub?`<div class="gf-ring-sub" style="margin-top:2px">${sub}</div>`:''}
+</div>
+</div>`;
+}
+function gfTile({icon='',label='',value='',unit='',sub='',color='var(--ink)',bg=null}){
+  const bgStyle=bg?`background:${bg};`:'';
+  return `<div class="gf-tile" style="${bgStyle}">
+<div class="gf-tile-h"><span>${icon}</span><span>${label}</span></div>
+<div style="display:flex;align-items:baseline;gap:2px"><span class="gf-tile-v" style="color:${color}">${value}</span>${unit?`<span class="gf-tile-u">${unit}</span>`:''}</div>
+${sub?`<div class="gf-tile-sub">${sub}</div>`:''}
+</div>`;
+}
+function gfRow({icon='',iconBg='var(--surface-cream)',iconColor='var(--ink)',title='',sub='',arrow=true,id=''}){
+  return `<div class="gf-row"${id?` id="${id}"`:''}><div class="gf-row-i" style="background:${iconBg};color:${iconColor}">${icon}</div><div class="gf-row-t"><div class="gf-row-title">${title}</div>${sub?`<div class="gf-row-sub">${sub}</div>`:''}</div>${arrow?`<div style="color:var(--faint);font-size:18px">›</div>`:''}</div>`;
+}
+function dailyStepGoal(){return isShiftDay()?12000:8000}
+function dailyActiveKcalGoal(){return isShiftDay()?700:500}
+
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function dayOfWeek(d=new Date()){const js=d.getDay();return js===0?6:js-1}
 function daysSinceStart(){if(!state.config.startDate)return 0;return Math.max(0,Math.floor((Date.now()-new Date(state.config.startDate).getTime())/86400000))}
@@ -344,89 +417,108 @@ function bindOnboarding(){
 }
 
 function renderToday(){
-  const t=today(),stats=weightStats(),streak=calcStreak();
+  const t=today(),stats=weightStats();
   const week=weekSinceStart(),entry=state.data.entries[t];
-  return `<div style="padding:0 4px">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0 8px">
-      <div><div class="muted tiny">${fmtDateLong(t)}</div><h1 style="font-size:26px;font-weight:700;letter-spacing:-0.01em;margin-top:2px">Hi, ${escapeHtml(state.profile.name||'there')} 👋</h1></div>
-      <button id="t-avatar" style="width:48px;height:48px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px">${(state.profile.name||'V')[0].toUpperCase()}</button>
-    </div>
-    ${(()=>{
+  const shift=isShiftDay();
   const hc=getHCToday()||{};
+  // Coverage % over last 7 days — replaces streaks (Polivy & Herman counter-regulatory risk)
+  const last7=[];for(let i=0;i<7;i++){const d=new Date();d.setDate(d.getDate()-i);last7.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'))}
+  const covered=last7.filter(iso=>state.data.entries[iso]).length;
+  const coveragePct=Math.round((covered/7)*100);
+  // Move Ring data — steps as the primary metric (universal, less SSRI-distorted than active kcal)
+  const stepsNow=hc.steps||0;
+  const stepsGoal=dailyStepGoal();
+  const ringPct=Math.min(100,Math.round((stepsNow/stepsGoal)*100));
+  // Energy balance numbers
   const bmrSoFar=bmrSoFarToday();
   const activeOut=Math.round(hc.active_calories||0);
   const totalOut=bmrSoFar+activeOut;
-  const todayEntry=state.data.entries[today()]||{};
-  const foods=todayEntry.foods||[];
+  const foods=(entry&&entry.foods)||[];
   const caloriesIn=foods.reduce((s,f)=>s+(f.kcal||0),0);
+  const proteinIn=foods.reduce((s,f)=>s+(f.protein||0),0);
   const net=caloriesIn-totalOut;
-  const shift=isShiftDay();
-  const target=shift?2400:2000;
-  const tdeeTarget=fullBmr()+(shift?500:300);
-  const pctIn=Math.min(100,(caloriesIn/target)*100);
-  const pctOut=Math.min(100,(totalOut/tdeeTarget)*100);
-  return `<div class="card" style="margin-top:12px;padding:18px 18px">
-<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
-<div><div class="flabel" style="margin:0">ENERGY · ${shift?'SHIFT DAY':'OFF DAY'}</div><div style="font-weight:700;font-size:22px;margin-top:2px;color:${net<0?'var(--success)':net>200?'#B58A0F':'var(--ink)'}">${net>0?'+':''}${net} kcal</div><div class="tiny muted">${net<0?'in deficit ✓':net===0?'balanced':'in surplus'}</div></div>
-<div style="text-align:right"><div class="tiny muted">Target net</div><div style="font-weight:600;font-size:15px">${(shift?-400:-300).toLocaleString()}</div><div class="tiny muted">~0.5 kg/wk loss</div></div>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-<div style="background:var(--success-s);border-radius:14px;padding:12px 14px">
-<div class="flabel" style="margin:0;color:var(--success)">CALORIES OUT</div>
-<div style="font-weight:700;font-size:20px;margin-top:4px">${totalOut.toLocaleString()}</div>
-<div class="tiny" style="color:var(--success);margin-top:2px">• ${bmrSoFar} resting</div>
-<div class="tiny" style="color:var(--success);margin-top:1px">• ${activeOut} active</div>
-<div style="height:4px;background:rgba(77,168,105,0.2);border-radius:2px;margin-top:8px;overflow:hidden"><div style="height:100%;width:${pctOut}%;background:var(--success);transition:width 0.3s"></div></div>
-</div>
-<div style="background:var(--coral-s);border-radius:14px;padding:12px 14px">
-<div class="flabel" style="margin:0;color:var(--coral)">CALORIES IN</div>
-<div style="font-weight:700;font-size:20px;margin-top:4px">${caloriesIn.toLocaleString()}</div>
-<div class="tiny" style="color:var(--coral);margin-top:2px">• ${foods.length} item${foods.length===1?'':'s'}</div>
-<div class="tiny" style="color:var(--coral);margin-top:1px">• of ${target} target</div>
-<div style="height:4px;background:rgba(237,122,77,0.2);border-radius:2px;margin-top:8px;overflow:hidden"><div style="height:100%;width:${pctIn}%;background:var(--coral);transition:width 0.3s"></div></div>
-</div>
-</div>
-${shift?`<div class="card-flat" style="margin-top:12px;padding:10px 12px;display:flex;gap:10px;align-items:center;background:var(--sky-s)"><div style="font-size:18px">🌙</div><div style="flex:1"><div class="tiny" style="font-weight:600;color:var(--sky)">SHIFT DAY · Workout window</div><div class="tiny muted">9:30 PM (pre-shift) · 30-40 min strength · See SHIFT_WORK.md</div></div></div>`:''}
-</div>`;
-})()}
+  const kcalTarget=shift?2400:2000;
+  // Caffeine awareness — show if shift day AND user has logged any caffeine entries today
+  const caffEntries=foods.filter(f=>(f.name||'').toLowerCase().includes('coffee')||(f.name||'').toLowerCase().includes('caffeine')||(f.name||'').toLowerCase().includes('tea'));
+  const caffShown=shift&&new Date().getHours()>=1&&new Date().getHours()<=11; // during shift hours
+  return `<div style="padding:0 4px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0 4px">
+      <div>
+        <div class="muted tiny">${fmtDateLong(t)}</div>
+        <h1 style="font-size:24px;font-weight:700;letter-spacing:-0.01em;margin-top:2px">Hi, ${escapeHtml(state.profile.name||'there')}</h1>
+        <div class="gf-pill ${shift?'cool':'ok'}" style="margin-top:6px">${shift?'🌙 SHIFT DAY':'☀ OFF DAY'} · Week ${week}</div>
+      </div>
+      <button id="t-avatar" style="width:44px;height:44px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:16px">${(state.profile.name||'V')[0].toUpperCase()}</button>
+    </div>
+    <div class="gf-hero" style="margin-top:14px">
+      ${gfRing({value:stepsNow,goal:stepsGoal,size:200,thick:14,color:'var(--coral)',track:'var(--surface-cream)',centerLabel:'STEPS'})}
+      <div class="tiny muted" style="margin-top:-4px">${stepsNow.toLocaleString()} of ${stepsGoal.toLocaleString()} · ${ringPct}%</div>
+      <div style="display:flex;gap:0;margin-top:18px;border-top:1px solid var(--border-l);padding-top:14px">
+        <div class="gf-mini-stat"><div class="gf-mini-val">${activeOut}</div><div class="gf-mini-lbl">Active kcal</div></div>
+        <div class="gf-mini-stat"><div class="gf-mini-val">${hc.distance_km?hc.distance_km.toFixed(1):'—'}</div><div class="gf-mini-lbl">km</div></div>
+        <div class="gf-mini-stat"><div class="gf-mini-val">${hc.workouts?.length||0}</div><div class="gf-mini-lbl">Workouts</div></div>
+      </div>
+    </div>
+    ${caffShown?`<div class="gf-card" style="background:var(--sun-s);margin-top:12px;display:flex;align-items:center;gap:12px">
+      <div style="font-size:24px">☕</div>
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:14px">Caffeine cutoff today: 4:00 AM</div>
+        <div class="tiny muted">Sleep at 2 PM. Calibrate to your own sleep latency, not the clock.</div>
+      </div>
+    </div>`:''}
+    <h2 class="gf-section">TODAY</h2>
+    <div class="gf-grid-2">
+      ${gfTile({icon:'⚖️',label:'Weight',value:stats?.latest!=null?stats.latest.toFixed(1):'—',unit:'kg',sub:stats?.avgNow!=null?'7-day avg '+stats.avgNow.toFixed(1):'log today',color:'var(--ink)'})}
+      ${gfTile({icon:'📉',label:'Week Δ',value:stats?.weekChange!=null?(stats.weekChange>0?'+':'')+stats.weekChange.toFixed(2):'—',unit:'kg',sub:'vs prior week',color:stats?.weekChange<0?'var(--success)':stats?.weekChange>0?'#B58A0F':'var(--ink)'})}
+      ${gfTile({icon:'🥩',label:'Protein',value:Math.round(proteinIn),unit:'g',sub:'/ 130 g target',color:'var(--coral)'})}
+      ${gfTile({icon:'⚡',label:'Energy net',value:(net>0?'+':'')+net,unit:'kcal',sub:net<0?'in deficit ✓':net===0?'balanced':'in surplus',color:net<0?'var(--success)':net>200?'#B58A0F':'var(--ink)'})}
+      ${hc.resting_heart_rate?gfTile({icon:'❤️',label:'Resting HR',value:Math.round(hc.resting_heart_rate),unit:'bpm',sub:'last night',color:'var(--ink)'}):''}
+      ${hc.sleep?gfTile({icon:'😴',label:'Sleep',value:hc.sleep.hours.toFixed(1),unit:'h',sub:'last block',color:'var(--ink)'}):''}
+    </div>
+    <h2 class="gf-section">HYDRATION</h2>
     ${(()=>{
-  const todayEntry=state.data.entries[today()]||{};
-  const waterFoods=(todayEntry.foods||[]).filter(f=>f.foodId==='calgary-tap-water');
+  const waterFoods=foods.filter(f=>f.foodId==='calgary-tap-water');
   const appMl=waterFoods.reduce((s,f)=>s+(f.grams||0),0);
   const hcMl=hcWaterToday();
-  const ml=Math.max(appMl,hcMl); // take the bigger of in-app or HC (avoid double-counting)
+  const ml=Math.max(appMl,hcMl);
   const glassCount=Math.round(ml/250);
   const goal=state.profile.waterGoalMl||2500;
   const pct=Math.min(100,(ml/goal)*100);
   const cups=8;const filled=Math.min(cups,Math.round((ml/goal)*cups));
-  return `<div class="card" style="margin-top:12px;padding:16px 18px;background:linear-gradient(135deg,#EAF4FB,#F8FAFB)">
+  return `<div class="gf-card" style="background:linear-gradient(135deg,#EAF4FB,#F8FAFB)">
 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
-<div><div class="flabel" style="margin:0;color:var(--sky)">💧 HYDRATION</div><div style="font-weight:700;font-size:22px;margin-top:2px">${ml.toLocaleString()} <span style="font-size:14px;font-weight:500;color:var(--muted)">/ ${goal.toLocaleString()} ml</span></div><div class="tiny muted">${glassCount} glass${glassCount===1?'':'es'} · ${ml>=goal?'goal hit ✓':Math.max(0,goal-ml)+' ml to goal'}</div></div>
+<div><div style="font-weight:700;font-size:22px">${ml.toLocaleString()}<span class="gf-tile-u"> / ${goal.toLocaleString()} ml</span></div><div class="tiny muted">${glassCount} glass${glassCount===1?'':'es'} · ${ml>=goal?'goal hit ✓':Math.max(0,goal-ml)+' ml to goal'}</div></div>
 <div style="text-align:right"><div class="tiny muted">CALGARY TAP</div><div class="tiny" style="color:var(--sky);font-weight:600">${Math.round(56*ml/100)} mg Ca · ${Math.round(16*ml/100)} mg Mg</div></div>
 </div>
 <div style="display:flex;gap:4px;margin-bottom:12px">${Array.from({length:cups},(_,i)=>`<div style="flex:1;aspect-ratio:1;background:${i<filled?'var(--sky)':'rgba(115,178,224,0.15)'};border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;color:${i<filled?'white':'rgba(115,178,224,0.5)'}">💧</div>`).join('')}</div>
 <div style="height:6px;background:rgba(115,178,224,0.2);border-radius:3px;overflow:hidden;margin-bottom:12px"><div style="height:100%;width:${pct}%;background:var(--sky);transition:width 0.3s"></div></div>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-<button id="t-water-glass" class="t-water-btn" style="background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:12px 8px;font-size:13px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px"><span style="font-size:16px">＋ 250 ml</span><span class="tiny muted" style="font-weight:400">Glass</span></button>
-<button id="t-water-bottle" class="t-water-btn" style="background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:12px 8px;font-size:13px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px"><span style="font-size:16px">＋ 500 ml</span><span class="tiny muted" style="font-weight:400">Bottle</span></button>
-<button id="t-water-custom" class="t-water-btn" style="background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:12px 8px;font-size:13px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px"><span style="font-size:16px">＋ Custom</span><span class="tiny muted" style="font-weight:400">Tap to enter</span></button>
+<button id="t-water-glass" style="background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:10px 6px;font-size:12px;font-weight:600">＋ 250 ml<br><span class="tiny muted" style="font-weight:400">Glass</span></button>
+<button id="t-water-bottle" style="background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:10px 6px;font-size:12px;font-weight:600">＋ 500 ml<br><span class="tiny muted" style="font-weight:400">Bottle</span></button>
+<button id="t-water-custom" style="background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:10px 6px;font-size:12px;font-weight:600">＋ Custom<br><span class="tiny muted" style="font-weight:400">Type ml</span></button>
 </div>
 ${ml>0?`<button id="t-water-undo" style="margin-top:8px;width:100%;background:transparent;color:var(--muted);font-size:12px;padding:6px;border-radius:8px">↶ Undo last glass</button>`:''}
 </div>`;
 })()}
-    <div class="grid-2" style="margin-top:12px">
-      <div class="card" style="margin-bottom:0"><div class="flabel">CURRENT</div><div style="font-size:26px;font-weight:700;margin-top:4px">${stats?.latest!=null?stats.latest.toFixed(1)+' kg':'—'}</div><div class="tiny muted">${stats?.avgNow!=null?'7-day avg '+stats.avgNow.toFixed(1):'no data yet'}</div></div>
-      <div class="card" style="margin-bottom:0"><div class="flabel">WEEK Δ</div><div style="font-size:26px;font-weight:700;margin-top:4px;color:${stats?.weekChange<0?'var(--success)':stats?.weekChange>0?'#B58A0F':'var(--ink)'}">${stats?.weekChange!=null?(stats.weekChange>0?'+':'')+stats.weekChange.toFixed(2)+' kg':'—'}</div><div class="tiny muted">vs. prior week</div></div>
+    ${hc.workouts&&hc.workouts.length?`<h2 class="gf-section">WORKOUTS · TODAY</h2><div class="gf-card">${hc.workouts.map(w=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border-l)"><div><div style="font-weight:600;font-size:13px">${escapeHtml(w.title||w.type||'Workout')}</div><div class="tiny muted">${w.sourceApp?escapeHtml(w.sourceApp.split('.').slice(-1)[0]):'manual'}</div></div><div style="text-align:right"><div style="font-weight:700;font-size:13px">${Math.round((w.durationSec||0)/60)} min</div>${w.calories?`<div class="tiny muted">${Math.round(w.calories)} kcal</div>`:''}</div></div>`).join('')}</div>`:''}
+    <h2 class="gf-section">CONSISTENCY</h2>
+    <div class="gf-card" id="t-coverage">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div>
+          <div style="font-weight:700;font-size:18px">${covered} of 7 days logged</div>
+          <div class="tiny muted">${coveragePct>=70?"I'm running the script":coveragePct>=40?"I protect the plan when I can":"Bad weeks happen. Resume tomorrow."}</div>
+        </div>
+        <div style="font-size:28px">${coveragePct>=70?'✓':coveragePct>=40?'~':'·'}</div>
+      </div>
+      <div style="display:flex;gap:3px">
+        ${last7.reverse().map(iso=>`<div style="flex:1;height:8px;border-radius:2px;background:${state.data.entries[iso]?'var(--success)':'var(--border)'}" title="${iso}"></div>`).join('')}
+      </div>
     </div>
-    ${streak>0?`<div style="background:linear-gradient(135deg,var(--coral),#E25E2D);color:white;border-radius:var(--r-lg);padding:16px 20px;margin-top:12px;position:relative;overflow:hidden"><div style="position:relative;z-index:1"><div style="font-size:28px">🔥</div><div style="font-size:20px;font-weight:700;margin-top:2px">${streak} day streak</div><div class="tiny" style="opacity:0.9">${entry?'Logged today — keep it going.':'Log today to keep it going.'}</div></div><div style="position:absolute;right:-30px;top:-30px;width:130px;height:130px;background:rgba(255,255,255,0.15);border-radius:50%"></div></div>`:''}
-    ${(()=>{const hc=getHCToday();if(!hc)return'';const items=[];if(hc.steps)items.push(['👟',hc.steps.toLocaleString()+' steps','today']);if(hc.distance_km)items.push(['📏',hc.distance_km.toFixed(2)+' km','distance']);if(hc.active_calories)items.push(['🔥',Math.round(hc.active_calories)+' kcal','active']);if(hc.floors_climbed)items.push(['🏢',hc.floors_climbed+' floors','climbed']);if(hc.resting_heart_rate)items.push(['❤️',Math.round(hc.resting_heart_rate)+' bpm','resting HR']);if(hc.sleep)items.push(['😴',hc.sleep.hours+' h','last night']);if(hc.vo2_max)items.push(['🫁',hc.vo2_max.toFixed(1),'VO₂max']);if(items.length===0)return'';const workoutLine=hc.workouts&&hc.workouts.length?`<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border-l);font-size:13px"><div style="font-weight:600;margin-bottom:4px">${hc.workouts.length} workout${hc.workouts.length>1?'s':''}</div>${hc.workouts.map(w=>`<div class="tiny muted">${escapeHtml(w.title||w.type||'Workout')} · ${Math.round((w.durationSec||0)/60)} min${w.calories?' · '+Math.round(w.calories)+' kcal':''}${w.sourceApp?' · '+escapeHtml(w.sourceApp.split('.').slice(-1)[0]):''}</div>`).join('')}</div>`:'';return `<div class="card" style="margin-top:12px;padding:14px 16px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div class="flabel" style="margin:0">FROM HEALTH CONNECT</div><button id="t-hcsync" class="chip-pill" style="background:var(--surface-cream);color:var(--muted);text-transform:none;letter-spacing:0;cursor:pointer">↻ Sync</button></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 12px">${items.map(([e,v,l])=>`<div style="display:flex;align-items:center;gap:8px"><div style="font-size:18px">${e}</div><div><div style="font-weight:700;font-size:15px;line-height:1.1">${v}</div><div class="tiny muted">${l}</div></div></div>`).join('')}</div>${workoutLine}</div>`})()}
-<button class="btn btn-secondary btn-full mt-4" id="t-log" style="padding:18px"><span style="font-size:20px;font-weight:700">＋</span> <span>Log today (weight, photo, meals)</span></button>
-    <h2 class="sec">SUPPLEMENTS</h2>
-    <div class="card-flat" id="t-supps" style="display:flex;align-items:center;gap:12px;cursor:pointer">
-      <div style="flex:1"><div style="font-weight:600">${todaySuppCount()} of ${SUPPLEMENTS.length} taken</div><div class="tiny muted">${suppStreak()>0?'🔥 '+suppStreak()+'-day streak':'Tap to check off today'}</div></div>
-      <div style="font-size:18px;color:var(--muted)">→</div>
-    </div>
-    ${hasClaudeKey()?`<h2 class="sec">COACH</h2><div class="card-flat" id="t-coach" style="display:flex;align-items:center;gap:12px;cursor:pointer"><div style="width:40px;height:40px;background:var(--cta);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--sun);font-weight:700">✦</div><div style="flex:1"><div style="font-weight:600">Ask your coach</div><div class="tiny muted">Knows your data</div></div><div style="font-size:18px;color:var(--muted)">→</div></div>`:''}
+    <button class="btn btn-secondary btn-full mt-4" id="t-log" style="padding:16px;display:flex;align-items:center;justify-content:center;gap:8px"><span style="font-size:18px">＋</span> <span>Log today</span></button>
+    <h2 class="gf-section">SUPPLEMENTS</h2>
+    ${gfRow({icon:'💊',iconBg:'var(--mint-s)',iconColor:'var(--mint)',title:todaySuppCount()+' of '+(DB.supplements?DB.supplements.supplements.filter(s=>s.frequency==='daily').length:SUPPLEMENTS.length)+' taken',sub:suppStreak()>0?'Coverage: '+suppStreak()+' days in a row':'Tap to check off',id:'t-supps'})}
+    ${hasClaudeKey()?`<h2 class="gf-section">COACH</h2>${gfRow({icon:'✦',iconBg:'var(--cta)',iconColor:'var(--sun)',title:'Ask your coach',sub:'Knows your data',id:'t-coach'})}`:''}
+    <div style="height:32px"></div>
   </div>`;
 }
 function bindToday(){
@@ -855,14 +947,14 @@ function renderCoach(){
 <div id="cc-thread" style="display:flex;flex-direction:column;gap:12px;padding:12px 4px">
 ${conv.length===0?`<div style="background:var(--surface-white);border-radius:var(--r-md) var(--r-md) var(--r-md) 4px;padding:14px 16px;max-width:80%;align-self:flex-start;box-shadow:var(--sh-card)"><p style="line-height:1.5">Hi ${escapeHtml(state.profile.name||'there')}, I'm your coach. I've read your plan and your last 30 days of logs. Ask me anything about training, nutrition, recovery, or how you're tracking against your goals.</p></div>`:conv.map(m=>{const u=m.role==='user';return `<div style="background:${u?'var(--cta)':'var(--surface-white)'};color:${u?'white':'var(--ink)'};border-radius:var(--r-md) var(--r-md) ${u?'4px var(--r-md)':'var(--r-md) 4px'};padding:14px 16px;max-width:82%;align-self:${u?'flex-end':'flex-start'};box-shadow:var(--sh-card);white-space:pre-wrap;line-height:1.5">${escapeHtml(m.content)}</div>`}).join('')}
 </div>
-${conv.length<2?`<div class="flabel" style="margin:16px 4px 8px">TRY ASKING</div><div class="chip-row" id="cc-sugg" style="padding:0 4px">${['How am I doing this week?','Should I rest today?','My knees are sore — should I run?','Make my workouts tougher'].map(s=>`<div class="chip" data-p="${escapeHtml(s)}">${escapeHtml(s)}</div>`).join('')}</div>`:''}
+${conv.length<2?`<div class="flabel" style="margin:16px 4px 8px">TRY ASKING</div><div class="chip-row" id="cc-sugg" style="padding:0 4px">${['How am I doing this week?','Is this weight bounce noise or signal?','My shift week was rough — what should I do?','Does this plan still feel like mine?'].map(s=>`<div class="chip" data-p="${escapeHtml(s)}">${escapeHtml(s)}</div>`).join('')}</div>`:''}
 </main>
 <div style="padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--surface-cream);border-top:1px solid var(--border-l)">
 <div style="display:flex;gap:8px;align-items:flex-end">
 <textarea id="cc-in" placeholder="Ask anything…" style="min-height:48px;max-height:120px;padding:14px 16px;border-radius:24px" rows="1"></textarea>
 <button class="btn btn-primary" id="cc-send" style="width:48px;height:48px;padding:0;border-radius:50%;flex-shrink:0">↑</button>
 </div>
-<p class="tiny faint text-center mt-2">Coach sees your weight, workouts, meals & notes</p>
+<p class="tiny faint text-center mt-2">Coach sees your data — shift days, sleep, weight, food, supplements</p>
 </div>`;
 }
 function bindCoach(){
@@ -1277,16 +1369,18 @@ function openCustomFood(onSave){
 
 // =================== HEALTH CONNECT — COMPREHENSIVE SYNC ===================
 let healthConnectReady=false;
-const HC_PERMS=['STEPS','HEART_RATE','RESTING_HEART_RATE','SLEEP','ACTIVE_CALORIES_BURNED','TOTAL_CALORIES_BURNED','DISTANCE','EXERCISE','WEIGHT','BODY_FAT','HEIGHT','HYDRATION','FLOORS_CLIMBED','OXYGEN_SATURATION','RESPIRATORY_RATE','HEART_RATE_VARIABILITY','VO2_MAX','POWER','SPEED','BLOOD_PRESSURE','BLOOD_GLUCOSE','BODY_TEMPERATURE','WRITE_WEIGHT','WRITE_HYDRATION'];
+const HC_PERMS=['READ_STEPS','READ_HEART_RATE','READ_RESTING_HEART_RATE','READ_ACTIVE_CALORIES','READ_TOTAL_CALORIES','READ_DISTANCE','READ_EXERCISE','READ_WEIGHT','READ_BODY_FAT','READ_HEIGHT','READ_FLOORS_CLIMBED','READ_VO2_MAX','READ_SLEEP','WRITE_WEIGHT','WRITE_EXERCISE'];
 const HC_DATA_TYPES=['steps','distance','active-calories','total-calories','floors-climbed','water','heart-rate','resting-heart-rate','oxygen-saturation','respiratory-rate','heart-rate-variability','vo2-max','weight','body-fat','height','blood-pressure-systolic','blood-pressure-diastolic','blood-glucose','body-temperature'];
 
-function hcPlugin(){return window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health||window.Capacitor?.Plugins?.HealthConnect}
+function hcPlugin(){return window.Capacitor?.Plugins?.HealthPlugin||window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health||window.Capacitor?.Plugins?.HealthConnect}
 
 // Write-back helpers. Plugin's exact write API varies across versions; we try multiple shapes.
 async function writeWeightToHC(kg,dateIso){
   if(!IS_NATIVE)return false;
   if(!healthConnectReady){const ok=await setupHealthConnect();if(!ok)return false}
   const HC=hcPlugin();if(!HC||!kg)return false;
+  // Feature-detect — capacitor-health@8.1.2 is read-only. Bail quietly if no write method exists.
+  if(!HC.write&&!HC.writeData&&!HC.writeWeight&&!HC.insertWeight){console.info('HC: weight write not supported in this plugin version');return false}
   const ts=new Date(dateIso+'T12:00:00').toISOString();
   // Try the documented patterns in capacitor-health@8.x and fall through.
   const attempts=[
@@ -1304,6 +1398,7 @@ async function writeHydrationToHC(ml,dateIso){
   if(!IS_NATIVE||!ml)return false;
   if(!healthConnectReady){const ok=await setupHealthConnect();if(!ok)return false}
   const HC=hcPlugin();if(!HC)return false;
+  if(!HC.write&&!HC.writeData&&!HC.writeHydration){console.info('HC: hydration write not supported');return false}
   const ts=new Date().toISOString();
   const attempts=[
     ()=>HC.write?.({dataType:'water',value:ml,startDate:ts,endDate:ts}),
@@ -1375,30 +1470,42 @@ async function syncHealthConnect(dateIso){
     if(hc.workouts.length)hc.available.workouts=true;
   }catch(e){console.warn('HC workouts',e)}
 
-  // Sleep — last night (today minus 1 evening through this morning)
+  // Sleep — feature-detect; capacitor-health@8.1.2 doesn't expose querySleep, so we
+  // pull it via aggregated 'sleep' bucket when available, otherwise gracefully skip.
   try{
-    const sleepStart=new Date(start.getTime()-30*3600*1000);
-    const r=await HC.querySleep?.({startDate:sleepStart.toISOString(),endDate:endIso});
-    const sessions=r?.sleepData||r?.sleepSessions||r?.sessions||[];
-    if(sessions.length>0){
-      const last=sessions[sessions.length-1];
-      const s=new Date(last.startDate||last.startTime),e=new Date(last.endDate||last.endTime);
-      hc.sleep={start:s.toISOString(),end:e.toISOString(),hours:Math.round((e-s)/360000)/10,stages:last.stages||last.sleepStages||null};
-      hc.available.sleep=true;
+    if(typeof HC.querySleep==='function'){
+      const sleepStart=new Date(start.getTime()-30*3600*1000);
+      const r=await HC.querySleep({startDate:sleepStart.toISOString(),endDate:endIso});
+      const sessions=r?.sleepData||r?.sleepSessions||r?.sessions||[];
+      if(sessions.length>0){
+        const last=sessions[sessions.length-1];
+        const s=new Date(last.startDate||last.startTime),e=new Date(last.endDate||last.endTime);
+        hc.sleep={start:s.toISOString(),end:e.toISOString(),hours:Math.round((e-s)/360000)/10,stages:last.stages||last.sleepStages||null};
+        hc.available.sleep=true;
+      }
+    }else{
+      // Fallback: queryAggregated with 'sleep' or 'sleep-duration' if the plugin supports it
+      const r=await HC.queryAggregated?.({startDate:startIso,endDate:endIso,dataType:'sleep',bucket:'day'}).catch(()=>null);
+      const v=r?.aggregatedData?.[0]?.value;
+      if(v){hc.sleep={hours:Math.round((v/3600)*10)/10};hc.available.sleep=true}
     }
   }catch(e){console.warn('HC sleep',e)}
 
-  // HR streams — pull individual HR samples if available, compute min/max/avg
+  // HR streams — capacitor-health@8.1.2 doesn't expose a top-level HR query.
+  // Heart-rate data comes through queryWorkouts with includeHeartRate:true (above).
+  // Aggregate min/avg/max from any workout HR samples we collected.
   try{
-    const r=await HC.queryHeartRateSamples?.({startDate:startIso,endDate:endIso})||await HC.queryHeartRate?.({startDate:startIso,endDate:endIso});
-    const samples=r?.samples||r?.heartRateData||[];
-    if(samples.length){
-      const vals=samples.map(s=>s.bpm||s.value).filter(v=>v>0);
-      if(vals.length){
-        hc.hr_min=Math.min(...vals);hc.hr_max=Math.max(...vals);
-        hc.hr_avg=Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
-        hc.hr_samples=vals.length;
-      }
+    const hrVals=[];
+    for(const w of hc.workouts||[]){
+      if(w.hrAvg)hrVals.push(w.hrAvg);
+      if(w.hrMax)hrVals.push(w.hrMax);
+      if(Array.isArray(w.heartRate))for(const sample of w.heartRate){const b=sample.bpm||sample.value;if(b>0)hrVals.push(b)}
+    }
+    if(hrVals.length){
+      hc.hr_min=Math.min(...hrVals);
+      hc.hr_max=Math.max(...hrVals);
+      hc.hr_avg=Math.round(hrVals.reduce((a,b)=>a+b,0)/hrVals.length);
+      hc.hr_samples=hrVals.length;
     }
   }catch(e){}
 
