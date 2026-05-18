@@ -1,7 +1,7 @@
 {
   "version": 2,
   "updatedAt": "2026-05-13",
-  "note": "Daily supplement protocol tailored to Vedant. v2 adds shift-work specific tier (melatonin, magnesium glycinate, L-theanine, ashwagandha, glycine) — see SUPPLEMENTS.md for evidence. Ashwagandha removed — contraindicated with user's SSRI medication.",
+  "note": "v2.1 — caffeine cutoffs tightened (CYP1A2 inhibition from fluoxetine extends caffeine half-life). Ashwagandha removed (SSRI interaction).",
   "supplements": [
     {
       "id": "creatine",
@@ -130,13 +130,13 @@
       "dose": "200-300 mg",
       "unit": "mg",
       "form": "Coffee (~80 mg/cup) or anhydrous caffeine tablet",
-      "timing": "~45 min pre-workout",
+      "timing": "~45 min pre-workout (before noon off-days; before 4:30 AM shift days)",
       "scheduleSlot": "pre-workout",
       "withFood": false,
       "frequency": "training-days-only",
       "phaseFromWeek": 1,
       "conditional": "training-day",
-      "notes": "HARD RULE: not after 2 PM. Sleep > workout boost. Skip rest days to preserve sensitivity.",
+      "notes": "HARD RULE on fluoxetine: off days no caffeine after NOON; shift days no caffeine after 4:30 AM (CYP1A2 inhibition extends caffeine half-life). Sleep > workout boost.",
       "monthlyCostCAD": "5-15"
     },
     {
@@ -308,7 +308,7 @@
     },
     {
       "slot": "shift-caffeine",
-      "time": "first 4h of shift only (cutoff 5:30 AM)",
+      "time": "first 3h of shift only (cutoff 4:30 AM — SSRI extends half-life)",
       "icon": "☕",
       "label": "Shift caffeine",
       "include": [
