@@ -1,7 +1,7 @@
 {
   "version": 2,
   "updatedAt": "2026-05-13",
-  "note": "v2.1 — caffeine cutoffs tightened (CYP1A2 inhibition from fluoxetine extends caffeine half-life). Ashwagandha removed (SSRI interaction).",
+  "note": "v2.1 — caffeine cutoffs tightened (CYP1A2 inhibition from fluoxetine extends caffeine half-life). Ashwagandha removed (SSRI interaction). Caffeine removed per user — no caffeine tracking in app.",
   "supplements": [
     {
       "id": "creatine",
@@ -121,25 +121,6 @@
       "monthlyCostCAD": "10-25"
     },
     {
-      "id": "caffeine",
-      "name": "Caffeine (coffee or pill)",
-      "icon": "☕",
-      "color": "coral",
-      "category": "tier3",
-      "purpose": "Strong evidence for endurance + sprint performance. 3-6 mg/kg pre-workout.",
-      "dose": "200-300 mg",
-      "unit": "mg",
-      "form": "Coffee (~80 mg/cup) or anhydrous caffeine tablet",
-      "timing": "~45 min pre-workout (before noon off-days; before 4:30 AM shift days)",
-      "scheduleSlot": "pre-workout",
-      "withFood": false,
-      "frequency": "training-days-only",
-      "phaseFromWeek": 1,
-      "conditional": "training-day",
-      "notes": "HARD RULE on fluoxetine: off days no caffeine after NOON; shift days no caffeine after 4:30 AM (CYP1A2 inhibition extends caffeine half-life). Sleep > workout boost.",
-      "monthlyCostCAD": "5-15"
-    },
-    {
       "id": "melatonin",
       "name": "Melatonin (low-dose)",
       "icon": "M",
@@ -239,7 +220,6 @@
       "icon": "⚡",
       "label": "Pre-workout",
       "include": [
-        "caffeine",
         "electrolytes"
       ],
       "conditional": "training-day"
@@ -304,15 +284,6 @@
         "d3",
         "omega3",
         "whey"
-      ]
-    },
-    {
-      "slot": "shift-caffeine",
-      "time": "first 3h of shift only (cutoff 4:30 AM — SSRI extends half-life)",
-      "icon": "☕",
-      "label": "Shift caffeine",
-      "include": [
-        "caffeine"
       ]
     },
     {
