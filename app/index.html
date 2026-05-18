@@ -915,6 +915,8 @@ ${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="chip ${(state.
           ['Platform',cap?.getPlatform?.()||'(none)'],
           ['Plugins registered',keys.length?keys.join(', '):'<span style="color:var(--danger)">none</span>'],
           ['Health plugin',hc?'<span style="color:var(--success)">found</span>':'<span style="color:var(--danger)">missing</span>'],
+          ['Sleep plugin (v4)',plugins.Sleep?'<span style="color:var(--success)">found</span>':'<span style="color:var(--danger)">missing</span>'],
+          ['ShiftRescue plugin (v4)',plugins.ShiftRescue?'<span style="color:var(--success)">found</span>':'<span style="color:var(--danger)">missing</span>'],
           ['healthConnectReady',String(typeof healthConnectReady!=='undefined'?healthConnectReady:'(no var)')],
           ['Last HC sync',state.lastHcSyncAt||state.data.entries[today()]?.hcSyncedAt||'(never)'],
         ];
@@ -937,6 +939,8 @@ function bindSettings(){
     else state.profile.shiftDays.push(d);
     saveLocalConfig();
     c.classList.toggle('selected');
+    // Propagate sleep-window change to native scheduler
+    setupShiftRescue();
   }));
   document.getElementById('s-save')?.addEventListener('click',async()=>{state.config.githubOwner=document.getElementById('s-u').value.trim();state.config.githubRepo=document.getElementById('s-r').value.trim();state.config.githubToken=document.getElementById('s-t').value.trim();saveLocalConfig();toast('Saved','success');if(isConfigured()){try{await pullData();toast('Connected ✓','success');render()}catch(e){toast('Saved but sync failed: '+e.message,'error')}}});
   document.getElementById('s-test')?.addEventListener('click',async()=>{const o=document.getElementById('s-u').value.trim(),r=document.getElementById('s-r').value.trim(),t=document.getElementById('s-t').value.trim();if(!o||!r||!t){toast('Fill all fields','error');return}try{const res=await fetch(`https://api.github.com/repos/${o}/${r}`,{headers:{'Authorization':`Bearer ${t}`,'Accept':'application/vnd.github+json'}});if(res.ok){const j=await res.json();toast('✓ '+j.full_name,'success')}else{toast('Error '+res.status,'error')}}catch(e){toast('Network error','error')}});
@@ -977,7 +981,17 @@ function bindSettings(){
     if(HC){
       lines.push('HC methods: '+Object.keys(HC).filter(k=>typeof HC[k]==='function').slice(0,10).join(', '));
       try{const a=await(HC.isHealthAvailable?.());lines.push('isHealthAvailable: '+JSON.stringify(a))}catch(e){lines.push('isHealthAvailable err: '+e.message)}
-      try{const p=await(HC.requestHealthPermissions?.({permissions:HC_PERMS}));lines.push('requestPerms: '+JSON.stringify(p).slice(0,200))}catch(e){lines.push('requestPerms err: '+e.message)}
+    }
+    const SL=window.Capacitor?.Plugins?.Sleep;
+    lines.push('Sleep plugin: '+(SL?'found':'MISSING'));
+    if(SL){
+      try{const r=await SL.querySleep({startDate:new Date(Date.now()-86400000).toISOString(),endDate:new Date().toISOString()});lines.push('Sleep.querySleep last24h: '+(r?.sessions?.length||0)+' sessions')}catch(e){lines.push('Sleep.querySleep err: '+e.message)}
+      try{const r=await SL.queryBodyBattery();lines.push('Sleep.queryBodyBattery: '+JSON.stringify(r))}catch(e){lines.push('Sleep.queryBodyBattery err: '+e.message)}
+    }
+    const SR=window.Capacitor?.Plugins?.ShiftRescue;
+    lines.push('ShiftRescue plugin: '+(SR?'found':'MISSING'));
+    if(SR){
+      try{const r=await SR.listScheduled();lines.push('ShiftRescue.listScheduled: '+JSON.stringify(r))}catch(e){lines.push('ShiftRescue.listScheduled err: '+e.message)}
     }
     alert(lines.join('\n\n'));
   });
@@ -1864,26 +1878,68 @@ async function syncHealthConnect(dateIso){
     if(hc.workouts.length)hc.available.workouts=true;
   }catch(e){console.warn('HC workouts',e)}
 
-  // Sleep — feature-detect; capacitor-health@8.1.2 doesn't expose querySleep, so we
-  // pull it via aggregated 'sleep' bucket when available, otherwise gracefully skip.
+  // Sleep — prefer the native Sleep bridge (added v4.0) which returns full stage data
   try{
-    if(typeof HC.querySleep==='function'){
-      const sleepStart=new Date(start.getTime()-30*3600*1000);
+    const sleepP=window.Capacitor?.Plugins?.Sleep;
+    const sleepStart=new Date(start.getTime()-30*3600*1000);
+    if(sleepP&&typeof sleepP.querySleep==='function'){
+      const r=await sleepP.querySleep({startDate:sleepStart.toISOString(),endDate:endIso});
+      const sessions=r?.sessions||[];
+      if(sessions.length>0){
+        const last=sessions[sessions.length-1];
+        hc.sleep={
+          start:last.startTime,
+          end:last.endTime,
+          hours:Math.round((last.durationMinutes/60)*10)/10,
+          stages:last.stages||null,
+        };
+        hc.available.sleep=true;
+      }
+    }else if(typeof HC.querySleep==='function'){
       const r=await HC.querySleep({startDate:sleepStart.toISOString(),endDate:endIso});
       const sessions=r?.sleepData||r?.sleepSessions||r?.sessions||[];
       if(sessions.length>0){
         const last=sessions[sessions.length-1];
-        const s=new Date(last.startDate||last.startTime),e=new Date(last.endDate||last.endTime);
-        hc.sleep={start:s.toISOString(),end:e.toISOString(),hours:Math.round((e-s)/360000)/10,stages:last.stages||last.sleepStages||null};
+        const sd=new Date(last.startDate||last.startTime),ed=new Date(last.endDate||last.endTime);
+        hc.sleep={start:sd.toISOString(),end:ed.toISOString(),hours:Math.round((ed-sd)/360000)/10,stages:last.stages||last.sleepStages||null};
         hc.available.sleep=true;
       }
     }else{
-      // Fallback: queryAggregated with 'sleep' or 'sleep-duration' if the plugin supports it
       const r=await HC.queryAggregated?.({startDate:startIso,endDate:endIso,dataType:'sleep',bucket:'day'}).catch(()=>null);
       const v=r?.aggregatedData?.[0]?.value;
       if(v){hc.sleep={hours:Math.round((v/3600)*10)/10};hc.available.sleep=true}
     }
   }catch(e){console.warn('HC sleep',e)}
+
+  // HRV — native Sleep bridge exposes queryHrv
+  try{
+    const sleepP=window.Capacitor?.Plugins?.Sleep;
+    if(sleepP&&typeof sleepP.queryHrv==='function'){
+      const r=await sleepP.queryHrv({startDate:startIso,endDate:endIso});
+      const samples=r?.samples||[];
+      if(samples.length){
+        const vals=samples.map(s=>s.rmssd_ms).filter(v=>v>0);
+        if(vals.length){
+          hc.hrv_rmssd_avg=Math.round((vals.reduce((a,b)=>a+b,0)/vals.length)*10)/10;
+          hc.hrv_samples=vals.length;
+          hc.available.hrv=true;
+        }
+      }
+    }
+  }catch(e){console.warn('HC hrv',e)}
+
+  // RHR — native Sleep bridge exposes queryRestingHeartRate (override aggregated if available)
+  try{
+    const sleepP=window.Capacitor?.Plugins?.Sleep;
+    if(sleepP&&typeof sleepP.queryRestingHeartRate==='function'){
+      const r=await sleepP.queryRestingHeartRate({startDate:startIso,endDate:endIso});
+      const vals=(r?.values||[]).map(v=>v.bpm).filter(v=>v>0);
+      if(vals.length){
+        hc.resting_heart_rate=Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+        hc.available['resting-heart-rate']=true;
+      }
+    }
+  }catch(e){console.warn('HC rhr native',e)}
 
   // HR streams — capacitor-health@8.1.2 doesn't expose a top-level HR query.
   // Heart-rate data comes through queryWorkouts with includeHeartRate:true (above).
@@ -1933,6 +1989,47 @@ async function syncHealthConnectRange(days=7){
 
 // Quick reads (kept for UI convenience — pull from cached HC sync)
 function getHCToday(){return state.data.entries[today()]?.hc||null}
+// =================== SHIFT RESCUE BRIDGE (v4.0 native plugin) ===================
+function shiftRescuePlugin(){return window.Capacitor?.Plugins?.ShiftRescue}
+
+// Compute today's daytime-sleep window (only meaningful on shift days). Returns
+// {startMs, endMs} or null if not a shift day.
+function todaySleepWindow(){
+  if(!isShiftDay())return null;
+  const now=new Date();
+  // Shift sleep target: 2:00 PM to 9:30 PM (matches the corrected schedule)
+  const start=new Date(now);start.setHours(14,0,0,0);
+  const end=new Date(now);end.setHours(21,30,0,0);
+  return {startMs:start.getTime(),endMs:end.getTime()};
+}
+
+async function setupShiftRescue(){
+  const SR=shiftRescuePlugin();
+  if(!SR)return false;
+  const w=todaySleepWindow();
+  if(!w)return true; // not a shift day → no window to set
+  try{
+    await SR.setSleepWindow({startMs:w.startMs,endMs:w.endMs});
+    return true;
+  }catch(e){console.warn('setSleepWindow',e);return false}
+}
+
+async function scheduleRescuePrompt({id,fireAtMs,title,body,deepLinkRoute='today',tag='default'}){
+  const SR=shiftRescuePlugin();
+  if(!SR){console.info('ShiftRescue not native — prompt skipped:',id);return false}
+  try{
+    await SR.schedulePrompt({id,fireAtMs,title,body,deepLinkRoute,tag});
+    return true;
+  }catch(e){console.warn('schedulePrompt',e);return false}
+}
+
+async function cancelRescuePrompt(id){
+  const SR=shiftRescuePlugin();
+  if(!SR)return false;
+  try{await SR.cancelPrompt({id});return true}catch(e){return false}
+}
+
+
 function hcWaterToday(){const hc=getHCToday()||{};return hc.water||0}  // ml from HC if logged elsewhere
 function hcAvg(field,days=7){
   const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,days);
@@ -1987,12 +2084,13 @@ if(IS_NATIVE){
   setupHealthConnect().then(ok=>{
     if(!ok)return;
     // Decide between single-day and multi-day backfill.
-    // If we haven't synced HC in the last 12 hours, backfill last 7 days. Otherwise just today.
     const last=state.data.entries[today()]?.hcSyncedAt;
     const stale=!last||((Date.now()-new Date(last).getTime())>12*3600*1000);
     const job=stale?syncHealthConnectRange(7):syncHealthConnect();
     Promise.resolve(job).then(r=>{render()});
   });
+  // Set the sleep-sovereign gate on the native scheduler so notifications respect daytime sleep
+  setupShiftRescue();
 }
 if(isConfigured())pullData().then(()=>render()).catch(e=>console.warn('boot sync failed',e));
 </script>
