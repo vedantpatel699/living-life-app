@@ -1552,6 +1552,5150 @@
         "wheat",
         "home_cooked"
       ]
+    },
+    {
+      "id": "rice-basmati-raw",
+      "name": "Basmati Rice (raw)",
+      "category": "grain",
+      "kcal": 345,
+      "protein": 7.5,
+      "carbs": 78.2,
+      "fat": 0.5,
+      "fiber": 1.3,
+      "sat_fat": 0.1,
+      "sugar": 0.5,
+      "sodium_mg": 5,
+      "potassium_mg": 115,
+      "calcium_mg": 9,
+      "iron_mg": 0.7,
+      "magnesium_mg": 25,
+      "zinc_mg": 1.1,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 8,
+      "leucine_g": 0.63,
+      "selenium_ug": 15,
+      "glycemic_index": 58,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 D-2 basmati",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "staple",
+        "raw",
+        "grain"
+      ],
+      "portions": [
+        {
+          "n": "1 cup raw (180g)",
+          "g": 180
+        },
+        {
+          "n": "1 katori raw (100g)",
+          "g": 100
+        },
+        {
+          "n": "100g raw",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "rice-brown-raw",
+      "name": "Brown Rice (raw)",
+      "category": "grain",
+      "kcal": 370,
+      "protein": 7.9,
+      "carbs": 77.2,
+      "fat": 2.9,
+      "fiber": 3.5,
+      "sat_fat": 0.6,
+      "sugar": 0.7,
+      "sodium_mg": 7,
+      "potassium_mg": 223,
+      "calcium_mg": 23,
+      "iron_mg": 1.5,
+      "magnesium_mg": 143,
+      "zinc_mg": 2.0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 20,
+      "leucine_g": 0.62,
+      "selenium_ug": 23,
+      "glycemic_index": 68,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169704",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "staple",
+        "raw",
+        "grain",
+        "high_fiber"
+      ],
+      "portions": [
+        {
+          "n": "1 cup raw (185g)",
+          "g": 185
+        },
+        {
+          "n": "100g raw",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "rice-white-raw",
+      "name": "White Rice (raw)",
+      "category": "grain",
+      "kcal": 360,
+      "protein": 6.6,
+      "carbs": 80.0,
+      "fat": 0.6,
+      "fiber": 1.3,
+      "sat_fat": 0.2,
+      "sugar": 0.1,
+      "sodium_mg": 5,
+      "potassium_mg": 86,
+      "calcium_mg": 9,
+      "iron_mg": 1.5,
+      "magnesium_mg": 28,
+      "zinc_mg": 1.1,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 8,
+      "leucine_g": 0.55,
+      "selenium_ug": 15,
+      "glycemic_index": 72,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169756",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "staple",
+        "raw",
+        "grain",
+        "high_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup raw (185g)",
+          "g": 185
+        },
+        {
+          "n": "100g raw",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "toor-dal-raw",
+      "name": "Toor Dal / Arhar (raw split)",
+      "category": "lentil",
+      "kcal": 343,
+      "protein": 22.3,
+      "carbs": 57.6,
+      "fat": 1.7,
+      "fiber": 9.1,
+      "sat_fat": 0.6,
+      "sugar": 2.0,
+      "sodium_mg": 30,
+      "potassium_mg": 1392,
+      "calcium_mg": 73,
+      "iron_mg": 3.9,
+      "magnesium_mg": 133,
+      "zinc_mg": 2.3,
+      "vit_a_iu": 3,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 456,
+      "leucine_g": 1.5,
+      "selenium_ug": 8,
+      "glycemic_index": 22,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 C-15 arhar dal",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "staple",
+        "raw",
+        "legume",
+        "low_gi",
+        "high_protein"
+      ],
+      "portions": [
+        {
+          "n": "1 katori raw (100g)",
+          "g": 100
+        },
+        {
+          "n": "1 cup raw (200g)",
+          "g": 200
+        }
+      ]
+    },
+    {
+      "id": "moong-dal-split-raw",
+      "name": "Moong Dal Yellow (split, raw)",
+      "category": "lentil",
+      "kcal": 348,
+      "protein": 24.5,
+      "carbs": 59.0,
+      "fat": 1.2,
+      "fiber": 8.2,
+      "sat_fat": 0.3,
+      "sugar": 2.0,
+      "sodium_mg": 28,
+      "potassium_mg": 1246,
+      "calcium_mg": 90,
+      "iron_mg": 3.7,
+      "magnesium_mg": 124,
+      "zinc_mg": 2.7,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 140,
+      "leucine_g": 1.9,
+      "selenium_ug": 8,
+      "glycemic_index": 25,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 C-9",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "staple",
+        "raw",
+        "legume",
+        "low_gi",
+        "high_protein"
+      ],
+      "portions": [
+        {
+          "n": "1 katori raw (100g)",
+          "g": 100
+        },
+        {
+          "n": "100g raw",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "moong-whole-raw",
+      "name": "Whole Green Moong (raw)",
+      "category": "lentil",
+      "kcal": 347,
+      "protein": 24.0,
+      "carbs": 56.7,
+      "fat": 1.2,
+      "fiber": 16.3,
+      "sat_fat": 0.3,
+      "sugar": 7.0,
+      "sodium_mg": 15,
+      "potassium_mg": 1246,
+      "calcium_mg": 124,
+      "iron_mg": 6.7,
+      "magnesium_mg": 189,
+      "zinc_mg": 2.7,
+      "vit_a_iu": 114,
+      "vit_c_mg": 4.8,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 625,
+      "leucine_g": 1.87,
+      "selenium_ug": 8,
+      "glycemic_index": 25,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 174270",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "raw",
+        "legume",
+        "whole",
+        "high_fiber",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 katori raw (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "urad-dal-split-raw",
+      "name": "Urad Dal (split, raw)",
+      "category": "lentil",
+      "kcal": 341,
+      "protein": 24.0,
+      "carbs": 59.6,
+      "fat": 1.4,
+      "fiber": 18.3,
+      "sat_fat": 0.2,
+      "sugar": 0.9,
+      "sodium_mg": 38,
+      "potassium_mg": 983,
+      "calcium_mg": 138,
+      "iron_mg": 7.6,
+      "magnesium_mg": 267,
+      "zinc_mg": 3.4,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 216,
+      "leucine_g": 1.9,
+      "selenium_ug": 5,
+      "glycemic_index": 28,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 C-13",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "raw",
+        "legume",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 katori raw (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "urad-dal-whole-raw",
+      "name": "Whole Urad / Black Gram (raw)",
+      "category": "lentil",
+      "kcal": 341,
+      "protein": 25.2,
+      "carbs": 58.9,
+      "fat": 1.6,
+      "fiber": 18.3,
+      "sat_fat": 0.2,
+      "sugar": 0.9,
+      "sodium_mg": 38,
+      "potassium_mg": 983,
+      "calcium_mg": 138,
+      "iron_mg": 7.6,
+      "magnesium_mg": 267,
+      "zinc_mg": 3.4,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 216,
+      "leucine_g": 1.98,
+      "selenium_ug": 5,
+      "glycemic_index": 28,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 C-13",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "raw",
+        "legume",
+        "whole",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 katori raw (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "masoor-dal-split-raw",
+      "name": "Masoor Dal Red (split, raw)",
+      "category": "lentil",
+      "kcal": 343,
+      "protein": 24.3,
+      "carbs": 60.1,
+      "fat": 0.7,
+      "fiber": 10.7,
+      "sat_fat": 0.2,
+      "sugar": 2.0,
+      "sodium_mg": 7,
+      "potassium_mg": 955,
+      "calcium_mg": 35,
+      "iron_mg": 7.5,
+      "magnesium_mg": 71,
+      "zinc_mg": 3.3,
+      "vit_a_iu": 8,
+      "vit_c_mg": 4.5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 479,
+      "leucine_g": 1.8,
+      "selenium_ug": 8,
+      "glycemic_index": 26,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 C-11",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "staple",
+        "raw",
+        "legume",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 katori raw (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "chana-dal-raw",
+      "name": "Chana Dal (split, raw)",
+      "category": "lentil",
+      "kcal": 372,
+      "protein": 21.0,
+      "carbs": 60.0,
+      "fat": 5.3,
+      "fiber": 12.7,
+      "sat_fat": 0.7,
+      "sugar": 3.4,
+      "sodium_mg": 24,
+      "potassium_mg": 776,
+      "calcium_mg": 57,
+      "iron_mg": 4.6,
+      "magnesium_mg": 79,
+      "zinc_mg": 3.4,
+      "vit_a_iu": 67,
+      "vit_c_mg": 4.0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 557,
+      "leucine_g": 1.5,
+      "selenium_ug": 8,
+      "glycemic_index": 8,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 C-5",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "raw",
+        "legume",
+        "very_low_gi",
+        "high_protein"
+      ],
+      "portions": [
+        {
+          "n": "1 katori raw (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "kala-chana-raw",
+      "name": "Kala Chana / Black Chickpea (raw)",
+      "category": "lentil",
+      "kcal": 360,
+      "protein": 20.7,
+      "carbs": 60.0,
+      "fat": 5.3,
+      "fiber": 15.0,
+      "sat_fat": 0.7,
+      "sugar": 3.0,
+      "sodium_mg": 24,
+      "potassium_mg": 776,
+      "calcium_mg": 105,
+      "iron_mg": 4.8,
+      "magnesium_mg": 115,
+      "zinc_mg": 3.4,
+      "vit_a_iu": 67,
+      "vit_c_mg": 4.0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 557,
+      "leucine_g": 1.45,
+      "selenium_ug": 8,
+      "glycemic_index": 33,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 C-7",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "raw",
+        "legume",
+        "whole",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 katori raw (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "kabuli-chana-raw",
+      "name": "Kabuli Chana / White Chickpea (raw)",
+      "category": "lentil",
+      "kcal": 364,
+      "protein": 19.3,
+      "carbs": 61.0,
+      "fat": 6.0,
+      "fiber": 17.4,
+      "sat_fat": 0.6,
+      "sugar": 10.7,
+      "sodium_mg": 24,
+      "potassium_mg": 875,
+      "calcium_mg": 105,
+      "iron_mg": 6.2,
+      "magnesium_mg": 115,
+      "zinc_mg": 3.4,
+      "vit_a_iu": 67,
+      "vit_c_mg": 4.0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 557,
+      "leucine_g": 1.4,
+      "selenium_ug": 8,
+      "glycemic_index": 28,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 173756",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "raw",
+        "legume",
+        "whole",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 katori raw (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "rajma-raw",
+      "name": "Rajma / Kidney Bean (dry, raw)",
+      "category": "lentil",
+      "kcal": 333,
+      "protein": 22.9,
+      "carbs": 60.0,
+      "fat": 1.3,
+      "fiber": 15.2,
+      "sat_fat": 0.2,
+      "sugar": 2.1,
+      "sodium_mg": 12,
+      "potassium_mg": 1359,
+      "calcium_mg": 143,
+      "iron_mg": 8.2,
+      "magnesium_mg": 140,
+      "zinc_mg": 2.8,
+      "vit_a_iu": 0,
+      "vit_c_mg": 4.5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 394,
+      "leucine_g": 1.93,
+      "selenium_ug": 3,
+      "glycemic_index": 25,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 175249",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "raw",
+        "legume",
+        "whole",
+        "low_gi",
+        "high_iron"
+      ],
+      "portions": [
+        {
+          "n": "1 katori raw (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "lobia-raw",
+      "name": "Lobia / Black-eyed Peas (dry, raw)",
+      "category": "lentil",
+      "kcal": 336,
+      "protein": 23.5,
+      "carbs": 60.0,
+      "fat": 1.3,
+      "fiber": 10.7,
+      "sat_fat": 0.5,
+      "sugar": 6.9,
+      "sodium_mg": 16,
+      "potassium_mg": 1112,
+      "calcium_mg": 110,
+      "iron_mg": 8.3,
+      "magnesium_mg": 184,
+      "zinc_mg": 3.4,
+      "vit_a_iu": 50,
+      "vit_c_mg": 1.5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 633,
+      "leucine_g": 1.8,
+      "selenium_ug": 9,
+      "glycemic_index": 33,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 173757",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "raw",
+        "legume",
+        "whole",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 katori raw (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "matar-yellow-split-raw",
+      "name": "Matar Yellow Split (raw)",
+      "category": "lentil",
+      "kcal": 341,
+      "protein": 24.6,
+      "carbs": 60.4,
+      "fat": 1.2,
+      "fiber": 8.3,
+      "sat_fat": 0.2,
+      "sugar": 8.0,
+      "sodium_mg": 15,
+      "potassium_mg": 981,
+      "calcium_mg": 55,
+      "iron_mg": 4.4,
+      "magnesium_mg": 115,
+      "zinc_mg": 3.0,
+      "vit_a_iu": 149,
+      "vit_c_mg": 1.8,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 274,
+      "leucine_g": 1.79,
+      "selenium_ug": 1.6,
+      "glycemic_index": 22,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 172421",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "raw",
+        "legume",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 katori raw (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "atta-whole-wheat",
+      "name": "Atta (Whole Wheat Chakki Flour)",
+      "category": "grain",
+      "kcal": 341,
+      "protein": 12.1,
+      "carbs": 69.4,
+      "fat": 1.7,
+      "fiber": 11.2,
+      "sat_fat": 0.3,
+      "sugar": 0.4,
+      "sodium_mg": 2,
+      "potassium_mg": 363,
+      "calcium_mg": 34,
+      "iron_mg": 4.9,
+      "magnesium_mg": 138,
+      "zinc_mg": 2.9,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 44,
+      "leucine_g": 0.81,
+      "selenium_ug": 71,
+      "glycemic_index": 50,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 A-2",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "staple",
+        "raw",
+        "grain",
+        "whole_grain"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (130g)",
+          "g": 130
+        },
+        {
+          "n": "1 tbsp (8g)",
+          "g": 8
+        }
+      ]
+    },
+    {
+      "id": "maida-refined-flour",
+      "name": "Maida (Refined Wheat Flour)",
+      "category": "grain",
+      "kcal": 348,
+      "protein": 11.0,
+      "carbs": 72.5,
+      "fat": 0.9,
+      "fiber": 2.7,
+      "sat_fat": 0.2,
+      "sugar": 0.3,
+      "sodium_mg": 2,
+      "potassium_mg": 107,
+      "calcium_mg": 15,
+      "iron_mg": 1.2,
+      "magnesium_mg": 22,
+      "zinc_mg": 0.7,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 26,
+      "leucine_g": 0.74,
+      "selenium_ug": 33,
+      "glycemic_index": 71,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 A-3",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "raw",
+        "grain",
+        "refined",
+        "high_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (125g)",
+          "g": 125
+        }
+      ]
+    },
+    {
+      "id": "besan-gram-flour",
+      "name": "Besan (Gram Flour)",
+      "category": "lentil",
+      "kcal": 372,
+      "protein": 20.6,
+      "carbs": 57.8,
+      "fat": 5.4,
+      "fiber": 10.8,
+      "sat_fat": 0.6,
+      "sugar": 10.3,
+      "sodium_mg": 64,
+      "potassium_mg": 846,
+      "calcium_mg": 45,
+      "iron_mg": 4.9,
+      "magnesium_mg": 166,
+      "zinc_mg": 2.8,
+      "vit_a_iu": 40,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 437,
+      "leucine_g": 1.45,
+      "selenium_ug": 5,
+      "glycemic_index": 22,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 C-5b",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "staple",
+        "raw",
+        "legume",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (92g)",
+          "g": 92
+        },
+        {
+          "n": "1 tbsp (8g)",
+          "g": 8
+        }
+      ]
+    },
+    {
+      "id": "suji-semolina",
+      "name": "Suji / Rava (Semolina)",
+      "category": "grain",
+      "kcal": 360,
+      "protein": 12.7,
+      "carbs": 72.8,
+      "fat": 1.1,
+      "fiber": 3.9,
+      "sat_fat": 0.2,
+      "sugar": 0.0,
+      "sodium_mg": 1,
+      "potassium_mg": 186,
+      "calcium_mg": 17,
+      "iron_mg": 1.2,
+      "magnesium_mg": 47,
+      "zinc_mg": 1.1,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 72,
+      "leucine_g": 0.85,
+      "selenium_ug": 83,
+      "glycemic_index": 66,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 168913",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "raw",
+        "grain"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (167g)",
+          "g": 167
+        }
+      ]
+    },
+    {
+      "id": "poha-flattened-rice",
+      "name": "Poha (Flattened Rice, raw)",
+      "category": "grain",
+      "kcal": 346,
+      "protein": 6.6,
+      "carbs": 77.3,
+      "fat": 1.2,
+      "fiber": 2.2,
+      "sat_fat": 0.2,
+      "sugar": 0.1,
+      "sodium_mg": 5,
+      "potassium_mg": 90,
+      "calcium_mg": 11,
+      "iron_mg": 20.0,
+      "magnesium_mg": 30,
+      "zinc_mg": 1.5,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 8,
+      "leucine_g": 0.55,
+      "selenium_ug": 12,
+      "glycemic_index": 75,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 B-15 poha",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "raw",
+        "grain",
+        "high_iron",
+        "high_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup raw (50g)",
+          "g": 50
+        }
+      ]
+    },
+    {
+      "id": "sabudana-tapioca-pearls",
+      "name": "Sabudana (Tapioca Pearls)",
+      "category": "grain",
+      "kcal": 358,
+      "protein": 0.2,
+      "carbs": 88.7,
+      "fat": 0.1,
+      "fiber": 0.9,
+      "sat_fat": 0.0,
+      "sugar": 3.4,
+      "sodium_mg": 1,
+      "potassium_mg": 11,
+      "calcium_mg": 20,
+      "iron_mg": 1.6,
+      "magnesium_mg": 1,
+      "zinc_mg": 0.1,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 4,
+      "leucine_g": 0.01,
+      "selenium_ug": 0.7,
+      "glycemic_index": 70,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169717",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "raw",
+        "fasting",
+        "high_gi",
+        "low_protein"
+      ],
+      "portions": [
+        {
+          "n": "1 cup raw (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "daliya-broken-wheat",
+      "name": "Daliya (Broken Wheat / Bulgur, raw)",
+      "category": "grain",
+      "kcal": 342,
+      "protein": 11.4,
+      "carbs": 68.0,
+      "fat": 1.5,
+      "fiber": 12.5,
+      "sat_fat": 0.3,
+      "sugar": 0.4,
+      "sodium_mg": 17,
+      "potassium_mg": 410,
+      "calcium_mg": 35,
+      "iron_mg": 3.7,
+      "magnesium_mg": 164,
+      "zinc_mg": 1.9,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 27,
+      "leucine_g": 0.76,
+      "selenium_ug": 50,
+      "glycemic_index": 45,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 168881",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "raw",
+        "grain",
+        "whole_grain",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup raw (140g)",
+          "g": 140
+        }
+      ]
+    },
+    {
+      "id": "oats-rolled-raw",
+      "name": "Oats (Rolled, raw)",
+      "category": "grain",
+      "kcal": 379,
+      "protein": 13.2,
+      "carbs": 67.7,
+      "fat": 6.5,
+      "fiber": 10.1,
+      "sat_fat": 1.1,
+      "sugar": 0.99,
+      "sodium_mg": 6,
+      "potassium_mg": 362,
+      "calcium_mg": 52,
+      "iron_mg": 4.7,
+      "magnesium_mg": 138,
+      "zinc_mg": 4.0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 32,
+      "leucine_g": 0.98,
+      "selenium_ug": 28,
+      "glycemic_index": 55,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 173904",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "raw",
+        "grain",
+        "whole_grain",
+        "high_fiber",
+        "staple"
+      ],
+      "portions": [
+        {
+          "n": "1 cup dry (80g)",
+          "g": 80
+        },
+        {
+          "n": "1/2 cup dry (40g)",
+          "g": 40
+        }
+      ]
+    },
+    {
+      "id": "quinoa-raw",
+      "name": "Quinoa (raw)",
+      "category": "grain",
+      "kcal": 368,
+      "protein": 14.1,
+      "carbs": 64.2,
+      "fat": 6.1,
+      "fiber": 7.0,
+      "sat_fat": 0.7,
+      "sugar": 0.0,
+      "sodium_mg": 5,
+      "potassium_mg": 563,
+      "calcium_mg": 47,
+      "iron_mg": 4.6,
+      "magnesium_mg": 197,
+      "zinc_mg": 3.1,
+      "vit_a_iu": 14,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 184,
+      "leucine_g": 0.84,
+      "selenium_ug": 8.5,
+      "glycemic_index": 53,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 168874",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "complete",
+      "brand": null,
+      "tags": [
+        "raw",
+        "grain",
+        "complete_protein",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup raw (170g)",
+          "g": 170
+        }
+      ]
+    },
+    {
+      "id": "ragi-flour",
+      "name": "Ragi / Finger Millet Flour",
+      "category": "grain",
+      "kcal": 320,
+      "protein": 7.3,
+      "carbs": 72.6,
+      "fat": 1.3,
+      "fiber": 11.5,
+      "sat_fat": 0.2,
+      "sugar": 0.6,
+      "sodium_mg": 11,
+      "potassium_mg": 408,
+      "calcium_mg": 344,
+      "iron_mg": 3.9,
+      "magnesium_mg": 137,
+      "zinc_mg": 2.3,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 18,
+      "leucine_g": 0.51,
+      "selenium_ug": 2,
+      "glycemic_index": 55,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 A-7",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "raw",
+        "grain",
+        "high_calcium",
+        "whole_grain"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (130g)",
+          "g": 130
+        }
+      ]
+    },
+    {
+      "id": "bajra-flour",
+      "name": "Bajra / Pearl Millet Flour",
+      "category": "grain",
+      "kcal": 348,
+      "protein": 11.0,
+      "carbs": 67.5,
+      "fat": 5.0,
+      "fiber": 11.5,
+      "sat_fat": 0.7,
+      "sugar": 0.0,
+      "sodium_mg": 11,
+      "potassium_mg": 422,
+      "calcium_mg": 28,
+      "iron_mg": 8.0,
+      "magnesium_mg": 137,
+      "zinc_mg": 2.8,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 42,
+      "leucine_g": 0.85,
+      "selenium_ug": 2.7,
+      "glycemic_index": 55,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 A-5",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "raw",
+        "grain",
+        "whole_grain",
+        "high_iron"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (130g)",
+          "g": 130
+        }
+      ]
+    },
+    {
+      "id": "jowar-flour",
+      "name": "Jowar / Sorghum Flour",
+      "category": "grain",
+      "kcal": 334,
+      "protein": 9.9,
+      "carbs": 72.0,
+      "fat": 1.7,
+      "fiber": 9.7,
+      "sat_fat": 0.2,
+      "sugar": 1.3,
+      "sodium_mg": 8,
+      "potassium_mg": 328,
+      "calcium_mg": 28,
+      "iron_mg": 3.9,
+      "magnesium_mg": 165,
+      "zinc_mg": 1.7,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 39,
+      "leucine_g": 1.3,
+      "selenium_ug": 12,
+      "glycemic_index": 70,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 A-4",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "raw",
+        "grain",
+        "whole_grain",
+        "gluten_free"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (130g)",
+          "g": 130
+        }
+      ]
+    },
+    {
+      "id": "makki-ka-atta",
+      "name": "Makki ka Atta (Maize Flour)",
+      "category": "grain",
+      "kcal": 342,
+      "protein": 7.0,
+      "carbs": 73.4,
+      "fat": 3.7,
+      "fiber": 7.3,
+      "sat_fat": 0.5,
+      "sugar": 0.6,
+      "sodium_mg": 5,
+      "potassium_mg": 287,
+      "calcium_mg": 7,
+      "iron_mg": 2.4,
+      "magnesium_mg": 127,
+      "zinc_mg": 1.7,
+      "vit_a_iu": 214,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 25,
+      "leucine_g": 0.85,
+      "selenium_ug": 15,
+      "glycemic_index": 65,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169994",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "raw",
+        "grain",
+        "whole_grain",
+        "gluten_free"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (130g)",
+          "g": 130
+        }
+      ]
+    },
+    {
+      "id": "amaranth-rajgira-raw",
+      "name": "Amaranth / Rajgira (raw)",
+      "category": "grain",
+      "kcal": 371,
+      "protein": 13.6,
+      "carbs": 65.3,
+      "fat": 7.0,
+      "fiber": 6.7,
+      "sat_fat": 1.5,
+      "sugar": 1.7,
+      "sodium_mg": 4,
+      "potassium_mg": 508,
+      "calcium_mg": 159,
+      "iron_mg": 7.6,
+      "magnesium_mg": 248,
+      "zinc_mg": 2.9,
+      "vit_a_iu": 2,
+      "vit_c_mg": 4.2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 82,
+      "leucine_g": 0.88,
+      "selenium_ug": 18.7,
+      "glycemic_index": 35,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 170682",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "complete",
+      "brand": null,
+      "tags": [
+        "raw",
+        "grain",
+        "gluten_free",
+        "fasting",
+        "complete_protein"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (193g)",
+          "g": 193
+        }
+      ]
+    },
+    {
+      "id": "buckwheat-kuttu-raw",
+      "name": "Kuttu / Buckwheat (raw)",
+      "category": "grain",
+      "kcal": 343,
+      "protein": 13.3,
+      "carbs": 71.5,
+      "fat": 3.4,
+      "fiber": 10.0,
+      "sat_fat": 0.7,
+      "sugar": 0.0,
+      "sodium_mg": 1,
+      "potassium_mg": 460,
+      "calcium_mg": 18,
+      "iron_mg": 2.2,
+      "magnesium_mg": 231,
+      "zinc_mg": 2.4,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 30,
+      "leucine_g": 0.83,
+      "selenium_ug": 8.3,
+      "glycemic_index": 45,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 170286",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "raw",
+        "grain",
+        "fasting",
+        "gluten_free",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (170g)",
+          "g": 170
+        }
+      ]
+    },
+    {
+      "id": "paneer-full-fat",
+      "name": "Paneer (Full Fat)",
+      "category": "dairy",
+      "kcal": 296,
+      "protein": 18.3,
+      "carbs": 1.2,
+      "fat": 25.0,
+      "fiber": 0,
+      "sat_fat": 16.0,
+      "sugar": 1.2,
+      "sodium_mg": 18,
+      "potassium_mg": 138,
+      "calcium_mg": 208,
+      "iron_mg": 0.2,
+      "magnesium_mg": 12,
+      "zinc_mg": 1.0,
+      "vit_a_iu": 250,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.5,
+      "folate_ug": 5,
+      "leucine_g": 1.74,
+      "selenium_ug": 14,
+      "glycemic_index": null,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 D-12 paneer",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "dairy",
+        "high_protein",
+        "high_leucine",
+        "staple",
+        "high_calcium"
+      ],
+      "portions": [
+        {
+          "n": "1 katori cubes (100g)",
+          "g": 100
+        },
+        {
+          "n": "50g",
+          "g": 50
+        }
+      ]
+    },
+    {
+      "id": "paneer-low-fat",
+      "name": "Paneer (Low Fat)",
+      "category": "dairy",
+      "kcal": 156,
+      "protein": 24.0,
+      "carbs": 1.5,
+      "fat": 6.5,
+      "fiber": 0,
+      "sat_fat": 4.0,
+      "sugar": 1.5,
+      "sodium_mg": 32,
+      "potassium_mg": 160,
+      "calcium_mg": 212,
+      "iron_mg": 0.3,
+      "magnesium_mg": 15,
+      "zinc_mg": 1.4,
+      "vit_a_iu": 80,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.6,
+      "folate_ug": 5,
+      "leucine_g": 2.28,
+      "selenium_ug": 14,
+      "glycemic_index": null,
+      "source": {
+        "type": "label",
+        "citation": "Generic low-fat paneer label",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "dairy",
+        "high_protein",
+        "high_leucine",
+        "low_fat"
+      ],
+      "portions": [
+        {
+          "n": "1 katori cubes (100g)",
+          "g": 100
+        },
+        {
+          "n": "50g",
+          "g": 50
+        }
+      ]
+    },
+    {
+      "id": "dahi-yogurt-full-fat",
+      "name": "Dahi (Full Fat Yogurt)",
+      "category": "dairy",
+      "kcal": 60,
+      "protein": 3.1,
+      "carbs": 4.7,
+      "fat": 3.3,
+      "fiber": 0,
+      "sat_fat": 2.1,
+      "sugar": 4.7,
+      "sodium_mg": 46,
+      "potassium_mg": 155,
+      "calcium_mg": 149,
+      "iron_mg": 0.1,
+      "magnesium_mg": 12,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 99,
+      "vit_c_mg": 0.5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.4,
+      "folate_ug": 7,
+      "leucine_g": 0.3,
+      "selenium_ug": 2.2,
+      "glycemic_index": 36,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 171284",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "fermented",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "dairy",
+        "fermented",
+        "probiotic",
+        "staple",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        },
+        {
+          "n": "1 cup (245g)",
+          "g": 245
+        }
+      ]
+    },
+    {
+      "id": "greek-yogurt-plain",
+      "name": "Greek Yogurt (plain, low fat)",
+      "category": "dairy",
+      "kcal": 97,
+      "protein": 9.0,
+      "carbs": 3.6,
+      "fat": 5.0,
+      "fiber": 0,
+      "sat_fat": 3.2,
+      "sugar": 3.6,
+      "sodium_mg": 35,
+      "potassium_mg": 141,
+      "calcium_mg": 100,
+      "iron_mg": 0.04,
+      "magnesium_mg": 11,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 99,
+      "vit_c_mg": 0.8,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.75,
+      "folate_ug": 7,
+      "leucine_g": 0.86,
+      "selenium_ug": 9.7,
+      "glycemic_index": 11,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 170887",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "fermented",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "dairy",
+        "fermented",
+        "high_protein",
+        "high_leucine",
+        "low_gi",
+        "post_shift_anchor"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (245g)",
+          "g": 245
+        },
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "malai-cream",
+      "name": "Malai (Heavy Cream)",
+      "category": "dairy",
+      "kcal": 340,
+      "protein": 2.8,
+      "carbs": 2.9,
+      "fat": 36.0,
+      "fiber": 0,
+      "sat_fat": 22.5,
+      "sugar": 2.9,
+      "sodium_mg": 38,
+      "potassium_mg": 95,
+      "calcium_mg": 66,
+      "iron_mg": 0.04,
+      "magnesium_mg": 7,
+      "zinc_mg": 0.27,
+      "vit_a_iu": 1470,
+      "vit_c_mg": 0,
+      "vit_d_iu": 52,
+      "vit_b12_ug": 0.3,
+      "folate_ug": 4,
+      "leucine_g": 0.26,
+      "selenium_ug": 0.6,
+      "glycemic_index": null,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 170859",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "dairy",
+        "high_fat",
+        "high_sat_fat"
+      ],
+      "portions": [
+        {
+          "n": "1 tbsp (15g)",
+          "g": 15
+        },
+        {
+          "n": "1 cup (240g)",
+          "g": 240
+        }
+      ]
+    },
+    {
+      "id": "ghee",
+      "name": "Ghee (clarified butter)",
+      "category": "fat",
+      "kcal": 900,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 100,
+      "fiber": 0,
+      "sat_fat": 65.0,
+      "sugar": 0,
+      "sodium_mg": 0,
+      "potassium_mg": 0,
+      "calcium_mg": 0,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 3060,
+      "vit_c_mg": 0,
+      "vit_d_iu": 80,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 0,
+      "glycemic_index": null,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 G-1 ghee",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "fat",
+        "staple",
+        "high_sat_fat",
+        "cooking_fat"
+      ],
+      "portions": [
+        {
+          "n": "1 tsp (4.5g)",
+          "g": 4.5
+        },
+        {
+          "n": "1 tbsp (14g)",
+          "g": 14
+        }
+      ]
+    },
+    {
+      "id": "butter-unsalted",
+      "name": "Butter (unsalted)",
+      "category": "fat",
+      "kcal": 717,
+      "protein": 0.85,
+      "carbs": 0.06,
+      "fat": 81.1,
+      "fiber": 0,
+      "sat_fat": 51.4,
+      "sugar": 0.06,
+      "sodium_mg": 11,
+      "potassium_mg": 24,
+      "calcium_mg": 24,
+      "iron_mg": 0.02,
+      "magnesium_mg": 2,
+      "zinc_mg": 0.09,
+      "vit_a_iu": 2499,
+      "vit_c_mg": 0,
+      "vit_d_iu": 60,
+      "vit_b12_ug": 0.17,
+      "folate_ug": 3,
+      "leucine_g": 0.08,
+      "selenium_ug": 1.0,
+      "glycemic_index": null,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 173410",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "fat",
+        "dairy",
+        "high_sat_fat"
+      ],
+      "portions": [
+        {
+          "n": "1 tbsp (14g)",
+          "g": 14
+        }
+      ]
+    },
+    {
+      "id": "milk-whole-3.25",
+      "name": "Whole Milk (3.25%)",
+      "category": "dairy",
+      "kcal": 61,
+      "protein": 3.2,
+      "carbs": 4.8,
+      "fat": 3.3,
+      "fiber": 0,
+      "sat_fat": 1.9,
+      "sugar": 5.1,
+      "sodium_mg": 43,
+      "potassium_mg": 132,
+      "calcium_mg": 113,
+      "iron_mg": 0.03,
+      "magnesium_mg": 10,
+      "zinc_mg": 0.37,
+      "vit_a_iu": 162,
+      "vit_c_mg": 0,
+      "vit_d_iu": 51,
+      "vit_b12_ug": 0.5,
+      "folate_ug": 5,
+      "leucine_g": 0.3,
+      "selenium_ug": 3.7,
+      "glycemic_index": 31,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 171265",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "dairy",
+        "staple",
+        "low_gi",
+        "high_calcium"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (244g)",
+          "g": 244
+        },
+        {
+          "n": "1 glass (200g)",
+          "g": 200
+        }
+      ]
+    },
+    {
+      "id": "milk-skim",
+      "name": "Skim Milk (0.1%)",
+      "category": "dairy",
+      "kcal": 34,
+      "protein": 3.4,
+      "carbs": 5.0,
+      "fat": 0.1,
+      "fiber": 0,
+      "sat_fat": 0.07,
+      "sugar": 5.1,
+      "sodium_mg": 42,
+      "potassium_mg": 156,
+      "calcium_mg": 122,
+      "iron_mg": 0.03,
+      "magnesium_mg": 11,
+      "zinc_mg": 0.4,
+      "vit_a_iu": 204,
+      "vit_c_mg": 0,
+      "vit_d_iu": 42,
+      "vit_b12_ug": 0.5,
+      "folate_ug": 5,
+      "leucine_g": 0.32,
+      "selenium_ug": 3.3,
+      "glycemic_index": 32,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 171269",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "dairy",
+        "low_fat",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (245g)",
+          "g": 245
+        }
+      ]
+    },
+    {
+      "id": "buttermilk-chaas",
+      "name": "Buttermilk / Chaas",
+      "category": "dairy",
+      "kcal": 40,
+      "protein": 3.3,
+      "carbs": 4.8,
+      "fat": 0.9,
+      "fiber": 0,
+      "sat_fat": 0.6,
+      "sugar": 4.8,
+      "sodium_mg": 105,
+      "potassium_mg": 151,
+      "calcium_mg": 116,
+      "iron_mg": 0.03,
+      "magnesium_mg": 11,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 98,
+      "vit_c_mg": 1.0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.2,
+      "folate_ug": 5,
+      "leucine_g": 0.3,
+      "selenium_ug": 4.0,
+      "glycemic_index": 30,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 173441",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "fermented",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "dairy",
+        "fermented",
+        "low_fat",
+        "probiotic",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 glass (245g)",
+          "g": 245
+        }
+      ]
+    },
+    {
+      "id": "palak-raw",
+      "name": "Palak (Spinach, raw)",
+      "category": "vegetable",
+      "kcal": 23,
+      "protein": 2.9,
+      "carbs": 3.6,
+      "fat": 0.4,
+      "fiber": 2.2,
+      "sat_fat": 0.06,
+      "sugar": 0.4,
+      "sodium_mg": 79,
+      "potassium_mg": 558,
+      "calcium_mg": 99,
+      "iron_mg": 2.7,
+      "magnesium_mg": 79,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 9377,
+      "vit_c_mg": 28.1,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 194,
+      "leucine_g": 0.22,
+      "selenium_ug": 1,
+      "glycemic_index": 15,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 168462",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "leafy",
+        "iron",
+        "folate"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (30g)",
+          "g": 30
+        },
+        {
+          "n": "1 katori chopped (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "methi-leaves",
+      "name": "Methi (Fenugreek Leaves, raw)",
+      "category": "vegetable",
+      "kcal": 49,
+      "protein": 4.4,
+      "carbs": 6.0,
+      "fat": 0.9,
+      "fiber": 1.1,
+      "sat_fat": 0.2,
+      "sugar": 0.0,
+      "sodium_mg": 76,
+      "potassium_mg": 770,
+      "calcium_mg": 395,
+      "iron_mg": 16.5,
+      "magnesium_mg": 67,
+      "zinc_mg": 1.1,
+      "vit_a_iu": 5900,
+      "vit_c_mg": 52,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 57,
+      "leucine_g": 0.27,
+      "selenium_ug": 1,
+      "glycemic_index": 15,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 E-19 methi",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "leafy",
+        "high_iron",
+        "bitter"
+      ],
+      "portions": [
+        {
+          "n": "1 cup chopped (30g)",
+          "g": 30
+        }
+      ]
+    },
+    {
+      "id": "gobi-cauliflower-raw",
+      "name": "Gobi (Cauliflower, raw)",
+      "category": "vegetable",
+      "kcal": 25,
+      "protein": 1.9,
+      "carbs": 5.0,
+      "fat": 0.3,
+      "fiber": 2.0,
+      "sat_fat": 0.13,
+      "sugar": 1.9,
+      "sodium_mg": 30,
+      "potassium_mg": 299,
+      "calcium_mg": 22,
+      "iron_mg": 0.4,
+      "magnesium_mg": 15,
+      "zinc_mg": 0.27,
+      "vit_a_iu": 0,
+      "vit_c_mg": 48.2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 57,
+      "leucine_g": 0.1,
+      "selenium_ug": 0.6,
+      "glycemic_index": 15,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169986",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "cruciferous",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup florets (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "baingan-eggplant-raw",
+      "name": "Baingan (Eggplant, raw)",
+      "category": "vegetable",
+      "kcal": 25,
+      "protein": 1.0,
+      "carbs": 5.9,
+      "fat": 0.2,
+      "fiber": 3.0,
+      "sat_fat": 0.03,
+      "sugar": 3.5,
+      "sodium_mg": 2,
+      "potassium_mg": 229,
+      "calcium_mg": 9,
+      "iron_mg": 0.23,
+      "magnesium_mg": 14,
+      "zinc_mg": 0.16,
+      "vit_a_iu": 23,
+      "vit_c_mg": 2.2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 22,
+      "leucine_g": 0.05,
+      "selenium_ug": 0.3,
+      "glycemic_index": 15,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169228",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup cubes (82g)",
+          "g": 82
+        },
+        {
+          "n": "1 medium (300g)",
+          "g": 300
+        }
+      ]
+    },
+    {
+      "id": "bhindi-okra-raw",
+      "name": "Bhindi (Okra, raw)",
+      "category": "vegetable",
+      "kcal": 33,
+      "protein": 1.9,
+      "carbs": 7.5,
+      "fat": 0.2,
+      "fiber": 3.2,
+      "sat_fat": 0.03,
+      "sugar": 1.5,
+      "sodium_mg": 7,
+      "potassium_mg": 299,
+      "calcium_mg": 82,
+      "iron_mg": 0.6,
+      "magnesium_mg": 57,
+      "zinc_mg": 0.6,
+      "vit_a_iu": 716,
+      "vit_c_mg": 23.0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 60,
+      "leucine_g": 0.13,
+      "selenium_ug": 0.7,
+      "glycemic_index": 20,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169260",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "high_fiber",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup sliced (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "lauki-bottle-gourd-raw",
+      "name": "Lauki (Bottle Gourd, raw)",
+      "category": "vegetable",
+      "kcal": 14,
+      "protein": 0.6,
+      "carbs": 3.4,
+      "fat": 0.0,
+      "fiber": 0.5,
+      "sat_fat": 0,
+      "sugar": 1.5,
+      "sodium_mg": 2,
+      "potassium_mg": 150,
+      "calcium_mg": 26,
+      "iron_mg": 0.2,
+      "magnesium_mg": 11,
+      "zinc_mg": 0.7,
+      "vit_a_iu": 0,
+      "vit_c_mg": 10.1,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 6,
+      "leucine_g": 0.01,
+      "selenium_ug": 0.2,
+      "glycemic_index": 15,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 168410",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "hydrating",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup cubed (116g)",
+          "g": 116
+        }
+      ]
+    },
+    {
+      "id": "tinda-apple-gourd-raw",
+      "name": "Tinda (Apple Gourd, raw)",
+      "category": "vegetable",
+      "kcal": 21,
+      "protein": 0.7,
+      "carbs": 4.3,
+      "fat": 0.2,
+      "fiber": 1.0,
+      "sat_fat": 0.02,
+      "sugar": 1.8,
+      "sodium_mg": 2,
+      "potassium_mg": 140,
+      "calcium_mg": 15,
+      "iron_mg": 0.2,
+      "magnesium_mg": 9,
+      "zinc_mg": 0.2,
+      "vit_a_iu": 0,
+      "vit_c_mg": 5.0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 8,
+      "leucine_g": 0.04,
+      "selenium_ug": 0.2,
+      "glycemic_index": 15,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "IFCT 2017 E-tinda estimate",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup cubed (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "karela-bitter-gourd-raw",
+      "name": "Karela (Bitter Gourd, raw)",
+      "category": "vegetable",
+      "kcal": 17,
+      "protein": 1.0,
+      "carbs": 3.7,
+      "fat": 0.2,
+      "fiber": 2.8,
+      "sat_fat": 0.01,
+      "sugar": 1.95,
+      "sodium_mg": 5,
+      "potassium_mg": 296,
+      "calcium_mg": 19,
+      "iron_mg": 0.4,
+      "magnesium_mg": 17,
+      "zinc_mg": 0.8,
+      "vit_a_iu": 471,
+      "vit_c_mg": 84.0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 72,
+      "leucine_g": 0.06,
+      "selenium_ug": 0.2,
+      "glycemic_index": 15,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169212",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "bitter",
+        "low_gi",
+        "high_vit_c"
+      ],
+      "portions": [
+        {
+          "n": "1 cup sliced (94g)",
+          "g": 94
+        }
+      ]
+    },
+    {
+      "id": "tomato-raw",
+      "name": "Tomato (raw)",
+      "category": "vegetable",
+      "kcal": 18,
+      "protein": 0.9,
+      "carbs": 3.9,
+      "fat": 0.2,
+      "fiber": 1.2,
+      "sat_fat": 0.03,
+      "sugar": 2.6,
+      "sodium_mg": 5,
+      "potassium_mg": 237,
+      "calcium_mg": 10,
+      "iron_mg": 0.27,
+      "magnesium_mg": 11,
+      "zinc_mg": 0.17,
+      "vit_a_iu": 833,
+      "vit_c_mg": 13.7,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 15,
+      "leucine_g": 0.03,
+      "selenium_ug": 0,
+      "glycemic_index": 15,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 170457",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "staple",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (123g)",
+          "g": 123
+        },
+        {
+          "n": "1 cup chopped (180g)",
+          "g": 180
+        }
+      ]
+    },
+    {
+      "id": "onion-raw",
+      "name": "Onion (raw)",
+      "category": "vegetable",
+      "kcal": 40,
+      "protein": 1.1,
+      "carbs": 9.3,
+      "fat": 0.1,
+      "fiber": 1.7,
+      "sat_fat": 0.04,
+      "sugar": 4.2,
+      "sodium_mg": 4,
+      "potassium_mg": 146,
+      "calcium_mg": 23,
+      "iron_mg": 0.21,
+      "magnesium_mg": 10,
+      "zinc_mg": 0.17,
+      "vit_a_iu": 2,
+      "vit_c_mg": 7.4,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 19,
+      "leucine_g": 0.03,
+      "selenium_ug": 0.5,
+      "glycemic_index": 10,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 170000",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "staple",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (110g)",
+          "g": 110
+        },
+        {
+          "n": "1 cup chopped (160g)",
+          "g": 160
+        }
+      ]
+    },
+    {
+      "id": "potato-raw",
+      "name": "Potato (raw, with skin)",
+      "category": "vegetable",
+      "kcal": 77,
+      "protein": 2.0,
+      "carbs": 17.5,
+      "fat": 0.1,
+      "fiber": 2.1,
+      "sat_fat": 0.03,
+      "sugar": 0.8,
+      "sodium_mg": 6,
+      "potassium_mg": 425,
+      "calcium_mg": 12,
+      "iron_mg": 0.81,
+      "magnesium_mg": 23,
+      "zinc_mg": 0.3,
+      "vit_a_iu": 2,
+      "vit_c_mg": 19.7,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 15,
+      "leucine_g": 0.1,
+      "selenium_ug": 0.4,
+      "glycemic_index": 70,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 170026",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "starchy",
+        "high_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (213g)",
+          "g": 213
+        }
+      ]
+    },
+    {
+      "id": "sweet-potato-raw",
+      "name": "Sweet Potato (raw)",
+      "category": "vegetable",
+      "kcal": 86,
+      "protein": 1.6,
+      "carbs": 20.1,
+      "fat": 0.1,
+      "fiber": 3.0,
+      "sat_fat": 0.02,
+      "sugar": 4.2,
+      "sodium_mg": 55,
+      "potassium_mg": 337,
+      "calcium_mg": 30,
+      "iron_mg": 0.6,
+      "magnesium_mg": 25,
+      "zinc_mg": 0.3,
+      "vit_a_iu": 14187,
+      "vit_c_mg": 2.4,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 11,
+      "leucine_g": 0.09,
+      "selenium_ug": 0.6,
+      "glycemic_index": 54,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 168482",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "starchy",
+        "high_vit_a",
+        "medium_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (130g)",
+          "g": 130
+        }
+      ]
+    },
+    {
+      "id": "cucumber-raw",
+      "name": "Cucumber (raw, with peel)",
+      "category": "vegetable",
+      "kcal": 16,
+      "protein": 0.7,
+      "carbs": 3.6,
+      "fat": 0.1,
+      "fiber": 0.5,
+      "sat_fat": 0.04,
+      "sugar": 1.7,
+      "sodium_mg": 2,
+      "potassium_mg": 147,
+      "calcium_mg": 16,
+      "iron_mg": 0.28,
+      "magnesium_mg": 13,
+      "zinc_mg": 0.2,
+      "vit_a_iu": 105,
+      "vit_c_mg": 2.8,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 7,
+      "leucine_g": 0.02,
+      "selenium_ug": 0.3,
+      "glycemic_index": 15,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 168409",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "hydrating",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup sliced (104g)",
+          "g": 104
+        },
+        {
+          "n": "1 medium (300g)",
+          "g": 300
+        }
+      ]
+    },
+    {
+      "id": "carrot-raw",
+      "name": "Carrot (raw)",
+      "category": "vegetable",
+      "kcal": 41,
+      "protein": 0.9,
+      "carbs": 9.6,
+      "fat": 0.2,
+      "fiber": 2.8,
+      "sat_fat": 0.04,
+      "sugar": 4.7,
+      "sodium_mg": 69,
+      "potassium_mg": 320,
+      "calcium_mg": 33,
+      "iron_mg": 0.3,
+      "magnesium_mg": 12,
+      "zinc_mg": 0.24,
+      "vit_a_iu": 16706,
+      "vit_c_mg": 5.9,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 19,
+      "leucine_g": 0.05,
+      "selenium_ug": 0.1,
+      "glycemic_index": 35,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 170393",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "high_vit_a",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (61g)",
+          "g": 61
+        },
+        {
+          "n": "1 cup chopped (128g)",
+          "g": 128
+        }
+      ]
+    },
+    {
+      "id": "beetroot-raw",
+      "name": "Beetroot (raw)",
+      "category": "vegetable",
+      "kcal": 43,
+      "protein": 1.6,
+      "carbs": 9.6,
+      "fat": 0.2,
+      "fiber": 2.8,
+      "sat_fat": 0.03,
+      "sugar": 6.8,
+      "sodium_mg": 78,
+      "potassium_mg": 325,
+      "calcium_mg": 16,
+      "iron_mg": 0.8,
+      "magnesium_mg": 23,
+      "zinc_mg": 0.35,
+      "vit_a_iu": 33,
+      "vit_c_mg": 4.9,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 109,
+      "leucine_g": 0.07,
+      "selenium_ug": 0.7,
+      "glycemic_index": 64,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169145",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "nitric_oxide",
+        "medium_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup chopped (136g)",
+          "g": 136
+        }
+      ]
+    },
+    {
+      "id": "capsicum-bell-pepper-raw",
+      "name": "Capsicum / Bell Pepper (green, raw)",
+      "category": "vegetable",
+      "kcal": 20,
+      "protein": 0.9,
+      "carbs": 4.6,
+      "fat": 0.2,
+      "fiber": 1.7,
+      "sat_fat": 0.06,
+      "sugar": 2.4,
+      "sodium_mg": 3,
+      "potassium_mg": 175,
+      "calcium_mg": 10,
+      "iron_mg": 0.34,
+      "magnesium_mg": 10,
+      "zinc_mg": 0.13,
+      "vit_a_iu": 370,
+      "vit_c_mg": 80.4,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 10,
+      "leucine_g": 0.03,
+      "selenium_ug": 0,
+      "glycemic_index": 15,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 170427",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "high_vit_c",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (119g)",
+          "g": 119
+        }
+      ]
+    },
+    {
+      "id": "cabbage-raw",
+      "name": "Cabbage (raw)",
+      "category": "vegetable",
+      "kcal": 25,
+      "protein": 1.3,
+      "carbs": 5.8,
+      "fat": 0.1,
+      "fiber": 2.5,
+      "sat_fat": 0.03,
+      "sugar": 3.2,
+      "sodium_mg": 18,
+      "potassium_mg": 170,
+      "calcium_mg": 40,
+      "iron_mg": 0.47,
+      "magnesium_mg": 12,
+      "zinc_mg": 0.18,
+      "vit_a_iu": 98,
+      "vit_c_mg": 36.6,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 43,
+      "leucine_g": 0.04,
+      "selenium_ug": 0.3,
+      "glycemic_index": 15,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169975",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "cruciferous",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup chopped (89g)",
+          "g": 89
+        }
+      ]
+    },
+    {
+      "id": "broccoli-raw",
+      "name": "Broccoli (raw)",
+      "category": "vegetable",
+      "kcal": 34,
+      "protein": 2.8,
+      "carbs": 6.6,
+      "fat": 0.4,
+      "fiber": 2.6,
+      "sat_fat": 0.04,
+      "sugar": 1.7,
+      "sodium_mg": 33,
+      "potassium_mg": 316,
+      "calcium_mg": 47,
+      "iron_mg": 0.73,
+      "magnesium_mg": 21,
+      "zinc_mg": 0.41,
+      "vit_a_iu": 623,
+      "vit_c_mg": 89.2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 63,
+      "leucine_g": 0.13,
+      "selenium_ug": 2.5,
+      "glycemic_index": 15,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 170379",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "cruciferous",
+        "high_vit_c",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup chopped (91g)",
+          "g": 91
+        }
+      ]
+    },
+    {
+      "id": "mushroom-button-raw",
+      "name": "Mushroom (white button, raw)",
+      "category": "vegetable",
+      "kcal": 22,
+      "protein": 3.1,
+      "carbs": 3.3,
+      "fat": 0.3,
+      "fiber": 1.0,
+      "sat_fat": 0.05,
+      "sugar": 1.98,
+      "sodium_mg": 5,
+      "potassium_mg": 318,
+      "calcium_mg": 3,
+      "iron_mg": 0.5,
+      "magnesium_mg": 9,
+      "zinc_mg": 0.52,
+      "vit_a_iu": 0,
+      "vit_c_mg": 2.1,
+      "vit_d_iu": 7,
+      "vit_b12_ug": 0.04,
+      "folate_ug": 17,
+      "leucine_g": 0.13,
+      "selenium_ug": 9.3,
+      "glycemic_index": 15,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169251",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "high_selenium",
+        "low_gi",
+        "umami"
+      ],
+      "portions": [
+        {
+          "n": "1 cup sliced (70g)",
+          "g": 70
+        }
+      ]
+    },
+    {
+      "id": "green-peas-fresh",
+      "name": "Green Peas (fresh, raw)",
+      "category": "vegetable",
+      "kcal": 81,
+      "protein": 5.4,
+      "carbs": 14.5,
+      "fat": 0.4,
+      "fiber": 5.7,
+      "sat_fat": 0.07,
+      "sugar": 5.7,
+      "sodium_mg": 5,
+      "potassium_mg": 244,
+      "calcium_mg": 25,
+      "iron_mg": 1.5,
+      "magnesium_mg": 33,
+      "zinc_mg": 1.24,
+      "vit_a_iu": 765,
+      "vit_c_mg": 40.0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 65,
+      "leucine_g": 0.32,
+      "selenium_ug": 1.8,
+      "glycemic_index": 22,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 170419",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "raw",
+        "vegetable",
+        "legume",
+        "high_protein_for_veg",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (145g)",
+          "g": 145
+        }
+      ]
+    },
+    {
+      "id": "dal-tadka-toor-cooked",
+      "name": "Dal Tadka (Toor, cooked)",
+      "category": "prepared",
+      "kcal": 120,
+      "protein": 5.8,
+      "carbs": 14.5,
+      "fat": 4.4,
+      "fiber": 3.5,
+      "sat_fat": 0.6,
+      "sugar": 1.2,
+      "sodium_mg": 310,
+      "potassium_mg": 290,
+      "calcium_mg": 28,
+      "iron_mg": 1.2,
+      "magnesium_mg": 32,
+      "zinc_mg": 0.9,
+      "vit_a_iu": 180,
+      "vit_c_mg": 2.0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 68,
+      "leucine_g": 0.42,
+      "selenium_ug": 6,
+      "glycemic_index": 38,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 dal tadka",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "legume",
+        "staple",
+        "home_cooked"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        },
+        {
+          "n": "1 bowl (200g)",
+          "g": 200
+        }
+      ]
+    },
+    {
+      "id": "dal-makhani-cooked",
+      "name": "Dal Makhani (cooked)",
+      "category": "prepared",
+      "kcal": 190,
+      "protein": 7.5,
+      "carbs": 17.6,
+      "fat": 9.6,
+      "fiber": 5.1,
+      "sat_fat": 3.8,
+      "sugar": 2.3,
+      "sodium_mg": 420,
+      "potassium_mg": 360,
+      "calcium_mg": 72,
+      "iron_mg": 2.4,
+      "magnesium_mg": 45,
+      "zinc_mg": 1.4,
+      "vit_a_iu": 420,
+      "vit_c_mg": 1.5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.05,
+      "folate_ug": 55,
+      "leucine_g": 0.55,
+      "selenium_ug": 7,
+      "glycemic_index": 35,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 dal makhani",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "legume",
+        "high_fat",
+        "restaurant_style"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "palak-paneer-cooked",
+      "name": "Palak Paneer (cooked)",
+      "category": "prepared",
+      "kcal": 180,
+      "protein": 8.8,
+      "carbs": 7.6,
+      "fat": 13.0,
+      "fiber": 2.6,
+      "sat_fat": 5.7,
+      "sugar": 2.0,
+      "sodium_mg": 360,
+      "potassium_mg": 420,
+      "calcium_mg": 210,
+      "iron_mg": 2.4,
+      "magnesium_mg": 52,
+      "zinc_mg": 1.1,
+      "vit_a_iu": 4200,
+      "vit_c_mg": 16,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.3,
+      "folate_ug": 75,
+      "leucine_g": 0.85,
+      "selenium_ug": 8,
+      "glycemic_index": 25,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 palak paneer",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "dairy",
+        "high_iron",
+        "high_calcium",
+        "high_leucine"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "paneer-butter-masala-cooked",
+      "name": "Paneer Butter Masala (cooked)",
+      "category": "prepared",
+      "kcal": 280,
+      "protein": 9.2,
+      "carbs": 11.8,
+      "fat": 22.5,
+      "fiber": 1.8,
+      "sat_fat": 11.5,
+      "sugar": 5.5,
+      "sodium_mg": 520,
+      "potassium_mg": 320,
+      "calcium_mg": 180,
+      "iron_mg": 1.6,
+      "magnesium_mg": 28,
+      "zinc_mg": 1.1,
+      "vit_a_iu": 890,
+      "vit_c_mg": 4,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.4,
+      "folate_ug": 28,
+      "leucine_g": 0.85,
+      "selenium_ug": 7,
+      "glycemic_index": 28,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 paneer butter masala",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "dairy",
+        "restaurant_style",
+        "high_fat",
+        "high_sat_fat"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "paneer-tikka-dry-cooked",
+      "name": "Paneer Tikka (dry, cooked)",
+      "category": "prepared",
+      "kcal": 240,
+      "protein": 15.5,
+      "carbs": 6.4,
+      "fat": 17.0,
+      "fiber": 1.4,
+      "sat_fat": 9.0,
+      "sugar": 3.2,
+      "sodium_mg": 420,
+      "potassium_mg": 210,
+      "calcium_mg": 260,
+      "iron_mg": 1.3,
+      "magnesium_mg": 18,
+      "zinc_mg": 1.7,
+      "vit_a_iu": 310,
+      "vit_c_mg": 6,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.4,
+      "folate_ug": 18,
+      "leucine_g": 1.4,
+      "selenium_ug": 11,
+      "glycemic_index": 25,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 paneer tikka",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "roasted",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "dairy",
+        "high_protein",
+        "high_leucine",
+        "tandoor"
+      ],
+      "portions": [
+        {
+          "n": "1 plate (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "aloo-gobi-dry-cooked",
+      "name": "Aloo Gobi (dry, cooked)",
+      "category": "prepared",
+      "kcal": 95,
+      "protein": 2.5,
+      "carbs": 12.3,
+      "fat": 4.2,
+      "fiber": 2.6,
+      "sat_fat": 0.5,
+      "sugar": 2.4,
+      "sodium_mg": 260,
+      "potassium_mg": 310,
+      "calcium_mg": 32,
+      "iron_mg": 0.9,
+      "magnesium_mg": 18,
+      "zinc_mg": 0.4,
+      "vit_a_iu": 180,
+      "vit_c_mg": 28,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 38,
+      "leucine_g": 0.13,
+      "selenium_ug": 1,
+      "glycemic_index": 60,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 aloo gobi",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "dry_sabzi",
+        "home_cooked"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "chana-masala-cooked",
+      "name": "Chana Masala (cooked)",
+      "category": "prepared",
+      "kcal": 165,
+      "protein": 7.2,
+      "carbs": 21.3,
+      "fat": 5.8,
+      "fiber": 5.6,
+      "sat_fat": 0.8,
+      "sugar": 3.1,
+      "sodium_mg": 360,
+      "potassium_mg": 310,
+      "calcium_mg": 52,
+      "iron_mg": 2.3,
+      "magnesium_mg": 38,
+      "zinc_mg": 1.4,
+      "vit_a_iu": 260,
+      "vit_c_mg": 7,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 86,
+      "leucine_g": 0.5,
+      "selenium_ug": 4,
+      "glycemic_index": 30,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 chana masala",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "legume",
+        "high_fiber",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "rajma-masala-cooked",
+      "name": "Rajma Masala (cooked)",
+      "category": "prepared",
+      "kcal": 140,
+      "protein": 7.0,
+      "carbs": 20.0,
+      "fat": 3.5,
+      "fiber": 5.4,
+      "sat_fat": 0.5,
+      "sugar": 2.6,
+      "sodium_mg": 340,
+      "potassium_mg": 420,
+      "calcium_mg": 38,
+      "iron_mg": 2.5,
+      "magnesium_mg": 42,
+      "zinc_mg": 1.0,
+      "vit_a_iu": 180,
+      "vit_c_mg": 3,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 72,
+      "leucine_g": 0.55,
+      "selenium_ug": 3,
+      "glycemic_index": 25,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 rajma",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "legume",
+        "high_iron",
+        "low_gi",
+        "staple"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "kadhi-pakora-cooked",
+      "name": "Kadhi Pakora (cooked)",
+      "category": "prepared",
+      "kcal": 135,
+      "protein": 5.0,
+      "carbs": 11.0,
+      "fat": 8.0,
+      "fiber": 1.2,
+      "sat_fat": 2.5,
+      "sugar": 4.5,
+      "sodium_mg": 310,
+      "potassium_mg": 180,
+      "calcium_mg": 95,
+      "iron_mg": 1.0,
+      "magnesium_mg": 18,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 180,
+      "vit_c_mg": 1,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.2,
+      "folate_ug": 18,
+      "leucine_g": 0.4,
+      "selenium_ug": 3,
+      "glycemic_index": 35,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 kadhi pakora",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "fermented",
+        "yogurt_based"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "sambar-cooked",
+      "name": "Sambar (cooked)",
+      "category": "prepared",
+      "kcal": 78,
+      "protein": 3.8,
+      "carbs": 11.0,
+      "fat": 2.0,
+      "fiber": 3.0,
+      "sat_fat": 0.3,
+      "sugar": 2.2,
+      "sodium_mg": 320,
+      "potassium_mg": 260,
+      "calcium_mg": 32,
+      "iron_mg": 1.1,
+      "magnesium_mg": 28,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 420,
+      "vit_c_mg": 6,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 42,
+      "leucine_g": 0.27,
+      "selenium_ug": 4,
+      "glycemic_index": 35,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 sambar",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "legume",
+        "south_indian",
+        "low_kcal"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "idli-plain-cooked",
+      "name": "Idli (plain, steamed)",
+      "category": "prepared",
+      "kcal": 115,
+      "protein": 3.5,
+      "carbs": 23.0,
+      "fat": 0.5,
+      "fiber": 1.5,
+      "sat_fat": 0.1,
+      "sugar": 0.4,
+      "sodium_mg": 260,
+      "potassium_mg": 55,
+      "calcium_mg": 12,
+      "iron_mg": 0.6,
+      "magnesium_mg": 16,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 8,
+      "leucine_g": 0.27,
+      "selenium_ug": 8,
+      "glycemic_index": 60,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 idli",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "steamed",
+        "fermented",
+        "south_indian",
+        "low_fat"
+      ],
+      "portions": [
+        {
+          "n": "2 idlis (60g)",
+          "g": 60
+        },
+        {
+          "n": "4 idlis (120g)",
+          "g": 120
+        }
+      ]
+    },
+    {
+      "id": "dosa-plain-cooked",
+      "name": "Dosa (plain, cooked)",
+      "category": "prepared",
+      "kcal": 170,
+      "protein": 4.0,
+      "carbs": 30.0,
+      "fat": 5.0,
+      "fiber": 1.5,
+      "sat_fat": 1.0,
+      "sugar": 0.5,
+      "sodium_mg": 280,
+      "potassium_mg": 80,
+      "calcium_mg": 18,
+      "iron_mg": 1.0,
+      "magnesium_mg": 22,
+      "zinc_mg": 0.6,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 12,
+      "leucine_g": 0.3,
+      "selenium_ug": 10,
+      "glycemic_index": 70,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 dosa",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "fermented",
+        "south_indian",
+        "high_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 dosa (80g)",
+          "g": 80
+        }
+      ]
+    },
+    {
+      "id": "upma-rava-cooked",
+      "name": "Upma (Rava, cooked)",
+      "category": "prepared",
+      "kcal": 135,
+      "protein": 3.5,
+      "carbs": 22.0,
+      "fat": 4.0,
+      "fiber": 1.7,
+      "sat_fat": 0.5,
+      "sugar": 1.0,
+      "sodium_mg": 330,
+      "potassium_mg": 90,
+      "calcium_mg": 14,
+      "iron_mg": 0.8,
+      "magnesium_mg": 18,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 180,
+      "vit_c_mg": 2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 25,
+      "leucine_g": 0.25,
+      "selenium_ug": 28,
+      "glycemic_index": 65,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 upma",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "south_indian",
+        "breakfast"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "poha-cooked",
+      "name": "Poha (cooked)",
+      "category": "prepared",
+      "kcal": 130,
+      "protein": 2.5,
+      "carbs": 23.0,
+      "fat": 3.0,
+      "fiber": 1.4,
+      "sat_fat": 0.4,
+      "sugar": 0.6,
+      "sodium_mg": 280,
+      "potassium_mg": 120,
+      "calcium_mg": 18,
+      "iron_mg": 5.0,
+      "magnesium_mg": 15,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 180,
+      "vit_c_mg": 15,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 15,
+      "leucine_g": 0.2,
+      "selenium_ug": 5,
+      "glycemic_index": 70,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 poha",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "breakfast",
+        "high_iron",
+        "high_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "khichdi-yellow-cooked",
+      "name": "Khichdi (Yellow Dal + Rice, cooked)",
+      "category": "prepared",
+      "kcal": 120,
+      "protein": 5.0,
+      "carbs": 18.5,
+      "fat": 3.0,
+      "fiber": 2.0,
+      "sat_fat": 0.4,
+      "sugar": 0.6,
+      "sodium_mg": 260,
+      "potassium_mg": 160,
+      "calcium_mg": 18,
+      "iron_mg": 1.0,
+      "magnesium_mg": 25,
+      "zinc_mg": 0.7,
+      "vit_a_iu": 80,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 28,
+      "leucine_g": 0.35,
+      "selenium_ug": 8,
+      "glycemic_index": 50,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 khichdi",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "complete",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "staple",
+        "complete_protein",
+        "comfort_food",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        },
+        {
+          "n": "1 bowl (250g)",
+          "g": 250
+        }
+      ]
+    },
+    {
+      "id": "veg-biryani-cooked",
+      "name": "Veg Biryani (cooked)",
+      "category": "prepared",
+      "kcal": 165,
+      "protein": 3.8,
+      "carbs": 28.0,
+      "fat": 4.0,
+      "fiber": 1.6,
+      "sat_fat": 0.6,
+      "sugar": 1.5,
+      "sodium_mg": 290,
+      "potassium_mg": 130,
+      "calcium_mg": 22,
+      "iron_mg": 1.0,
+      "magnesium_mg": 22,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 420,
+      "vit_c_mg": 6,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 18,
+      "leucine_g": 0.3,
+      "selenium_ug": 9,
+      "glycemic_index": 58,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 veg biryani",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "rice",
+        "restaurant_style"
+      ],
+      "portions": [
+        {
+          "n": "1 plate (250g)",
+          "g": 250
+        },
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "veg-pulao-cooked",
+      "name": "Veg Pulao (cooked)",
+      "category": "prepared",
+      "kcal": 155,
+      "protein": 3.5,
+      "carbs": 26.0,
+      "fat": 4.0,
+      "fiber": 1.4,
+      "sat_fat": 0.5,
+      "sugar": 1.0,
+      "sodium_mg": 250,
+      "potassium_mg": 120,
+      "calcium_mg": 18,
+      "iron_mg": 0.9,
+      "magnesium_mg": 20,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 320,
+      "vit_c_mg": 5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 15,
+      "leucine_g": 0.28,
+      "selenium_ug": 8,
+      "glycemic_index": 60,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 veg pulao",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "rice",
+        "home_cooked"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "roti-phulka-cooked",
+      "name": "Roti / Phulka (cooked, no oil)",
+      "category": "prepared",
+      "kcal": 275,
+      "protein": 9.0,
+      "carbs": 55.0,
+      "fat": 2.0,
+      "fiber": 8.0,
+      "sat_fat": 0.3,
+      "sugar": 0.4,
+      "sodium_mg": 3,
+      "potassium_mg": 260,
+      "calcium_mg": 28,
+      "iron_mg": 3.5,
+      "magnesium_mg": 108,
+      "zinc_mg": 2.1,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 32,
+      "leucine_g": 0.66,
+      "selenium_ug": 53,
+      "glycemic_index": 62,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 roti phulka",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "grain",
+        "staple",
+        "whole_grain"
+      ],
+      "portions": [
+        {
+          "n": "1 roti (30g)",
+          "g": 30
+        },
+        {
+          "n": "2 rotis (60g)",
+          "g": 60
+        }
+      ]
+    },
+    {
+      "id": "paratha-plain-cooked",
+      "name": "Paratha (plain, cooked with oil)",
+      "category": "prepared",
+      "kcal": 310,
+      "protein": 7.8,
+      "carbs": 45.0,
+      "fat": 11.0,
+      "fiber": 6.0,
+      "sat_fat": 2.5,
+      "sugar": 0.6,
+      "sodium_mg": 5,
+      "potassium_mg": 225,
+      "calcium_mg": 24,
+      "iron_mg": 3.0,
+      "magnesium_mg": 92,
+      "zinc_mg": 1.8,
+      "vit_a_iu": 180,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 28,
+      "leucine_g": 0.6,
+      "selenium_ug": 45,
+      "glycemic_index": 62,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 paratha plain",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "grain",
+        "fried"
+      ],
+      "portions": [
+        {
+          "n": "1 paratha (70g)",
+          "g": 70
+        }
+      ]
+    },
+    {
+      "id": "paratha-stuffed-aloo-cooked",
+      "name": "Paratha Aloo (stuffed, cooked)",
+      "category": "prepared",
+      "kcal": 230,
+      "protein": 5.0,
+      "carbs": 30.0,
+      "fat": 10.0,
+      "fiber": 3.5,
+      "sat_fat": 2.2,
+      "sugar": 1.2,
+      "sodium_mg": 260,
+      "potassium_mg": 260,
+      "calcium_mg": 22,
+      "iron_mg": 2.0,
+      "magnesium_mg": 55,
+      "zinc_mg": 1.2,
+      "vit_a_iu": 180,
+      "vit_c_mg": 4,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 22,
+      "leucine_g": 0.4,
+      "selenium_ug": 25,
+      "glycemic_index": 60,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 aloo paratha",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "grain",
+        "stuffed",
+        "fried"
+      ],
+      "portions": [
+        {
+          "n": "1 paratha (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "banana-raw",
+      "name": "Banana (raw)",
+      "category": "fruit",
+      "kcal": 89,
+      "protein": 1.1,
+      "carbs": 22.8,
+      "fat": 0.3,
+      "fiber": 2.6,
+      "sat_fat": 0.11,
+      "sugar": 12.2,
+      "sodium_mg": 1,
+      "potassium_mg": 358,
+      "calcium_mg": 5,
+      "iron_mg": 0.26,
+      "magnesium_mg": 27,
+      "zinc_mg": 0.15,
+      "vit_a_iu": 64,
+      "vit_c_mg": 8.7,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 20,
+      "leucine_g": 0.07,
+      "selenium_ug": 1.0,
+      "glycemic_index": 51,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 173944",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "fruit",
+        "staple",
+        "high_potassium",
+        "medium_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (118g)",
+          "g": 118
+        },
+        {
+          "n": "1 small (101g)",
+          "g": 101
+        }
+      ]
+    },
+    {
+      "id": "apple-raw",
+      "name": "Apple (raw, with skin)",
+      "category": "fruit",
+      "kcal": 52,
+      "protein": 0.3,
+      "carbs": 13.8,
+      "fat": 0.2,
+      "fiber": 2.4,
+      "sat_fat": 0.03,
+      "sugar": 10.4,
+      "sodium_mg": 1,
+      "potassium_mg": 107,
+      "calcium_mg": 6,
+      "iron_mg": 0.12,
+      "magnesium_mg": 5,
+      "zinc_mg": 0.04,
+      "vit_a_iu": 54,
+      "vit_c_mg": 4.6,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 3,
+      "leucine_g": 0.02,
+      "selenium_ug": 0,
+      "glycemic_index": 36,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 171688",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "fruit",
+        "staple",
+        "low_gi",
+        "high_fiber"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (182g)",
+          "g": 182
+        }
+      ]
+    },
+    {
+      "id": "orange-raw",
+      "name": "Orange (raw)",
+      "category": "fruit",
+      "kcal": 47,
+      "protein": 0.9,
+      "carbs": 11.8,
+      "fat": 0.1,
+      "fiber": 2.4,
+      "sat_fat": 0.02,
+      "sugar": 9.4,
+      "sodium_mg": 0,
+      "potassium_mg": 181,
+      "calcium_mg": 40,
+      "iron_mg": 0.1,
+      "magnesium_mg": 10,
+      "zinc_mg": 0.07,
+      "vit_a_iu": 225,
+      "vit_c_mg": 53.2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 30,
+      "leucine_g": 0.02,
+      "selenium_ug": 0.5,
+      "glycemic_index": 43,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169097",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "fruit",
+        "high_vit_c",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (131g)",
+          "g": 131
+        }
+      ]
+    },
+    {
+      "id": "mango-raw",
+      "name": "Mango (raw)",
+      "category": "fruit",
+      "kcal": 60,
+      "protein": 0.8,
+      "carbs": 15.0,
+      "fat": 0.4,
+      "fiber": 1.6,
+      "sat_fat": 0.09,
+      "sugar": 13.7,
+      "sodium_mg": 1,
+      "potassium_mg": 168,
+      "calcium_mg": 11,
+      "iron_mg": 0.16,
+      "magnesium_mg": 10,
+      "zinc_mg": 0.09,
+      "vit_a_iu": 1082,
+      "vit_c_mg": 36.4,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 43,
+      "leucine_g": 0.05,
+      "selenium_ug": 0.6,
+      "glycemic_index": 51,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169910",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "fruit",
+        "high_vit_a",
+        "medium_gi",
+        "seasonal"
+      ],
+      "portions": [
+        {
+          "n": "1 cup sliced (165g)",
+          "g": 165
+        },
+        {
+          "n": "1 medium (200g)",
+          "g": 200
+        }
+      ]
+    },
+    {
+      "id": "papaya-raw",
+      "name": "Papaya (raw)",
+      "category": "fruit",
+      "kcal": 43,
+      "protein": 0.5,
+      "carbs": 10.8,
+      "fat": 0.3,
+      "fiber": 1.7,
+      "sat_fat": 0.1,
+      "sugar": 7.8,
+      "sodium_mg": 8,
+      "potassium_mg": 182,
+      "calcium_mg": 20,
+      "iron_mg": 0.25,
+      "magnesium_mg": 21,
+      "zinc_mg": 0.08,
+      "vit_a_iu": 950,
+      "vit_c_mg": 60.9,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 37,
+      "leucine_g": 0.02,
+      "selenium_ug": 0.6,
+      "glycemic_index": 60,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169926",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "fruit",
+        "high_vit_c",
+        "high_vit_a",
+        "medium_gi",
+        "digestive"
+      ],
+      "portions": [
+        {
+          "n": "1 cup cubed (145g)",
+          "g": 145
+        }
+      ]
+    },
+    {
+      "id": "guava-raw",
+      "name": "Guava (raw)",
+      "category": "fruit",
+      "kcal": 68,
+      "protein": 2.6,
+      "carbs": 14.3,
+      "fat": 1.0,
+      "fiber": 5.4,
+      "sat_fat": 0.27,
+      "sugar": 8.9,
+      "sodium_mg": 2,
+      "potassium_mg": 417,
+      "calcium_mg": 18,
+      "iron_mg": 0.26,
+      "magnesium_mg": 22,
+      "zinc_mg": 0.23,
+      "vit_a_iu": 624,
+      "vit_c_mg": 228.3,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 49,
+      "leucine_g": 0.19,
+      "selenium_ug": 0.6,
+      "glycemic_index": 24,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 173044",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "fruit",
+        "high_vit_c",
+        "high_fiber",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (165g)",
+          "g": 165
+        }
+      ]
+    },
+    {
+      "id": "pomegranate-raw",
+      "name": "Pomegranate (raw, arils)",
+      "category": "fruit",
+      "kcal": 83,
+      "protein": 1.7,
+      "carbs": 18.7,
+      "fat": 1.2,
+      "fiber": 4.0,
+      "sat_fat": 0.12,
+      "sugar": 13.7,
+      "sodium_mg": 3,
+      "potassium_mg": 236,
+      "calcium_mg": 10,
+      "iron_mg": 0.3,
+      "magnesium_mg": 12,
+      "zinc_mg": 0.35,
+      "vit_a_iu": 0,
+      "vit_c_mg": 10.2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 38,
+      "leucine_g": 0.06,
+      "selenium_ug": 0.5,
+      "glycemic_index": 53,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169134",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "fruit",
+        "antioxidant",
+        "medium_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup arils (174g)",
+          "g": 174
+        }
+      ]
+    },
+    {
+      "id": "watermelon-raw",
+      "name": "Watermelon (raw)",
+      "category": "fruit",
+      "kcal": 30,
+      "protein": 0.6,
+      "carbs": 7.6,
+      "fat": 0.2,
+      "fiber": 0.4,
+      "sat_fat": 0.02,
+      "sugar": 6.2,
+      "sodium_mg": 1,
+      "potassium_mg": 112,
+      "calcium_mg": 7,
+      "iron_mg": 0.24,
+      "magnesium_mg": 10,
+      "zinc_mg": 0.1,
+      "vit_a_iu": 569,
+      "vit_c_mg": 8.1,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 3,
+      "leucine_g": 0.02,
+      "selenium_ug": 0.4,
+      "glycemic_index": 72,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 167765",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "fruit",
+        "hydrating",
+        "high_gi",
+        "seasonal"
+      ],
+      "portions": [
+        {
+          "n": "1 cup diced (152g)",
+          "g": 152
+        }
+      ]
+    },
+    {
+      "id": "grapes-red-raw",
+      "name": "Grapes (red, raw)",
+      "category": "fruit",
+      "kcal": 69,
+      "protein": 0.72,
+      "carbs": 18.1,
+      "fat": 0.16,
+      "fiber": 0.9,
+      "sat_fat": 0.05,
+      "sugar": 15.5,
+      "sodium_mg": 2,
+      "potassium_mg": 191,
+      "calcium_mg": 10,
+      "iron_mg": 0.36,
+      "magnesium_mg": 7,
+      "zinc_mg": 0.07,
+      "vit_a_iu": 66,
+      "vit_c_mg": 3.2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 2,
+      "leucine_g": 0.03,
+      "selenium_ug": 0.1,
+      "glycemic_index": 46,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 174683",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "fruit",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (151g)",
+          "g": 151
+        }
+      ]
+    },
+    {
+      "id": "berries-mixed-raw",
+      "name": "Mixed Berries (blueberry/strawberry/raspberry avg)",
+      "category": "fruit",
+      "kcal": 50,
+      "protein": 0.9,
+      "carbs": 12.0,
+      "fat": 0.4,
+      "fiber": 3.8,
+      "sat_fat": 0.04,
+      "sugar": 7.0,
+      "sodium_mg": 1,
+      "potassium_mg": 120,
+      "calcium_mg": 18,
+      "iron_mg": 0.45,
+      "magnesium_mg": 15,
+      "zinc_mg": 0.3,
+      "vit_a_iu": 40,
+      "vit_c_mg": 40.0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 18,
+      "leucine_g": 0.05,
+      "selenium_ug": 0.2,
+      "glycemic_index": 32,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC average of 171711/167762/167755",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "fruit",
+        "antioxidant",
+        "low_gi",
+        "high_fiber"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "almond-raw",
+      "name": "Almonds (raw)",
+      "category": "nuts",
+      "kcal": 579,
+      "protein": 21.2,
+      "carbs": 21.6,
+      "fat": 49.9,
+      "fiber": 12.5,
+      "sat_fat": 3.8,
+      "sugar": 4.4,
+      "sodium_mg": 1,
+      "potassium_mg": 733,
+      "calcium_mg": 269,
+      "iron_mg": 3.7,
+      "magnesium_mg": 270,
+      "zinc_mg": 3.1,
+      "vit_a_iu": 2,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 44,
+      "leucine_g": 1.47,
+      "selenium_ug": 4.1,
+      "glycemic_index": 15,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 170567",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": null,
+      "tags": [
+        "raw",
+        "nuts",
+        "high_protein",
+        "high_fat",
+        "high_calcium",
+        "low_gi",
+        "staple"
+      ],
+      "portions": [
+        {
+          "n": "1 oz / ~23 almonds (28g)",
+          "g": 28
+        },
+        {
+          "n": "1 cup whole (143g)",
+          "g": 143
+        }
+      ]
+    },
+    {
+      "id": "walnut-raw",
+      "name": "Walnuts (raw, English)",
+      "category": "nuts",
+      "kcal": 654,
+      "protein": 15.2,
+      "carbs": 13.7,
+      "fat": 65.2,
+      "fiber": 6.7,
+      "sat_fat": 6.1,
+      "sugar": 2.6,
+      "sodium_mg": 2,
+      "potassium_mg": 441,
+      "calcium_mg": 98,
+      "iron_mg": 2.9,
+      "magnesium_mg": 158,
+      "zinc_mg": 3.1,
+      "vit_a_iu": 20,
+      "vit_c_mg": 1.3,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 98,
+      "leucine_g": 1.17,
+      "selenium_ug": 4.9,
+      "glycemic_index": 15,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 170187",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": null,
+      "tags": [
+        "raw",
+        "nuts",
+        "omega3",
+        "high_fat",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 oz / 14 halves (28g)",
+          "g": 28
+        }
+      ]
+    },
+    {
+      "id": "peanut-raw",
+      "name": "Peanuts (raw)",
+      "category": "nuts",
+      "kcal": 567,
+      "protein": 25.8,
+      "carbs": 16.1,
+      "fat": 49.2,
+      "fiber": 8.5,
+      "sat_fat": 6.3,
+      "sugar": 4.7,
+      "sodium_mg": 18,
+      "potassium_mg": 705,
+      "calcium_mg": 92,
+      "iron_mg": 4.6,
+      "magnesium_mg": 168,
+      "zinc_mg": 3.3,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 240,
+      "leucine_g": 1.67,
+      "selenium_ug": 7.2,
+      "glycemic_index": 14,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 172430",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "raw",
+        "legume",
+        "high_protein",
+        "high_fat",
+        "staple",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 oz (28g)",
+          "g": 28
+        },
+        {
+          "n": "1 cup (146g)",
+          "g": 146
+        }
+      ]
+    },
+    {
+      "id": "chia-seeds",
+      "name": "Chia Seeds",
+      "category": "nuts",
+      "kcal": 486,
+      "protein": 16.5,
+      "carbs": 42.1,
+      "fat": 30.7,
+      "fiber": 34.4,
+      "sat_fat": 3.3,
+      "sugar": 0.0,
+      "sodium_mg": 16,
+      "potassium_mg": 407,
+      "calcium_mg": 631,
+      "iron_mg": 7.7,
+      "magnesium_mg": 335,
+      "zinc_mg": 4.6,
+      "vit_a_iu": 54,
+      "vit_c_mg": 1.6,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 49,
+      "leucine_g": 1.37,
+      "selenium_ug": 55.2,
+      "glycemic_index": 30,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 170554",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": null,
+      "tags": [
+        "raw",
+        "seeds",
+        "omega3",
+        "high_fiber",
+        "high_calcium",
+        "high_selenium",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 tbsp (12g)",
+          "g": 12
+        }
+      ]
+    },
+    {
+      "id": "flax-seeds-ground",
+      "name": "Flax Seeds (ground)",
+      "category": "nuts",
+      "kcal": 534,
+      "protein": 18.3,
+      "carbs": 28.9,
+      "fat": 42.2,
+      "fiber": 27.3,
+      "sat_fat": 3.7,
+      "sugar": 1.5,
+      "sodium_mg": 30,
+      "potassium_mg": 813,
+      "calcium_mg": 255,
+      "iron_mg": 5.7,
+      "magnesium_mg": 392,
+      "zinc_mg": 4.3,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0.6,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 87,
+      "leucine_g": 1.24,
+      "selenium_ug": 25.4,
+      "glycemic_index": 35,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 169414",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": null,
+      "tags": [
+        "raw",
+        "seeds",
+        "omega3",
+        "high_fiber",
+        "lignans",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 tbsp ground (7g)",
+          "g": 7
+        }
+      ]
+    },
+    {
+      "id": "whey-isolate-generic",
+      "name": "Whey Protein Isolate (generic)",
+      "category": "supplement",
+      "kcal": 380,
+      "protein": 90.0,
+      "carbs": 1.5,
+      "fat": 1.0,
+      "fiber": 0,
+      "sat_fat": 0.5,
+      "sugar": 1.0,
+      "sodium_mg": 200,
+      "potassium_mg": 500,
+      "calcium_mg": 500,
+      "iron_mg": 0.5,
+      "magnesium_mg": 40,
+      "zinc_mg": 1.0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 1.2,
+      "folate_ug": 15,
+      "leucine_g": 11.0,
+      "selenium_ug": 30,
+      "glycemic_index": null,
+      "source": {
+        "type": "label",
+        "citation": "Generic whey isolate label (90% protein per scoop)",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "complete",
+      "brand": null,
+      "tags": [
+        "supplement",
+        "high_protein",
+        "high_leucine",
+        "fast_digesting",
+        "post_workout"
+      ],
+      "portions": [
+        {
+          "n": "1 scoop (30g)",
+          "g": 30
+        },
+        {
+          "n": "100g",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "whey-concentrate-generic",
+      "name": "Whey Protein Concentrate (generic)",
+      "category": "supplement",
+      "kcal": 400,
+      "protein": 80.0,
+      "carbs": 8.0,
+      "fat": 6.0,
+      "fiber": 0,
+      "sat_fat": 3.5,
+      "sugar": 5.0,
+      "sodium_mg": 180,
+      "potassium_mg": 450,
+      "calcium_mg": 450,
+      "iron_mg": 0.8,
+      "magnesium_mg": 40,
+      "zinc_mg": 1.0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 1.0,
+      "folate_ug": 15,
+      "leucine_g": 9.0,
+      "selenium_ug": 25,
+      "glycemic_index": null,
+      "source": {
+        "type": "label",
+        "citation": "Generic whey concentrate label (80% protein per scoop)",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "complete",
+      "brand": null,
+      "tags": [
+        "supplement",
+        "high_protein",
+        "high_leucine",
+        "fast_digesting",
+        "post_workout"
+      ],
+      "portions": [
+        {
+          "n": "1 scoop (30g)",
+          "g": 30
+        },
+        {
+          "n": "100g",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "soya-chunks-dry",
+      "name": "Soya Chunks (dry)",
+      "category": "supplement",
+      "kcal": 345,
+      "protein": 52.4,
+      "carbs": 33.0,
+      "fat": 0.5,
+      "fiber": 13.0,
+      "sat_fat": 0.1,
+      "sugar": 0.0,
+      "sodium_mg": 2,
+      "potassium_mg": 1500,
+      "calcium_mg": 350,
+      "iron_mg": 11.0,
+      "magnesium_mg": 250,
+      "zinc_mg": 4.5,
+      "vit_a_iu": 2,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 250,
+      "leucine_g": 4.0,
+      "selenium_ug": 17.8,
+      "glycemic_index": 16,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 174279 (textured soy protein)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "soy",
+      "brand": null,
+      "tags": [
+        "supplement",
+        "high_protein",
+        "high_leucine",
+        "soy",
+        "fiber",
+        "low_gi",
+        "veg_protein_anchor"
+      ],
+      "portions": [
+        {
+          "n": "1 cup dry (50g)",
+          "g": 50
+        },
+        {
+          "n": "100g dry",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "tofu-firm",
+      "name": "Tofu (firm)",
+      "category": "supplement",
+      "kcal": 144,
+      "protein": 17.3,
+      "carbs": 2.8,
+      "fat": 8.7,
+      "fiber": 2.3,
+      "sat_fat": 1.3,
+      "sugar": 0.6,
+      "sodium_mg": 14,
+      "potassium_mg": 237,
+      "calcium_mg": 372,
+      "iron_mg": 2.7,
+      "magnesium_mg": 58,
+      "zinc_mg": 1.6,
+      "vit_a_iu": 85,
+      "vit_c_mg": 0.2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 29,
+      "leucine_g": 1.41,
+      "selenium_ug": 17.8,
+      "glycemic_index": 15,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FDC 172476",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "soy",
+      "brand": null,
+      "tags": [
+        "raw",
+        "soy",
+        "high_protein",
+        "high_calcium",
+        "high_leucine",
+        "low_gi"
+      ],
+      "portions": [
+        {
+          "n": "100g",
+          "g": 100
+        },
+        {
+          "n": "1 cup cubes (252g)",
+          "g": 252
+        }
+      ]
     }
   ]
 }
