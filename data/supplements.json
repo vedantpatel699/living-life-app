@@ -1,7 +1,7 @@
 {
   "version": 2,
   "updatedAt": "2026-05-13",
-  "note": "Daily supplement protocol tailored to Vedant. v2 adds shift-work specific tier (melatonin, magnesium glycinate, L-theanine, ashwagandha, glycine) — see SUPPLEMENTS.md for evidence.",
+  "note": "Daily supplement protocol tailored to Vedant. v2 adds shift-work specific tier (melatonin, magnesium glycinate, L-theanine, ashwagandha, glycine) — see SUPPLEMENTS.md for evidence. Ashwagandha removed — contraindicated with user's SSRI medication.",
   "supplements": [
     {
       "id": "creatine",
@@ -201,26 +201,6 @@
       "monthlyCostCAD": "10-18"
     },
     {
-      "id": "ashwagandha",
-      "name": "Ashwagandha (KSM-66)",
-      "icon": "A",
-      "color": "coral",
-      "category": "shift",
-      "purpose": "Cortisol regulation under chronic shift-work stress. 8-12 week trial basis.",
-      "dose": "300-600 mg",
-      "unit": "mg",
-      "form": "KSM-66 or Sensoril extract capsule",
-      "timing": "with dinner OR pre-sleep",
-      "scheduleSlot": "pre-sleep",
-      "withFood": true,
-      "frequency": "daily",
-      "phaseFromWeek": 4,
-      "conditional": null,
-      "notes": "Trial 8-12 weeks; reassess. Mildly thyroid-stimulating — avoid if hyperthyroid. Talk to GP if you're on any other meds.",
-      "evidence": "Moderate — Salve 2019 RCT: ~28% cortisol reduction + better sleep at 600 mg/day. Studies short, industry-funded. https://pubmed.ncbi.nlm.nih.gov/31728244/",
-      "monthlyCostCAD": "20-35"
-    },
-    {
       "id": "glycine",
       "name": "Glycine",
       "icon": "G",
@@ -280,8 +260,7 @@
       "icon": "🌙",
       "label": "Pre-sleep",
       "include": [
-        "magnesium-glycinate",
-        "ashwagandha"
+        "magnesium-glycinate"
       ]
     }
   ],
@@ -355,8 +334,7 @@
         "melatonin",
         "magnesium-glycinate",
         "l-theanine",
-        "glycine",
-        "ashwagandha"
+        "glycine"
       ],
       "conditional": "shift-day"
     }
