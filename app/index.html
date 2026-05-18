@@ -530,6 +530,30 @@ ${ml>0?`<button id="t-water-undo" style="margin-top:8px;width:100%;background:tr
       </div>
     </div>
     <button class="btn btn-secondary btn-full mt-4" id="t-log" style="padding:16px;display:flex;align-items:center;justify-content:center;gap:8px"><span style="font-size:18px">＋</span> <span>Log today</span></button>
+    ${(()=>{
+      const tpls=(state.data.mealTemplates||[]);
+      if(tpls.length===0)return '';
+      // Surface "post_shift"-tagged template only when relevant (shift day + landing window 12-2 PM)
+      const hr=new Date().getHours();
+      const inLandingWindow=shift&&hr>=12&&hr<=14;
+      const postShift=tpls.find(t=>(t.tags||[]).includes('post_shift'));
+      const candidate=inLandingWindow&&postShift?postShift:tpls[tpls.length-1];
+      const isPostShift=candidate===postShift;
+      const totK=(candidate.components||[]).reduce((s,c)=>s+(c.kcal||0),0);
+      const totP=(candidate.components||[]).reduce((s,c)=>s+(c.protein||0),0);
+      return `<h2 class="gf-section">${isPostShift&&inLandingWindow?'POST-SHIFT LANDING':'SAVED MEAL TEMPLATES'}</h2>
+      <div class="gf-card" style="${isPostShift&&inLandingWindow?'background:linear-gradient(135deg,var(--sky-s),#F8FAFB);border:1px solid rgba(115,178,224,0.3)':''}">
+        ${isPostShift&&inLandingWindow?'<div class="tiny" style="color:var(--sky);font-weight:700;margin-bottom:8px">🌙 Run the script — no optimizing</div>':''}
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:15px">${escapeHtml(candidate.name)}</div>
+            <div class="tiny muted">${totK} kcal · ${totP.toFixed(1)}g protein · ${(candidate.components||[]).length} items</div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-full" id="t-tpl-log" data-tplid="${candidate.id}">＋ One-tap log</button>
+        ${tpls.length>1?`<button class="btn btn-ghost btn-full mt-2 tiny" id="t-tpl-more" style="font-size:12px;padding:6px">Other templates (${tpls.length-1})</button>`:''}
+      </div>`;
+    })()}
     <h2 class="gf-section">SUPPLEMENTS</h2>
     ${gfRow({icon:'💊',iconBg:'var(--mint-s)',iconColor:'var(--mint)',title:todaySuppCount()+' of '+(DB.supplements?DB.supplements.supplements.filter(s=>s.frequency==='daily').length:SUPPLEMENTS.length)+' taken',sub:suppStreak()>0?'Coverage: '+suppStreak()+' days in a row':'Tap to check off',id:'t-supps'})}
     ${hasClaudeKey()?`<h2 class="gf-section">COACH</h2>${gfRow({icon:'✦',iconBg:'var(--cta)',iconColor:'var(--sun)',title:'Ask your coach',sub:'Knows your data',id:'t-coach'})}`:''}
@@ -549,6 +573,13 @@ function bindToday(){
   document.getElementById('t-water-bottle')?.addEventListener('click',()=>addWaterEntry(500));
   document.getElementById('t-water-custom')?.addEventListener('click',()=>{const v=prompt('How many ml?','750');if(!v)return;const ml=parseInt(v,10);if(!ml||ml<=0||ml>3000){toast('Enter 1-3000 ml','error');return}addWaterEntry(ml)});
   document.getElementById('t-water-undo')?.addEventListener('click',()=>undoLastWater());
+  // Template buttons
+  document.getElementById('t-tpl-log')?.addEventListener('click',e=>{
+    const id=e.currentTarget.dataset.tplid;
+    const tpl=(state.data.mealTemplates||[]).find(t=>t.id===id);
+    if(tpl)logMealTemplate(tpl);
+  });
+  document.getElementById('t-tpl-more')?.addEventListener('click',()=>openTemplatesList());
 }
 
 // =================== WATER TRACKING ===================
@@ -571,6 +602,99 @@ function addWaterEntry(ml){
   pushData().catch(err=>console.warn('water sync',err));
   writeHydrationToHC(ml,t).catch(()=>{});
 }
+// =================== MEAL TEMPLATES ===================
+function openSaveTemplateModal(currentFoods,onSave){
+  if(!currentFoods||currentFoods.length===0){toast('Add foods first','error');return}
+  const m=document.createElement('div');m.className='modal-bg';
+  m.innerHTML=`<div class="modal" style="max-width:460px"><div class="modal-handle"></div>
+  <h2 style="font-size:20px;font-weight:700;margin-bottom:4px">Save as template</h2>
+  <p class="tiny muted" style="margin-bottom:14px">One-tap log for repeat meals (post-shift landing, off-day breakfast, etc.). The grams + nutrient values are locked when you save; edit later if you tweak the recipe.</p>
+  <div class="field"><div class="flabel">Template name</div><input type="text" id="tpl-name" placeholder="Post-shift saved meal" autofocus></div>
+  <div class="field"><div class="flabel">Tag (drives where it surfaces)</div>
+    <select id="tpl-tag" style="padding:12px">
+      <option value="">none — generic template</option>
+      <option value="post_shift">post_shift — surfaces 12-2 PM on shift days</option>
+      <option value="off_day_breakfast">off_day_breakfast — morning on off days</option>
+      <option value="pre_workout">pre_workout — before workout slot</option>
+      <option value="dinner">dinner</option>
+    </select>
+  </div>
+  <div class="card-flat" style="padding:10px 12px;margin:8px 0"><div class="tiny muted" style="margin-bottom:6px">Locked-in:</div>
+    ${currentFoods.map(f=>`<div class="tiny" style="display:flex;justify-content:space-between;padding:2px 0"><span>${escapeHtml(f.name)} · ${escapeHtml(f.portionName)}</span><span class="muted">${f.kcal} kcal</span></div>`).join('')}
+  </div>
+  <div class="btn-row mt-4"><button class="btn btn-secondary" id="tpl-cancel">Cancel</button><button class="btn btn-primary" id="tpl-save">Save</button></div>
+  </div>`;
+  m.addEventListener('click',ev=>{if(ev.target===m)m.remove()});
+  m.querySelector('#tpl-cancel').addEventListener('click',()=>m.remove());
+  m.querySelector('#tpl-save').addEventListener('click',()=>{
+    const name=m.querySelector('#tpl-name').value.trim();
+    const tag=m.querySelector('#tpl-tag').value;
+    if(!name){toast('Name required','error');return}
+    const tpl={
+      id:'tpl-'+Date.now(),
+      name,
+      tags:tag?[tag]:[],
+      components:JSON.parse(JSON.stringify(currentFoods)), // deep clone, locked
+      created:nowIso(),
+    };
+    onSave(tpl);
+    m.remove();
+  });
+  document.body.appendChild(m);
+  setTimeout(()=>m.querySelector('#tpl-name')?.focus(),80);
+}
+function logMealTemplate(tpl){
+  const t=today();
+  const e=state.data.entries[t]||{};
+  e.foods=e.foods||[];
+  // Push a fresh copy of each component so the template isn't mutated
+  for(const c of (tpl.components||[])){
+    e.foods.push(JSON.parse(JSON.stringify(c)));
+  }
+  e.updatedAt=nowIso();
+  state.data.entries[t]=e;
+  saveLocalData();
+  nativeHaptic('heavy');
+  toast(`Logged: ${tpl.name}`,'success');
+  render();
+  pushData().catch(err=>console.warn('template log sync',err));
+}
+function openTemplatesList(){
+  const tpls=state.data.mealTemplates||[];
+  const m=document.createElement('div');m.className='modal-bg';
+  m.innerHTML=`<div class="modal" style="max-width:460px;max-height:80dvh;overflow-y:auto"><div class="modal-handle"></div>
+  <h2 style="font-size:18px;font-weight:700">Saved templates</h2>
+  <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+  ${tpls.map(t=>{
+    const totK=(t.components||[]).reduce((s,c)=>s+(c.kcal||0),0);
+    const totP=(t.components||[]).reduce((s,c)=>s+(c.protein||0),0);
+    return `<div class="card-flat" style="padding:12px;display:flex;justify-content:space-between;align-items:center;gap:10px">
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:700;font-size:14px">${escapeHtml(t.name)}</div>
+        <div class="tiny muted">${totK} kcal · ${totP.toFixed(1)}g P · ${(t.components||[]).length} items${(t.tags||[]).length?' · #'+(t.tags||[]).join(' #'):''}</div>
+      </div>
+      <button class="btn btn-primary btn-sm tpl-log-btn" data-id="${t.id}" style="font-size:12px;padding:6px 12px">＋ Log</button>
+      <button class="tpl-del-btn" data-id="${t.id}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:14px">×</button>
+    </div>`;
+  }).join('')}
+  </div>
+  <button class="btn btn-secondary btn-full mt-4" id="tplist-close">Close</button>
+  </div>`;
+  m.addEventListener('click',ev=>{if(ev.target===m)m.remove()});
+  m.querySelector('#tplist-close').addEventListener('click',()=>m.remove());
+  m.querySelectorAll('.tpl-log-btn').forEach(b=>b.addEventListener('click',()=>{
+    const tpl=tpls.find(t=>t.id===b.dataset.id);if(tpl){logMealTemplate(tpl);m.remove()}
+  }));
+  m.querySelectorAll('.tpl-del-btn').forEach(b=>b.addEventListener('click',()=>{
+    if(!confirm('Delete this template?'))return;
+    state.data.mealTemplates=state.data.mealTemplates.filter(t=>t.id!==b.dataset.id);
+    saveLocalData();
+    pushData().catch(()=>{});
+    m.remove();render();
+  }));
+  document.body.appendChild(m);
+}
+
 function undoLastWater(){
   const t=today();
   const e=state.data.entries[t];
@@ -887,7 +1011,7 @@ function renderLogEntry(){
 <h2 class="sec">ACTIVITY</h2>
 <div class="chip-row" id="le-acts">${ACTIVITIES.map(a=>`<div class="chip ${d.activities.includes(a)?'selected':''}" data-a="${escapeHtml(a)}">${escapeHtml(a)}</div>`).join('')}</div>
 <h2 class="sec">🍽 FOODS LOGGED</h2>
-${(()=>{const fs=d.foods||[];const totK=fs.reduce((s,f)=>s+(f.kcal||0),0);const totP=fs.reduce((s,f)=>s+(f.protein||0),0);return `<div class="card-flat" style="padding:10px 12px;display:flex;align-items:center;gap:12px;margin-bottom:8px"><div style="flex:1"><div style="font-weight:700;font-size:18px">${totK} kcal</div><div class="tiny muted">${totP.toFixed(1)} g protein${fs.length?' · '+fs.length+' items':' · nothing logged yet'}</div></div><button class="btn btn-primary btn-sm" id="le-addfood" style="padding:8px 14px;font-size:13px">+ Add food</button></div>${fs.length?`<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px">${fs.map((f,i)=>`<div class="le-fr" data-i="${i}" style="background:var(--surface-white);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${escapeHtml(f.name)}</div><div class="tiny muted">${escapeHtml(f.portionName)} · ${f.kcal} kcal · ${(f.protein||0).toFixed(1)}g P</div></div><button class="le-fedit" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:13px" title="Edit grams">✎</button><button class="le-fdel" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:14px">×</button></div>`).join('')}</div>`:''}`})()}
+${(()=>{const fs=d.foods||[];const totK=fs.reduce((s,f)=>s+(f.kcal||0),0);const totP=fs.reduce((s,f)=>s+(f.protein||0),0);return `<div class="card-flat" style="padding:10px 12px;display:flex;align-items:center;gap:12px;margin-bottom:8px"><div style="flex:1"><div style="font-weight:700;font-size:18px">${totK} kcal</div><div class="tiny muted">${totP.toFixed(1)} g protein${fs.length?' · '+fs.length+' items':' · nothing logged yet'}</div></div><div style="display:flex;gap:6px"><button class="btn btn-primary btn-sm" id="le-addfood" style="padding:8px 14px;font-size:13px">+ Add food</button>${(d.foods||[]).length>0?'<button class="btn btn-secondary btn-sm" id="le-savetpl" style="padding:8px 12px;font-size:13px" title="Save these foods as a one-tap template">💾</button>':''}</div></div>${fs.length?`<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px">${fs.map((f,i)=>`<div class="le-fr" data-i="${i}" style="background:var(--surface-white);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${escapeHtml(f.name)}</div><div class="tiny muted">${escapeHtml(f.portionName)} · ${f.kcal} kcal · ${(f.protein||0).toFixed(1)}g P</div></div><button class="le-fedit" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:13px" title="Edit grams">✎</button><button class="le-fdel" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:14px">×</button></div>`).join('')}</div>`:''}`})()}
 <h2 class="sec">MEAL NOTES</h2>
 <textarea id="le-m" placeholder="Breakfast: paneer paratha. Lunch: dal-rice + salad. Dinner: chicken curry, one plate.">${escapeHtml(d.meals)}</textarea>
 <h2 class="sec">ENERGY</h2>
@@ -910,6 +1034,13 @@ function bindLogEntry(){
   document.getElementById('le-w')?.addEventListener('input',e=>d.weight=e.target.value===''?'':parseFloat(e.target.value));
   document.getElementById('le-m')?.addEventListener('input',e=>d.meals=e.target.value);
   document.getElementById('le-addfood')?.addEventListener('click',()=>openFoodPicker(f=>{d.foods=d.foods||[];d.foods.push(f);render()}));
+  document.getElementById('le-savetpl')?.addEventListener('click',()=>openSaveTemplateModal(d.foods||[],t=>{
+    state.data.mealTemplates=state.data.mealTemplates||[];
+    state.data.mealTemplates.push(t);
+    saveLocalData();
+    pushData().catch(e=>console.warn('template sync',e));
+    toast('Template saved ✓','success');
+  }));
   document.querySelectorAll('.le-fdel').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const i=parseInt(b.dataset.i,10);d.foods.splice(i,1);render()}));
   document.querySelectorAll('.le-fedit').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const i=parseInt(b.dataset.i,10);openEditFoodGrams(d.foods[i],updated=>{d.foods[i]=updated;render()})}));
   document.getElementById('le-n')?.addEventListener('input',e=>d.notes=e.target.value);
