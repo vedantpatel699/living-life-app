@@ -1554,1544 +1554,6 @@
       ]
     },
     {
-      "id": "rice-basmati-raw",
-      "name": "Basmati Rice (raw)",
-      "category": "grain",
-      "kcal": 345,
-      "protein": 7.5,
-      "carbs": 78.2,
-      "fat": 0.5,
-      "fiber": 1.3,
-      "sat_fat": 0.1,
-      "sugar": 0.5,
-      "sodium_mg": 5,
-      "potassium_mg": 115,
-      "calcium_mg": 9,
-      "iron_mg": 0.7,
-      "magnesium_mg": 25,
-      "zinc_mg": 1.1,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 8,
-      "leucine_g": 0.63,
-      "selenium_ug": 15,
-      "glycemic_index": 58,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 D-2 basmati",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "staple",
-        "raw",
-        "grain"
-      ],
-      "portions": [
-        {
-          "n": "1 cup raw (180g)",
-          "g": 180
-        },
-        {
-          "n": "1 katori raw (100g)",
-          "g": 100
-        },
-        {
-          "n": "100g raw",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "rice-brown-raw",
-      "name": "Brown Rice (raw)",
-      "category": "grain",
-      "kcal": 370,
-      "protein": 7.9,
-      "carbs": 77.2,
-      "fat": 2.9,
-      "fiber": 3.5,
-      "sat_fat": 0.6,
-      "sugar": 0.7,
-      "sodium_mg": 7,
-      "potassium_mg": 223,
-      "calcium_mg": 23,
-      "iron_mg": 1.5,
-      "magnesium_mg": 143,
-      "zinc_mg": 2.0,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 20,
-      "leucine_g": 0.62,
-      "selenium_ug": 23,
-      "glycemic_index": 68,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 169704",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "staple",
-        "raw",
-        "grain",
-        "high_fiber"
-      ],
-      "portions": [
-        {
-          "n": "1 cup raw (185g)",
-          "g": 185
-        },
-        {
-          "n": "100g raw",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "rice-white-raw",
-      "name": "White Rice (raw)",
-      "category": "grain",
-      "kcal": 360,
-      "protein": 6.6,
-      "carbs": 80.0,
-      "fat": 0.6,
-      "fiber": 1.3,
-      "sat_fat": 0.2,
-      "sugar": 0.1,
-      "sodium_mg": 5,
-      "potassium_mg": 86,
-      "calcium_mg": 9,
-      "iron_mg": 1.5,
-      "magnesium_mg": 28,
-      "zinc_mg": 1.1,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 8,
-      "leucine_g": 0.55,
-      "selenium_ug": 15,
-      "glycemic_index": 72,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 169756",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "staple",
-        "raw",
-        "grain",
-        "high_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup raw (185g)",
-          "g": 185
-        },
-        {
-          "n": "100g raw",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "toor-dal-raw",
-      "name": "Toor Dal / Arhar (raw split)",
-      "category": "lentil",
-      "kcal": 343,
-      "protein": 22.3,
-      "carbs": 57.6,
-      "fat": 1.7,
-      "fiber": 9.1,
-      "sat_fat": 0.6,
-      "sugar": 2.0,
-      "sodium_mg": 30,
-      "potassium_mg": 1392,
-      "calcium_mg": 73,
-      "iron_mg": 3.9,
-      "magnesium_mg": 133,
-      "zinc_mg": 2.3,
-      "vit_a_iu": 3,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 456,
-      "leucine_g": 1.5,
-      "selenium_ug": 8,
-      "glycemic_index": 22,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 C-15 arhar dal",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "legume",
-      "brand": null,
-      "tags": [
-        "staple",
-        "raw",
-        "legume",
-        "low_gi",
-        "high_protein"
-      ],
-      "portions": [
-        {
-          "n": "1 katori raw (100g)",
-          "g": 100
-        },
-        {
-          "n": "1 cup raw (200g)",
-          "g": 200
-        }
-      ]
-    },
-    {
-      "id": "moong-dal-split-raw",
-      "name": "Moong Dal Yellow (split, raw)",
-      "category": "lentil",
-      "kcal": 348,
-      "protein": 24.5,
-      "carbs": 59.0,
-      "fat": 1.2,
-      "fiber": 8.2,
-      "sat_fat": 0.3,
-      "sugar": 2.0,
-      "sodium_mg": 28,
-      "potassium_mg": 1246,
-      "calcium_mg": 90,
-      "iron_mg": 3.7,
-      "magnesium_mg": 124,
-      "zinc_mg": 2.7,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 140,
-      "leucine_g": 1.9,
-      "selenium_ug": 8,
-      "glycemic_index": 25,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 C-9",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "legume",
-      "brand": null,
-      "tags": [
-        "staple",
-        "raw",
-        "legume",
-        "low_gi",
-        "high_protein"
-      ],
-      "portions": [
-        {
-          "n": "1 katori raw (100g)",
-          "g": 100
-        },
-        {
-          "n": "100g raw",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "moong-whole-raw",
-      "name": "Whole Green Moong (raw)",
-      "category": "lentil",
-      "kcal": 347,
-      "protein": 24.0,
-      "carbs": 56.7,
-      "fat": 1.2,
-      "fiber": 16.3,
-      "sat_fat": 0.3,
-      "sugar": 7.0,
-      "sodium_mg": 15,
-      "potassium_mg": 1246,
-      "calcium_mg": 124,
-      "iron_mg": 6.7,
-      "magnesium_mg": 189,
-      "zinc_mg": 2.7,
-      "vit_a_iu": 114,
-      "vit_c_mg": 4.8,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 625,
-      "leucine_g": 1.87,
-      "selenium_ug": 8,
-      "glycemic_index": 25,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 174270",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "legume",
-      "brand": null,
-      "tags": [
-        "raw",
-        "legume",
-        "whole",
-        "high_fiber",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 katori raw (100g)",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "urad-dal-split-raw",
-      "name": "Urad Dal (split, raw)",
-      "category": "lentil",
-      "kcal": 341,
-      "protein": 24.0,
-      "carbs": 59.6,
-      "fat": 1.4,
-      "fiber": 18.3,
-      "sat_fat": 0.2,
-      "sugar": 0.9,
-      "sodium_mg": 38,
-      "potassium_mg": 983,
-      "calcium_mg": 138,
-      "iron_mg": 7.6,
-      "magnesium_mg": 267,
-      "zinc_mg": 3.4,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 216,
-      "leucine_g": 1.9,
-      "selenium_ug": 5,
-      "glycemic_index": 28,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 C-13",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "legume",
-      "brand": null,
-      "tags": [
-        "raw",
-        "legume",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 katori raw (100g)",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "urad-dal-whole-raw",
-      "name": "Whole Urad / Black Gram (raw)",
-      "category": "lentil",
-      "kcal": 341,
-      "protein": 25.2,
-      "carbs": 58.9,
-      "fat": 1.6,
-      "fiber": 18.3,
-      "sat_fat": 0.2,
-      "sugar": 0.9,
-      "sodium_mg": 38,
-      "potassium_mg": 983,
-      "calcium_mg": 138,
-      "iron_mg": 7.6,
-      "magnesium_mg": 267,
-      "zinc_mg": 3.4,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 216,
-      "leucine_g": 1.98,
-      "selenium_ug": 5,
-      "glycemic_index": 28,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 C-13",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "legume",
-      "brand": null,
-      "tags": [
-        "raw",
-        "legume",
-        "whole",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 katori raw (100g)",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "masoor-dal-split-raw",
-      "name": "Masoor Dal Red (split, raw)",
-      "category": "lentil",
-      "kcal": 343,
-      "protein": 24.3,
-      "carbs": 60.1,
-      "fat": 0.7,
-      "fiber": 10.7,
-      "sat_fat": 0.2,
-      "sugar": 2.0,
-      "sodium_mg": 7,
-      "potassium_mg": 955,
-      "calcium_mg": 35,
-      "iron_mg": 7.5,
-      "magnesium_mg": 71,
-      "zinc_mg": 3.3,
-      "vit_a_iu": 8,
-      "vit_c_mg": 4.5,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 479,
-      "leucine_g": 1.8,
-      "selenium_ug": 8,
-      "glycemic_index": 26,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 C-11",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "legume",
-      "brand": null,
-      "tags": [
-        "staple",
-        "raw",
-        "legume",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 katori raw (100g)",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "chana-dal-raw",
-      "name": "Chana Dal (split, raw)",
-      "category": "lentil",
-      "kcal": 372,
-      "protein": 21.0,
-      "carbs": 60.0,
-      "fat": 5.3,
-      "fiber": 12.7,
-      "sat_fat": 0.7,
-      "sugar": 3.4,
-      "sodium_mg": 24,
-      "potassium_mg": 776,
-      "calcium_mg": 57,
-      "iron_mg": 4.6,
-      "magnesium_mg": 79,
-      "zinc_mg": 3.4,
-      "vit_a_iu": 67,
-      "vit_c_mg": 4.0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 557,
-      "leucine_g": 1.5,
-      "selenium_ug": 8,
-      "glycemic_index": 8,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 C-5",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "legume",
-      "brand": null,
-      "tags": [
-        "raw",
-        "legume",
-        "very_low_gi",
-        "high_protein"
-      ],
-      "portions": [
-        {
-          "n": "1 katori raw (100g)",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "kala-chana-raw",
-      "name": "Kala Chana / Black Chickpea (raw)",
-      "category": "lentil",
-      "kcal": 360,
-      "protein": 20.7,
-      "carbs": 60.0,
-      "fat": 5.3,
-      "fiber": 15.0,
-      "sat_fat": 0.7,
-      "sugar": 3.0,
-      "sodium_mg": 24,
-      "potassium_mg": 776,
-      "calcium_mg": 105,
-      "iron_mg": 4.8,
-      "magnesium_mg": 115,
-      "zinc_mg": 3.4,
-      "vit_a_iu": 67,
-      "vit_c_mg": 4.0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 557,
-      "leucine_g": 1.45,
-      "selenium_ug": 8,
-      "glycemic_index": 33,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 C-7",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "legume",
-      "brand": null,
-      "tags": [
-        "raw",
-        "legume",
-        "whole",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 katori raw (100g)",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "kabuli-chana-raw",
-      "name": "Kabuli Chana / White Chickpea (raw)",
-      "category": "lentil",
-      "kcal": 364,
-      "protein": 19.3,
-      "carbs": 61.0,
-      "fat": 6.0,
-      "fiber": 17.4,
-      "sat_fat": 0.6,
-      "sugar": 10.7,
-      "sodium_mg": 24,
-      "potassium_mg": 875,
-      "calcium_mg": 105,
-      "iron_mg": 6.2,
-      "magnesium_mg": 115,
-      "zinc_mg": 3.4,
-      "vit_a_iu": 67,
-      "vit_c_mg": 4.0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 557,
-      "leucine_g": 1.4,
-      "selenium_ug": 8,
-      "glycemic_index": 28,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 173756",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "legume",
-      "brand": null,
-      "tags": [
-        "raw",
-        "legume",
-        "whole",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 katori raw (100g)",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "rajma-raw",
-      "name": "Rajma / Kidney Bean (dry, raw)",
-      "category": "lentil",
-      "kcal": 333,
-      "protein": 22.9,
-      "carbs": 60.0,
-      "fat": 1.3,
-      "fiber": 15.2,
-      "sat_fat": 0.2,
-      "sugar": 2.1,
-      "sodium_mg": 12,
-      "potassium_mg": 1359,
-      "calcium_mg": 143,
-      "iron_mg": 8.2,
-      "magnesium_mg": 140,
-      "zinc_mg": 2.8,
-      "vit_a_iu": 0,
-      "vit_c_mg": 4.5,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 394,
-      "leucine_g": 1.93,
-      "selenium_ug": 3,
-      "glycemic_index": 25,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 175249",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "legume",
-      "brand": null,
-      "tags": [
-        "raw",
-        "legume",
-        "whole",
-        "low_gi",
-        "high_iron"
-      ],
-      "portions": [
-        {
-          "n": "1 katori raw (100g)",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "lobia-raw",
-      "name": "Lobia / Black-eyed Peas (dry, raw)",
-      "category": "lentil",
-      "kcal": 336,
-      "protein": 23.5,
-      "carbs": 60.0,
-      "fat": 1.3,
-      "fiber": 10.7,
-      "sat_fat": 0.5,
-      "sugar": 6.9,
-      "sodium_mg": 16,
-      "potassium_mg": 1112,
-      "calcium_mg": 110,
-      "iron_mg": 8.3,
-      "magnesium_mg": 184,
-      "zinc_mg": 3.4,
-      "vit_a_iu": 50,
-      "vit_c_mg": 1.5,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 633,
-      "leucine_g": 1.8,
-      "selenium_ug": 9,
-      "glycemic_index": 33,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 173757",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "legume",
-      "brand": null,
-      "tags": [
-        "raw",
-        "legume",
-        "whole",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 katori raw (100g)",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "matar-yellow-split-raw",
-      "name": "Matar Yellow Split (raw)",
-      "category": "lentil",
-      "kcal": 341,
-      "protein": 24.6,
-      "carbs": 60.4,
-      "fat": 1.2,
-      "fiber": 8.3,
-      "sat_fat": 0.2,
-      "sugar": 8.0,
-      "sodium_mg": 15,
-      "potassium_mg": 981,
-      "calcium_mg": 55,
-      "iron_mg": 4.4,
-      "magnesium_mg": 115,
-      "zinc_mg": 3.0,
-      "vit_a_iu": 149,
-      "vit_c_mg": 1.8,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 274,
-      "leucine_g": 1.79,
-      "selenium_ug": 1.6,
-      "glycemic_index": 22,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 172421",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "legume",
-      "brand": null,
-      "tags": [
-        "raw",
-        "legume",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 katori raw (100g)",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "atta-whole-wheat",
-      "name": "Atta (Whole Wheat Chakki Flour)",
-      "category": "grain",
-      "kcal": 341,
-      "protein": 12.1,
-      "carbs": 69.4,
-      "fat": 1.7,
-      "fiber": 11.2,
-      "sat_fat": 0.3,
-      "sugar": 0.4,
-      "sodium_mg": 2,
-      "potassium_mg": 363,
-      "calcium_mg": 34,
-      "iron_mg": 4.9,
-      "magnesium_mg": 138,
-      "zinc_mg": 2.9,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 44,
-      "leucine_g": 0.81,
-      "selenium_ug": 71,
-      "glycemic_index": 50,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 A-2",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "staple",
-        "raw",
-        "grain",
-        "whole_grain"
-      ],
-      "portions": [
-        {
-          "n": "1 cup (130g)",
-          "g": 130
-        },
-        {
-          "n": "1 tbsp (8g)",
-          "g": 8
-        }
-      ]
-    },
-    {
-      "id": "maida-refined-flour",
-      "name": "Maida (Refined Wheat Flour)",
-      "category": "grain",
-      "kcal": 348,
-      "protein": 11.0,
-      "carbs": 72.5,
-      "fat": 0.9,
-      "fiber": 2.7,
-      "sat_fat": 0.2,
-      "sugar": 0.3,
-      "sodium_mg": 2,
-      "potassium_mg": 107,
-      "calcium_mg": 15,
-      "iron_mg": 1.2,
-      "magnesium_mg": 22,
-      "zinc_mg": 0.7,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 26,
-      "leucine_g": 0.74,
-      "selenium_ug": 33,
-      "glycemic_index": 71,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 A-3",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "raw",
-        "grain",
-        "refined",
-        "high_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup (125g)",
-          "g": 125
-        }
-      ]
-    },
-    {
-      "id": "besan-gram-flour",
-      "name": "Besan (Gram Flour)",
-      "category": "lentil",
-      "kcal": 372,
-      "protein": 20.6,
-      "carbs": 57.8,
-      "fat": 5.4,
-      "fiber": 10.8,
-      "sat_fat": 0.6,
-      "sugar": 10.3,
-      "sodium_mg": 64,
-      "potassium_mg": 846,
-      "calcium_mg": 45,
-      "iron_mg": 4.9,
-      "magnesium_mg": 166,
-      "zinc_mg": 2.8,
-      "vit_a_iu": 40,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 437,
-      "leucine_g": 1.45,
-      "selenium_ug": 5,
-      "glycemic_index": 22,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 C-5b",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "legume",
-      "brand": null,
-      "tags": [
-        "staple",
-        "raw",
-        "legume",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup (92g)",
-          "g": 92
-        },
-        {
-          "n": "1 tbsp (8g)",
-          "g": 8
-        }
-      ]
-    },
-    {
-      "id": "suji-semolina",
-      "name": "Suji / Rava (Semolina)",
-      "category": "grain",
-      "kcal": 360,
-      "protein": 12.7,
-      "carbs": 72.8,
-      "fat": 1.1,
-      "fiber": 3.9,
-      "sat_fat": 0.2,
-      "sugar": 0.0,
-      "sodium_mg": 1,
-      "potassium_mg": 186,
-      "calcium_mg": 17,
-      "iron_mg": 1.2,
-      "magnesium_mg": 47,
-      "zinc_mg": 1.1,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 72,
-      "leucine_g": 0.85,
-      "selenium_ug": 83,
-      "glycemic_index": 66,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 168913",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "raw",
-        "grain"
-      ],
-      "portions": [
-        {
-          "n": "1 cup (167g)",
-          "g": 167
-        }
-      ]
-    },
-    {
-      "id": "poha-flattened-rice",
-      "name": "Poha (Flattened Rice, raw)",
-      "category": "grain",
-      "kcal": 346,
-      "protein": 6.6,
-      "carbs": 77.3,
-      "fat": 1.2,
-      "fiber": 2.2,
-      "sat_fat": 0.2,
-      "sugar": 0.1,
-      "sodium_mg": 5,
-      "potassium_mg": 90,
-      "calcium_mg": 11,
-      "iron_mg": 20.0,
-      "magnesium_mg": 30,
-      "zinc_mg": 1.5,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 8,
-      "leucine_g": 0.55,
-      "selenium_ug": 12,
-      "glycemic_index": 75,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 B-15 poha",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "raw",
-        "grain",
-        "high_iron",
-        "high_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup raw (50g)",
-          "g": 50
-        }
-      ]
-    },
-    {
-      "id": "sabudana-tapioca-pearls",
-      "name": "Sabudana (Tapioca Pearls)",
-      "category": "grain",
-      "kcal": 358,
-      "protein": 0.2,
-      "carbs": 88.7,
-      "fat": 0.1,
-      "fiber": 0.9,
-      "sat_fat": 0.0,
-      "sugar": 3.4,
-      "sodium_mg": 1,
-      "potassium_mg": 11,
-      "calcium_mg": 20,
-      "iron_mg": 1.6,
-      "magnesium_mg": 1,
-      "zinc_mg": 0.1,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 4,
-      "leucine_g": 0.01,
-      "selenium_ug": 0.7,
-      "glycemic_index": 70,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 169717",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "raw",
-        "fasting",
-        "high_gi",
-        "low_protein"
-      ],
-      "portions": [
-        {
-          "n": "1 cup raw (150g)",
-          "g": 150
-        }
-      ]
-    },
-    {
-      "id": "daliya-broken-wheat",
-      "name": "Daliya (Broken Wheat / Bulgur, raw)",
-      "category": "grain",
-      "kcal": 342,
-      "protein": 11.4,
-      "carbs": 68.0,
-      "fat": 1.5,
-      "fiber": 12.5,
-      "sat_fat": 0.3,
-      "sugar": 0.4,
-      "sodium_mg": 17,
-      "potassium_mg": 410,
-      "calcium_mg": 35,
-      "iron_mg": 3.7,
-      "magnesium_mg": 164,
-      "zinc_mg": 1.9,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 27,
-      "leucine_g": 0.76,
-      "selenium_ug": 50,
-      "glycemic_index": 45,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 168881",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "raw",
-        "grain",
-        "whole_grain",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup raw (140g)",
-          "g": 140
-        }
-      ]
-    },
-    {
-      "id": "oats-rolled-raw",
-      "name": "Oats (Rolled, raw)",
-      "category": "grain",
-      "kcal": 379,
-      "protein": 13.2,
-      "carbs": 67.7,
-      "fat": 6.5,
-      "fiber": 10.1,
-      "sat_fat": 1.1,
-      "sugar": 0.99,
-      "sodium_mg": 6,
-      "potassium_mg": 362,
-      "calcium_mg": 52,
-      "iron_mg": 4.7,
-      "magnesium_mg": 138,
-      "zinc_mg": 4.0,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 32,
-      "leucine_g": 0.98,
-      "selenium_ug": 28,
-      "glycemic_index": 55,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 173904",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "raw",
-        "grain",
-        "whole_grain",
-        "high_fiber",
-        "staple"
-      ],
-      "portions": [
-        {
-          "n": "1 cup dry (80g)",
-          "g": 80
-        },
-        {
-          "n": "1/2 cup dry (40g)",
-          "g": 40
-        }
-      ]
-    },
-    {
-      "id": "quinoa-raw",
-      "name": "Quinoa (raw)",
-      "category": "grain",
-      "kcal": 368,
-      "protein": 14.1,
-      "carbs": 64.2,
-      "fat": 6.1,
-      "fiber": 7.0,
-      "sat_fat": 0.7,
-      "sugar": 0.0,
-      "sodium_mg": 5,
-      "potassium_mg": 563,
-      "calcium_mg": 47,
-      "iron_mg": 4.6,
-      "magnesium_mg": 197,
-      "zinc_mg": 3.1,
-      "vit_a_iu": 14,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 184,
-      "leucine_g": 0.84,
-      "selenium_ug": 8.5,
-      "glycemic_index": 53,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 168874",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "complete",
-      "brand": null,
-      "tags": [
-        "raw",
-        "grain",
-        "complete_protein",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup raw (170g)",
-          "g": 170
-        }
-      ]
-    },
-    {
-      "id": "ragi-flour",
-      "name": "Ragi / Finger Millet Flour",
-      "category": "grain",
-      "kcal": 320,
-      "protein": 7.3,
-      "carbs": 72.6,
-      "fat": 1.3,
-      "fiber": 11.5,
-      "sat_fat": 0.2,
-      "sugar": 0.6,
-      "sodium_mg": 11,
-      "potassium_mg": 408,
-      "calcium_mg": 344,
-      "iron_mg": 3.9,
-      "magnesium_mg": 137,
-      "zinc_mg": 2.3,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 18,
-      "leucine_g": 0.51,
-      "selenium_ug": 2,
-      "glycemic_index": 55,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 A-7",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "raw",
-        "grain",
-        "high_calcium",
-        "whole_grain"
-      ],
-      "portions": [
-        {
-          "n": "1 cup (130g)",
-          "g": 130
-        }
-      ]
-    },
-    {
-      "id": "bajra-flour",
-      "name": "Bajra / Pearl Millet Flour",
-      "category": "grain",
-      "kcal": 348,
-      "protein": 11.0,
-      "carbs": 67.5,
-      "fat": 5.0,
-      "fiber": 11.5,
-      "sat_fat": 0.7,
-      "sugar": 0.0,
-      "sodium_mg": 11,
-      "potassium_mg": 422,
-      "calcium_mg": 28,
-      "iron_mg": 8.0,
-      "magnesium_mg": 137,
-      "zinc_mg": 2.8,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 42,
-      "leucine_g": 0.85,
-      "selenium_ug": 2.7,
-      "glycemic_index": 55,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 A-5",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "raw",
-        "grain",
-        "whole_grain",
-        "high_iron"
-      ],
-      "portions": [
-        {
-          "n": "1 cup (130g)",
-          "g": 130
-        }
-      ]
-    },
-    {
-      "id": "jowar-flour",
-      "name": "Jowar / Sorghum Flour",
-      "category": "grain",
-      "kcal": 334,
-      "protein": 9.9,
-      "carbs": 72.0,
-      "fat": 1.7,
-      "fiber": 9.7,
-      "sat_fat": 0.2,
-      "sugar": 1.3,
-      "sodium_mg": 8,
-      "potassium_mg": 328,
-      "calcium_mg": 28,
-      "iron_mg": 3.9,
-      "magnesium_mg": 165,
-      "zinc_mg": 1.7,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 39,
-      "leucine_g": 1.3,
-      "selenium_ug": 12,
-      "glycemic_index": 70,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 A-4",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "raw",
-        "grain",
-        "whole_grain",
-        "gluten_free"
-      ],
-      "portions": [
-        {
-          "n": "1 cup (130g)",
-          "g": 130
-        }
-      ]
-    },
-    {
-      "id": "makki-ka-atta",
-      "name": "Makki ka Atta (Maize Flour)",
-      "category": "grain",
-      "kcal": 342,
-      "protein": 7.0,
-      "carbs": 73.4,
-      "fat": 3.7,
-      "fiber": 7.3,
-      "sat_fat": 0.5,
-      "sugar": 0.6,
-      "sodium_mg": 5,
-      "potassium_mg": 287,
-      "calcium_mg": 7,
-      "iron_mg": 2.4,
-      "magnesium_mg": 127,
-      "zinc_mg": 1.7,
-      "vit_a_iu": 214,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 25,
-      "leucine_g": 0.85,
-      "selenium_ug": 15,
-      "glycemic_index": 65,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 169994",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "raw",
-        "grain",
-        "whole_grain",
-        "gluten_free"
-      ],
-      "portions": [
-        {
-          "n": "1 cup (130g)",
-          "g": 130
-        }
-      ]
-    },
-    {
-      "id": "amaranth-rajgira-raw",
-      "name": "Amaranth / Rajgira (raw)",
-      "category": "grain",
-      "kcal": 371,
-      "protein": 13.6,
-      "carbs": 65.3,
-      "fat": 7.0,
-      "fiber": 6.7,
-      "sat_fat": 1.5,
-      "sugar": 1.7,
-      "sodium_mg": 4,
-      "potassium_mg": 508,
-      "calcium_mg": 159,
-      "iron_mg": 7.6,
-      "magnesium_mg": 248,
-      "zinc_mg": 2.9,
-      "vit_a_iu": 2,
-      "vit_c_mg": 4.2,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 82,
-      "leucine_g": 0.88,
-      "selenium_ug": 18.7,
-      "glycemic_index": 35,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 170682",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "complete",
-      "brand": null,
-      "tags": [
-        "raw",
-        "grain",
-        "gluten_free",
-        "fasting",
-        "complete_protein"
-      ],
-      "portions": [
-        {
-          "n": "1 cup (193g)",
-          "g": 193
-        }
-      ]
-    },
-    {
-      "id": "buckwheat-kuttu-raw",
-      "name": "Kuttu / Buckwheat (raw)",
-      "category": "grain",
-      "kcal": 343,
-      "protein": 13.3,
-      "carbs": 71.5,
-      "fat": 3.4,
-      "fiber": 10.0,
-      "sat_fat": 0.7,
-      "sugar": 0.0,
-      "sodium_mg": 1,
-      "potassium_mg": 460,
-      "calcium_mg": 18,
-      "iron_mg": 2.2,
-      "magnesium_mg": 231,
-      "zinc_mg": 2.4,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 30,
-      "leucine_g": 0.83,
-      "selenium_ug": 8.3,
-      "glycemic_index": 45,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 170286",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "raw",
-        "grain",
-        "fasting",
-        "gluten_free",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup (170g)",
-          "g": 170
-        }
-      ]
-    },
-    {
       "id": "paneer-full-fat",
       "name": "Paneer (Full Fat)",
       "category": "dairy",
@@ -3365,109 +1827,6 @@
       ]
     },
     {
-      "id": "ghee",
-      "name": "Ghee (clarified butter)",
-      "category": "fat",
-      "kcal": 900,
-      "protein": 0,
-      "carbs": 0,
-      "fat": 100,
-      "fiber": 0,
-      "sat_fat": 65.0,
-      "sugar": 0,
-      "sodium_mg": 0,
-      "potassium_mg": 0,
-      "calcium_mg": 0,
-      "iron_mg": 0,
-      "magnesium_mg": 0,
-      "zinc_mg": 0,
-      "vit_a_iu": 3060,
-      "vit_c_mg": 0,
-      "vit_d_iu": 80,
-      "vit_b12_ug": 0,
-      "folate_ug": 0,
-      "leucine_g": 0,
-      "selenium_ug": 0,
-      "glycemic_index": null,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 G-1 ghee",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "fat",
-        "staple",
-        "high_sat_fat",
-        "cooking_fat"
-      ],
-      "portions": [
-        {
-          "n": "1 tsp (4.5g)",
-          "g": 4.5
-        },
-        {
-          "n": "1 tbsp (14g)",
-          "g": 14
-        }
-      ]
-    },
-    {
-      "id": "butter-unsalted",
-      "name": "Butter (unsalted)",
-      "category": "fat",
-      "kcal": 717,
-      "protein": 0.85,
-      "carbs": 0.06,
-      "fat": 81.1,
-      "fiber": 0,
-      "sat_fat": 51.4,
-      "sugar": 0.06,
-      "sodium_mg": 11,
-      "potassium_mg": 24,
-      "calcium_mg": 24,
-      "iron_mg": 0.02,
-      "magnesium_mg": 2,
-      "zinc_mg": 0.09,
-      "vit_a_iu": 2499,
-      "vit_c_mg": 0,
-      "vit_d_iu": 60,
-      "vit_b12_ug": 0.17,
-      "folate_ug": 3,
-      "leucine_g": 0.08,
-      "selenium_ug": 1.0,
-      "glycemic_index": null,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 173410",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "dairy",
-      "brand": null,
-      "tags": [
-        "fat",
-        "dairy",
-        "high_sat_fat"
-      ],
-      "portions": [
-        {
-          "n": "1 tbsp (14g)",
-          "g": 14
-        }
-      ]
-    },
-    {
       "id": "milk-whole-3.25",
       "name": "Whole Milk (3.25%)",
       "category": "dairy",
@@ -3618,1035 +1977,6 @@
         {
           "n": "1 glass (245g)",
           "g": 245
-        }
-      ]
-    },
-    {
-      "id": "palak-raw",
-      "name": "Palak (Spinach, raw)",
-      "category": "vegetable",
-      "kcal": 23,
-      "protein": 2.9,
-      "carbs": 3.6,
-      "fat": 0.4,
-      "fiber": 2.2,
-      "sat_fat": 0.06,
-      "sugar": 0.4,
-      "sodium_mg": 79,
-      "potassium_mg": 558,
-      "calcium_mg": 99,
-      "iron_mg": 2.7,
-      "magnesium_mg": 79,
-      "zinc_mg": 0.5,
-      "vit_a_iu": 9377,
-      "vit_c_mg": 28.1,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 194,
-      "leucine_g": 0.22,
-      "selenium_ug": 1,
-      "glycemic_index": 15,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 168462",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "leafy",
-        "iron",
-        "folate"
-      ],
-      "portions": [
-        {
-          "n": "1 cup (30g)",
-          "g": 30
-        },
-        {
-          "n": "1 katori chopped (100g)",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "methi-leaves",
-      "name": "Methi (Fenugreek Leaves, raw)",
-      "category": "vegetable",
-      "kcal": 49,
-      "protein": 4.4,
-      "carbs": 6.0,
-      "fat": 0.9,
-      "fiber": 1.1,
-      "sat_fat": 0.2,
-      "sugar": 0.0,
-      "sodium_mg": 76,
-      "potassium_mg": 770,
-      "calcium_mg": 395,
-      "iron_mg": 16.5,
-      "magnesium_mg": 67,
-      "zinc_mg": 1.1,
-      "vit_a_iu": 5900,
-      "vit_c_mg": 52,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 57,
-      "leucine_g": 0.27,
-      "selenium_ug": 1,
-      "glycemic_index": 15,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 E-19 methi",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "leafy",
-        "high_iron",
-        "bitter"
-      ],
-      "portions": [
-        {
-          "n": "1 cup chopped (30g)",
-          "g": 30
-        }
-      ]
-    },
-    {
-      "id": "gobi-cauliflower-raw",
-      "name": "Gobi (Cauliflower, raw)",
-      "category": "vegetable",
-      "kcal": 25,
-      "protein": 1.9,
-      "carbs": 5.0,
-      "fat": 0.3,
-      "fiber": 2.0,
-      "sat_fat": 0.13,
-      "sugar": 1.9,
-      "sodium_mg": 30,
-      "potassium_mg": 299,
-      "calcium_mg": 22,
-      "iron_mg": 0.4,
-      "magnesium_mg": 15,
-      "zinc_mg": 0.27,
-      "vit_a_iu": 0,
-      "vit_c_mg": 48.2,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 57,
-      "leucine_g": 0.1,
-      "selenium_ug": 0.6,
-      "glycemic_index": 15,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 169986",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "cruciferous",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup florets (100g)",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "baingan-eggplant-raw",
-      "name": "Baingan (Eggplant, raw)",
-      "category": "vegetable",
-      "kcal": 25,
-      "protein": 1.0,
-      "carbs": 5.9,
-      "fat": 0.2,
-      "fiber": 3.0,
-      "sat_fat": 0.03,
-      "sugar": 3.5,
-      "sodium_mg": 2,
-      "potassium_mg": 229,
-      "calcium_mg": 9,
-      "iron_mg": 0.23,
-      "magnesium_mg": 14,
-      "zinc_mg": 0.16,
-      "vit_a_iu": 23,
-      "vit_c_mg": 2.2,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 22,
-      "leucine_g": 0.05,
-      "selenium_ug": 0.3,
-      "glycemic_index": 15,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 169228",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup cubes (82g)",
-          "g": 82
-        },
-        {
-          "n": "1 medium (300g)",
-          "g": 300
-        }
-      ]
-    },
-    {
-      "id": "bhindi-okra-raw",
-      "name": "Bhindi (Okra, raw)",
-      "category": "vegetable",
-      "kcal": 33,
-      "protein": 1.9,
-      "carbs": 7.5,
-      "fat": 0.2,
-      "fiber": 3.2,
-      "sat_fat": 0.03,
-      "sugar": 1.5,
-      "sodium_mg": 7,
-      "potassium_mg": 299,
-      "calcium_mg": 82,
-      "iron_mg": 0.6,
-      "magnesium_mg": 57,
-      "zinc_mg": 0.6,
-      "vit_a_iu": 716,
-      "vit_c_mg": 23.0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 60,
-      "leucine_g": 0.13,
-      "selenium_ug": 0.7,
-      "glycemic_index": 20,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 169260",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "high_fiber",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup sliced (100g)",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "lauki-bottle-gourd-raw",
-      "name": "Lauki (Bottle Gourd, raw)",
-      "category": "vegetable",
-      "kcal": 14,
-      "protein": 0.6,
-      "carbs": 3.4,
-      "fat": 0.0,
-      "fiber": 0.5,
-      "sat_fat": 0,
-      "sugar": 1.5,
-      "sodium_mg": 2,
-      "potassium_mg": 150,
-      "calcium_mg": 26,
-      "iron_mg": 0.2,
-      "magnesium_mg": 11,
-      "zinc_mg": 0.7,
-      "vit_a_iu": 0,
-      "vit_c_mg": 10.1,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 6,
-      "leucine_g": 0.01,
-      "selenium_ug": 0.2,
-      "glycemic_index": 15,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 168410",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "hydrating",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup cubed (116g)",
-          "g": 116
-        }
-      ]
-    },
-    {
-      "id": "tinda-apple-gourd-raw",
-      "name": "Tinda (Apple Gourd, raw)",
-      "category": "vegetable",
-      "kcal": 21,
-      "protein": 0.7,
-      "carbs": 4.3,
-      "fat": 0.2,
-      "fiber": 1.0,
-      "sat_fat": 0.02,
-      "sugar": 1.8,
-      "sodium_mg": 2,
-      "potassium_mg": 140,
-      "calcium_mg": 15,
-      "iron_mg": 0.2,
-      "magnesium_mg": 9,
-      "zinc_mg": 0.2,
-      "vit_a_iu": 0,
-      "vit_c_mg": 5.0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 8,
-      "leucine_g": 0.04,
-      "selenium_ug": 0.2,
-      "glycemic_index": 15,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "IFCT 2017 E-tinda estimate",
-        "confidence": "medium"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup cubed (100g)",
-          "g": 100
-        }
-      ]
-    },
-    {
-      "id": "karela-bitter-gourd-raw",
-      "name": "Karela (Bitter Gourd, raw)",
-      "category": "vegetable",
-      "kcal": 17,
-      "protein": 1.0,
-      "carbs": 3.7,
-      "fat": 0.2,
-      "fiber": 2.8,
-      "sat_fat": 0.01,
-      "sugar": 1.95,
-      "sodium_mg": 5,
-      "potassium_mg": 296,
-      "calcium_mg": 19,
-      "iron_mg": 0.4,
-      "magnesium_mg": 17,
-      "zinc_mg": 0.8,
-      "vit_a_iu": 471,
-      "vit_c_mg": 84.0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 72,
-      "leucine_g": 0.06,
-      "selenium_ug": 0.2,
-      "glycemic_index": 15,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 169212",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "bitter",
-        "low_gi",
-        "high_vit_c"
-      ],
-      "portions": [
-        {
-          "n": "1 cup sliced (94g)",
-          "g": 94
-        }
-      ]
-    },
-    {
-      "id": "tomato-raw",
-      "name": "Tomato (raw)",
-      "category": "vegetable",
-      "kcal": 18,
-      "protein": 0.9,
-      "carbs": 3.9,
-      "fat": 0.2,
-      "fiber": 1.2,
-      "sat_fat": 0.03,
-      "sugar": 2.6,
-      "sodium_mg": 5,
-      "potassium_mg": 237,
-      "calcium_mg": 10,
-      "iron_mg": 0.27,
-      "magnesium_mg": 11,
-      "zinc_mg": 0.17,
-      "vit_a_iu": 833,
-      "vit_c_mg": 13.7,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 15,
-      "leucine_g": 0.03,
-      "selenium_ug": 0,
-      "glycemic_index": 15,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 170457",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "staple",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 medium (123g)",
-          "g": 123
-        },
-        {
-          "n": "1 cup chopped (180g)",
-          "g": 180
-        }
-      ]
-    },
-    {
-      "id": "onion-raw",
-      "name": "Onion (raw)",
-      "category": "vegetable",
-      "kcal": 40,
-      "protein": 1.1,
-      "carbs": 9.3,
-      "fat": 0.1,
-      "fiber": 1.7,
-      "sat_fat": 0.04,
-      "sugar": 4.2,
-      "sodium_mg": 4,
-      "potassium_mg": 146,
-      "calcium_mg": 23,
-      "iron_mg": 0.21,
-      "magnesium_mg": 10,
-      "zinc_mg": 0.17,
-      "vit_a_iu": 2,
-      "vit_c_mg": 7.4,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 19,
-      "leucine_g": 0.03,
-      "selenium_ug": 0.5,
-      "glycemic_index": 10,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 170000",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "staple",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 medium (110g)",
-          "g": 110
-        },
-        {
-          "n": "1 cup chopped (160g)",
-          "g": 160
-        }
-      ]
-    },
-    {
-      "id": "potato-raw",
-      "name": "Potato (raw, with skin)",
-      "category": "vegetable",
-      "kcal": 77,
-      "protein": 2.0,
-      "carbs": 17.5,
-      "fat": 0.1,
-      "fiber": 2.1,
-      "sat_fat": 0.03,
-      "sugar": 0.8,
-      "sodium_mg": 6,
-      "potassium_mg": 425,
-      "calcium_mg": 12,
-      "iron_mg": 0.81,
-      "magnesium_mg": 23,
-      "zinc_mg": 0.3,
-      "vit_a_iu": 2,
-      "vit_c_mg": 19.7,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 15,
-      "leucine_g": 0.1,
-      "selenium_ug": 0.4,
-      "glycemic_index": 70,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 170026",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "starchy",
-        "high_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 medium (213g)",
-          "g": 213
-        }
-      ]
-    },
-    {
-      "id": "sweet-potato-raw",
-      "name": "Sweet Potato (raw)",
-      "category": "vegetable",
-      "kcal": 86,
-      "protein": 1.6,
-      "carbs": 20.1,
-      "fat": 0.1,
-      "fiber": 3.0,
-      "sat_fat": 0.02,
-      "sugar": 4.2,
-      "sodium_mg": 55,
-      "potassium_mg": 337,
-      "calcium_mg": 30,
-      "iron_mg": 0.6,
-      "magnesium_mg": 25,
-      "zinc_mg": 0.3,
-      "vit_a_iu": 14187,
-      "vit_c_mg": 2.4,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 11,
-      "leucine_g": 0.09,
-      "selenium_ug": 0.6,
-      "glycemic_index": 54,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 168482",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "starchy",
-        "high_vit_a",
-        "medium_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 medium (130g)",
-          "g": 130
-        }
-      ]
-    },
-    {
-      "id": "cucumber-raw",
-      "name": "Cucumber (raw, with peel)",
-      "category": "vegetable",
-      "kcal": 16,
-      "protein": 0.7,
-      "carbs": 3.6,
-      "fat": 0.1,
-      "fiber": 0.5,
-      "sat_fat": 0.04,
-      "sugar": 1.7,
-      "sodium_mg": 2,
-      "potassium_mg": 147,
-      "calcium_mg": 16,
-      "iron_mg": 0.28,
-      "magnesium_mg": 13,
-      "zinc_mg": 0.2,
-      "vit_a_iu": 105,
-      "vit_c_mg": 2.8,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 7,
-      "leucine_g": 0.02,
-      "selenium_ug": 0.3,
-      "glycemic_index": 15,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 168409",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "hydrating",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup sliced (104g)",
-          "g": 104
-        },
-        {
-          "n": "1 medium (300g)",
-          "g": 300
-        }
-      ]
-    },
-    {
-      "id": "carrot-raw",
-      "name": "Carrot (raw)",
-      "category": "vegetable",
-      "kcal": 41,
-      "protein": 0.9,
-      "carbs": 9.6,
-      "fat": 0.2,
-      "fiber": 2.8,
-      "sat_fat": 0.04,
-      "sugar": 4.7,
-      "sodium_mg": 69,
-      "potassium_mg": 320,
-      "calcium_mg": 33,
-      "iron_mg": 0.3,
-      "magnesium_mg": 12,
-      "zinc_mg": 0.24,
-      "vit_a_iu": 16706,
-      "vit_c_mg": 5.9,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 19,
-      "leucine_g": 0.05,
-      "selenium_ug": 0.1,
-      "glycemic_index": 35,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 170393",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "high_vit_a",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 medium (61g)",
-          "g": 61
-        },
-        {
-          "n": "1 cup chopped (128g)",
-          "g": 128
-        }
-      ]
-    },
-    {
-      "id": "beetroot-raw",
-      "name": "Beetroot (raw)",
-      "category": "vegetable",
-      "kcal": 43,
-      "protein": 1.6,
-      "carbs": 9.6,
-      "fat": 0.2,
-      "fiber": 2.8,
-      "sat_fat": 0.03,
-      "sugar": 6.8,
-      "sodium_mg": 78,
-      "potassium_mg": 325,
-      "calcium_mg": 16,
-      "iron_mg": 0.8,
-      "magnesium_mg": 23,
-      "zinc_mg": 0.35,
-      "vit_a_iu": 33,
-      "vit_c_mg": 4.9,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 109,
-      "leucine_g": 0.07,
-      "selenium_ug": 0.7,
-      "glycemic_index": 64,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 169145",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "nitric_oxide",
-        "medium_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup chopped (136g)",
-          "g": 136
-        }
-      ]
-    },
-    {
-      "id": "capsicum-bell-pepper-raw",
-      "name": "Capsicum / Bell Pepper (green, raw)",
-      "category": "vegetable",
-      "kcal": 20,
-      "protein": 0.9,
-      "carbs": 4.6,
-      "fat": 0.2,
-      "fiber": 1.7,
-      "sat_fat": 0.06,
-      "sugar": 2.4,
-      "sodium_mg": 3,
-      "potassium_mg": 175,
-      "calcium_mg": 10,
-      "iron_mg": 0.34,
-      "magnesium_mg": 10,
-      "zinc_mg": 0.13,
-      "vit_a_iu": 370,
-      "vit_c_mg": 80.4,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 10,
-      "leucine_g": 0.03,
-      "selenium_ug": 0,
-      "glycemic_index": 15,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 170427",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "high_vit_c",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 medium (119g)",
-          "g": 119
-        }
-      ]
-    },
-    {
-      "id": "cabbage-raw",
-      "name": "Cabbage (raw)",
-      "category": "vegetable",
-      "kcal": 25,
-      "protein": 1.3,
-      "carbs": 5.8,
-      "fat": 0.1,
-      "fiber": 2.5,
-      "sat_fat": 0.03,
-      "sugar": 3.2,
-      "sodium_mg": 18,
-      "potassium_mg": 170,
-      "calcium_mg": 40,
-      "iron_mg": 0.47,
-      "magnesium_mg": 12,
-      "zinc_mg": 0.18,
-      "vit_a_iu": 98,
-      "vit_c_mg": 36.6,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 43,
-      "leucine_g": 0.04,
-      "selenium_ug": 0.3,
-      "glycemic_index": 15,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 169975",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "cruciferous",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup chopped (89g)",
-          "g": 89
-        }
-      ]
-    },
-    {
-      "id": "broccoli-raw",
-      "name": "Broccoli (raw)",
-      "category": "vegetable",
-      "kcal": 34,
-      "protein": 2.8,
-      "carbs": 6.6,
-      "fat": 0.4,
-      "fiber": 2.6,
-      "sat_fat": 0.04,
-      "sugar": 1.7,
-      "sodium_mg": 33,
-      "potassium_mg": 316,
-      "calcium_mg": 47,
-      "iron_mg": 0.73,
-      "magnesium_mg": 21,
-      "zinc_mg": 0.41,
-      "vit_a_iu": 623,
-      "vit_c_mg": 89.2,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 63,
-      "leucine_g": 0.13,
-      "selenium_ug": 2.5,
-      "glycemic_index": 15,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 170379",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "cruciferous",
-        "high_vit_c",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup chopped (91g)",
-          "g": 91
-        }
-      ]
-    },
-    {
-      "id": "mushroom-button-raw",
-      "name": "Mushroom (white button, raw)",
-      "category": "vegetable",
-      "kcal": 22,
-      "protein": 3.1,
-      "carbs": 3.3,
-      "fat": 0.3,
-      "fiber": 1.0,
-      "sat_fat": 0.05,
-      "sugar": 1.98,
-      "sodium_mg": 5,
-      "potassium_mg": 318,
-      "calcium_mg": 3,
-      "iron_mg": 0.5,
-      "magnesium_mg": 9,
-      "zinc_mg": 0.52,
-      "vit_a_iu": 0,
-      "vit_c_mg": 2.1,
-      "vit_d_iu": 7,
-      "vit_b12_ug": 0.04,
-      "folate_ug": 17,
-      "leucine_g": 0.13,
-      "selenium_ug": 9.3,
-      "glycemic_index": 15,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 169251",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "unknown",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "high_selenium",
-        "low_gi",
-        "umami"
-      ],
-      "portions": [
-        {
-          "n": "1 cup sliced (70g)",
-          "g": 70
-        }
-      ]
-    },
-    {
-      "id": "green-peas-fresh",
-      "name": "Green Peas (fresh, raw)",
-      "category": "vegetable",
-      "kcal": 81,
-      "protein": 5.4,
-      "carbs": 14.5,
-      "fat": 0.4,
-      "fiber": 5.7,
-      "sat_fat": 0.07,
-      "sugar": 5.7,
-      "sodium_mg": 5,
-      "potassium_mg": 244,
-      "calcium_mg": 25,
-      "iron_mg": 1.5,
-      "magnesium_mg": 33,
-      "zinc_mg": 1.24,
-      "vit_a_iu": 765,
-      "vit_c_mg": 40.0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 65,
-      "leucine_g": 0.32,
-      "selenium_ug": 1.8,
-      "glycemic_index": 22,
-      "source": {
-        "type": "USDA_FDC",
-        "citation": "USDA FDC 170419",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "raw",
-        "oil_added": false,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "legume",
-      "brand": null,
-      "tags": [
-        "raw",
-        "vegetable",
-        "legume",
-        "high_protein_for_veg",
-        "low_gi"
-      ],
-      "portions": [
-        {
-          "n": "1 cup (145g)",
-          "g": 145
         }
       ]
     },
@@ -7063,6 +4393,4436 @@
         "confidence": "low",
         "note": "Estimated based on standard weights for a Tim Hortons everything bagel (approx 95g), a regular slice of cheddar cheese (approx 25g), and a regular portion of Philadelphia herb & garlic cream cheese (approx 35g)."
       }
+    },
+    {
+      "id": "samosa-aloo",
+      "name": "Samosa (Aloo, fried)",
+      "category": "prepared",
+      "kcal": 262,
+      "protein": 4.5,
+      "carbs": 30,
+      "fat": 13,
+      "fiber": 2.4,
+      "sat_fat": 2.5,
+      "sugar": 1.2,
+      "sodium_mg": 420,
+      "potassium_mg": 250,
+      "calcium_mg": 18,
+      "iron_mg": 1.2,
+      "magnesium_mg": 30,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 150,
+      "vit_c_mg": 3,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 18,
+      "leucine_g": 0.34,
+      "selenium_ug": 12,
+      "glycemic_index": 55,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 aloo samosa",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_snack",
+        "fried",
+        "high_fat",
+        "street_food"
+      ],
+      "portions": [
+        {
+          "n": "1 samosa (60g)",
+          "g": 60
+        },
+        {
+          "n": "2 samosas (120g)",
+          "g": 120
+        }
+      ]
+    },
+    {
+      "id": "kachori-dal",
+      "name": "Kachori (Dal, fried)",
+      "category": "prepared",
+      "kcal": 290,
+      "protein": 6.5,
+      "carbs": 33,
+      "fat": 14,
+      "fiber": 3.5,
+      "sat_fat": 2.5,
+      "sugar": 1.5,
+      "sodium_mg": 440,
+      "potassium_mg": 260,
+      "calcium_mg": 22,
+      "iron_mg": 1.6,
+      "magnesium_mg": 30,
+      "zinc_mg": 0.6,
+      "vit_a_iu": 80,
+      "vit_c_mg": 2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 22,
+      "leucine_g": 0.5,
+      "selenium_ug": 12,
+      "glycemic_index": 58,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 dal kachori",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": null,
+      "tags": [
+        "indian_snack",
+        "fried",
+        "street_food"
+      ],
+      "portions": [
+        {
+          "n": "1 kachori (60g)",
+          "g": 60
+        }
+      ]
+    },
+    {
+      "id": "dhokla-khaman",
+      "name": "Dhokla / Khaman (steamed)",
+      "category": "prepared",
+      "kcal": 160,
+      "protein": 7.5,
+      "carbs": 22,
+      "fat": 4.0,
+      "fiber": 2.8,
+      "sat_fat": 0.5,
+      "sugar": 2.0,
+      "sodium_mg": 310,
+      "potassium_mg": 180,
+      "calcium_mg": 30,
+      "iron_mg": 1.5,
+      "magnesium_mg": 40,
+      "zinc_mg": 0.7,
+      "vit_a_iu": 40,
+      "vit_c_mg": 2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 38,
+      "leucine_g": 0.55,
+      "selenium_ug": 10,
+      "glycemic_index": 45,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 khaman dhokla",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "indian_snack",
+        "steamed",
+        "gujarati",
+        "fermented",
+        "low_fat",
+        "high_protein"
+      ],
+      "portions": [
+        {
+          "n": "1 piece (40g)",
+          "g": 40
+        },
+        {
+          "n": "1 plate (120g)",
+          "g": 120
+        }
+      ]
+    },
+    {
+      "id": "pakora-onion-besan",
+      "name": "Pakora / Bhajiya (Onion, besan fried)",
+      "category": "prepared",
+      "kcal": 330,
+      "protein": 8,
+      "carbs": 28,
+      "fat": 21,
+      "fiber": 4.0,
+      "sat_fat": 2.5,
+      "sugar": 2.0,
+      "sodium_mg": 420,
+      "potassium_mg": 280,
+      "calcium_mg": 30,
+      "iron_mg": 1.8,
+      "magnesium_mg": 35,
+      "zinc_mg": 0.8,
+      "vit_a_iu": 90,
+      "vit_c_mg": 5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 28,
+      "leucine_g": 0.58,
+      "selenium_ug": 8,
+      "glycemic_index": 52,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 onion pakora",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "indian_snack",
+        "fried",
+        "high_fat",
+        "monsoon"
+      ],
+      "portions": [
+        {
+          "n": "100g",
+          "g": 100
+        },
+        {
+          "n": "1 plate (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "vada-pav",
+      "name": "Vada Pav",
+      "category": "prepared",
+      "kcal": 285,
+      "protein": 7,
+      "carbs": 38,
+      "fat": 12,
+      "fiber": 2.8,
+      "sat_fat": 2.0,
+      "sugar": 3.0,
+      "sodium_mg": 520,
+      "potassium_mg": 260,
+      "calcium_mg": 28,
+      "iron_mg": 1.8,
+      "magnesium_mg": 30,
+      "zinc_mg": 0.7,
+      "vit_a_iu": 180,
+      "vit_c_mg": 3,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 42,
+      "leucine_g": 0.55,
+      "selenium_ug": 15,
+      "glycemic_index": 68,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 vada pav",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_snack",
+        "street_food",
+        "mumbai",
+        "fried"
+      ],
+      "portions": [
+        {
+          "n": "1 vada pav (120g)",
+          "g": 120
+        }
+      ]
+    },
+    {
+      "id": "pao-bhaji",
+      "name": "Pao Bhaji (with butter)",
+      "category": "prepared",
+      "kcal": 185,
+      "protein": 5,
+      "carbs": 21,
+      "fat": 9,
+      "fiber": 3.0,
+      "sat_fat": 3.5,
+      "sugar": 2.5,
+      "sodium_mg": 420,
+      "potassium_mg": 290,
+      "calcium_mg": 32,
+      "iron_mg": 1.5,
+      "magnesium_mg": 28,
+      "zinc_mg": 0.6,
+      "vit_a_iu": 720,
+      "vit_c_mg": 18,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.05,
+      "folate_ug": 30,
+      "leucine_g": 0.42,
+      "selenium_ug": 8,
+      "glycemic_index": 55,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 pao bhaji",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "mumbai",
+        "street_food",
+        "high_fat",
+        "high_sodium"
+      ],
+      "portions": [
+        {
+          "n": "1 plate (300g)",
+          "g": 300
+        },
+        {
+          "n": "100g",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "pani-puri-golgappa",
+      "name": "Pani Puri / Golgappa (1 plate, 6 pcs)",
+      "category": "prepared",
+      "kcal": 95,
+      "protein": 2,
+      "carbs": 18,
+      "fat": 1.5,
+      "fiber": 2.0,
+      "sat_fat": 0.2,
+      "sugar": 1.5,
+      "sodium_mg": 380,
+      "potassium_mg": 220,
+      "calcium_mg": 20,
+      "iron_mg": 1.0,
+      "magnesium_mg": 18,
+      "zinc_mg": 0.4,
+      "vit_a_iu": 80,
+      "vit_c_mg": 4,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 30,
+      "leucine_g": 0.15,
+      "selenium_ug": 5,
+      "glycemic_index": 65,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 pani puri",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_snack",
+        "street_food",
+        "chaat"
+      ],
+      "portions": [
+        {
+          "n": "1 plate (6 pcs, 120g)",
+          "g": 120
+        },
+        {
+          "n": "100g",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "bhel-puri",
+      "name": "Bhel Puri",
+      "category": "prepared",
+      "kcal": 215,
+      "protein": 4.5,
+      "carbs": 38,
+      "fat": 5,
+      "fiber": 3.0,
+      "sat_fat": 0.5,
+      "sugar": 5.0,
+      "sodium_mg": 420,
+      "potassium_mg": 260,
+      "calcium_mg": 28,
+      "iron_mg": 1.5,
+      "magnesium_mg": 28,
+      "zinc_mg": 0.6,
+      "vit_a_iu": 210,
+      "vit_c_mg": 12,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 38,
+      "leucine_g": 0.32,
+      "selenium_ug": 12,
+      "glycemic_index": 60,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 bhel puri",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_snack",
+        "street_food",
+        "chaat"
+      ],
+      "portions": [
+        {
+          "n": "1 plate (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "masala-dosa",
+      "name": "Masala Dosa (with aloo)",
+      "category": "prepared",
+      "kcal": 195,
+      "protein": 4.5,
+      "carbs": 32,
+      "fat": 5.5,
+      "fiber": 2.2,
+      "sat_fat": 1.2,
+      "sugar": 1.0,
+      "sodium_mg": 290,
+      "potassium_mg": 180,
+      "calcium_mg": 22,
+      "iron_mg": 1.2,
+      "magnesium_mg": 28,
+      "zinc_mg": 0.6,
+      "vit_a_iu": 180,
+      "vit_c_mg": 5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 18,
+      "leucine_g": 0.35,
+      "selenium_ug": 12,
+      "glycemic_index": 68,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 masala dosa",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "south_indian",
+        "breakfast"
+      ],
+      "portions": [
+        {
+          "n": "1 dosa (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "medu-vada",
+      "name": "Medu Vada (urad dal fried)",
+      "category": "prepared",
+      "kcal": 295,
+      "protein": 9,
+      "carbs": 32,
+      "fat": 14,
+      "fiber": 3.2,
+      "sat_fat": 1.5,
+      "sugar": 1.2,
+      "sodium_mg": 420,
+      "potassium_mg": 280,
+      "calcium_mg": 32,
+      "iron_mg": 2.0,
+      "magnesium_mg": 40,
+      "zinc_mg": 1.0,
+      "vit_a_iu": 40,
+      "vit_c_mg": 1,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 42,
+      "leucine_g": 0.71,
+      "selenium_ug": 8,
+      "glycemic_index": 52,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 medu vada",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "indian_snack",
+        "south_indian",
+        "breakfast",
+        "fried"
+      ],
+      "portions": [
+        {
+          "n": "2 vadas (90g)",
+          "g": 90
+        }
+      ]
+    },
+    {
+      "id": "uttapam-onion",
+      "name": "Uttapam (Onion)",
+      "category": "prepared",
+      "kcal": 165,
+      "protein": 4.5,
+      "carbs": 28,
+      "fat": 4.0,
+      "fiber": 2.5,
+      "sat_fat": 1.0,
+      "sugar": 1.5,
+      "sodium_mg": 260,
+      "potassium_mg": 180,
+      "calcium_mg": 22,
+      "iron_mg": 1.3,
+      "magnesium_mg": 28,
+      "zinc_mg": 0.6,
+      "vit_a_iu": 80,
+      "vit_c_mg": 3,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 15,
+      "leucine_g": 0.34,
+      "selenium_ug": 11,
+      "glycemic_index": 65,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 onion uttapam",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "south_indian",
+        "breakfast"
+      ],
+      "portions": [
+        {
+          "n": "1 uttapam (130g)",
+          "g": 130
+        }
+      ]
+    },
+    {
+      "id": "methi-thepla",
+      "name": "Methi Thepla",
+      "category": "prepared",
+      "kcal": 295,
+      "protein": 8,
+      "carbs": 42,
+      "fat": 10,
+      "fiber": 5.0,
+      "sat_fat": 1.5,
+      "sugar": 1.0,
+      "sodium_mg": 380,
+      "potassium_mg": 260,
+      "calcium_mg": 40,
+      "iron_mg": 3.0,
+      "magnesium_mg": 55,
+      "zinc_mg": 1.2,
+      "vit_a_iu": 420,
+      "vit_c_mg": 5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 28,
+      "leucine_g": 0.6,
+      "selenium_ug": 38,
+      "glycemic_index": 58,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 methi thepla",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "gujarati",
+        "breakfast",
+        "whole_grain"
+      ],
+      "portions": [
+        {
+          "n": "1 thepla (40g)",
+          "g": 40
+        },
+        {
+          "n": "2 thepla (80g)",
+          "g": 80
+        }
+      ]
+    },
+    {
+      "id": "handvo",
+      "name": "Handvo (Gujarati baked savory cake)",
+      "category": "prepared",
+      "kcal": 225,
+      "protein": 7,
+      "carbs": 32,
+      "fat": 7.5,
+      "fiber": 3.2,
+      "sat_fat": 1.0,
+      "sugar": 2.5,
+      "sodium_mg": 360,
+      "potassium_mg": 260,
+      "calcium_mg": 55,
+      "iron_mg": 2.0,
+      "magnesium_mg": 40,
+      "zinc_mg": 0.9,
+      "vit_a_iu": 180,
+      "vit_c_mg": 4,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 28,
+      "leucine_g": 0.5,
+      "selenium_ug": 12,
+      "glycemic_index": 55,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 handvo",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": null,
+      "tags": [
+        "indian_snack",
+        "gujarati",
+        "baked",
+        "fermented"
+      ],
+      "portions": [
+        {
+          "n": "1 piece (80g)",
+          "g": 80
+        }
+      ]
+    },
+    {
+      "id": "khandvi",
+      "name": "Khandvi (besan rolled)",
+      "category": "prepared",
+      "kcal": 125,
+      "protein": 5,
+      "carbs": 15,
+      "fat": 5,
+      "fiber": 2.0,
+      "sat_fat": 1.0,
+      "sugar": 2.0,
+      "sodium_mg": 260,
+      "potassium_mg": 180,
+      "calcium_mg": 40,
+      "iron_mg": 1.3,
+      "magnesium_mg": 28,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 80,
+      "vit_c_mg": 2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 18,
+      "leucine_g": 0.36,
+      "selenium_ug": 5,
+      "glycemic_index": 42,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 khandvi",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "legume",
+      "brand": null,
+      "tags": [
+        "indian_snack",
+        "gujarati",
+        "low_fat",
+        "steamed"
+      ],
+      "portions": [
+        {
+          "n": "1 plate (80g)",
+          "g": 80
+        }
+      ]
+    },
+    {
+      "id": "masala-chai",
+      "name": "Masala Chai (with milk & sugar)",
+      "category": "beverage",
+      "kcal": 65,
+      "protein": 1.5,
+      "carbs": 10,
+      "fat": 2,
+      "fiber": 0,
+      "sat_fat": 1.2,
+      "sugar": 8.5,
+      "sodium_mg": 28,
+      "potassium_mg": 75,
+      "calcium_mg": 55,
+      "iron_mg": 0.05,
+      "magnesium_mg": 8,
+      "zinc_mg": 0.15,
+      "vit_a_iu": 80,
+      "vit_c_mg": 0,
+      "vit_d_iu": 18,
+      "vit_b12_ug": 0.18,
+      "folate_ug": 3,
+      "leucine_g": 0.14,
+      "selenium_ug": 1.5,
+      "glycemic_index": 40,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 masala chai",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "beverage",
+        "indian_beverage",
+        "staple",
+        "dairy",
+        "added_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 cup (150g)",
+          "g": 150
+        },
+        {
+          "n": "1 mug (250g)",
+          "g": 250
+        }
+      ]
+    },
+    {
+      "id": "mango-lassi-sweet",
+      "name": "Mango Lassi (sweet)",
+      "category": "beverage",
+      "kcal": 112,
+      "protein": 2.5,
+      "carbs": 21,
+      "fat": 2.0,
+      "fiber": 0.4,
+      "sat_fat": 1.3,
+      "sugar": 18,
+      "sodium_mg": 32,
+      "potassium_mg": 120,
+      "calcium_mg": 75,
+      "iron_mg": 0.15,
+      "magnesium_mg": 12,
+      "zinc_mg": 0.3,
+      "vit_a_iu": 420,
+      "vit_c_mg": 12,
+      "vit_d_iu": 8,
+      "vit_b12_ug": 0.2,
+      "folate_ug": 5,
+      "leucine_g": 0.25,
+      "selenium_ug": 2,
+      "glycemic_index": 55,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 mango lassi",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "beverage",
+        "indian_beverage",
+        "dairy",
+        "high_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 glass (250g)",
+          "g": 250
+        }
+      ]
+    },
+    {
+      "id": "sweet-lassi",
+      "name": "Sweet Lassi (plain)",
+      "category": "beverage",
+      "kcal": 95,
+      "protein": 2.6,
+      "carbs": 16,
+      "fat": 2.0,
+      "fiber": 0,
+      "sat_fat": 1.2,
+      "sugar": 15,
+      "sodium_mg": 38,
+      "potassium_mg": 140,
+      "calcium_mg": 90,
+      "iron_mg": 0.1,
+      "magnesium_mg": 12,
+      "zinc_mg": 0.4,
+      "vit_a_iu": 80,
+      "vit_c_mg": 0.5,
+      "vit_d_iu": 8,
+      "vit_b12_ug": 0.3,
+      "folate_ug": 4,
+      "leucine_g": 0.25,
+      "selenium_ug": 3,
+      "glycemic_index": 38,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 sweet lassi",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fermented",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "beverage",
+        "indian_beverage",
+        "dairy",
+        "probiotic",
+        "high_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 glass (250g)",
+          "g": 250
+        }
+      ]
+    },
+    {
+      "id": "rasgulla",
+      "name": "Rasgulla (in syrup)",
+      "category": "sweet",
+      "kcal": 186,
+      "protein": 4.5,
+      "carbs": 35,
+      "fat": 2.5,
+      "fiber": 0,
+      "sat_fat": 1.5,
+      "sugar": 32,
+      "sodium_mg": 42,
+      "potassium_mg": 80,
+      "calcium_mg": 80,
+      "iron_mg": 0.2,
+      "magnesium_mg": 8,
+      "zinc_mg": 0.4,
+      "vit_a_iu": 80,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.2,
+      "folate_ug": 3,
+      "leucine_g": 0.43,
+      "selenium_ug": 5,
+      "glycemic_index": 75,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 rasgulla",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "indian_sweet",
+        "dairy",
+        "high_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 piece (40g)",
+          "g": 40
+        },
+        {
+          "n": "2 pieces (80g)",
+          "g": 80
+        }
+      ]
+    },
+    {
+      "id": "jalebi",
+      "name": "Jalebi (sugar syrup soaked)",
+      "category": "sweet",
+      "kcal": 380,
+      "protein": 4,
+      "carbs": 72,
+      "fat": 8,
+      "fiber": 0.5,
+      "sat_fat": 3.5,
+      "sugar": 55,
+      "sodium_mg": 50,
+      "potassium_mg": 60,
+      "calcium_mg": 12,
+      "iron_mg": 1.2,
+      "magnesium_mg": 15,
+      "zinc_mg": 0.3,
+      "vit_a_iu": 80,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 15,
+      "leucine_g": 0.3,
+      "selenium_ug": 12,
+      "glycemic_index": 80,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 jalebi",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_sweet",
+        "fried",
+        "high_sugar",
+        "high_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 piece (35g)",
+          "g": 35
+        },
+        {
+          "n": "50g",
+          "g": 50
+        }
+      ]
+    },
+    {
+      "id": "kaju-katli",
+      "name": "Kaju Katli (cashew fudge)",
+      "category": "sweet",
+      "kcal": 480,
+      "protein": 9,
+      "carbs": 55,
+      "fat": 25,
+      "fiber": 1.5,
+      "sat_fat": 8,
+      "sugar": 42,
+      "sodium_mg": 12,
+      "potassium_mg": 420,
+      "calcium_mg": 55,
+      "iron_mg": 2.5,
+      "magnesium_mg": 180,
+      "zinc_mg": 2.0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 28,
+      "leucine_g": 0.78,
+      "selenium_ug": 12,
+      "glycemic_index": 55,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 kaju katli",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": null,
+      "tags": [
+        "indian_sweet",
+        "nuts",
+        "high_fat",
+        "festival"
+      ],
+      "portions": [
+        {
+          "n": "1 piece (12g)",
+          "g": 12
+        },
+        {
+          "n": "2 pieces (24g)",
+          "g": 24
+        }
+      ]
+    },
+    {
+      "id": "rasmalai",
+      "name": "Rasmalai (in milk syrup)",
+      "category": "sweet",
+      "kcal": 215,
+      "protein": 5.5,
+      "carbs": 30,
+      "fat": 8,
+      "fiber": 0,
+      "sat_fat": 4.5,
+      "sugar": 28,
+      "sodium_mg": 50,
+      "potassium_mg": 150,
+      "calcium_mg": 160,
+      "iron_mg": 0.2,
+      "magnesium_mg": 15,
+      "zinc_mg": 0.6,
+      "vit_a_iu": 180,
+      "vit_c_mg": 0,
+      "vit_d_iu": 15,
+      "vit_b12_ug": 0.3,
+      "folate_ug": 5,
+      "leucine_g": 0.52,
+      "selenium_ug": 4,
+      "glycemic_index": 55,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 rasmalai",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "indian_sweet",
+        "dairy",
+        "high_sugar",
+        "high_calcium"
+      ],
+      "portions": [
+        {
+          "n": "1 piece (60g)",
+          "g": 60
+        }
+      ]
+    },
+    {
+      "id": "malai-kofta-cooked",
+      "name": "Malai Kofta (cooked)",
+      "category": "prepared",
+      "kcal": 260,
+      "protein": 8,
+      "carbs": 18,
+      "fat": 18,
+      "fiber": 2.5,
+      "sat_fat": 7.5,
+      "sugar": 5,
+      "sodium_mg": 420,
+      "potassium_mg": 310,
+      "calcium_mg": 180,
+      "iron_mg": 1.8,
+      "magnesium_mg": 30,
+      "zinc_mg": 1.0,
+      "vit_a_iu": 720,
+      "vit_c_mg": 3,
+      "vit_d_iu": 12,
+      "vit_b12_ug": 0.3,
+      "folate_ug": 28,
+      "leucine_g": 0.76,
+      "selenium_ug": 9,
+      "glycemic_index": 32,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 malai kofta",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "dairy",
+        "restaurant_style",
+        "high_fat"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "paneer-tikka-masala-gravy",
+      "name": "Paneer Tikka Masala (gravy)",
+      "category": "prepared",
+      "kcal": 240,
+      "protein": 11,
+      "carbs": 12,
+      "fat": 17,
+      "fiber": 2.0,
+      "sat_fat": 6.5,
+      "sugar": 5.5,
+      "sodium_mg": 520,
+      "potassium_mg": 320,
+      "calcium_mg": 180,
+      "iron_mg": 1.6,
+      "magnesium_mg": 28,
+      "zinc_mg": 1.1,
+      "vit_a_iu": 520,
+      "vit_c_mg": 5,
+      "vit_d_iu": 8,
+      "vit_b12_ug": 0.3,
+      "folate_ug": 28,
+      "leucine_g": 1.05,
+      "selenium_ug": 9,
+      "glycemic_index": 30,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 paneer tikka masala",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "dairy",
+        "restaurant_style",
+        "high_protein",
+        "high_leucine"
+      ],
+      "portions": [
+        {
+          "n": "1 katori (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "gobi-manchurian-dry",
+      "name": "Gobi Manchurian (dry, indo-chinese)",
+      "category": "prepared",
+      "kcal": 225,
+      "protein": 5,
+      "carbs": 25,
+      "fat": 12,
+      "fiber": 3.0,
+      "sat_fat": 1.5,
+      "sugar": 5,
+      "sodium_mg": 520,
+      "potassium_mg": 320,
+      "calcium_mg": 40,
+      "iron_mg": 1.5,
+      "magnesium_mg": 28,
+      "zinc_mg": 0.6,
+      "vit_a_iu": 90,
+      "vit_c_mg": 28,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 42,
+      "leucine_g": 0.38,
+      "selenium_ug": 8,
+      "glycemic_index": 55,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Indo-Chinese gobi manchurian recipe build",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "indo_chinese",
+        "fried",
+        "high_sodium"
+      ],
+      "portions": [
+        {
+          "n": "1 plate (200g)",
+          "g": 200
+        }
+      ]
+    },
+    {
+      "id": "veg-hakka-noodles",
+      "name": "Veg Hakka Noodles (indo-chinese)",
+      "category": "prepared",
+      "kcal": 180,
+      "protein": 4.5,
+      "carbs": 30,
+      "fat": 5,
+      "fiber": 2.5,
+      "sat_fat": 0.8,
+      "sugar": 3,
+      "sodium_mg": 480,
+      "potassium_mg": 180,
+      "calcium_mg": 28,
+      "iron_mg": 1.2,
+      "magnesium_mg": 22,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 180,
+      "vit_c_mg": 8,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 18,
+      "leucine_g": 0.34,
+      "selenium_ug": 12,
+      "glycemic_index": 65,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Indo-Chinese veg hakka noodles recipe build",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "indo_chinese",
+        "cooked",
+        "high_sodium"
+      ],
+      "portions": [
+        {
+          "n": "1 plate (250g)",
+          "g": 250
+        }
+      ]
+    },
+    {
+      "id": "tim-plain-bagel",
+      "name": "Tim Hortons Plain Bagel",
+      "category": "prepared",
+      "kcal": 274,
+      "protein": 10.4,
+      "carbs": 55.2,
+      "fat": 1.6,
+      "fiber": 2.1,
+      "sat_fat": 0.3,
+      "sugar": 4.2,
+      "sodium_mg": 469,
+      "potassium_mg": 108,
+      "calcium_mg": 21,
+      "iron_mg": 3.1,
+      "magnesium_mg": 18,
+      "zinc_mg": 0.8,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 75,
+      "leucine_g": 0.78,
+      "selenium_ug": 28,
+      "glycemic_index": 72,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons published nutrition (Plain Bagel)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "grain",
+        "bread",
+        "staple"
+      ],
+      "portions": [
+        {
+          "n": "1 bagel (96g)",
+          "g": 96
+        }
+      ]
+    },
+    {
+      "id": "tim-everything-bagel",
+      "name": "Tim Hortons Everything Bagel",
+      "category": "prepared",
+      "kcal": 278,
+      "protein": 11,
+      "carbs": 54,
+      "fat": 1.6,
+      "fiber": 2.1,
+      "sat_fat": 0.3,
+      "sugar": 4.1,
+      "sodium_mg": 490,
+      "potassium_mg": 115,
+      "calcium_mg": 22,
+      "iron_mg": 3.2,
+      "magnesium_mg": 18,
+      "zinc_mg": 0.8,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 75,
+      "leucine_g": 0.83,
+      "selenium_ug": 28,
+      "glycemic_index": 72,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons published nutrition (Everything Bagel)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "grain",
+        "bread"
+      ],
+      "portions": [
+        {
+          "n": "1 bagel (97g)",
+          "g": 97
+        }
+      ]
+    },
+    {
+      "id": "tim-cinnamon-raisin-bagel",
+      "name": "Tim Hortons Cinnamon Raisin Bagel",
+      "category": "prepared",
+      "kcal": 281,
+      "protein": 9.4,
+      "carbs": 58,
+      "fat": 1.0,
+      "fiber": 2.1,
+      "sat_fat": 0.2,
+      "sugar": 8.3,
+      "sodium_mg": 365,
+      "potassium_mg": 135,
+      "calcium_mg": 21,
+      "iron_mg": 2.9,
+      "magnesium_mg": 18,
+      "zinc_mg": 0.7,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 68,
+      "leucine_g": 0.71,
+      "selenium_ug": 26,
+      "glycemic_index": 72,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons published nutrition (Cinnamon Raisin Bagel)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "grain",
+        "bread",
+        "raisin",
+        "added_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 bagel (96g)",
+          "g": 96
+        }
+      ]
+    },
+    {
+      "id": "tim-sesame-seed-bagel",
+      "name": "Tim Hortons Sesame Seed Bagel",
+      "category": "prepared",
+      "kcal": 281,
+      "protein": 11,
+      "carbs": 54,
+      "fat": 2.0,
+      "fiber": 2.1,
+      "sat_fat": 0.3,
+      "sugar": 4.2,
+      "sodium_mg": 469,
+      "potassium_mg": 115,
+      "calcium_mg": 30,
+      "iron_mg": 3.1,
+      "magnesium_mg": 22,
+      "zinc_mg": 0.9,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 75,
+      "leucine_g": 0.83,
+      "selenium_ug": 28,
+      "glycemic_index": 72,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons published nutrition",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "grain",
+        "bread"
+      ],
+      "portions": [
+        {
+          "n": "1 bagel (96g)",
+          "g": 96
+        }
+      ]
+    },
+    {
+      "id": "tim-plain-cream-cheese",
+      "name": "Tim Hortons Plain Cream Cheese",
+      "category": "prepared",
+      "kcal": 324,
+      "protein": 5.4,
+      "carbs": 2.7,
+      "fat": 32,
+      "fiber": 0,
+      "sat_fat": 18.9,
+      "sugar": 2.7,
+      "sodium_mg": 378,
+      "potassium_mg": 108,
+      "calcium_mg": 108,
+      "iron_mg": 0.3,
+      "magnesium_mg": 8,
+      "zinc_mg": 0.4,
+      "vit_a_iu": 1080,
+      "vit_c_mg": 0,
+      "vit_d_iu": 80,
+      "vit_b12_ug": 0.2,
+      "folate_ug": 8,
+      "leucine_g": 0.51,
+      "selenium_ug": 3,
+      "glycemic_index": null,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons published nutrition (Plain Cream Cheese 37g)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "dairy",
+        "high_fat",
+        "spread"
+      ],
+      "portions": [
+        {
+          "n": "1 portion (37g)",
+          "g": 37
+        }
+      ]
+    },
+    {
+      "id": "tim-strawberry-cream-cheese",
+      "name": "Tim Hortons Strawberry Cream Cheese",
+      "category": "prepared",
+      "kcal": 324,
+      "protein": 5.4,
+      "carbs": 8.1,
+      "fat": 29.7,
+      "fiber": 0,
+      "sat_fat": 17.6,
+      "sugar": 8.1,
+      "sodium_mg": 324,
+      "potassium_mg": 108,
+      "calcium_mg": 108,
+      "iron_mg": 0.3,
+      "magnesium_mg": 8,
+      "zinc_mg": 0.4,
+      "vit_a_iu": 1080,
+      "vit_c_mg": 0,
+      "vit_d_iu": 80,
+      "vit_b12_ug": 0.2,
+      "folate_ug": 8,
+      "leucine_g": 0.51,
+      "selenium_ug": 3,
+      "glycemic_index": null,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons published nutrition (Strawberry Cream Cheese)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "dairy",
+        "high_fat",
+        "spread",
+        "added_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 portion (37g)",
+          "g": 37
+        }
+      ]
+    },
+    {
+      "id": "tim-honey-cruller",
+      "name": "Tim Hortons Honey Cruller",
+      "category": "sweet",
+      "kcal": 620,
+      "protein": 2.0,
+      "carbs": 54,
+      "fat": 42,
+      "fiber": 0,
+      "sat_fat": 18,
+      "sugar": 28,
+      "sodium_mg": 420,
+      "potassium_mg": 32,
+      "calcium_mg": 12,
+      "iron_mg": 0.6,
+      "magnesium_mg": 8,
+      "zinc_mg": 0.2,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 12,
+      "leucine_g": 0.15,
+      "selenium_ug": 4,
+      "glycemic_index": 75,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons published nutrition",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "sweet",
+        "donut",
+        "fried",
+        "high_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 cruller (50g)",
+          "g": 50
+        }
+      ]
+    },
+    {
+      "id": "tim-boston-cream-donut",
+      "name": "Tim Hortons Boston Cream Donut",
+      "category": "sweet",
+      "kcal": 346,
+      "protein": 5.1,
+      "carbs": 44.9,
+      "fat": 14.1,
+      "fiber": 1.3,
+      "sat_fat": 5.1,
+      "sugar": 15.4,
+      "sodium_mg": 346,
+      "potassium_mg": 90,
+      "calcium_mg": 38,
+      "iron_mg": 2.6,
+      "magnesium_mg": 15,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 30,
+      "leucine_g": 0.38,
+      "selenium_ug": 15,
+      "glycemic_index": 75,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons published nutrition (Boston Cream 78g)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "sweet",
+        "donut",
+        "fried",
+        "high_sugar",
+        "filled"
+      ],
+      "portions": [
+        {
+          "n": "1 donut (78g)",
+          "g": 78
+        }
+      ]
+    },
+    {
+      "id": "tim-old-fashioned-plain",
+      "name": "Tim Hortons Old Fashioned Plain Donut",
+      "category": "sweet",
+      "kcal": 360,
+      "protein": 5.3,
+      "carbs": 41.3,
+      "fat": 17.3,
+      "fiber": 1.3,
+      "sat_fat": 8.0,
+      "sugar": 12.0,
+      "sodium_mg": 400,
+      "potassium_mg": 80,
+      "calcium_mg": 20,
+      "iron_mg": 2.3,
+      "magnesium_mg": 12,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 28,
+      "leucine_g": 0.4,
+      "selenium_ug": 15,
+      "glycemic_index": 75,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons published nutrition (Old Fashioned Plain 75g)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "sweet",
+        "donut",
+        "fried"
+      ],
+      "portions": [
+        {
+          "n": "1 donut (75g)",
+          "g": 75
+        }
+      ]
+    },
+    {
+      "id": "tim-vanilla-dip",
+      "name": "Tim Hortons Vanilla Dip Donut",
+      "category": "sweet",
+      "kcal": 293,
+      "protein": 5.3,
+      "carbs": 40.0,
+      "fat": 12.0,
+      "fiber": 1.0,
+      "sat_fat": 5.0,
+      "sugar": 21.0,
+      "sodium_mg": 300,
+      "potassium_mg": 75,
+      "calcium_mg": 20,
+      "iron_mg": 2.0,
+      "magnesium_mg": 10,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 25,
+      "leucine_g": 0.4,
+      "selenium_ug": 12,
+      "glycemic_index": 75,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons published nutrition",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "sweet",
+        "donut",
+        "fried",
+        "high_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 donut (75g)",
+          "g": 75
+        }
+      ]
+    },
+    {
+      "id": "tim-apple-fritter",
+      "name": "Tim Hortons Apple Fritter",
+      "category": "sweet",
+      "kcal": 326,
+      "protein": 5.3,
+      "carbs": 51.6,
+      "fat": 9.5,
+      "fiber": 2.1,
+      "sat_fat": 3.7,
+      "sugar": 21.0,
+      "sodium_mg": 316,
+      "potassium_mg": 90,
+      "calcium_mg": 25,
+      "iron_mg": 1.8,
+      "magnesium_mg": 12,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 32,
+      "leucine_g": 0.4,
+      "selenium_ug": 18,
+      "glycemic_index": 75,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons published nutrition (Apple Fritter 95g)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "sweet",
+        "donut",
+        "fried",
+        "high_sugar",
+        "fruit"
+      ],
+      "portions": [
+        {
+          "n": "1 fritter (95g)",
+          "g": 95
+        }
+      ]
+    },
+    {
+      "id": "tim-coffee-double-double-medium",
+      "name": "Tim Hortons Coffee Double Double (medium)",
+      "category": "beverage",
+      "kcal": 64,
+      "protein": 1.2,
+      "carbs": 9.0,
+      "fat": 2.5,
+      "fiber": 0,
+      "sat_fat": 1.6,
+      "sugar": 9.0,
+      "sodium_mg": 12,
+      "potassium_mg": 40,
+      "calcium_mg": 20,
+      "iron_mg": 0.04,
+      "magnesium_mg": 4,
+      "zinc_mg": 0.05,
+      "vit_a_iu": 80,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.1,
+      "folate_ug": 2,
+      "leucine_g": 0.12,
+      "selenium_ug": 0.5,
+      "glycemic_index": 50,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons double-double nutrition (medium 295ml)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "beverage",
+        "coffee",
+        "added_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (295g)",
+          "g": 295
+        }
+      ]
+    },
+    {
+      "id": "tim-hot-chocolate-medium",
+      "name": "Tim Hortons Hot Chocolate (medium)",
+      "category": "beverage",
+      "kcal": 95,
+      "protein": 2.7,
+      "carbs": 16.9,
+      "fat": 2.0,
+      "fiber": 1.0,
+      "sat_fat": 1.7,
+      "sugar": 13.6,
+      "sodium_mg": 75,
+      "potassium_mg": 90,
+      "calcium_mg": 75,
+      "iron_mg": 0.2,
+      "magnesium_mg": 12,
+      "zinc_mg": 0.2,
+      "vit_a_iu": 30,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.1,
+      "folate_ug": 4,
+      "leucine_g": 0.25,
+      "selenium_ug": 2,
+      "glycemic_index": 50,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons hot chocolate (medium 295ml)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "beverage",
+        "cocoa",
+        "dairy",
+        "added_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (295g)",
+          "g": 295
+        }
+      ]
+    },
+    {
+      "id": "tim-iced-capp-original-medium",
+      "name": "Tim Hortons Iced Capp Original (medium)",
+      "category": "beverage",
+      "kcal": 81,
+      "protein": 0.9,
+      "carbs": 11.3,
+      "fat": 3.6,
+      "fiber": 0,
+      "sat_fat": 2.0,
+      "sugar": 9.5,
+      "sodium_mg": 18,
+      "potassium_mg": 40,
+      "calcium_mg": 32,
+      "iron_mg": 0.05,
+      "magnesium_mg": 5,
+      "zinc_mg": 0.05,
+      "vit_a_iu": 40,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.1,
+      "folate_ug": 2,
+      "leucine_g": 0.09,
+      "selenium_ug": 0.5,
+      "glycemic_index": 55,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons Iced Capp Original (medium 444g)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "beverage",
+        "frozen",
+        "coffee",
+        "high_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (444g)",
+          "g": 444
+        }
+      ]
+    },
+    {
+      "id": "tim-hash-brown",
+      "name": "Tim Hortons Hash Brown",
+      "category": "prepared",
+      "kcal": 275,
+      "protein": 2.5,
+      "carbs": 27.5,
+      "fat": 17.5,
+      "fiber": 2.5,
+      "sat_fat": 2.5,
+      "sugar": 0,
+      "sodium_mg": 750,
+      "potassium_mg": 200,
+      "calcium_mg": 15,
+      "iron_mg": 0.5,
+      "magnesium_mg": 15,
+      "zinc_mg": 0.3,
+      "vit_a_iu": 0,
+      "vit_c_mg": 2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 15,
+      "leucine_g": 0.18,
+      "selenium_ug": 5,
+      "glycemic_index": 75,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons published nutrition (Hash Brown 40g)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "fried",
+        "breakfast",
+        "high_sodium"
+      ],
+      "portions": [
+        {
+          "n": "1 hash brown (40g)",
+          "g": 40
+        }
+      ]
+    },
+    {
+      "id": "tim-chocolate-chip-cookie",
+      "name": "Tim Hortons Chocolate Chip Cookie",
+      "category": "sweet",
+      "kcal": 483,
+      "protein": 5.0,
+      "carbs": 63.3,
+      "fat": 23.3,
+      "fiber": 2.0,
+      "sat_fat": 12.0,
+      "sugar": 36.7,
+      "sodium_mg": 300,
+      "potassium_mg": 150,
+      "calcium_mg": 25,
+      "iron_mg": 2.5,
+      "magnesium_mg": 18,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 20,
+      "leucine_g": 0.38,
+      "selenium_ug": 15,
+      "glycemic_index": 72,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons published nutrition (Cookie 60g)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "sweet",
+        "cookie",
+        "high_sugar",
+        "high_fat"
+      ],
+      "portions": [
+        {
+          "n": "1 cookie (60g)",
+          "g": 60
+        }
+      ]
+    },
+    {
+      "id": "tim-timbits-chocolate-glazed",
+      "name": "Tim Hortons Timbits (Chocolate Glazed, per piece)",
+      "category": "sweet",
+      "kcal": 467,
+      "protein": 5.0,
+      "carbs": 53.3,
+      "fat": 26.7,
+      "fiber": 1.3,
+      "sat_fat": 9.3,
+      "sugar": 26.7,
+      "sodium_mg": 333,
+      "potassium_mg": 75,
+      "calcium_mg": 18,
+      "iron_mg": 2.0,
+      "magnesium_mg": 12,
+      "zinc_mg": 0.4,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 18,
+      "leucine_g": 0.38,
+      "selenium_ug": 12,
+      "glycemic_index": 75,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Tim Hortons Timbits (Chocolate Glazed 15g per piece)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Tim Hortons",
+      "tags": [
+        "restaurant",
+        "sweet",
+        "donut_holes",
+        "fried"
+      ],
+      "portions": [
+        {
+          "n": "1 Timbit (15g)",
+          "g": 15
+        },
+        {
+          "n": "10 Timbits (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "aw-beyond-meat-burger",
+      "name": "A&W Beyond Meat Burger",
+      "category": "prepared",
+      "kcal": 198,
+      "protein": 9.2,
+      "carbs": 19.5,
+      "fat": 8.8,
+      "fiber": 3.4,
+      "sat_fat": 2.7,
+      "sugar": 3.4,
+      "sodium_mg": 420,
+      "potassium_mg": 300,
+      "calcium_mg": 80,
+      "iron_mg": 2.7,
+      "magnesium_mg": 30,
+      "zinc_mg": 1.5,
+      "vit_a_iu": 80,
+      "vit_c_mg": 2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 38,
+      "leucine_g": 0.69,
+      "selenium_ug": 8,
+      "glycemic_index": 55,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "A&W Canada Beyond Meat Burger nutrition",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": "A&W",
+      "tags": [
+        "restaurant",
+        "veggie_burger",
+        "plant_based",
+        "high_protein"
+      ],
+      "portions": [
+        {
+          "n": "1 burger (262g)",
+          "g": 262
+        }
+      ]
+    },
+    {
+      "id": "aw-russet-thick-cut-fries-medium",
+      "name": "A&W Russet Thick-Cut Fries (medium)",
+      "category": "prepared",
+      "kcal": 240,
+      "protein": 2.7,
+      "carbs": 32.7,
+      "fat": 10.7,
+      "fiber": 3.3,
+      "sat_fat": 1.0,
+      "sugar": 0.5,
+      "sodium_mg": 400,
+      "potassium_mg": 500,
+      "calcium_mg": 8,
+      "iron_mg": 0.7,
+      "magnesium_mg": 25,
+      "zinc_mg": 0.4,
+      "vit_a_iu": 0,
+      "vit_c_mg": 5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 15,
+      "leucine_g": 0.16,
+      "selenium_ug": 1,
+      "glycemic_index": 75,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "A&W Canada russet thick-cut fries (medium 150g)",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "A&W",
+      "tags": [
+        "restaurant",
+        "fried",
+        "high_gi",
+        "high_sodium"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "aw-sweet-potato-fries-medium",
+      "name": "A&W Sweet Potato Fries (medium)",
+      "category": "prepared",
+      "kcal": 247,
+      "protein": 2.0,
+      "carbs": 33.3,
+      "fat": 11.3,
+      "fiber": 4.7,
+      "sat_fat": 1.3,
+      "sugar": 8.0,
+      "sodium_mg": 353,
+      "potassium_mg": 420,
+      "calcium_mg": 30,
+      "iron_mg": 0.5,
+      "magnesium_mg": 22,
+      "zinc_mg": 0.3,
+      "vit_a_iu": 12000,
+      "vit_c_mg": 5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 15,
+      "leucine_g": 0.15,
+      "selenium_ug": 1,
+      "glycemic_index": 65,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "A&W Canada sweet potato fries (medium 150g)",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "A&W",
+      "tags": [
+        "restaurant",
+        "fried",
+        "high_vit_a",
+        "medium_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (150g)",
+          "g": 150
+        }
+      ]
+    },
+    {
+      "id": "aw-onion-rings-medium",
+      "name": "A&W Onion Rings (medium)",
+      "category": "prepared",
+      "kcal": 360,
+      "protein": 5.0,
+      "carbs": 39.0,
+      "fat": 20.0,
+      "fiber": 3.0,
+      "sat_fat": 2.5,
+      "sugar": 4.5,
+      "sodium_mg": 520,
+      "potassium_mg": 200,
+      "calcium_mg": 40,
+      "iron_mg": 1.5,
+      "magnesium_mg": 18,
+      "zinc_mg": 0.4,
+      "vit_a_iu": 40,
+      "vit_c_mg": 3,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 40,
+      "leucine_g": 0.38,
+      "selenium_ug": 8,
+      "glycemic_index": 65,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "A&W Canada onion rings (medium 100g)",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "A&W",
+      "tags": [
+        "restaurant",
+        "fried",
+        "high_fat",
+        "high_sodium"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "aw-root-beer-medium",
+      "name": "A&W Root Beer (medium)",
+      "category": "beverage",
+      "kcal": 42,
+      "protein": 0,
+      "carbs": 10.7,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 10.7,
+      "sodium_mg": 18,
+      "potassium_mg": 4,
+      "calcium_mg": 4,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 0.1,
+      "glycemic_index": 65,
+      "source": {
+        "type": "label",
+        "citation": "A&W Root Beer label (medium 591ml)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "A&W",
+      "tags": [
+        "restaurant",
+        "beverage",
+        "soda",
+        "added_sugar",
+        "high_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (591g)",
+          "g": 591
+        }
+      ]
+    },
+    {
+      "id": "aw-diet-root-beer-medium",
+      "name": "A&W Diet Root Beer (medium)",
+      "category": "beverage",
+      "kcal": 0,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 0,
+      "sodium_mg": 18,
+      "potassium_mg": 4,
+      "calcium_mg": 4,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 0.1,
+      "glycemic_index": null,
+      "source": {
+        "type": "label",
+        "citation": "A&W Diet Root Beer label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "A&W",
+      "tags": [
+        "restaurant",
+        "beverage",
+        "soda",
+        "sugar_free",
+        "zero_kcal",
+        "diet"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (591g)",
+          "g": 591
+        }
+      ]
+    },
+    {
+      "id": "aw-vanilla-milkshake-medium",
+      "name": "A&W Vanilla Milkshake (medium)",
+      "category": "beverage",
+      "kcal": 108,
+      "protein": 2.5,
+      "carbs": 15.0,
+      "fat": 4.5,
+      "fiber": 0,
+      "sat_fat": 3.0,
+      "sugar": 13.0,
+      "sodium_mg": 80,
+      "potassium_mg": 140,
+      "calcium_mg": 90,
+      "iron_mg": 0.05,
+      "magnesium_mg": 12,
+      "zinc_mg": 0.4,
+      "vit_a_iu": 180,
+      "vit_c_mg": 0.5,
+      "vit_d_iu": 20,
+      "vit_b12_ug": 0.3,
+      "folate_ug": 5,
+      "leucine_g": 0.24,
+      "selenium_ug": 2,
+      "glycemic_index": 55,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "A&W Canada vanilla milkshake (medium 591ml)",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": "A&W",
+      "tags": [
+        "restaurant",
+        "beverage",
+        "dairy",
+        "high_sugar",
+        "milkshake"
+      ],
+      "portions": [
+        {
+          "n": "1 medium (591g)",
+          "g": 591
+        }
+      ]
+    },
+    {
+      "id": "aw-apple-slices",
+      "name": "A&W Apple Slices (kids side)",
+      "category": "fruit",
+      "kcal": 52,
+      "protein": 0.3,
+      "carbs": 14,
+      "fat": 0.2,
+      "fiber": 2.4,
+      "sat_fat": 0.03,
+      "sugar": 10.4,
+      "sodium_mg": 1,
+      "potassium_mg": 107,
+      "calcium_mg": 6,
+      "iron_mg": 0.12,
+      "magnesium_mg": 5,
+      "zinc_mg": 0.04,
+      "vit_a_iu": 54,
+      "vit_c_mg": 4.6,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 3,
+      "leucine_g": 0.02,
+      "selenium_ug": 0,
+      "glycemic_index": 36,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "A&W apple slices side (fresh)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "A&W",
+      "tags": [
+        "restaurant",
+        "fruit",
+        "low_gi",
+        "sides"
+      ],
+      "portions": [
+        {
+          "n": "1 serving (60g)",
+          "g": 60
+        }
+      ]
+    },
+    {
+      "id": "subway-veggie-delite-6inch",
+      "name": "Subway Veggie Delite (6\" sub)",
+      "category": "prepared",
+      "kcal": 96,
+      "protein": 4.3,
+      "carbs": 18.5,
+      "fat": 1.1,
+      "fiber": 2.2,
+      "sat_fat": 0.3,
+      "sugar": 3.0,
+      "sodium_mg": 420,
+      "potassium_mg": 170,
+      "calcium_mg": 38,
+      "iron_mg": 1.6,
+      "magnesium_mg": 15,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 260,
+      "vit_c_mg": 5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 28,
+      "leucine_g": 0.3,
+      "selenium_ug": 17,
+      "glycemic_index": 55,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Subway Canada Veggie Delite 6-inch",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Subway",
+      "tags": [
+        "restaurant",
+        "vegetarian",
+        "low_fat",
+        "sub"
+      ],
+      "portions": [
+        {
+          "n": "6-inch (235g)",
+          "g": 235
+        }
+      ]
+    },
+    {
+      "id": "subway-veggie-patty-6inch",
+      "name": "Subway Veggie Patty (6\" sub)",
+      "category": "prepared",
+      "kcal": 165,
+      "protein": 5.9,
+      "carbs": 22.6,
+      "fat": 5.5,
+      "fiber": 3.4,
+      "sat_fat": 1.5,
+      "sugar": 3.4,
+      "sodium_mg": 560,
+      "potassium_mg": 180,
+      "calcium_mg": 76,
+      "iron_mg": 2.5,
+      "magnesium_mg": 18,
+      "zinc_mg": 0.7,
+      "vit_a_iu": 260,
+      "vit_c_mg": 6,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 30,
+      "leucine_g": 0.42,
+      "selenium_ug": 18,
+      "glycemic_index": 58,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Subway Canada Veggie Patty 6-inch",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": "Subway",
+      "tags": [
+        "restaurant",
+        "vegetarian",
+        "sub",
+        "high_sodium"
+      ],
+      "portions": [
+        {
+          "n": "6-inch (238g)",
+          "g": 238
+        }
+      ]
+    },
+    {
+      "id": "subway-veggie-pizza-6inch",
+      "name": "Subway Veggie Pizza Sub (6\" sub)",
+      "category": "prepared",
+      "kcal": 173,
+      "protein": 7.0,
+      "carbs": 21.7,
+      "fat": 6.5,
+      "fiber": 2.6,
+      "sat_fat": 3.0,
+      "sugar": 5.2,
+      "sodium_mg": 580,
+      "potassium_mg": 180,
+      "calcium_mg": 108,
+      "iron_mg": 1.9,
+      "magnesium_mg": 20,
+      "zinc_mg": 0.9,
+      "vit_a_iu": 360,
+      "vit_c_mg": 8,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.1,
+      "folate_ug": 28,
+      "leucine_g": 0.65,
+      "selenium_ug": 18,
+      "glycemic_index": 60,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Subway Canada Veggie Pizza Sub 6-inch",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": "Subway",
+      "tags": [
+        "restaurant",
+        "vegetarian",
+        "sub",
+        "dairy",
+        "cheese",
+        "high_sodium"
+      ],
+      "portions": [
+        {
+          "n": "6-inch (276g)",
+          "g": 276
+        }
+      ]
+    },
+    {
+      "id": "subway-cookie-chocolate-chip",
+      "name": "Subway Chocolate Chip Cookie",
+      "category": "sweet",
+      "kcal": 489,
+      "protein": 4.4,
+      "carbs": 66.7,
+      "fat": 22.2,
+      "fiber": 2.2,
+      "sat_fat": 11.1,
+      "sugar": 33.3,
+      "sodium_mg": 267,
+      "potassium_mg": 140,
+      "calcium_mg": 20,
+      "iron_mg": 2.2,
+      "magnesium_mg": 15,
+      "zinc_mg": 0.5,
+      "vit_a_iu": 40,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 18,
+      "leucine_g": 0.34,
+      "selenium_ug": 12,
+      "glycemic_index": 75,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Subway Canada Chocolate Chip Cookie (45g)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Subway",
+      "tags": [
+        "restaurant",
+        "sweet",
+        "cookie",
+        "high_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 cookie (45g)",
+          "g": 45
+        },
+        {
+          "n": "3 cookies (135g)",
+          "g": 135
+        }
+      ]
+    },
+    {
+      "id": "subway-cookie-oatmeal-raisin",
+      "name": "Subway Oatmeal Raisin Cookie",
+      "category": "sweet",
+      "kcal": 444,
+      "protein": 5.0,
+      "carbs": 68.0,
+      "fat": 16.7,
+      "fiber": 2.6,
+      "sat_fat": 4.4,
+      "sugar": 33.0,
+      "sodium_mg": 267,
+      "potassium_mg": 180,
+      "calcium_mg": 22,
+      "iron_mg": 2.0,
+      "magnesium_mg": 18,
+      "zinc_mg": 0.6,
+      "vit_a_iu": 80,
+      "vit_c_mg": 0.5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 18,
+      "leucine_g": 0.42,
+      "selenium_ug": 18,
+      "glycemic_index": 68,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Subway Canada Oatmeal Raisin Cookie (45g)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Subway",
+      "tags": [
+        "restaurant",
+        "sweet",
+        "cookie",
+        "oats",
+        "raisin",
+        "high_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 cookie (45g)",
+          "g": 45
+        }
+      ]
+    },
+    {
+      "id": "subway-hashbrown",
+      "name": "Subway Hash Brown",
+      "category": "prepared",
+      "kcal": 300,
+      "protein": 2.0,
+      "carbs": 30.0,
+      "fat": 18.0,
+      "fiber": 2.5,
+      "sat_fat": 2.0,
+      "sugar": 0,
+      "sodium_mg": 480,
+      "potassium_mg": 200,
+      "calcium_mg": 12,
+      "iron_mg": 0.6,
+      "magnesium_mg": 12,
+      "zinc_mg": 0.3,
+      "vit_a_iu": 0,
+      "vit_c_mg": 2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 12,
+      "leucine_g": 0.15,
+      "selenium_ug": 5,
+      "glycemic_index": 75,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Subway Canada Hash Brown (50g)",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "fried",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Subway",
+      "tags": [
+        "restaurant",
+        "fried",
+        "breakfast",
+        "high_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 hash brown (50g)",
+          "g": 50
+        }
+      ]
+    },
+    {
+      "id": "coca-cola-classic",
+      "name": "Coca-Cola Classic",
+      "category": "beverage",
+      "kcal": 42,
+      "protein": 0,
+      "carbs": 10.6,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 10.6,
+      "sodium_mg": 1,
+      "potassium_mg": 0,
+      "calcium_mg": 0,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 0,
+      "glycemic_index": 65,
+      "source": {
+        "type": "label",
+        "citation": "Coca-Cola Classic Canada Nutrition Facts",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "Coca-Cola",
+      "tags": [
+        "beverage",
+        "soda",
+        "added_sugar",
+        "high_gi",
+        "ultra_processed"
+      ],
+      "portions": [
+        {
+          "n": "1 can (355ml)",
+          "g": 355
+        },
+        {
+          "n": "1 bottle (591ml)",
+          "g": 591
+        }
+      ]
+    },
+    {
+      "id": "coca-cola-zero",
+      "name": "Coca-Cola Zero Sugar",
+      "category": "beverage",
+      "kcal": 0,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 0,
+      "sodium_mg": 4,
+      "potassium_mg": 0,
+      "calcium_mg": 0,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 0,
+      "glycemic_index": null,
+      "source": {
+        "type": "label",
+        "citation": "Coca-Cola Zero Canada label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "Coca-Cola",
+      "tags": [
+        "beverage",
+        "soda",
+        "sugar_free",
+        "zero_kcal",
+        "diet"
+      ],
+      "portions": [
+        {
+          "n": "1 can (355ml)",
+          "g": 355
+        }
+      ]
+    },
+    {
+      "id": "diet-coke",
+      "name": "Diet Coke",
+      "category": "beverage",
+      "kcal": 0,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 0,
+      "sodium_mg": 11,
+      "potassium_mg": 0,
+      "calcium_mg": 0,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 0,
+      "glycemic_index": null,
+      "source": {
+        "type": "label",
+        "citation": "Diet Coke Canada label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "Coca-Cola",
+      "tags": [
+        "beverage",
+        "soda",
+        "sugar_free",
+        "zero_kcal",
+        "diet"
+      ],
+      "portions": [
+        {
+          "n": "1 can (355ml)",
+          "g": 355
+        }
+      ]
+    },
+    {
+      "id": "pepsi",
+      "name": "Pepsi",
+      "category": "beverage",
+      "kcal": 44,
+      "protein": 0,
+      "carbs": 11.0,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 11.0,
+      "sodium_mg": 8,
+      "potassium_mg": 0,
+      "calcium_mg": 0,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 0,
+      "glycemic_index": 65,
+      "source": {
+        "type": "label",
+        "citation": "Pepsi Canada label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "Pepsi",
+      "tags": [
+        "beverage",
+        "soda",
+        "added_sugar",
+        "high_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 can (355ml)",
+          "g": 355
+        }
+      ]
+    },
+    {
+      "id": "sprite",
+      "name": "Sprite",
+      "category": "beverage",
+      "kcal": 38,
+      "protein": 0,
+      "carbs": 9.6,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 9.6,
+      "sodium_mg": 12,
+      "potassium_mg": 0,
+      "calcium_mg": 0,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 0,
+      "glycemic_index": 63,
+      "source": {
+        "type": "label",
+        "citation": "Sprite Canada label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "Sprite",
+      "tags": [
+        "beverage",
+        "soda",
+        "added_sugar",
+        "lemon_lime"
+      ],
+      "portions": [
+        {
+          "n": "1 can (355ml)",
+          "g": 355
+        }
+      ]
+    },
+    {
+      "id": "mountain-dew",
+      "name": "Mountain Dew",
+      "category": "beverage",
+      "kcal": 47,
+      "protein": 0,
+      "carbs": 12.4,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 12.4,
+      "sodium_mg": 18,
+      "potassium_mg": 0,
+      "calcium_mg": 0,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 0,
+      "glycemic_index": 75,
+      "source": {
+        "type": "label",
+        "citation": "Mountain Dew Canada label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "Pepsi",
+      "tags": [
+        "beverage",
+        "soda",
+        "added_sugar",
+        "caffeine",
+        "high_gi"
+      ],
+      "portions": [
+        {
+          "n": "1 can (355ml)",
+          "g": 355
+        }
+      ]
+    },
+    {
+      "id": "fanta-orange",
+      "name": "Fanta Orange",
+      "category": "beverage",
+      "kcal": 44,
+      "protein": 0,
+      "carbs": 11.0,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 11.0,
+      "sodium_mg": 11,
+      "potassium_mg": 0,
+      "calcium_mg": 0,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 0,
+      "glycemic_index": 68,
+      "source": {
+        "type": "label",
+        "citation": "Fanta Orange Canada label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "Fanta",
+      "tags": [
+        "beverage",
+        "soda",
+        "added_sugar",
+        "orange"
+      ],
+      "portions": [
+        {
+          "n": "1 can (355ml)",
+          "g": 355
+        }
+      ]
+    },
+    {
+      "id": "canada-dry-ginger-ale",
+      "name": "Canada Dry Ginger Ale",
+      "category": "beverage",
+      "kcal": 37,
+      "protein": 0,
+      "carbs": 9.4,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 9.4,
+      "sodium_mg": 11,
+      "potassium_mg": 0,
+      "calcium_mg": 0,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 0,
+      "glycemic_index": 63,
+      "source": {
+        "type": "label",
+        "citation": "Canada Dry Ginger Ale label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "Canada Dry",
+      "tags": [
+        "beverage",
+        "soda",
+        "added_sugar",
+        "ginger"
+      ],
+      "portions": [
+        {
+          "n": "1 can (355ml)",
+          "g": 355
+        }
+      ]
+    },
+    {
+      "id": "dr-pepper",
+      "name": "Dr Pepper",
+      "category": "beverage",
+      "kcal": 41,
+      "protein": 0,
+      "carbs": 10.3,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 10.3,
+      "sodium_mg": 11,
+      "potassium_mg": 0,
+      "calcium_mg": 0,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 0,
+      "glycemic_index": 65,
+      "source": {
+        "type": "label",
+        "citation": "Dr Pepper Canada label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "Dr Pepper",
+      "tags": [
+        "beverage",
+        "soda",
+        "added_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 can (355ml)",
+          "g": 355
+        }
+      ]
+    },
+    {
+      "id": "red-bull",
+      "name": "Red Bull Energy Drink",
+      "category": "beverage",
+      "kcal": 45,
+      "protein": 0,
+      "carbs": 11.0,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 11.0,
+      "sodium_mg": 40,
+      "potassium_mg": 4,
+      "calcium_mg": 5,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 4.8,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 3,
+      "glycemic_index": 70,
+      "source": {
+        "type": "label",
+        "citation": "Red Bull Canada label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "Red Bull",
+      "tags": [
+        "beverage",
+        "energy_drink",
+        "added_sugar",
+        "caffeine",
+        "taurine",
+        "b12"
+      ],
+      "portions": [
+        {
+          "n": "1 can (250ml)",
+          "g": 250
+        },
+        {
+          "n": "1 large can (473ml)",
+          "g": 473
+        }
+      ]
+    },
+    {
+      "id": "monster-energy",
+      "name": "Monster Energy",
+      "category": "beverage",
+      "kcal": 47,
+      "protein": 0,
+      "carbs": 11.0,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 11.0,
+      "sodium_mg": 55,
+      "potassium_mg": 5,
+      "calcium_mg": 5,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 3.2,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 4,
+      "glycemic_index": 70,
+      "source": {
+        "type": "label",
+        "citation": "Monster Energy Canada label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "Monster",
+      "tags": [
+        "beverage",
+        "energy_drink",
+        "added_sugar",
+        "caffeine",
+        "taurine"
+      ],
+      "portions": [
+        {
+          "n": "1 can (473ml)",
+          "g": 473
+        }
+      ]
+    },
+    {
+      "id": "nestea-iced-tea-lemon",
+      "name": "Nestea Iced Tea Lemon",
+      "category": "beverage",
+      "kcal": 30,
+      "protein": 0,
+      "carbs": 7.5,
+      "fat": 0,
+      "fiber": 0,
+      "sat_fat": 0,
+      "sugar": 7.5,
+      "sodium_mg": 10,
+      "potassium_mg": 15,
+      "calcium_mg": 0,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 0,
+      "glycemic_index": 55,
+      "source": {
+        "type": "label",
+        "citation": "Nestea Iced Tea Lemon Canada label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "Nestea",
+      "tags": [
+        "beverage",
+        "iced_tea",
+        "added_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 bottle (500ml)",
+          "g": 500
+        },
+        {
+          "n": "1 can (355ml)",
+          "g": 355
+        }
+      ]
+    },
+    {
+      "id": "cadbury-dairy-milk",
+      "name": "Cadbury Dairy Milk (milk chocolate bar)",
+      "category": "sweet",
+      "kcal": 534,
+      "protein": 7.5,
+      "carbs": 57.0,
+      "fat": 30.0,
+      "fiber": 2.0,
+      "sat_fat": 18.0,
+      "sugar": 56.0,
+      "sodium_mg": 80,
+      "potassium_mg": 420,
+      "calcium_mg": 240,
+      "iron_mg": 2.0,
+      "magnesium_mg": 60,
+      "zinc_mg": 1.5,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.6,
+      "folate_ug": 12,
+      "leucine_g": 0.71,
+      "selenium_ug": 4,
+      "glycemic_index": 42,
+      "source": {
+        "type": "label",
+        "citation": "Cadbury Dairy Milk Canada label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": "Cadbury",
+      "tags": [
+        "sweet",
+        "chocolate",
+        "dairy",
+        "high_sugar",
+        "high_fat",
+        "candy"
+      ],
+      "portions": [
+        {
+          "n": "1 small bar (42g)",
+          "g": 42
+        },
+        {
+          "n": "1 large bar (100g)",
+          "g": 100
+        },
+        {
+          "n": "1 mini (15g)",
+          "g": 15
+        }
+      ]
+    },
+    {
+      "id": "kit-kat",
+      "name": "Kit Kat (4-finger)",
+      "category": "sweet",
+      "kcal": 522,
+      "protein": 7.0,
+      "carbs": 62.0,
+      "fat": 27.0,
+      "fiber": 1.0,
+      "sat_fat": 16.0,
+      "sugar": 49.0,
+      "sodium_mg": 55,
+      "potassium_mg": 290,
+      "calcium_mg": 140,
+      "iron_mg": 1.5,
+      "magnesium_mg": 40,
+      "zinc_mg": 1.1,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.4,
+      "folate_ug": 12,
+      "leucine_g": 0.66,
+      "selenium_ug": 4,
+      "glycemic_index": 55,
+      "source": {
+        "type": "label",
+        "citation": "Kit Kat Canada label (Nestle)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": "Nestle",
+      "tags": [
+        "sweet",
+        "chocolate",
+        "wafer",
+        "dairy",
+        "high_sugar",
+        "candy"
+      ],
+      "portions": [
+        {
+          "n": "1 bar 4-finger (45g)",
+          "g": 45
+        },
+        {
+          "n": "1 bar 2-finger (21g)",
+          "g": 21
+        }
+      ]
+    },
+    {
+      "id": "reeses-peanut-butter-cup",
+      "name": "Reese's Peanut Butter Cup",
+      "category": "sweet",
+      "kcal": 530,
+      "protein": 10.6,
+      "carbs": 49.5,
+      "fat": 32.4,
+      "fiber": 3.2,
+      "sat_fat": 11.8,
+      "sugar": 47.1,
+      "sodium_mg": 394,
+      "potassium_mg": 329,
+      "calcium_mg": 71,
+      "iron_mg": 0.9,
+      "magnesium_mg": 53,
+      "zinc_mg": 1.5,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.3,
+      "folate_ug": 18,
+      "leucine_g": 0.94,
+      "selenium_ug": 5,
+      "glycemic_index": 45,
+      "source": {
+        "type": "label",
+        "citation": "Reese's Peanut Butter Cup Canada label (Hershey)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": "Hershey",
+      "tags": [
+        "sweet",
+        "chocolate",
+        "peanut",
+        "dairy",
+        "high_sugar",
+        "high_fat",
+        "candy"
+      ],
+      "portions": [
+        {
+          "n": "1 pack 2 cups (42g)",
+          "g": 42
+        },
+        {
+          "n": "1 cup (21g)",
+          "g": 21
+        }
+      ]
+    },
+    {
+      "id": "hersheys-milk-chocolate",
+      "name": "Hershey's Milk Chocolate Bar",
+      "category": "sweet",
+      "kcal": 535,
+      "protein": 7.7,
+      "carbs": 58.5,
+      "fat": 30.8,
+      "fiber": 1.5,
+      "sat_fat": 18.5,
+      "sugar": 54.0,
+      "sodium_mg": 77,
+      "potassium_mg": 360,
+      "calcium_mg": 200,
+      "iron_mg": 2.3,
+      "magnesium_mg": 55,
+      "zinc_mg": 1.4,
+      "vit_a_iu": 80,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.5,
+      "folate_ug": 12,
+      "leucine_g": 0.73,
+      "selenium_ug": 4,
+      "glycemic_index": 43,
+      "source": {
+        "type": "label",
+        "citation": "Hershey's Milk Chocolate Canada label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": "Hershey",
+      "tags": [
+        "sweet",
+        "chocolate",
+        "dairy",
+        "high_sugar",
+        "candy"
+      ],
+      "portions": [
+        {
+          "n": "1 bar (43g)",
+          "g": 43
+        },
+        {
+          "n": "1 Kiss (4.5g)",
+          "g": 4.5
+        },
+        {
+          "n": "10 Kisses (45g)",
+          "g": 45
+        }
+      ]
+    },
+    {
+      "id": "mms-milk-chocolate",
+      "name": "M&Ms Milk Chocolate",
+      "category": "sweet",
+      "kcal": 492,
+      "protein": 4.5,
+      "carbs": 71.4,
+      "fat": 19.0,
+      "fiber": 2.4,
+      "sat_fat": 11.9,
+      "sugar": 64.3,
+      "sodium_mg": 71,
+      "potassium_mg": 238,
+      "calcium_mg": 170,
+      "iron_mg": 0.7,
+      "magnesium_mg": 42,
+      "zinc_mg": 1.0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.3,
+      "folate_ug": 10,
+      "leucine_g": 0.43,
+      "selenium_ug": 3,
+      "glycemic_index": 32,
+      "source": {
+        "type": "label",
+        "citation": "M&Ms Milk Chocolate Canada label (Mars)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": "M&M's",
+      "tags": [
+        "sweet",
+        "chocolate",
+        "dairy",
+        "high_sugar",
+        "candy"
+      ],
+      "portions": [
+        {
+          "n": "1 fun size pack (17g)",
+          "g": 17
+        },
+        {
+          "n": "1 share pack (42g)",
+          "g": 42
+        },
+        {
+          "n": "1 large pack (113g)",
+          "g": 113
+        }
+      ]
+    },
+    {
+      "id": "mms-peanut",
+      "name": "M&Ms Peanut",
+      "category": "sweet",
+      "kcal": 521,
+      "protein": 9.8,
+      "carbs": 60.7,
+      "fat": 26.2,
+      "fiber": 3.6,
+      "sat_fat": 10.7,
+      "sugar": 52.4,
+      "sodium_mg": 57,
+      "potassium_mg": 381,
+      "calcium_mg": 90,
+      "iron_mg": 1.0,
+      "magnesium_mg": 77,
+      "zinc_mg": 1.7,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.3,
+      "folate_ug": 18,
+      "leucine_g": 0.78,
+      "selenium_ug": 4,
+      "glycemic_index": 33,
+      "source": {
+        "type": "label",
+        "citation": "M&Ms Peanut Canada label (Mars)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": "M&M's",
+      "tags": [
+        "sweet",
+        "chocolate",
+        "peanut",
+        "dairy",
+        "high_sugar",
+        "high_fat",
+        "candy"
+      ],
+      "portions": [
+        {
+          "n": "1 fun size pack (17g)",
+          "g": 17
+        },
+        {
+          "n": "1 share pack (49g)",
+          "g": 49
+        }
+      ]
+    },
+    {
+      "id": "snickers",
+      "name": "Snickers (chocolate bar)",
+      "category": "sweet",
+      "kcal": 488,
+      "protein": 8.4,
+      "carbs": 60.0,
+      "fat": 24.0,
+      "fiber": 2.1,
+      "sat_fat": 8.8,
+      "sugar": 49.5,
+      "sodium_mg": 243,
+      "potassium_mg": 378,
+      "calcium_mg": 75,
+      "iron_mg": 0.8,
+      "magnesium_mg": 53,
+      "zinc_mg": 1.2,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.2,
+      "folate_ug": 15,
+      "leucine_g": 0.66,
+      "selenium_ug": 4,
+      "glycemic_index": 43,
+      "source": {
+        "type": "label",
+        "citation": "Snickers Canada label (Mars)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": "Mars",
+      "tags": [
+        "sweet",
+        "chocolate",
+        "peanut",
+        "caramel",
+        "high_sugar",
+        "high_fat",
+        "candy"
+      ],
+      "portions": [
+        {
+          "n": "1 fun size (17g)",
+          "g": 17
+        },
+        {
+          "n": "1 bar (52g)",
+          "g": 52
+        }
+      ]
+    },
+    {
+      "id": "mars-bar",
+      "name": "Mars Bar",
+      "category": "sweet",
+      "kcal": 449,
+      "protein": 4.1,
+      "carbs": 69.6,
+      "fat": 16.6,
+      "fiber": 0.9,
+      "sat_fat": 7.8,
+      "sugar": 57.9,
+      "sodium_mg": 150,
+      "potassium_mg": 127,
+      "calcium_mg": 75,
+      "iron_mg": 0.5,
+      "magnesium_mg": 35,
+      "zinc_mg": 0.6,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.3,
+      "folate_ug": 8,
+      "leucine_g": 0.38,
+      "selenium_ug": 3,
+      "glycemic_index": 68,
+      "source": {
+        "type": "label",
+        "citation": "Mars Bar Canada label",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": "Mars",
+      "tags": [
+        "sweet",
+        "chocolate",
+        "caramel",
+        "nougat",
+        "high_sugar",
+        "candy"
+      ],
+      "portions": [
+        {
+          "n": "1 fun size (18g)",
+          "g": 18
+        },
+        {
+          "n": "1 bar (51g)",
+          "g": 51
+        }
+      ]
+    },
+    {
+      "id": "twix",
+      "name": "Twix (chocolate caramel cookie bar)",
+      "category": "sweet",
+      "kcal": 491,
+      "protein": 4.4,
+      "carbs": 64.6,
+      "fat": 24.4,
+      "fiber": 1.0,
+      "sat_fat": 12.7,
+      "sugar": 46.6,
+      "sodium_mg": 201,
+      "potassium_mg": 178,
+      "calcium_mg": 80,
+      "iron_mg": 1.7,
+      "magnesium_mg": 42,
+      "zinc_mg": 0.7,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 15,
+      "leucine_g": 0.39,
+      "selenium_ug": 3,
+      "glycemic_index": 65,
+      "source": {
+        "type": "label",
+        "citation": "Twix Canada label (Mars)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Twix",
+      "tags": [
+        "sweet",
+        "chocolate",
+        "caramel",
+        "cookie",
+        "high_sugar",
+        "candy"
+      ],
+      "portions": [
+        {
+          "n": "1 fun size (17g)",
+          "g": 17
+        },
+        {
+          "n": "1 pack 2 bars (50g)",
+          "g": 50
+        }
+      ]
+    },
+    {
+      "id": "coffee-crisp",
+      "name": "Coffee Crisp",
+      "category": "sweet",
+      "kcal": 509,
+      "protein": 5.5,
+      "carbs": 65.5,
+      "fat": 25.5,
+      "fiber": 1.8,
+      "sat_fat": 15.5,
+      "sugar": 49.0,
+      "sodium_mg": 80,
+      "potassium_mg": 290,
+      "calcium_mg": 90,
+      "iron_mg": 1.0,
+      "magnesium_mg": 40,
+      "zinc_mg": 0.8,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.2,
+      "folate_ug": 12,
+      "leucine_g": 0.52,
+      "selenium_ug": 4,
+      "glycemic_index": 60,
+      "source": {
+        "type": "label",
+        "citation": "Coffee Crisp Canada label (Nestle)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Nestle",
+      "tags": [
+        "sweet",
+        "chocolate",
+        "wafer",
+        "coffee",
+        "high_sugar",
+        "candy",
+        "canadian"
+      ],
+      "portions": [
+        {
+          "n": "1 fun size (15g)",
+          "g": 15
+        },
+        {
+          "n": "1 bar (50g)",
+          "g": 50
+        }
+      ]
+    },
+    {
+      "id": "toblerone-milk",
+      "name": "Toblerone Milk Chocolate",
+      "category": "sweet",
+      "kcal": 534,
+      "protein": 5.7,
+      "carbs": 60.0,
+      "fat": 29.5,
+      "fiber": 2.0,
+      "sat_fat": 18.0,
+      "sugar": 57.0,
+      "sodium_mg": 100,
+      "potassium_mg": 300,
+      "calcium_mg": 170,
+      "iron_mg": 1.5,
+      "magnesium_mg": 40,
+      "zinc_mg": 1.0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.4,
+      "folate_ug": 10,
+      "leucine_g": 0.54,
+      "selenium_ug": 3,
+      "glycemic_index": 42,
+      "source": {
+        "type": "label",
+        "citation": "Toblerone Milk Canada label (Mondelez)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": "Toblerone",
+      "tags": [
+        "sweet",
+        "chocolate",
+        "honey",
+        "almond",
+        "nougat",
+        "candy",
+        "high_sugar"
+      ],
+      "portions": [
+        {
+          "n": "1 small bar (35g)",
+          "g": 35
+        },
+        {
+          "n": "1 bar (100g)",
+          "g": 100
+        }
+      ]
+    },
+    {
+      "id": "skittles-original",
+      "name": "Skittles Original (fruit candy)",
+      "category": "sweet",
+      "kcal": 405,
+      "protein": 0,
+      "carbs": 90.5,
+      "fat": 4.4,
+      "fiber": 0,
+      "sat_fat": 4.4,
+      "sugar": 75.6,
+      "sodium_mg": 15,
+      "potassium_mg": 0,
+      "calcium_mg": 0,
+      "iron_mg": 0,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "leucine_g": 0,
+      "selenium_ug": 0,
+      "glycemic_index": 70,
+      "source": {
+        "type": "label",
+        "citation": "Skittles Canada label (Mars, gelatin-free since 2010)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": "Skittles",
+      "tags": [
+        "sweet",
+        "candy",
+        "gelatin_free",
+        "high_sugar",
+        "high_gi",
+        "fruit_flavor"
+      ],
+      "portions": [
+        {
+          "n": "1 fun size pack (19g)",
+          "g": 19
+        },
+        {
+          "n": "1 share pack (61g)",
+          "g": 61
+        }
+      ]
+    },
+    {
+      "id": "naan-plain",
+      "name": "Naan (plain, restaurant style)",
+      "category": "prepared",
+      "kcal": 310,
+      "protein": 9,
+      "carbs": 55,
+      "fat": 5,
+      "fiber": 2.0,
+      "sat_fat": 1.5,
+      "sugar": 3.0,
+      "sodium_mg": 460,
+      "potassium_mg": 150,
+      "calcium_mg": 38,
+      "iron_mg": 3.0,
+      "magnesium_mg": 30,
+      "zinc_mg": 1.0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 42,
+      "leucine_g": 0.68,
+      "selenium_ug": 28,
+      "glycemic_index": 71,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Generic restaurant naan recipe",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "grain",
+        "bread",
+        "restaurant_style"
+      ],
+      "portions": [
+        {
+          "n": "1 naan (100g)",
+          "g": 100
+        },
+        {
+          "n": "half naan (50g)",
+          "g": 50
+        }
+      ]
+    },
+    {
+      "id": "naan-garlic-butter",
+      "name": "Naan (garlic butter, restaurant)",
+      "category": "prepared",
+      "kcal": 355,
+      "protein": 9,
+      "carbs": 55,
+      "fat": 11,
+      "fiber": 2.0,
+      "sat_fat": 4.5,
+      "sugar": 3.5,
+      "sodium_mg": 520,
+      "potassium_mg": 160,
+      "calcium_mg": 42,
+      "iron_mg": 3.0,
+      "magnesium_mg": 30,
+      "zinc_mg": 1.0,
+      "vit_a_iu": 180,
+      "vit_c_mg": 1,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 42,
+      "leucine_g": 0.68,
+      "selenium_ug": 28,
+      "glycemic_index": 71,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Generic restaurant garlic butter naan",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "grain",
+        "bread",
+        "restaurant_style",
+        "high_fat"
+      ],
+      "portions": [
+        {
+          "n": "1 naan (110g)",
+          "g": 110
+        }
+      ]
+    },
+    {
+      "id": "tandoori-roti",
+      "name": "Tandoori Roti (plain)",
+      "category": "prepared",
+      "kcal": 265,
+      "protein": 9.5,
+      "carbs": 55,
+      "fat": 1.5,
+      "fiber": 7.5,
+      "sat_fat": 0.3,
+      "sugar": 0.5,
+      "sodium_mg": 8,
+      "potassium_mg": 250,
+      "calcium_mg": 28,
+      "iron_mg": 3.2,
+      "magnesium_mg": 98,
+      "zinc_mg": 2.0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 32,
+      "leucine_g": 0.71,
+      "selenium_ug": 48,
+      "glycemic_index": 62,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Generic restaurant tandoori roti",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "grain",
+        "bread",
+        "restaurant_style"
+      ],
+      "portions": [
+        {
+          "n": "1 roti (50g)",
+          "g": 50
+        }
+      ]
+    },
+    {
+      "id": "paneer-naan",
+      "name": "Paneer Naan (stuffed)",
+      "category": "prepared",
+      "kcal": 310,
+      "protein": 12,
+      "carbs": 42,
+      "fat": 11,
+      "fiber": 2.5,
+      "sat_fat": 4.5,
+      "sugar": 2.5,
+      "sodium_mg": 460,
+      "potassium_mg": 200,
+      "calcium_mg": 180,
+      "iron_mg": 2.5,
+      "magnesium_mg": 30,
+      "zinc_mg": 1.4,
+      "vit_a_iu": 260,
+      "vit_c_mg": 1,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.2,
+      "folate_ug": 32,
+      "leucine_g": 0.95,
+      "selenium_ug": 28,
+      "glycemic_index": 68,
+      "source": {
+        "type": "restaurant_estimate",
+        "citation": "Generic paneer naan recipe",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "dairy",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "grain",
+        "bread",
+        "restaurant_style",
+        "stuffed",
+        "dairy"
+      ],
+      "portions": [
+        {
+          "n": "1 naan (130g)",
+          "g": 130
+        }
+      ]
+    },
+    {
+      "id": "samosa-chaat",
+      "name": "Samosa Chaat (with chutney + yogurt)",
+      "category": "prepared",
+      "kcal": 215,
+      "protein": 5,
+      "carbs": 30,
+      "fat": 9,
+      "fiber": 3.0,
+      "sat_fat": 2.0,
+      "sugar": 5.0,
+      "sodium_mg": 520,
+      "potassium_mg": 260,
+      "calcium_mg": 55,
+      "iron_mg": 1.5,
+      "magnesium_mg": 28,
+      "zinc_mg": 0.6,
+      "vit_a_iu": 180,
+      "vit_c_mg": 8,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.1,
+      "folate_ug": 28,
+      "leucine_g": 0.42,
+      "selenium_ug": 10,
+      "glycemic_index": 60,
+      "source": {
+        "type": "INDB_2021",
+        "citation": "INDB 2021 samosa chaat",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "cooked",
+        "chaat",
+        "street_food",
+        "dairy",
+        "yogurt"
+      ],
+      "portions": [
+        {
+          "n": "1 plate (250g)",
+          "g": 250
+        }
+      ]
     }
   ]
 }
