@@ -147,7 +147,7 @@ nav.bnav .tab.active .lbl{color:var(--ink)}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
 <script>
 'use strict';
-const STORAGE_KEY='living-life-config-v2',DATA_KEY='living-life-data-v2',APP_VERSION='3.15.0';
+const STORAGE_KEY='living-life-config-v2',DATA_KEY='living-life-data-v2',APP_VERSION='3.16.0';
 const ACTIVITIES=['Walk','Strength workout','Run','Yoga / stretch','Amazon shift','Rest day'];
 const SUPPLEMENTS=[
   {id:'creatine',name:'Creatine monohydrate',dose:'5 g',timing:'anytime',color:'coral',ini:'C'},
@@ -221,7 +221,7 @@ const state={
   screen:'welcome',
   config:{githubOwner:'vedantpatel699',githubRepo:'living-life-data',githubToken:'',branch:'main',claudeApiKey:'',claudeModel:'claude-sonnet-4-6',stravaToken:'',startDate:null},
   profile:{name:'',age:28,heightCm:167,sex:'male',startWeight:78,goalWeight:65,goalDate:'',shiftDays:[]},
-  data:{version:3,entries:{},supplements:{},coachConversation:[],weeklyReflections:[],customFoods:[],mealTemplates:[],frequencyPattern:{},shiftDates:[]},
+  data:{version:3,entries:{},supplements:{},coachConversation:[],customFoods:[],mealTemplates:[],frequencyPattern:{},shiftDates:[]},
   dataSha:null,draft:{},isSyncing:false,lastSyncOk:null,
 };
 
@@ -302,7 +302,6 @@ function migrateData(){
   if(!d.entries)d.entries={};
   if(!d.supplements)d.supplements={};
   if(!d.coachConversation)d.coachConversation=[];
-  if(!d.weeklyReflections)d.weeklyReflections=[];
   if(!d.customFoods)d.customFoods=[];
   if(!d.mealTemplates)d.mealTemplates=[];    // Saved post-shift meal etc.
   if(!d.frequencyPattern)d.frequencyPattern={}; // Food picker personalization
@@ -521,7 +520,7 @@ function renderToday(){
     <button class="btn btn-primary btn-full mt-4" id="t-log" style="padding:16px;display:flex;align-items:center;justify-content:center;gap:8px"><span style="font-size:18px">＋</span> <span>Log today</span></button>
     <h2 class="gf-section">QUICK ACCESS</h2>
     <div style="display:flex;flex-direction:column;gap:8px">
-      ${gfRow({icon:'💊',iconBg:'var(--mint-s)',iconColor:'var(--mint)',title:todaySuppCount()+' of '+(DB.supplements?DB.supplements.supplements.filter(s=>s.frequency==='daily').length:SUPPLEMENTS.length)+' supplements taken',sub:suppStreak()>0?'Coverage: '+suppStreak()+' days in a row':'Tap to check off',id:'t-supps'})}
+      ${gfRow({icon:'💊',iconBg:'var(--mint-s)',iconColor:'var(--mint)',title:todaySuppCount()+' of '+(DB.supplements?DB.supplements.supplements.filter(s=>s.frequency==='daily').length:SUPPLEMENTS.length)+' supplements taken',sub:'Tap to check off',id:'t-supps'})}
       ${tpls.length>0?gfRow({icon:'💾',iconBg:'var(--sun-s)',iconColor:'#B58A0F',title:'Saved meal templates',sub:tpls.length+' template'+(tpls.length===1?'':'s')+' · one-tap log',id:'t-tpls'}):''}
       ${hasClaudeKey()?gfRow({icon:'✦',iconBg:'var(--cta)',iconColor:'var(--sun)',title:'Ask your coach',sub:'Knows your data',id:'t-coach'}):''}
     </div>
@@ -711,7 +710,7 @@ function renderProgress(){
     <div class="grid-3" style="margin-top:20px">
       <div class="card-flat"><div class="flabel">CURRENT</div><div style="font-size:19px;font-weight:700;margin-top:2px">${stats?.latest!=null?stats.latest.toFixed(1):'—'}</div><div class="tiny muted">${stats?.totalChange!=null?(stats.totalChange>0?'+':'')+stats.totalChange.toFixed(1)+' kg':'kg'}</div></div>
       <div class="card-flat"><div class="flabel">GOAL</div><div style="font-size:19px;font-weight:700;margin-top:2px">${state.profile.goalWeight||'—'}</div><div class="tiny muted">${state.profile.goalDate?'by '+fmtDate(state.profile.goalDate):'set in settings'}</div></div>
-      <div class="card-flat"><div class="flabel">STREAK</div><div style="font-size:19px;font-weight:700;margin-top:2px;color:var(--coral)">${streak}d</div><div class="tiny muted">logging</div></div>
+      <div class="card-flat"><div class="flabel">COVERAGE</div><div style="font-size:19px;font-weight:700;margin-top:2px;color:var(--coral)">${(()=>{const last7=[];for(let i=0;i<7;i++){const dt=new Date();dt.setDate(dt.getDate()-i);last7.push(dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0'))}return last7.filter(iso=>state.data.entries[iso]).length})()}/7</div><div class="tiny muted">last 7 days</div></div>
     </div>
     <div class="card mt-4"><div style="display:flex;justify-content:space-between;align-items:center"><h3>Weight trend</h3><div class="chip-pill" style="background:var(--surface-cream)">30 days</div></div>
       <div style="height:200px;margin-top:14px;position:relative"><canvas id="w-chart"></canvas></div></div>
@@ -932,7 +931,7 @@ function bindSettings(){
     saveLocalConfig();
     render();
   });
-  document.getElementById('s-clear')?.addEventListener('click',()=>{if(confirm('Clear local cache?')){localStorage.removeItem(DATA_KEY);state.data={version:3,entries:{},supplements:{},coachConversation:[],weeklyReflections:[],customFoods:[],mealTemplates:[],frequencyPattern:{},shiftDates:[]};state.dataSha=null;toast('Cleared');render()}});
+  document.getElementById('s-clear')?.addEventListener('click',()=>{if(confirm('Clear local cache?')){localStorage.removeItem(DATA_KEY);state.data={version:3,entries:{},supplements:{},coachConversation:[],customFoods:[],mealTemplates:[],frequencyPattern:{},shiftDates:[]};state.dataSha=null;toast('Cleared');render()}});
 }
 
 // Placeholders (filled in next Edits)
@@ -1175,188 +1174,8 @@ function bindCoach(){
   setTimeout(()=>{const th=document.getElementById('cc-thread');if(th)th.scrollTop=th.scrollHeight},50);
 }
 
-function parseDuration(str){if(!str)return 0;const m=String(str).match(/^(\d+):(\d{1,2})$/);if(m)return parseInt(m[1],10)*60+parseInt(m[2],10);const n=parseFloat(str);return isNaN(n)?0:Math.round(n*60)}
-function renderLogRun(){
-  if(!state.draft.lr)state.draft.lr={type:'outdoor',duration:'',distance:'',effort:2,notes:''};
-  const d=state.draft.lr;
-  const pace=(d.duration&&d.distance&&parseFloat(d.distance)>0)?fmtMinSec(Math.round((parseDuration(d.duration)||0)/parseFloat(d.distance))):'—:—';
-  const mets={outdoor:8.0,treadmill:7.5,walk:3.5};
-  const sec=parseDuration(d.duration)||0;
-  const kcal=sec>0?Math.round((mets[d.type]||7)*3.5*(state.profile.startWeight||78)*(sec/60)/200):0;
-  return `<div class="top-bar"><button class="back-btn" id="lr-back">←</button><div class="title-block"><h1>Log a run</h1><div class="subtitle">Add a session manually</div></div></div>
-<div style="padding:4px 4px 40px">
-<h2 class="sec" style="margin-top:12px">TYPE</h2>
-<div style="background:#EFF2F6;padding:5px;border-radius:var(--r-md);display:flex;gap:4px">
-${[{id:'outdoor',l:'🏃 Outdoor run'},{id:'treadmill',l:'🏃 Treadmill'},{id:'walk',l:'🚶 Walk'}].map(o=>`<button class="lrt" data-t="${o.id}" style="flex:1;padding:10px;border-radius:10px;font-size:12px;font-weight:600;background:${d.type===o.id?'var(--surface-white)':'transparent'};color:${d.type===o.id?'var(--ink)':'var(--muted)'};box-shadow:${d.type===o.id?'var(--sh-card)':'none'}">${o.l}</button>`).join('')}
-</div>
-<div class="grid-2" style="margin-top:16px">
-<div><h2 class="sec" style="margin:0 0 8px">DURATION</h2><div class="card-flat" style="padding:12px 16px"><input type="text" id="lr-d" value="${escapeHtml(d.duration)}" placeholder="32:00" style="border:none;padding:0;font-size:24px;font-weight:700;background:transparent"><div class="tiny muted mt-1">mm:ss</div></div></div>
-<div><h2 class="sec" style="margin:0 0 8px">DISTANCE</h2><div class="card-flat" style="padding:12px 16px"><div style="display:flex;align-items:baseline;gap:6px"><input type="number" step="0.1" id="lr-k" value="${d.distance}" placeholder="4.2" inputmode="decimal" style="border:none;padding:0;font-size:24px;font-weight:700;background:transparent;width:70px"><span class="muted" style="font-weight:600">km</span></div><div class="tiny muted mt-1">optional</div></div></div>
-</div>
-<div class="card-tinted" style="margin-top:14px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
-<div><div class="flabel">PACE · AUTO</div><div style="font-size:20px;font-weight:700;margin-top:2px">${pace} / km</div></div>
-<div class="text-right"><div class="flabel">EST. KCAL</div><div style="font-size:20px;font-weight:700;margin-top:2px">${kcal||'—'}</div><div class="tiny faint">±25-95% noisy</div></div>
-</div>
-<h2 class="sec">HOW IT FELT</h2>
-<div style="display:flex;gap:8px">${['Easy','Moderate','Hard'].map((l,i)=>`<button class="lre" data-e="${i+1}" style="flex:1;padding:14px;border-radius:var(--r-md);font-weight:600;background:${d.effort===i+1?'var(--cta)':'var(--surface-white)'};color:${d.effort===i+1?'white':'var(--ink)'};border:1.5px solid ${d.effort===i+1?'var(--cta)':'var(--border)'}">${l}</button>`).join('')}</div>
-<h2 class="sec">NOTES</h2>
-<textarea id="lr-n" placeholder="Felt smooth — knees fine, breathing OK.">${escapeHtml(d.notes)}</textarea>
-<button class="btn btn-primary btn-full" id="lr-s" style="margin-top:24px">✓ Save run</button>
-</div>`;
-}
-function bindLogRun(){
-  const d=state.draft.lr;
-  document.getElementById('lr-back')?.addEventListener('click',()=>setScreen('today'));
-  document.querySelectorAll('.lrt').forEach(b=>b.addEventListener('click',()=>{d.type=b.dataset.t;render()}));
-  document.querySelectorAll('.lre').forEach(b=>b.addEventListener('click',()=>{d.effort=parseInt(b.dataset.e,10);render()}));
-  document.getElementById('lr-d')?.addEventListener('input',e=>d.duration=e.target.value);
-  document.getElementById('lr-d')?.addEventListener('blur',()=>render());
-  document.getElementById('lr-k')?.addEventListener('input',e=>d.distance=e.target.value);
-  document.getElementById('lr-k')?.addEventListener('blur',()=>render());
-  document.getElementById('lr-n')?.addEventListener('input',e=>d.notes=e.target.value);
-  document.getElementById('lr-s')?.addEventListener('click',async()=>{
-    const dur=parseDuration(d.duration);if(dur===0){toast('Enter duration','error');return}
-    const btn=document.getElementById('lr-s');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Saving…';
-    try{
-      const tE=state.data.entries[today()]||{};
-      tE.activities=tE.activities||[];
-      const lbl=d.type==='outdoor'?'Outdoor run':d.type==='treadmill'?'Treadmill':'Walk';
-      if(!tE.activities.includes(lbl))tE.activities.push(lbl);
-      tE.run={type:d.type,durationSec:dur,distanceKm:parseFloat(d.distance)||null,effort:d.effort,notes:d.notes||'',source:'manual'};
-      tE.updatedAt=nowIso();
-      state.data.entries[today()]=tE;
-      await pushData();
-      toast('Run saved ✓','success');state.draft={};setScreen('today');
-    }catch(e){toast('Save failed: '+e.message,'error');btn.disabled=false;btn.innerHTML='✓ Save run'}
-  });
-}
-
-// =================== BIO TAB — bottom-nav 5th tab, surfaces the deep dive ===================
-function renderBio(){
-  // Bio tab uses the HCDetail content but with bottom nav (no top back-btn)
-  state.hcDetailDate=today();
-  // Strip the top-bar / back button by rendering the HCDetail body inline
-  const fullHtml=renderHCDetail();
-  // Replace the top-bar with a tab-friendly header
-  return fullHtml
-    .replace(/<div class="top-bar">[\s\S]*?<\/div>/,
-      '<div style="padding:14px 0 4px"><h1 style="font-size:24px;font-weight:700;letter-spacing:-0.01em">Bio</h1><div class="muted tiny" style="margin-top:2px">Health Connect deep dive · '+fmtDateLong(today())+'</div></div>'
-    );
-}
-function bindBio(){
-  // No back button — bottom nav handles navigation
-}
-
-// =================== HC DEEP-DIVE SCREEN (the curious-mind view) ===================
-function renderHCDetail(){
-  const t=state.hcDetailDate||today();
-  const e=state.data.entries[t]||{};
-  const hc=e.hc||{};
-  const foods=e.foods||[];
-  const fdv=DB.foods?.dv||{};
-  // Aggregate nutrient totals from foods array
-  const totals={};
-  for(const f of foods){
-    for(const k of Object.keys(f)){
-      if(typeof f[k]==='number'&&['kcal','protein','carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug','leucine_g','selenium_ug'].includes(k)){
-        totals[k]=(totals[k]||0)+f[k];
-      }
-    }
-  }
-  // BMR breakdown
-  const p=state.profile;
-  const wt=currentWeight();
-  const bmrTotal=Math.round(10*wt+6.25*p.heightCm-5*p.age+(p.sex==='female'?-161:5));
-  const bmrSoFar=bmrSoFarToday();
-  const activeOut=Math.round(hc.active_calories||0);
-  // Sleep stages
-  const stages=hc.sleep?.stages||null;
-
-  return `<div class="top-bar"><button class="back-btn" id="hcd-back">←</button><div class="title-block"><h1>Deep dive</h1><div class="subtitle">${fmtDateLong(t)} · all the data</div></div></div>
-<div style="padding:4px 4px 80px">
 
 
-
-  <h2 class="gf-section">HEALTH CONNECT — RAW VALUES</h2>
-  ${hc.syncedAt?`<div class="tiny muted" style="margin:0 4px 8px">Last synced ${fmtDateTime(hc.syncedAt)}</div>`:'<div class="tiny faint" style="margin:0 4px 8px">No HC data for this day</div>'}
-  <div class="gf-card" style="font-family:monospace;font-size:12px;line-height:1.7">
-    ${(()=>{
-      const rows=[];
-      const fmt=(label,val,unit='')=>val!=null?`<div style="display:flex;justify-content:space-between;border-bottom:1px dotted var(--border-l);padding:3px 0"><span class="muted">${label}</span><span><b>${val}</b>${unit}</span></div>`:'';
-      rows.push(fmt('Steps',hc.steps?.toLocaleString()));
-      rows.push(fmt('Distance',hc.distance_km?hc.distance_km.toFixed(3):null,' km'));
-      rows.push(fmt('Active kcal',hc.active_calories?Math.round(hc.active_calories):null,' kcal'));
-      rows.push(fmt('Total kcal (HC est.)',hc.total_calories?Math.round(hc.total_calories):null,' kcal'));
-      rows.push(fmt('Floors climbed',hc.floors_climbed));
-      rows.push(fmt('Resting HR',hc.resting_heart_rate?Math.round(hc.resting_heart_rate):null,' bpm'));
-      rows.push(fmt('HR avg (workout-derived)',hc.hr_avg,' bpm'));
-      rows.push(fmt('HR min',hc.hr_min,' bpm'));
-      rows.push(fmt('HR max',hc.hr_max,' bpm'));
-      rows.push(fmt('HRV (RMSSD avg)',hc.hrv_rmssd_avg?hc.hrv_rmssd_avg.toFixed(1):null,' ms'));
-      rows.push(fmt('HRV samples',hc.hrv_samples));
-      rows.push(fmt('VO₂max',hc.vo2_max?hc.vo2_max.toFixed(1):null));
-      rows.push(fmt('Weight (HC)',hc.weight?hc.weight.toFixed(1):null,' kg'));
-      rows.push(fmt('Body fat',hc.body_fat?(hc.body_fat*100).toFixed(1):null,'%'));
-      rows.push(fmt('Hydration (HC)',hc.water?Math.round(hc.water):null,' ml'));
-      rows.push(fmt('Oxygen saturation',hc.oxygen_saturation?(hc.oxygen_saturation*100).toFixed(1):null,'%'));
-      rows.push(fmt('Respiratory rate',hc.respiratory_rate?hc.respiratory_rate.toFixed(1):null,' /min'));
-      rows.push(fmt('Blood pressure',hc.blood_pressure_systolic?Math.round(hc.blood_pressure_systolic)+'/'+Math.round(hc.blood_pressure_diastolic||0):null,' mmHg'));
-      rows.push(fmt('Blood glucose',hc.blood_glucose?hc.blood_glucose.toFixed(1):null,' mmol/L'));
-      rows.push(fmt('Body temperature',hc.body_temperature?hc.body_temperature.toFixed(1):null,'°C'));
-      const valid=rows.filter(Boolean);
-      return valid.length>0?valid.join(''):'<div class="muted" style="text-align:center;padding:14px">No raw HC values stored for this day. Open the app on Android with HC granted, then return.</div>';
-    })()}
-  </div>
-
-
-
-  ${hc.workouts&&hc.workouts.length?`<h2 class="gf-section">WORKOUTS · DETAIL</h2>
-  <div style="display:flex;flex-direction:column;gap:8px">
-  ${hc.workouts.map(w=>`<div class="gf-card" style="padding:14px">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-      <div>
-        <div style="font-weight:700;font-size:14px">${escapeHtml(w.title||w.type||'Workout')}</div>
-        <div class="tiny muted">${w.sourceApp?escapeHtml(w.sourceApp.split('.').slice(-1)[0]):'manual'}</div>
-      </div>
-      <div style="text-align:right">
-        <div style="font-weight:700;font-size:14px">${Math.round((w.durationSec||0)/60)} min</div>
-        ${w.calories?`<div class="tiny muted">${Math.round(w.calories)} kcal</div>`:''}
-      </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:12px">
-      ${w.distance_m?`<div><span class="muted">Distance:</span> <b>${(w.distance_m/1000).toFixed(2)} km</b></div>`:''}
-      ${w.hrAvg?`<div><span class="muted">HR avg:</span> <b>${Math.round(w.hrAvg)} bpm</b></div>`:''}
-      ${w.hrMax?`<div><span class="muted">HR max:</span> <b>${Math.round(w.hrMax)} bpm</b></div>`:''}
-      ${w.start?`<div><span class="muted">Start:</span> <b>${new Date(w.start).toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'})}</b></div>`:''}
-      ${w.end?`<div><span class="muted">End:</span> <b>${new Date(w.end).toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'})}</b></div>`:''}
-    </div>
-  </div>`).join('')}
-  </div>`:''}
-
-  ${foods.length>0?`<h2 class="gf-section">NUTRIENTS CONSUMED · % DV</h2>
-  <div class="gf-card" style="font-family:monospace;font-size:12px;line-height:1.6">
-    ${(()=>{
-      const order=['kcal','protein','carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','selenium_ug','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug','leucine_g'];
-      const labels={kcal:'Energy',protein:'Protein',carbs:'Carbs',fat:'Fat',fiber:'Fiber',sat_fat:'Sat fat',sugar:'Sugar',sodium_mg:'Sodium',potassium_mg:'Potassium',calcium_mg:'Calcium',iron_mg:'Iron',magnesium_mg:'Magnesium',zinc_mg:'Zinc',selenium_ug:'Selenium',vit_a_iu:'Vit A',vit_c_mg:'Vit C',vit_d_iu:'Vit D',vit_b12_ug:'Vit B12',folate_ug:'Folate',leucine_g:'Leucine'};
-      const units={kcal:'kcal',protein:'g',carbs:'g',fat:'g',fiber:'g',sat_fat:'g',sugar:'g',sodium_mg:'mg',potassium_mg:'mg',calcium_mg:'mg',iron_mg:'mg',magnesium_mg:'mg',zinc_mg:'mg',selenium_ug:'µg',vit_a_iu:'IU',vit_c_mg:'mg',vit_d_iu:'IU',vit_b12_ug:'µg',folate_ug:'µg',leucine_g:'g'};
-      return order.map(k=>{
-        const v=totals[k];if(v==null||v===0)return '';
-        const tgt=fdv[k]?.target;
-        const pct=tgt?Math.round((v/tgt)*100):null;
-        const max=fdv[k]?.max;
-        const overMax=max&&v>max;
-        const color=overMax?'#B58A0F':pct>=80?'var(--success)':'var(--ink)';
-        return `<div style="display:flex;justify-content:space-between;border-bottom:1px dotted var(--border-l);padding:3px 0"><span class="muted">${labels[k]}</span><span style="color:${color}"><b>${Number.isInteger(v)?v:v.toFixed(1)}</b> ${units[k]}${pct!=null?` <span class="tiny faint">(${pct}% DV)</span>`:''}</span></div>`;
-      }).filter(Boolean).join('');
-    })()}
-  </div>`:''}
-
-  <div class="tiny faint text-center" style="margin-top:20px;padding:10px">All values stored in your private GitHub repo. This screen reads them back — nothing computed live.</div>
-</div>`;
-}
-function bindHCDetail(){
-  document.getElementById('hcd-back')?.addEventListener('click',()=>{state.hcDetailDate=null;setScreen('progress')});
-}
 
 function renderSupplements(){
   const t=today(),supp=state.data.supplements[t]||{};
@@ -1407,25 +1226,6 @@ function bindSupplements(){
     saveLocalData();nativeHaptic('light');render();
     pushData().catch(e=>console.warn('sync',e));
   }));
-}
-
-async function generateReflection(){
-  if(!hasClaudeKey()){toast('Add Claude API key first','error');return}
-  const btn=document.getElementById('gen-refl');if(btn){btn.disabled=true;btn.innerHTML='<span class="spinner dark"></span> Generating…'}
-  const d=new Date(),day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);
-  const ws=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-  const we=Object.entries(state.data.entries).filter(([dt])=>dt>=ws&&dt<=today()).sort((a,b)=>a[0].localeCompare(b[0]));
-  if(we.length===0){toast('Log a few days first','error');if(btn){btn.disabled=false;btn.innerHTML='Generate now'}return}
-  const sys=`You are writing a short weekly reflection for Vedant's fitness app. Read his week's data and write a single warm, honest paragraph (~120-180 words). Reference specific patterns. No fitness-bro hype. If the week was hard, acknowledge it. If something looks off, name it gently.`;
-  const s=weightStats();
-  const summary={weekStart:ws,days_logged:we.length,weights:we.map(([d,e])=>({d,w:e.weight})).filter(x=>x.w!=null),workouts:we.filter(([_,e])=>e.activities?.some(a=>a.startsWith('Routine'))).length,runs:we.filter(([_,e])=>e.activities?.some(a=>a.includes('un'))).length,walks:we.filter(([_,e])=>e.activities?.includes('Walk')).length,notes:we.map(([d,e])=>e.notes).filter(Boolean),trend_7d_avg:s?.avgNow,trend_change:s?.weekChange};
-  try{
-    const text=await callClaude([{role:'user',content:'Here is my week. Write me a reflection paragraph.\n\n'+JSON.stringify(summary,null,2)}],sys,600);
-    state.data.weeklyReflections=state.data.weeklyReflections||[];
-    state.data.weeklyReflections.push({weekStart:ws,text:text.trim(),ts:nowIso()});
-    saveLocalData();pushData().catch(()=>{});
-    toast('Reflection generated ✓','success');render();
-  }catch(e){toast('Failed: '+e.message,'error');if(btn){btn.disabled=false;btn.innerHTML='Generate now'}}
 }
 
 // BOOT
@@ -2046,33 +1846,6 @@ function hcWeekTotal(field){
   const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,7);
   return ents.reduce((s,[d,e])=>s+(e.hc?.[field]||0),0);
 }
-
-async function readTodayHR(){
-  if(!IS_NATIVE||!healthConnectReady)return null;
-  const HC=window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health;
-  if(!HC)return null;
-  const start=new Date();start.setHours(0,0,0,0);
-  const end=new Date();
-  try{
-    const r=await HC.queryAggregated?.({startDate:start.toISOString(),endDate:end.toISOString(),dataType:'heart-rate',bucket:'day'});
-    return r?.aggregatedData?.[0]?.value||null;
-  }catch(e){return null}
-}
-async function readLastSleep(){
-  if(!IS_NATIVE||!healthConnectReady)return null;
-  const HC=window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health;
-  if(!HC)return null;
-  const end=new Date(),start=new Date(end.getTime()-36*3600*1000);
-  try{
-    const r=await HC.querySleep?.({startDate:start.toISOString(),endDate:end.toISOString()});
-    const sessions=r?.sleepData||[];
-    if(sessions.length===0)return null;
-    const last=sessions[sessions.length-1];
-    const hrs=(new Date(last.endDate)-new Date(last.startDate))/3600000;
-    return Math.round(hrs*10)/10;
-  }catch(e){return null}
-}
-
 
 loadLocal();
 if(isConfigured())state.screen='today';else state.screen='welcome';
