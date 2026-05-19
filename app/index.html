@@ -1599,7 +1599,14 @@ function openFoodPicker(onPick){
     const allFoods=[...DB.foods.foods,...(state.data.customFoods||[])];
     let filtered=allFoods;
     if(cat!=='all')filtered=filtered.filter(f=>f.category===cat);
-    if(query){const q=query.toLowerCase();filtered=filtered.filter(f=>f.name.toLowerCase().includes(q))}
+    if(query){
+      const q=query.toLowerCase();
+      // v3.16 — search across name, brand, and tags
+      filtered=filtered.filter(f=>{
+        const hay=(f.name+' '+(f.brand||'')+' '+((f.tags||[]).join(' '))).toLowerCase();
+        return hay.includes(q);
+      });
+    }
     // v3.14 — frequency-weighted ordering: most-logged foods bubble to top within the filtered set
     filtered=[...filtered].sort((a,b)=>foodFreq(b.id)-foodFreq(a.id));
     modal.innerHTML=`<div class="modal" style="height:90dvh"><div class="modal-handle"></div>
@@ -1608,7 +1615,12 @@ function openFoodPicker(onPick){
 <div style="overflow-x:auto;margin-bottom:8px;-webkit-overflow-scrolling:touch">
 <div class="chip-row" style="flex-wrap:nowrap;padding-bottom:4px">
 <div class="chip ${cat==='all'?'selected':''}" data-c="all">All</div>
-${Object.entries(cats).map(([k,v])=>`<div class="chip ${cat===k?'selected':''}" data-c="${k}">${escapeHtml(v)}</div>`).join('')}
+${(()=>{
+  // v3.16 — only show category chips that have ≥1 food (after user pruned raw ingredients)
+  const counts={};
+  for(const f of allFoods)counts[f.category]=(counts[f.category]||0)+1;
+  return Object.entries(cats).filter(([k])=>(counts[k]||0)>0).map(([k,v])=>`<div class="chip ${cat===k?'selected':''}" data-c="${k}">${escapeHtml(v)}</div>`).join('');
+})()}
 </div></div>
 <div id="fp-list" style="overflow-y:auto;flex:1;max-height:55dvh;display:flex;flex-direction:column;gap:6px">
 ${filtered.slice(0,40).map(f=>`<div class="fp-food" data-id="${f.id}" style="background:var(--surface-white);border-radius:var(--r-sm);padding:12px 14px;display:flex;align-items:center;gap:8px">
@@ -1691,9 +1703,18 @@ function openFoodQuantityModal(f,onPick){
   const looksUnitBased=/\b(egg|paratha|roti|slice|piece|cup|katori|glass|bottle|scoop|item)\b/i.test(standard.n||'');
   const useUnits=looksUnitBased;
   const modal=document.createElement('div');modal.className='modal-bg';
+  // v3.16 — meta line from new foods.json fields (graceful no-op when fields are absent)
+  const meta=[
+    f.brand?escapeHtml(f.brand):null,
+    f.source?escapeHtml(f.source):null,
+    f.prep?escapeHtml(f.prep):null,
+    f.glycemic_index?('GI '+f.glycemic_index):null,
+    f.protein_quality_tag?escapeHtml(f.protein_quality_tag.replace(/_/g,' ')):null
+  ].filter(Boolean).join(' · ');
   modal.innerHTML=`<div class="modal" style="max-width:380px"><div class="modal-handle"></div>
   <h2 style="font-size:18px;font-weight:700;margin-bottom:2px">${escapeHtml(f.name)}</h2>
-  <p class="tiny muted" style="margin-bottom:14px">${escapeHtml(standard.n)} = ${standard.g}g · ${Math.round((f.kcal||0)*standard.g/100)} kcal</p>
+  <p class="tiny muted" style="margin-bottom:2px">${escapeHtml(standard.n)} = ${standard.g}g · ${Math.round((f.kcal||0)*standard.g/100)} kcal</p>
+  ${meta?`<p class="tiny faint" style="margin-bottom:14px">${meta}</p>`:'<div style="height:12px"></div>'}
   ${useUnits?`
     <div class="field"><div class="flabel">Servings (1 × ${escapeHtml(standard.n)})</div>
     <div style="display:flex;align-items:center;gap:8px">
@@ -2045,27 +2066,4 @@ async function cancelRescuePrompt(id){
 
 function hcWaterToday(){const hc=getHCToday()||{};return hc.water||0}  // ml from HC if logged elsewhere
 function hcAvg(field,days=7){
-  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,days);
-  const vals=ents.map(([d,e])=>e.hc?.[field]).filter(v=>v!=null&&!isNaN(v));
-  if(vals.length===0)return null;
-  return vals.reduce((s,v)=>s+v,0)/vals.length;
-}
-function hcSleepAvg(days=7){
-  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,days);
-  const vals=ents.map(([d,e])=>e.hc?.sleep?.hours).filter(v=>v!=null);
-  if(vals.length===0)return null;
-  return vals.reduce((s,v)=>s+v,0)/vals.length;
-}
-function hcWeekTotal(field){
-  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,7);
-  return ents.reduce((s,[d,e])=>s+(e.hc?.[field]||0),0);
-}
-
-loadLocal();
-if(isConfigured())state.screen='today';else state.screen='welcome';
-render();
-loadAllDB().then(()=>{state.todayRec=null;render()});
-if(IS_NATIVE){
-  setupHealthConnect().then(ok=>{
-    if(!ok)return;
-    // Decide between
+  const ents=Object.entries(state.data.entries).sort((a,b)
