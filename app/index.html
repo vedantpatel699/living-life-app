@@ -1592,6 +1592,9 @@ function openFoodPicker(onPick){
   let query='',cat='all',expanded=null;
   const modal=document.createElement('div');modal.className='modal-bg';
   const render2=()=>{
+    // v3.15 — preserve scroll positions across re-renders (chip-tap shouldn't reset the picker)
+    const prevChipScroll=modal.querySelector('.chip-row')?.parentElement?.scrollLeft||0;
+    const prevListScroll=modal.querySelector('#fp-list')?.scrollTop||0;
     const cats=DB.foods.categories;
     const allFoods=[...DB.foods.foods,...(state.data.customFoods||[])];
     let filtered=allFoods;
@@ -1615,6 +1618,11 @@ ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found
 </div>
 <button class="btn btn-secondary btn-full mt-2" id="fp-custom">+ Add custom food</button>
 </div>`;
+    // v3.15 — restore preserved scroll positions
+    const chipWrap=modal.querySelector('.chip-row')?.parentElement;
+    if(chipWrap)chipWrap.scrollLeft=prevChipScroll;
+    const listEl=modal.querySelector('#fp-list');
+    if(listEl)listEl.scrollTop=prevListScroll;
     modal.querySelector('#fp-q').addEventListener('input',e=>{const pos=e.target.selectionStart;query=e.target.value;render2();const inp=modal.querySelector('#fp-q');inp.focus();try{inp.setSelectionRange(pos,pos)}catch(_){}});
     modal.querySelector('#fp-x').addEventListener('click',()=>modal.remove());
     modal.querySelectorAll('.chip[data-c]').forEach(c=>c.addEventListener('click',()=>{cat=c.dataset.c;render2()}));
@@ -2060,16 +2068,4 @@ loadAllDB().then(()=>{state.todayRec=null;render()});
 if(IS_NATIVE){
   setupHealthConnect().then(ok=>{
     if(!ok)return;
-    // Decide between single-day and multi-day backfill.
-    const last=state.data.entries[today()]?.hcSyncedAt;
-    const stale=!last||((Date.now()-new Date(last).getTime())>12*3600*1000);
-    const job=stale?syncHealthConnectRange(7):syncHealthConnect();
-    Promise.resolve(job).then(r=>{render()});
-  });
-  // Set the sleep-sovereign gate on the native scheduler so notifications respect daytime sleep
-  setupShiftRescue();
-}
-if(isConfigured())pullData().then(()=>render()).catch(e=>console.warn('boot sync failed',e));
-</script>
-</body>
-</html>
+    // Decide between
