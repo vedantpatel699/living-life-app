@@ -140,14 +140,18 @@ nav.bnav .tab.active .lbl{color:var(--ink)}
 </head>
 <body>
 <div id="root">
-  <div class="status-bar"><div class="time" id="status-time">9:41</div><div class="icons">• • •</div></div>
+  <div class="status-bar" style="justify-content:flex-end">
+  <button id="status-settings" style="width:36px;height:36px;border-radius:50%;background:transparent;display:flex;align-items:center;justify-content:center;color:var(--ink)" title="Settings">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+  </button>
+</div>
   <main id="main"></main>
   <div id="bottom-nav-container"></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
 <script>
 'use strict';
-const STORAGE_KEY='living-life-config-v2',DATA_KEY='living-life-data-v2',APP_VERSION='4.0.0';
+const STORAGE_KEY='living-life-config-v2',DATA_KEY='living-life-data-v2',APP_VERSION='4.0.1';
 const ACTIVITIES=['Walk','Strength workout','Run','Yoga / stretch','Amazon shift','Rest day'];
 const SUPPLEMENTS=[
   {id:'creatine',name:'Creatine monohydrate',dose:'5 g',timing:'anytime',color:'coral',ini:'C'},
@@ -416,6 +420,9 @@ function renderBottomNav(){
 }
 
 function render(){
+  // Global Settings gear (top-right) — wires every time the screen renders
+  const sg=document.getElementById('status-settings');
+  if(sg)sg.onclick=()=>setScreen('settings');
   const m=document.getElementById('main');
   m.className=SCREENS_WITH_NAV.has(state.screen)?'with-nav':'';
   if(!isConfigured()&&!['welcome','onboarding','settings'].includes(state.screen)){m.innerHTML=renderWelcome();bindWelcome();renderBottomNav();return}
@@ -536,9 +543,7 @@ function renderToday(){
         <h1 style="font-size:24px;font-weight:700;letter-spacing:-0.01em;margin-top:2px">Hi, ${escapeHtml(state.profile.name||'there')}</h1>
         <button class="gf-pill ${shift?'cool':'ok'}" id="t-shift-toggle" style="margin-top:6px;cursor:pointer;border:none">${shift?'🌙 SHIFT DAY (tap to unmark)':'☀ OFF DAY (tap if working tonight)'} · Week ${week}</button>
       </div>
-      <button id="t-settings" style="width:40px;height:40px;border-radius:50%;background:transparent;display:flex;align-items:center;justify-content:center;color:var(--ink)" title="Settings">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      </button>
+
     </div>
     <div style="margin-top:20px;text-align:center">
       ${gfDualRing({
@@ -585,18 +590,19 @@ function renderToday(){
     <div class="tiny muted text-center" style="margin-top:8px">${covered} of 7 days logged · ${covered>=5?"I'm running the script":covered>=3?"I protect the plan when I can":"Bad weeks happen. Resume tomorrow."}</div>
     <h2 class="gf-section">QUICK ACCESS</h2>
     <div style="display:flex;flex-direction:column;gap:8px">
+      ${gfRow({icon:'＋',iconBg:'var(--coral)',iconColor:'white',title:'Log today',sub:'Weight, photo, food, notes',id:'t-log-row'})}
       ${gfRow({icon:'💊',iconBg:'var(--mint-s)',iconColor:'var(--mint)',title:todaySuppCount()+' of '+(DB.supplements?DB.supplements.supplements.filter(s=>s.frequency==='daily').length:SUPPLEMENTS.length)+' supplements taken',sub:'Tap to check off',id:'t-supps'})}
       ${tpls.length>0?gfRow({icon:'💾',iconBg:'var(--sun-s)',iconColor:'#B58A0F',title:'Saved meal templates',sub:tpls.length+' template'+(tpls.length===1?'':'s')+' · one-tap log',id:'t-tpls'}):''}
       ${hasClaudeKey()?gfRow({icon:'✦',iconBg:'var(--cta)',iconColor:'var(--sun)',title:'Ask your coach',sub:'Knows your data',id:'t-coach'}):''}
     </div>
-    <button id="t-fab" style="position:fixed;bottom:88px;right:18px;width:60px;height:60px;border-radius:50%;background:var(--coral);color:white;font-size:32px;font-weight:300;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(237,122,77,0.4);z-index:50">＋</button>
+    <button id="t-fab" style="position:fixed;bottom:96px;right:18px;height:54px;padding:0 22px;border-radius:27px;background:var(--coral);color:white;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 24px rgba(237,122,77,0.4);z-index:50"><span style="font-size:22px;line-height:1;font-weight:300">＋</span> <span>Log</span></button>
   </div>`;
 }
 function bindToday(){
   document.getElementById('t-supps')?.addEventListener('click',()=>setScreen('supplements'));
   document.getElementById('t-coach')?.addEventListener('click',()=>setScreen('coach'));
-  document.getElementById('t-settings')?.addEventListener('click',()=>setScreen('settings'));
   document.getElementById('t-fab')?.addEventListener('click',()=>setScreen('logEntry'));
+  document.getElementById('t-log-row')?.addEventListener('click',()=>setScreen('logEntry'));
   document.getElementById('t-tpls')?.addEventListener('click',()=>openTemplatesList());
   document.getElementById('t-water-glass')?.addEventListener('click',()=>addWaterEntry(250));
   document.getElementById('t-water-bottle')?.addEventListener('click',()=>addWaterEntry(500));
@@ -875,15 +881,6 @@ ${(()=>{const hc=e.hc;if(!hc)return '';const bits=[];if(hc.steps)bits.push(['�
 function renderSettings(){
   return `<div style="padding:0 4px"><h1 class="pt" style="padding-top:14px">Settings</h1>
     <div class="card mt-4"><div style="display:flex;align-items:center;gap:14px"><div style="width:56px;height:56px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:22px">${(state.profile.name||'V')[0].toUpperCase()}</div><div style="flex:1"><div style="font-weight:700;font-size:16px">${escapeHtml(state.profile.name||'You')}</div><div class="tiny muted">Goal: ${state.profile.goalWeight||'—'} kg${state.profile.goalDate?' by '+fmtDate(state.profile.goalDate):''}</div></div><button class="btn btn-secondary btn-sm" id="ed-p">Edit</button></div>
-<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border-l)">
-<div class="flabel">SHIFT DAYS</div>
-<p class="tiny muted mt-2">Mark individual days as shift days when they happen. Your schedule varies week to week, so per-day tracking is more accurate than a recurring weekly toggle.</p>
-${(()=>{
-  const dates=(state.data.shiftDates||[]).slice().sort().reverse().slice(0,12);
-  if(dates.length===0)return '<p class="tiny faint mt-2">No shift days logged yet. Use the toggle on the Today screen to mark a day.</p>';
-  return `<div class="tiny muted mt-2">Recent shift days:</div><div class="chip-row mt-2">${dates.map(d=>`<div class="chip" style="padding:6px 12px;background:var(--sky-s);color:var(--sky)" data-clear-shift="${d}">${fmtDate(d)} ×</div>`).join('')}</div>`;
-})()}
-</div>
 </div>
     <h2 class="sec">SYNC</h2>
     <div class="card">
@@ -1910,7 +1907,6 @@ function hcWeekTotal(field){
 
 loadLocal();
 if(isConfigured())state.screen='today';else state.screen='welcome';
-setStatusTime();setInterval(setStatusTime,30000);
 render();
 loadAllDB().then(()=>{state.todayRec=null;render()});
 if(IS_NATIVE){
