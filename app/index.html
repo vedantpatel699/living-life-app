@@ -147,7 +147,7 @@ nav.bnav .tab.active .lbl{color:var(--ink)}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
 <script>
 'use strict';
-const STORAGE_KEY='living-life-config-v2',DATA_KEY='living-life-data-v2',APP_VERSION='2.0.0';
+const STORAGE_KEY='living-life-config-v2',DATA_KEY='living-life-data-v2',APP_VERSION='3.13.0';
 const ACTIVITIES=['Walk','Strength workout','Run','Yoga / stretch','Amazon shift','Rest day'];
 const SUPPLEMENTS=[
   {id:'creatine',name:'Creatine monohydrate',dose:'5 g',timing:'anytime',color:'coral',ini:'C'},
@@ -209,6 +209,7 @@ function todaySuppSchedule(){
 
 const ICONS={
   today:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>',
+  bio:'<svg viewBox="0 0 24 24"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>',
   progress:'<svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
   history:'<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
   settings:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
@@ -272,7 +273,12 @@ function daysSinceStart(){if(!state.config.startDate)return 0;return Math.max(0,
 function weekSinceStart(){return Math.floor(daysSinceStart()/7)+1}
 function isConfigured(){return state.config.githubOwner&&state.config.githubRepo&&state.config.githubToken}
 function isShiftDay(d){const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];const today=days[dayOfWeek(d||new Date())];return(state.profile.shiftDays||[]).includes(today)}
-function bmrPerMin(){const p=state.profile;const bmr=10*p.startWeight+6.25*p.heightCm-5*p.age+(p.sex==='female'?-161:5);return bmr/1440}
+// Current weight = most recent manually-logged weight, fallback to startWeight
+function currentWeight(){const ents=Object.entries(state.data.entries||{}).filter(([d,e])=>typeof e.weight==='number').sort((a,b)=>b[0].localeCompare(a[0]));return ents[0]?ents[0][1].weight:state.profile.startWeight}
+// BMR via Mifflin-St Jeor (validated gold-standard against indirect calorimetry — Frankenfield 2005).
+// kcal/day = 10×kg + 6.25×cm − 5×age + (5 male / −161 female). Uses CURRENT weight so passive-calorie
+// estimate stays accurate as the user loses weight.
+function bmrPerMin(){const p=state.profile;const wt=currentWeight();const bmr=10*wt+6.25*p.heightCm-5*p.age+(p.sex==='female'?-161:5);return bmr/1440}
 function bmrSoFarToday(){const now=new Date();const minsSinceMidnight=now.getHours()*60+now.getMinutes();return Math.round(bmrPerMin()*minsSinceMidnight)}
 function fullBmr(){return Math.round(bmrPerMin()*1440)}
 function hasClaudeKey(){return!!state.config.claudeApiKey}
@@ -340,13 +346,13 @@ function todaySuppCount(){const s=state.data.supplements[today()]||{};return SUP
 
 function setStatusTime(){const t=document.getElementById('status-time');if(!t)return;const d=new Date();t.textContent=`${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`}
 
-const SCREENS_WITH_NAV=new Set(['today','progress','history','settings']);
+const SCREENS_WITH_NAV=new Set(['today','bio','progress','history','settings']);
 function setScreen(name,params={}){state.screen=name;state.draft={};Object.assign(state,params);render();document.getElementById('main')?.scrollTo?.(0,0)}
 
 function renderBottomNav(){
   const c=document.getElementById('bottom-nav-container');
   if(!isConfigured()||!SCREENS_WITH_NAV.has(state.screen)){c.innerHTML='';return}
-  const tabs=[{id:'today',l:'Today',i:ICONS.today},{id:'progress',l:'Progress',i:ICONS.progress},{id:'history',l:'History',i:ICONS.history},{id:'settings',l:'Settings',i:ICONS.settings}];
+  const tabs=[{id:'today',l:'Today',i:ICONS.today},{id:'bio',l:'Bio',i:ICONS.bio},{id:'progress',l:'Progress',i:ICONS.progress},{id:'history',l:'History',i:ICONS.history},{id:'settings',l:'Settings',i:ICONS.settings}];
   c.innerHTML=`<nav class="bnav">${tabs.map(t=>`<button class="tab ${state.screen===t.id?'active':''}" data-s="${t.id}"><div class="ic">${t.i}</div><div class="lbl">${t.l}</div></button>`).join('')}</nav>`;
   c.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>setScreen(b.dataset.s)));
 }
@@ -355,7 +361,7 @@ function render(){
   const m=document.getElementById('main');
   m.className=SCREENS_WITH_NAV.has(state.screen)?'with-nav':'';
   if(!isConfigured()&&!['welcome','onboarding','settings'].includes(state.screen)){m.innerHTML=renderWelcome();bindWelcome();renderBottomNav();return}
-  const renderers={welcome:[renderWelcome,bindWelcome],onboarding:[renderOnboarding,bindOnboarding],today:[renderToday,bindToday],progress:[renderProgress,bindProgress],history:[renderHistory,bindHistory],settings:[renderSettings,bindSettings],logEntry:[renderLogEntry,bindLogEntry],coach:[renderCoach,bindCoach],logRun:[renderLogRun,bindLogRun],supplements:[renderSupplements,bindSupplements]};
+  const renderers={welcome:[renderWelcome,bindWelcome],onboarding:[renderOnboarding,bindOnboarding],today:[renderToday,bindToday],progress:[renderProgress,bindProgress],history:[renderHistory,bindHistory],settings:[renderSettings,bindSettings],logEntry:[renderLogEntry,bindLogEntry],coach:[renderCoach,bindCoach],logRun:[renderLogRun,bindLogRun],supplements:[renderSupplements,bindSupplements],hcDetail:[renderHCDetail,bindHCDetail],bio:[renderBio,bindBio]};
   const [r,b]=renderers[state.screen]||[()=>'<div class="empty"><h3>404</h3></div>',()=>{}];
   m.innerHTML=r();b();
   renderBottomNav();
@@ -436,15 +442,12 @@ function renderToday(){
   const week=weekSinceStart(),entry=state.data.entries[t];
   const shift=isShiftDay();
   const hc=getHCToday()||{};
-  // Coverage % over last 7 days — replaces streaks (Polivy & Herman counter-regulatory risk)
+  // Coverage % over last 7 days
   const last7=[];for(let i=0;i<7;i++){const d=new Date();d.setDate(d.getDate()-i);last7.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'))}
   const covered=last7.filter(iso=>state.data.entries[iso]).length;
-  const coveragePct=Math.round((covered/7)*100);
-  // Move Ring data — steps as the primary metric (universal, less SSRI-distorted than active kcal)
   const stepsNow=hc.steps||0;
   const stepsGoal=dailyStepGoal();
   const ringPct=Math.min(100,Math.round((stepsNow/stepsGoal)*100));
-  // Energy balance numbers
   const bmrSoFar=bmrSoFarToday();
   const activeOut=Math.round(hc.active_calories||0);
   const totalOut=bmrSoFar+activeOut;
@@ -452,7 +455,16 @@ function renderToday(){
   const caloriesIn=foods.reduce((s,f)=>s+(f.kcal||0),0);
   const proteinIn=foods.reduce((s,f)=>s+(f.protein||0),0);
   const net=caloriesIn-totalOut;
-  const kcalTarget=shift?2400:2000;
+  // Water
+  const waterFoods=foods.filter(f=>f.foodId==='calgary-tap-water');
+  const appMl=waterFoods.reduce((s,f)=>s+(f.grams||0),0);
+  const ml=Math.max(appMl,hcWaterToday());
+  // Post-shift template hint
+  const tpls=state.data.mealTemplates||[];
+  const hr=new Date().getHours();
+  const inLandingWindow=shift&&hr>=12&&hr<=14;
+  const postShift=tpls.find(t=>(t.tags||[]).includes('post_shift'));
+  const showLanding=inLandingWindow&&postShift;
   return `<div style="padding:0 4px">
     <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0 4px">
       <div>
@@ -465,111 +477,61 @@ function renderToday(){
     <div class="gf-hero" style="margin-top:14px">
       ${gfRing({value:stepsNow,goal:stepsGoal,size:200,thick:14,color:'var(--coral)',track:'var(--surface-cream)',centerLabel:'STEPS'})}
       <div class="tiny muted" style="margin-top:-4px">${stepsNow.toLocaleString()} of ${stepsGoal.toLocaleString()} · ${ringPct}%</div>
-      <div style="display:flex;gap:0;margin-top:18px;border-top:1px solid var(--border-l);padding-top:14px">
-        <div class="gf-mini-stat"><div class="gf-mini-val">${activeOut}</div><div class="gf-mini-lbl">Active kcal</div></div>
-        <div class="gf-mini-stat"><div class="gf-mini-val">${hc.distance_km?hc.distance_km.toFixed(1):'—'}</div><div class="gf-mini-lbl">km</div></div>
-        <div class="gf-mini-stat"><div class="gf-mini-val">${hc.workouts?.length||0}</div><div class="gf-mini-lbl">Workouts</div></div>
-      </div>
     </div>
+    ${showLanding?`<div class="gf-card" style="background:linear-gradient(135deg,var(--sky-s),#F8FAFB);border:1px solid rgba(115,178,224,0.3);margin-top:12px">
+      <div class="tiny" style="color:var(--sky);font-weight:700;margin-bottom:6px">🌙 POST-SHIFT LANDING</div>
+      <div style="font-weight:700;font-size:15px;margin-bottom:2px">${escapeHtml(postShift.name)}</div>
+      <div class="tiny muted" style="margin-bottom:10px">Run the script — no optimizing.</div>
+      <button class="btn btn-primary btn-full" id="t-tpl-log" data-tplid="${postShift.id}">＋ One-tap log</button>
+    </div>`:''}
     <h2 class="gf-section">TODAY</h2>
     <div class="gf-grid-2">
       ${gfTile({icon:'⚖️',label:'Weight',value:stats?.latest!=null?stats.latest.toFixed(1):'—',unit:'kg',sub:stats?.avgNow!=null?'7-day avg '+stats.avgNow.toFixed(1):'log today',color:'var(--ink)'})}
-      ${gfTile({icon:'📉',label:'Week Δ',value:stats?.weekChange!=null?(stats.weekChange>0?'+':'')+stats.weekChange.toFixed(2):'—',unit:'kg',sub:'vs prior week',color:stats?.weekChange<0?'var(--success)':stats?.weekChange>0?'#B58A0F':'var(--ink)'})}
       ${gfTile({icon:'🥩',label:'Protein',value:Math.round(proteinIn),unit:'g',sub:'/ 130 g target',color:'var(--coral)'})}
       ${gfTile({icon:'⚡',label:'Energy net',value:(net>0?'+':'')+net,unit:'kcal',sub:net<0?'in deficit ✓':net===0?'balanced':'in surplus',color:net<0?'var(--success)':net>200?'#B58A0F':'var(--ink)'})}
-      ${hc.resting_heart_rate?gfTile({icon:'❤️',label:'Resting HR',value:Math.round(hc.resting_heart_rate),unit:'bpm',sub:'last night',color:'var(--ink)'}):''}
-      ${hc.sleep?gfTile({icon:'😴',label:'Sleep',value:hc.sleep.hours.toFixed(1),unit:'h',sub:'last block',color:'var(--ink)'}):''}
+      ${gfTile({icon:'💧',label:'Water',value:ml.toLocaleString(),unit:'ml',sub:'/ '+(state.profile.waterGoalMl||2500)+' ml',color:'var(--sky)'})}
     </div>
-    <h2 class="gf-section">HYDRATION</h2>
-    ${(()=>{
-  const waterFoods=foods.filter(f=>f.foodId==='calgary-tap-water');
-  const appMl=waterFoods.reduce((s,f)=>s+(f.grams||0),0);
-  const hcMl=hcWaterToday();
-  const ml=Math.max(appMl,hcMl);
-  const glassCount=Math.round(ml/250);
-  const goal=state.profile.waterGoalMl||2500;
-  const pct=Math.min(100,(ml/goal)*100);
-  const cups=8;const filled=Math.min(cups,Math.round((ml/goal)*cups));
-  return `<div class="gf-card" style="background:linear-gradient(135deg,#EAF4FB,#F8FAFB)">
-<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
-<div><div style="font-weight:700;font-size:22px">${ml.toLocaleString()}<span class="gf-tile-u"> / ${goal.toLocaleString()} ml</span></div><div class="tiny muted">${glassCount} glass${glassCount===1?'':'es'} · ${ml>=goal?'goal hit ✓':Math.max(0,goal-ml)+' ml to goal'}</div></div>
-<div style="text-align:right"><div class="tiny muted">CALGARY TAP</div><div class="tiny" style="color:var(--sky);font-weight:600">${Math.round(56*ml/100)} mg Ca · ${Math.round(16*ml/100)} mg Mg</div></div>
-</div>
-<div style="display:flex;gap:4px;margin-bottom:12px">${Array.from({length:cups},(_,i)=>`<div style="flex:1;aspect-ratio:1;background:${i<filled?'var(--sky)':'rgba(115,178,224,0.15)'};border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;color:${i<filled?'white':'rgba(115,178,224,0.5)'}">💧</div>`).join('')}</div>
-<div style="height:6px;background:rgba(115,178,224,0.2);border-radius:3px;overflow:hidden;margin-bottom:12px"><div style="height:100%;width:${pct}%;background:var(--sky);transition:width 0.3s"></div></div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-<button id="t-water-glass" style="background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:10px 6px;font-size:12px;font-weight:600">＋ 250 ml<br><span class="tiny muted" style="font-weight:400">Glass</span></button>
-<button id="t-water-bottle" style="background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:10px 6px;font-size:12px;font-weight:600">＋ 500 ml<br><span class="tiny muted" style="font-weight:400">Bottle</span></button>
-<button id="t-water-custom" style="background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:10px 6px;font-size:12px;font-weight:600">＋ Custom<br><span class="tiny muted" style="font-weight:400">Type ml</span></button>
-</div>
-${ml>0?`<button id="t-water-undo" style="margin-top:8px;width:100%;background:transparent;color:var(--muted);font-size:12px;padding:6px;border-radius:8px">↶ Undo last glass</button>`:''}
-</div>`;
-})()}
-    ${hc.workouts&&hc.workouts.length?`<h2 class="gf-section">WORKOUTS · TODAY</h2><div class="gf-card">${hc.workouts.map(w=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border-l)"><div><div style="font-weight:600;font-size:13px">${escapeHtml(w.title||w.type||'Workout')}</div><div class="tiny muted">${w.sourceApp?escapeHtml(w.sourceApp.split('.').slice(-1)[0]):'manual'}</div></div><div style="text-align:right"><div style="font-weight:700;font-size:13px">${Math.round((w.durationSec||0)/60)} min</div>${w.calories?`<div class="tiny muted">${Math.round(w.calories)} kcal</div>`:''}</div></div>`).join('')}</div>`:''}
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button id="t-water-glass" style="flex:1;background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:10px;font-size:12px;font-weight:600">＋ 250 ml</button>
+      <button id="t-water-bottle" style="flex:1;background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:10px;font-size:12px;font-weight:600">＋ 500 ml</button>
+      <button id="t-water-custom" style="flex:1;background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:10px;font-size:12px;font-weight:600">＋ Custom</button>
+    </div>
     <h2 class="gf-section">CONSISTENCY</h2>
-    <div class="gf-card" id="t-coverage">
+    <div class="gf-card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <div>
-          <div style="font-weight:700;font-size:18px">${covered} of 7 days logged</div>
-          <div class="tiny muted">${coveragePct>=70?"I'm running the script":coveragePct>=40?"I protect the plan when I can":"Bad weeks happen. Resume tomorrow."}</div>
-        </div>
-        <div style="font-size:28px">${coveragePct>=70?'✓':coveragePct>=40?'~':'·'}</div>
+        <div><div style="font-weight:700;font-size:16px">${covered} of 7 days logged</div><div class="tiny muted">${covered>=5?"I'm running the script":covered>=3?"I protect the plan when I can":"Bad weeks happen. Resume tomorrow."}</div></div>
       </div>
       <div style="display:flex;gap:3px">
         ${last7.reverse().map(iso=>`<div style="flex:1;height:8px;border-radius:2px;background:${state.data.entries[iso]?'var(--success)':'var(--border)'}" title="${iso}"></div>`).join('')}
       </div>
     </div>
-    <button class="btn btn-secondary btn-full mt-4" id="t-log" style="padding:16px;display:flex;align-items:center;justify-content:center;gap:8px"><span style="font-size:18px">＋</span> <span>Log today</span></button>
-    ${(()=>{
-      const tpls=(state.data.mealTemplates||[]);
-      if(tpls.length===0)return '';
-      // Surface "post_shift"-tagged template only when relevant (shift day + landing window 12-2 PM)
-      const hr=new Date().getHours();
-      const inLandingWindow=shift&&hr>=12&&hr<=14;
-      const postShift=tpls.find(t=>(t.tags||[]).includes('post_shift'));
-      const candidate=inLandingWindow&&postShift?postShift:tpls[tpls.length-1];
-      const isPostShift=candidate===postShift;
-      const totK=(candidate.components||[]).reduce((s,c)=>s+(c.kcal||0),0);
-      const totP=(candidate.components||[]).reduce((s,c)=>s+(c.protein||0),0);
-      return `<h2 class="gf-section">${isPostShift&&inLandingWindow?'POST-SHIFT LANDING':'SAVED MEAL TEMPLATES'}</h2>
-      <div class="gf-card" style="${isPostShift&&inLandingWindow?'background:linear-gradient(135deg,var(--sky-s),#F8FAFB);border:1px solid rgba(115,178,224,0.3)':''}">
-        ${isPostShift&&inLandingWindow?'<div class="tiny" style="color:var(--sky);font-weight:700;margin-bottom:8px">🌙 Run the script — no optimizing</div>':''}
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
-          <div style="flex:1">
-            <div style="font-weight:700;font-size:15px">${escapeHtml(candidate.name)}</div>
-            <div class="tiny muted">${totK} kcal · ${totP.toFixed(1)}g protein · ${(candidate.components||[]).length} items</div>
-          </div>
-        </div>
-        <button class="btn btn-primary btn-full" id="t-tpl-log" data-tplid="${candidate.id}">＋ One-tap log</button>
-        ${tpls.length>1?`<button class="btn btn-ghost btn-full mt-2 tiny" id="t-tpl-more" style="font-size:12px;padding:6px">Other templates (${tpls.length-1})</button>`:''}
-      </div>`;
-    })()}
-    <h2 class="gf-section">SUPPLEMENTS</h2>
-    ${gfRow({icon:'💊',iconBg:'var(--mint-s)',iconColor:'var(--mint)',title:todaySuppCount()+' of '+(DB.supplements?DB.supplements.supplements.filter(s=>s.frequency==='daily').length:SUPPLEMENTS.length)+' taken',sub:suppStreak()>0?'Coverage: '+suppStreak()+' days in a row':'Tap to check off',id:'t-supps'})}
-    ${hasClaudeKey()?`<h2 class="gf-section">COACH</h2>${gfRow({icon:'✦',iconBg:'var(--cta)',iconColor:'var(--sun)',title:'Ask your coach',sub:'Knows your data',id:'t-coach'})}`:''}
+    <button class="btn btn-primary btn-full mt-4" id="t-log" style="padding:16px;display:flex;align-items:center;justify-content:center;gap:8px"><span style="font-size:18px">＋</span> <span>Log today</span></button>
+    <h2 class="gf-section">QUICK ACCESS</h2>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      ${gfRow({icon:'💊',iconBg:'var(--mint-s)',iconColor:'var(--mint)',title:todaySuppCount()+' of '+(DB.supplements?DB.supplements.supplements.filter(s=>s.frequency==='daily').length:SUPPLEMENTS.length)+' supplements taken',sub:suppStreak()>0?'Coverage: '+suppStreak()+' days in a row':'Tap to check off',id:'t-supps'})}
+      ${tpls.length>0?gfRow({icon:'💾',iconBg:'var(--sun-s)',iconColor:'#B58A0F',title:'Saved meal templates',sub:tpls.length+' template'+(tpls.length===1?'':'s')+' · one-tap log',id:'t-tpls'}):''}
+      ${hasClaudeKey()?gfRow({icon:'✦',iconBg:'var(--cta)',iconColor:'var(--sun)',title:'Ask your coach',sub:'Knows your data',id:'t-coach'}):''}
+    </div>
     <div style="height:32px"></div>
   </div>`;
 }
 function bindToday(){
-  // Energy view replaces the routine card — no start-now button on Today anymore
-  // Users do workouts in Home Workout app; this app tracks via Health Connect.
+  // Energy view + tiles + quick access
   document.getElementById('t-log')?.addEventListener('click',()=>setScreen('logEntry'));
   document.getElementById('t-supps')?.addEventListener('click',()=>setScreen('supplements'));
   document.getElementById('t-coach')?.addEventListener('click',()=>setScreen('coach'));
   document.getElementById('t-avatar')?.addEventListener('click',()=>setScreen('settings'));
-  document.getElementById('t-hcsync')?.addEventListener('click',async(e)=>{e.stopPropagation();const btn=e.currentTarget;btn.textContent='Syncing…';try{const hc=await syncHealthConnect();if(hc){toast('Health Connect synced ✓','success');render()}else toast('HC not available (web mode)','error')}catch(err){toast('Sync failed: '+err.message,'error')}});
-  // Water quick-add buttons
+  document.getElementById('t-tpls')?.addEventListener('click',()=>openTemplatesList());
+  // Water quick-add
   document.getElementById('t-water-glass')?.addEventListener('click',()=>addWaterEntry(250));
   document.getElementById('t-water-bottle')?.addEventListener('click',()=>addWaterEntry(500));
   document.getElementById('t-water-custom')?.addEventListener('click',()=>{const v=prompt('How many ml?','750');if(!v)return;const ml=parseInt(v,10);if(!ml||ml<=0||ml>3000){toast('Enter 1-3000 ml','error');return}addWaterEntry(ml)});
-  document.getElementById('t-water-undo')?.addEventListener('click',()=>undoLastWater());
-  // Template buttons
+  // Post-shift template one-tap
   document.getElementById('t-tpl-log')?.addEventListener('click',e=>{
     const id=e.currentTarget.dataset.tplid;
     const tpl=(state.data.mealTemplates||[]).find(t=>t.id===id);
     if(tpl)logMealTemplate(tpl);
   });
-  document.getElementById('t-tpl-more')?.addEventListener('click',()=>openTemplatesList());
 }
 
 // =================== WATER TRACKING ===================
@@ -898,13 +860,14 @@ ${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="chip ${(state.
         ${log.length>1?`<button class="btn btn-ghost btn-full mt-2 tiny" id="gp-history" style="font-size:12px;padding:6px">View history (${log.length})</button>`:''}
       </div>`;
     })()}
-    <h2 class="sec">DIAGNOSTICS</h2>
-    <div class="card" style="font-family:monospace;font-size:11px;line-height:1.6">
+    <details style="margin-top:24px"><summary style="cursor:pointer;padding:8px 4px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:0.08em;font-weight:700">Diagnostics (tap to expand)</summary>
+    <div style="margin-top:8px">
+<div class="card" style="font-family:monospace;font-size:11px;line-height:1.6">
       ${(()=>{
         const cap=window.Capacitor;
         const plugins=cap?.Plugins||{};
         const keys=Object.keys(plugins);
-        const hc=plugins.CapacitorHealth||plugins.Health||plugins.HealthConnect;
+        const hc=plugins.HealthPlugin||plugins.CapacitorHealth||plugins.Health||plugins.HealthConnect;
         const host=location.host||location.hostname||'(file)';
         const ua=(navigator.userAgent||'').slice(0,80);
         const rows=[
@@ -924,8 +887,9 @@ ${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="chip ${(state.
       })()}
     </div>
     <button class="btn btn-secondary btn-full mt-2" id="s-diag-test">Run HC connection test</button>
+    </div></details>
     <h2 class="sec">ABOUT</h2>
-    <div class="card"><div style="display:flex;padding:4px 0"><div style="flex:1;font-weight:600">Version</div><div class="muted">${APP_VERSION}</div></div></div>
+    <div class="card"><div style="display:flex;padding:4px 0"><div style="flex:1;font-weight:600">Version</div><div class="muted">${APP_VERSION}</div></div><div style="display:flex;padding:4px 0;border-top:1px solid var(--border-l);margin-top:4px"><div style="flex:1"><div class="tiny muted">Passive calories</div><div class="tiny">Mifflin-St Jeor (current weight)</div></div></div></div>
     <div class="text-center mt-4" style="padding:20px 0"><p class="tiny faint">Living Life — your back-to-fit journey, your data.</p></div>
   </div>`;
 }
@@ -1282,6 +1246,162 @@ function bindLogRun(){
       toast('Run saved ✓','success');state.draft={};setScreen('today');
     }catch(e){toast('Save failed: '+e.message,'error');btn.disabled=false;btn.innerHTML='✓ Save run'}
   });
+}
+
+// =================== BIO TAB — bottom-nav 5th tab, surfaces the deep dive ===================
+function renderBio(){
+  // Bio tab uses the HCDetail content but with bottom nav (no top back-btn)
+  state.hcDetailDate=today();
+  // Strip the top-bar / back button by rendering the HCDetail body inline
+  const fullHtml=renderHCDetail();
+  // Replace the top-bar with a tab-friendly header
+  return fullHtml
+    .replace(/<div class="top-bar">[\s\S]*?<\/div>/,
+      '<div style="padding:14px 0 4px"><h1 style="font-size:24px;font-weight:700;letter-spacing:-0.01em">Bio</h1><div class="muted tiny" style="margin-top:2px">Health Connect deep dive · '+fmtDateLong(today())+'</div></div>'
+    );
+}
+function bindBio(){
+  // No back button — bottom nav handles navigation
+}
+
+// =================== HC DEEP-DIVE SCREEN (the curious-mind view) ===================
+function renderHCDetail(){
+  const t=state.hcDetailDate||today();
+  const e=state.data.entries[t]||{};
+  const hc=e.hc||{};
+  const foods=e.foods||[];
+  const fdv=DB.foods?.dv||{};
+  // Aggregate nutrient totals from foods array
+  const totals={};
+  for(const f of foods){
+    for(const k of Object.keys(f)){
+      if(typeof f[k]==='number'&&['kcal','protein','carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug','leucine_g','selenium_ug'].includes(k)){
+        totals[k]=(totals[k]||0)+f[k];
+      }
+    }
+  }
+  // BMR breakdown
+  const p=state.profile;
+  const wt=currentWeight();
+  const bmrTotal=Math.round(10*wt+6.25*p.heightCm-5*p.age+(p.sex==='female'?-161:5));
+  const bmrSoFar=bmrSoFarToday();
+  const activeOut=Math.round(hc.active_calories||0);
+  // Sleep stages
+  const stages=hc.sleep?.stages||null;
+
+  return `<div class="top-bar"><button class="back-btn" id="hcd-back">←</button><div class="title-block"><h1>Deep dive</h1><div class="subtitle">${fmtDateLong(t)} · all the data</div></div></div>
+<div style="padding:4px 4px 80px">
+
+  <h2 class="gf-section">PASSIVE CALORIES (BMR)</h2>
+  <div class="gf-card">
+    <div class="tiny muted" style="margin-bottom:6px">Mifflin-St Jeor (Frankenfield 2005 — gold standard validated against indirect calorimetry)</div>
+    <div style="font-family:monospace;font-size:13px;background:var(--surface-cream);padding:10px;border-radius:8px;line-height:1.6">
+      BMR = 10 × ${wt} kg + 6.25 × ${p.heightCm} cm − 5 × ${p.age} ${p.sex==='female'?'− 161':'+ 5'}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp; = ${10*wt} + ${(6.25*p.heightCm).toFixed(0)} − ${5*p.age} ${p.sex==='female'?'− 161':'+ 5'}<br>
+      &nbsp;&nbsp;&nbsp;&nbsp; = <b>${bmrTotal}</b> kcal/day
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px">
+      <div><div class="tiny muted">BMR rate</div><div style="font-weight:700;font-size:16px">${(bmrTotal/1440).toFixed(2)} kcal/min</div></div>
+      <div><div class="tiny muted">So far today</div><div style="font-weight:700;font-size:16px">${bmrSoFar} kcal</div><div class="tiny faint">×${Math.floor((new Date().getHours()*60+new Date().getMinutes())/60)}h${(new Date().getHours()*60+new Date().getMinutes())%60}m elapsed</div></div>
+    </div>
+    <div class="tiny muted" style="margin-top:10px">Active calories from Health Connect (above-BMR) are added on top — not double counted. Wearable kcal estimates have 27-93% error per Stanford 2017; trust the trend, not the daily number.</div>
+  </div>
+
+  <h2 class="gf-section">HEALTH CONNECT — RAW VALUES</h2>
+  ${hc.syncedAt?`<div class="tiny muted" style="margin:0 4px 8px">Last synced ${fmtDateTime(hc.syncedAt)}</div>`:'<div class="tiny faint" style="margin:0 4px 8px">No HC data for this day</div>'}
+  <div class="gf-card" style="font-family:monospace;font-size:12px;line-height:1.7">
+    ${(()=>{
+      const rows=[];
+      const fmt=(label,val,unit='')=>val!=null?`<div style="display:flex;justify-content:space-between;border-bottom:1px dotted var(--border-l);padding:3px 0"><span class="muted">${label}</span><span><b>${val}</b>${unit}</span></div>`:'';
+      rows.push(fmt('Steps',hc.steps?.toLocaleString()));
+      rows.push(fmt('Distance',hc.distance_km?hc.distance_km.toFixed(3):null,' km'));
+      rows.push(fmt('Active kcal',hc.active_calories?Math.round(hc.active_calories):null,' kcal'));
+      rows.push(fmt('Total kcal (HC est.)',hc.total_calories?Math.round(hc.total_calories):null,' kcal'));
+      rows.push(fmt('Floors climbed',hc.floors_climbed));
+      rows.push(fmt('Resting HR',hc.resting_heart_rate?Math.round(hc.resting_heart_rate):null,' bpm'));
+      rows.push(fmt('HR avg (workout-derived)',hc.hr_avg,' bpm'));
+      rows.push(fmt('HR min',hc.hr_min,' bpm'));
+      rows.push(fmt('HR max',hc.hr_max,' bpm'));
+      rows.push(fmt('HRV (RMSSD avg)',hc.hrv_rmssd_avg?hc.hrv_rmssd_avg.toFixed(1):null,' ms'));
+      rows.push(fmt('HRV samples',hc.hrv_samples));
+      rows.push(fmt('VO₂max',hc.vo2_max?hc.vo2_max.toFixed(1):null));
+      rows.push(fmt('Weight (HC)',hc.weight?hc.weight.toFixed(1):null,' kg'));
+      rows.push(fmt('Body fat',hc.body_fat?(hc.body_fat*100).toFixed(1):null,'%'));
+      rows.push(fmt('Hydration (HC)',hc.water?Math.round(hc.water):null,' ml'));
+      rows.push(fmt('Oxygen saturation',hc.oxygen_saturation?(hc.oxygen_saturation*100).toFixed(1):null,'%'));
+      rows.push(fmt('Respiratory rate',hc.respiratory_rate?hc.respiratory_rate.toFixed(1):null,' /min'));
+      rows.push(fmt('Blood pressure',hc.blood_pressure_systolic?Math.round(hc.blood_pressure_systolic)+'/'+Math.round(hc.blood_pressure_diastolic||0):null,' mmHg'));
+      rows.push(fmt('Blood glucose',hc.blood_glucose?hc.blood_glucose.toFixed(1):null,' mmol/L'));
+      rows.push(fmt('Body temperature',hc.body_temperature?hc.body_temperature.toFixed(1):null,'°C'));
+      const valid=rows.filter(Boolean);
+      return valid.length>0?valid.join(''):'<div class="muted" style="text-align:center;padding:14px">No raw HC values stored for this day. Open the app on Android with HC granted, then return.</div>';
+    })()}
+  </div>
+
+  ${stages?`<h2 class="gf-section">SLEEP STAGES</h2>
+  <div class="gf-card">
+    ${(()=>{
+      const totalMin=(stages.deep_min||0)+(stages.light_min||0)+(stages.rem_min||0)+(stages.awake_min||0);
+      if(totalMin===0)return '<div class="muted">No stage breakdown available</div>';
+      const pct=k=>Math.round(((stages[k]||0)/totalMin)*100);
+      const rows=[
+        ['Deep',stages.deep_min,'var(--ink)',pct('deep_min')],
+        ['REM',stages.rem_min,'var(--coral)',pct('rem_min')],
+        ['Light',stages.light_min,'var(--sky)',pct('light_min')],
+        ['Awake',stages.awake_min,'var(--faint)',pct('awake_min')],
+      ];
+      return `<div style="display:flex;height:18px;border-radius:8px;overflow:hidden;margin-bottom:14px">${rows.map(([_,m,c,p])=>m>0?`<div style="width:${p}%;background:${c}" title="${_} ${m}m"></div>`:'').join('')}</div>
+      ${rows.map(([label,m,c,p])=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dotted var(--border-l)"><div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:2px;background:${c}"></div><span>${label}</span></div><div><b>${m||0}</b> min <span class="tiny muted">(${p}%)</span></div></div>`).join('')}
+      <div class="tiny muted" style="margin-top:10px">Total in bed: ${Math.round(totalMin/60*10)/10} h · Deep+REM target ~25%+ combined</div>`;
+    })()}
+  </div>`:''}
+
+  ${hc.workouts&&hc.workouts.length?`<h2 class="gf-section">WORKOUTS · DETAIL</h2>
+  <div style="display:flex;flex-direction:column;gap:8px">
+  ${hc.workouts.map(w=>`<div class="gf-card" style="padding:14px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+      <div>
+        <div style="font-weight:700;font-size:14px">${escapeHtml(w.title||w.type||'Workout')}</div>
+        <div class="tiny muted">${w.sourceApp?escapeHtml(w.sourceApp.split('.').slice(-1)[0]):'manual'}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-weight:700;font-size:14px">${Math.round((w.durationSec||0)/60)} min</div>
+        ${w.calories?`<div class="tiny muted">${Math.round(w.calories)} kcal</div>`:''}
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:12px">
+      ${w.distance_m?`<div><span class="muted">Distance:</span> <b>${(w.distance_m/1000).toFixed(2)} km</b></div>`:''}
+      ${w.hrAvg?`<div><span class="muted">HR avg:</span> <b>${Math.round(w.hrAvg)} bpm</b></div>`:''}
+      ${w.hrMax?`<div><span class="muted">HR max:</span> <b>${Math.round(w.hrMax)} bpm</b></div>`:''}
+      ${w.start?`<div><span class="muted">Start:</span> <b>${new Date(w.start).toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'})}</b></div>`:''}
+      ${w.end?`<div><span class="muted">End:</span> <b>${new Date(w.end).toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'})}</b></div>`:''}
+    </div>
+  </div>`).join('')}
+  </div>`:''}
+
+  ${foods.length>0?`<h2 class="gf-section">NUTRIENTS CONSUMED · % DV</h2>
+  <div class="gf-card" style="font-family:monospace;font-size:12px;line-height:1.6">
+    ${(()=>{
+      const order=['kcal','protein','carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','selenium_ug','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug','leucine_g'];
+      const labels={kcal:'Energy',protein:'Protein',carbs:'Carbs',fat:'Fat',fiber:'Fiber',sat_fat:'Sat fat',sugar:'Sugar',sodium_mg:'Sodium',potassium_mg:'Potassium',calcium_mg:'Calcium',iron_mg:'Iron',magnesium_mg:'Magnesium',zinc_mg:'Zinc',selenium_ug:'Selenium',vit_a_iu:'Vit A',vit_c_mg:'Vit C',vit_d_iu:'Vit D',vit_b12_ug:'Vit B12',folate_ug:'Folate',leucine_g:'Leucine'};
+      const units={kcal:'kcal',protein:'g',carbs:'g',fat:'g',fiber:'g',sat_fat:'g',sugar:'g',sodium_mg:'mg',potassium_mg:'mg',calcium_mg:'mg',iron_mg:'mg',magnesium_mg:'mg',zinc_mg:'mg',selenium_ug:'µg',vit_a_iu:'IU',vit_c_mg:'mg',vit_d_iu:'IU',vit_b12_ug:'µg',folate_ug:'µg',leucine_g:'g'};
+      return order.map(k=>{
+        const v=totals[k];if(v==null||v===0)return '';
+        const tgt=fdv[k]?.target;
+        const pct=tgt?Math.round((v/tgt)*100):null;
+        const max=fdv[k]?.max;
+        const overMax=max&&v>max;
+        const color=overMax?'#B58A0F':pct>=80?'var(--success)':'var(--ink)';
+        return `<div style="display:flex;justify-content:space-between;border-bottom:1px dotted var(--border-l);padding:3px 0"><span class="muted">${labels[k]}</span><span style="color:${color}"><b>${Number.isInteger(v)?v:v.toFixed(1)}</b> ${units[k]}${pct!=null?` <span class="tiny faint">(${pct}% DV)</span>`:''}</span></div>`;
+      }).filter(Boolean).join('');
+    })()}
+  </div>`:''}
+
+  <div class="tiny faint text-center" style="margin-top:20px;padding:10px">All values stored in your private GitHub repo. This screen reads them back — nothing computed live.</div>
+</div>`;
+}
+function bindHCDetail(){
+  document.getElementById('hcd-back')?.addEventListener('click',()=>{state.hcDetailDate=null;setScreen('progress')});
 }
 
 function renderSupplements(){
