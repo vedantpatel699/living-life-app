@@ -151,7 +151,7 @@ nav.bnav .tab.active .lbl{color:var(--ink)}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
 <script>
 'use strict';
-const STORAGE_KEY='living-life-config-v2',DATA_KEY='living-life-data-v2',APP_VERSION='4.0.1';
+const STORAGE_KEY='living-life-config-v2',DATA_KEY='living-life-data-v2',APP_VERSION='4.1.0';
 const ACTIVITIES=['Walk','Strength workout','Run','Yoga / stretch','Amazon shift','Rest day'];
 const SUPPLEMENTS=[
   {id:'creatine',name:'Creatine monohydrate',dose:'5 g',timing:'anytime',color:'coral',ini:'C'},
@@ -294,10 +294,11 @@ ${innerLabel?`<div class="tiny faint" style="margin-top:4px">${innerLabel}</div>
 </div>`;
 }
 
-// v4.0 — compact stat row, no card wrapper, just text columns with vertical dividers
+// v4.0 — compact stat row, no card wrapper, just text columns with vertical dividers.
+// Each stat can be tap-to-drill-down via st.id (opens metric detail screen).
 function gfStatRow(stats){
   return `<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 16px;border-top:1px solid var(--border-l);border-bottom:1px solid var(--border-l);margin-top:18px">
-${stats.map((st,i)=>`<div style="flex:1;text-align:center;${i>0?'border-left:1px solid var(--border-l);':''}">
+${stats.map((st,i)=>`<div ${st.id?`class="gf-stat-tap" data-metric="${st.id}"`:''} style="flex:1;text-align:center;${i>0?'border-left:1px solid var(--border-l);':''}${st.id?'cursor:pointer':''}">
 <div style="font-size:18px;font-weight:700;color:${st.color||'var(--ink)'};line-height:1.1">${st.value}${st.unit?`<span style="font-size:11px;font-weight:500;color:var(--muted);margin-left:1px">${st.unit}</span>`:''}</div>
 <div style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px">${st.label}</div>
 </div>`).join('')}
@@ -426,7 +427,7 @@ function render(){
   const m=document.getElementById('main');
   m.className=SCREENS_WITH_NAV.has(state.screen)?'with-nav':'';
   if(!isConfigured()&&!['welcome','onboarding','settings'].includes(state.screen)){m.innerHTML=renderWelcome();bindWelcome();renderBottomNav();return}
-  const renderers={welcome:[renderWelcome,bindWelcome],onboarding:[renderOnboarding,bindOnboarding],today:[renderToday,bindToday],progress:[renderProgress,bindProgress],history:[renderHistory,bindHistory],settings:[renderSettings,bindSettings],logEntry:[renderLogEntry,bindLogEntry],coach:[renderCoach,bindCoach],supplements:[renderSupplements,bindSupplements]};
+  const renderers={welcome:[renderWelcome,bindWelcome],onboarding:[renderOnboarding,bindOnboarding],today:[renderToday,bindToday],progress:[renderProgress,bindProgress],history:[renderHistory,bindHistory],settings:[renderSettings,bindSettings],logEntry:[renderLogEntry,bindLogEntry],coach:[renderCoach,bindCoach],supplements:[renderSupplements,bindSupplements],metricDetail:[renderMetricDetail,bindMetricDetail]};
   const [r,b]=renderers[state.screen]||[()=>'<div class="empty"><h3>404</h3></div>',()=>{}];
   m.innerHTML=r();b();
   renderBottomNav();
@@ -526,10 +527,6 @@ function renderToday(){
   const caloriesIn=foods.reduce((s,f)=>s+(f.kcal||0),0);
   const proteinIn=foods.reduce((s,f)=>s+(f.protein||0),0);
   const net=caloriesIn-totalOut;
-  // Water
-  const waterFoods=foods.filter(f=>f.foodId==='calgary-tap-water');
-  const appMl=waterFoods.reduce((s,f)=>s+(f.grams||0),0);
-  const ml=Math.max(appMl,hcWaterToday());
   // Templates
   const tpls=state.data.mealTemplates||[];
   const hr=new Date().getHours();
@@ -562,10 +559,10 @@ function renderToday(){
       </div>
     </div>
     ${gfStatRow([
-      {label:'Weight',value:stats?.latest!=null?stats.latest.toFixed(1):'—',unit:'kg'},
-      {label:'Protein',value:Math.round(proteinIn),unit:'g'},
-      {label:'Net',value:(net>0?'+':'')+net,color:net<0?'var(--success)':net>200?'#B58A0F':'var(--ink)'},
-      {label:'Water',value:ml,unit:'ml'},
+      {label:'Weight',id:'weight',value:stats?.latest!=null?stats.latest.toFixed(1):'—',unit:'kg'},
+      {label:'Protein',id:'protein',value:Math.round(proteinIn),unit:'g'},
+      {label:'Active',id:'active_kcal',value:activeOut,unit:'kcal'},
+      {label:'Resting HR',id:'rhr',value:hc.resting_heart_rate?Math.round(hc.resting_heart_rate):'—',unit:'bpm'},
     ])}
     ${showLanding?`<div class="gf-card" style="background:linear-gradient(135deg,var(--sky-s),#F8FAFB);border:1px solid rgba(115,178,224,0.3);margin-top:18px">
       <div class="tiny" style="color:var(--sky);font-weight:700;margin-bottom:6px">🌙 POST-SHIFT LANDING</div>
@@ -573,12 +570,6 @@ function renderToday(){
       <div class="tiny muted" style="margin-bottom:10px">Run the script — no optimizing.</div>
       <button class="btn btn-primary btn-full" id="t-tpl-log" data-tplid="${postShift.id}">＋ One-tap log</button>
     </div>`:''}
-    <h2 class="gf-section">HYDRATION</h2>
-    <div style="display:flex;gap:8px">
-      <button id="t-water-glass" style="flex:1;background:var(--surface-white);border:1px solid var(--border);color:var(--ink);border-radius:14px;padding:14px;font-size:13px;font-weight:600">＋ 250 ml</button>
-      <button id="t-water-bottle" style="flex:1;background:var(--surface-white);border:1px solid var(--border);color:var(--ink);border-radius:14px;padding:14px;font-size:13px;font-weight:600">＋ 500 ml</button>
-      <button id="t-water-custom" style="flex:1;background:var(--surface-white);border:1px solid var(--border);color:var(--ink);border-radius:14px;padding:14px;font-size:13px;font-weight:600">＋ Custom</button>
-    </div>
     <h2 class="gf-section">CONSISTENCY · LAST 7 DAYS</h2>
     <div style="display:flex;gap:3px">
       ${last7.reverse().map((iso,i)=>{
@@ -587,10 +578,9 @@ function renderToday(){
         return `<div style="flex:1;text-align:center"><div style="height:6px;border-radius:2px;background:${state.data.entries[iso]?'var(--success)':'var(--border)'};margin-bottom:6px"></div><div style="font-size:10px;color:var(--muted);font-weight:600">${dayL}</div></div>`;
       }).join('')}
     </div>
-    <div class="tiny muted text-center" style="margin-top:8px">${covered} of 7 days logged · ${covered>=5?"I'm running the script":covered>=3?"I protect the plan when I can":"Bad weeks happen. Resume tomorrow."}</div>
+    <div class="tiny muted text-center" style="margin-top:8px">${covered} of 7 days logged</div>
     <h2 class="gf-section">QUICK ACCESS</h2>
     <div style="display:flex;flex-direction:column;gap:8px">
-      ${gfRow({icon:'＋',iconBg:'var(--coral)',iconColor:'white',title:'Log today',sub:'Weight, photo, food, notes',id:'t-log-row'})}
       ${gfRow({icon:'💊',iconBg:'var(--mint-s)',iconColor:'var(--mint)',title:todaySuppCount()+' of '+(DB.supplements?DB.supplements.supplements.filter(s=>s.frequency==='daily').length:SUPPLEMENTS.length)+' supplements taken',sub:'Tap to check off',id:'t-supps'})}
       ${tpls.length>0?gfRow({icon:'💾',iconBg:'var(--sun-s)',iconColor:'#B58A0F',title:'Saved meal templates',sub:tpls.length+' template'+(tpls.length===1?'':'s')+' · one-tap log',id:'t-tpls'}):''}
       ${hasClaudeKey()?gfRow({icon:'✦',iconBg:'var(--cta)',iconColor:'var(--sun)',title:'Ask your coach',sub:'Knows your data',id:'t-coach'}):''}
@@ -602,11 +592,8 @@ function bindToday(){
   document.getElementById('t-supps')?.addEventListener('click',()=>setScreen('supplements'));
   document.getElementById('t-coach')?.addEventListener('click',()=>setScreen('coach'));
   document.getElementById('t-fab')?.addEventListener('click',()=>setScreen('logEntry'));
-  document.getElementById('t-log-row')?.addEventListener('click',()=>setScreen('logEntry'));
+  document.querySelectorAll('.gf-stat-tap').forEach(el=>el.addEventListener('click',()=>setScreen('metricDetail',{metric:el.dataset.metric})));
   document.getElementById('t-tpls')?.addEventListener('click',()=>openTemplatesList());
-  document.getElementById('t-water-glass')?.addEventListener('click',()=>addWaterEntry(250));
-  document.getElementById('t-water-bottle')?.addEventListener('click',()=>addWaterEntry(500));
-  document.getElementById('t-water-custom')?.addEventListener('click',()=>{const v=prompt('How many ml?','750');if(!v)return;const ml=parseInt(v,10);if(!ml||ml<=0||ml>3000){toast('Enter 1-3000 ml','error');return}addWaterEntry(ml)});
   document.getElementById('t-tpl-log')?.addEventListener('click',e=>{
     const id=e.currentTarget.dataset.tplid;
     const tpl=(state.data.mealTemplates||[]).find(t=>t.id===id);
@@ -1234,6 +1221,167 @@ function bindCoach(){
 
 
 
+
+// =================== METRIC DETAIL SCREEN (Google-Fit-style drill-down) ===================
+const METRIC_DEFS = {
+  weight: {label:'Weight',unit:'kg',color:'var(--ink)',source:'manual',blurb:'Body weight logged daily. Daily noise comes from water, food, glycogen. The 7-day moving average is the real signal.'},
+  protein: {label:'Protein',unit:'g',color:'var(--coral)',source:'food log',blurb:'Daily protein intake from logged foods. Target 130-140g/day for muscle preservation in deficit (Witard 2014).'},
+  active_kcal: {label:'Active calories',unit:'kcal',color:'var(--coral)',source:'Health Connect',blurb:'Active calories burned above your resting metabolism. Wearable estimates have 27-93% error (Stanford 2017) — trust the trend, not the daily number.'},
+  rhr: {label:'Resting heart rate',unit:'bpm',color:'var(--coral)',source:'Health Connect',blurb:'Your morning resting heart rate. Trend up over weeks can mean illness, overtraining, or sleep debt.'},
+  hrv: {label:'Heart rate variability',unit:'ms',color:'var(--sky)',source:'Health Connect',blurb:'RMSSD HRV from Garmin. Within-day variability is high — interpret only the 7-day average trend.'},
+  steps: {label:'Steps',unit:'',color:'var(--ink)',source:'Health Connect',blurb:'Daily step count. Useful for spotting changes in your overall activity, not as a strict goal.'},
+  vo2_max: {label:'VO₂max',unit:'',color:'var(--mint)',source:'Health Connect',blurb:'Cardiorespiratory fitness estimate from Garmin. Move 8-12 week direction only.'},
+};
+
+function renderMetricDetail(){
+  const metric=state.metric||'weight';
+  const def=METRIC_DEFS[metric]||METRIC_DEFS.weight;
+  const period=state.metricPeriod||'week';
+  return `<div class="top-bar"><button class="back-btn" id="md-back">←</button><div class="title-block"><h1>${escapeHtml(def.label)}</h1></div><div style="width:44px"></div></div>
+<div style="padding:0 4px 80px">
+  <div style="display:flex;border-bottom:1px solid var(--border-l)">
+    ${['day','week','month','year'].map(p=>`<button class="md-tab" data-period="${p}" style="flex:1;padding:14px 0;background:transparent;font-size:14px;font-weight:${period===p?'700':'500'};color:${period===p?'var(--ink)':'var(--muted)'};border-bottom:2px solid ${period===p?'var(--ink)':'transparent'};text-transform:capitalize">${p}</button>`).join('')}
+  </div>
+  <div style="text-align:center;padding:24px 0 8px">
+    <div class="tiny muted" id="md-range-label">${metricRangeLabel(period)}</div>
+    <div id="md-total" style="font-size:32px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-top:4px">—</div>
+    <div class="tiny muted" id="md-total-label">${def.unit?def.unit:''}</div>
+  </div>
+  <div style="height:280px;margin:8px 0 20px;position:relative">
+    <canvas id="md-chart"></canvas>
+  </div>
+  <div style="padding:0 16px">
+    <p class="muted" style="font-size:14px;line-height:1.6">${escapeHtml(def.blurb)}</p>
+    <p class="tiny faint" style="margin-top:14px">Source: ${escapeHtml(def.source)}</p>
+  </div>
+</div>`;
+}
+
+function metricRangeLabel(period){
+  const d=new Date();
+  if(period==='day')return d.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
+  if(period==='week')return 'Last 7 days';
+  if(period==='month')return 'Last 30 days';
+  if(period==='year')return 'Last 12 months';
+  return '';
+}
+
+// Pull a value for a metric on a given ISO date from state.data.entries
+function metricValueFor(metric,iso){
+  const e=state.data.entries[iso];
+  if(!e)return null;
+  if(metric==='weight')return typeof e.weight==='number'?e.weight:null;
+  if(metric==='protein'){const foods=e.foods||[];const v=foods.reduce((s,f)=>s+(f.protein||0),0);return foods.length>0?v:null}
+  if(metric==='active_kcal')return e.hc?.active_calories??null;
+  if(metric==='rhr')return e.hc?.resting_heart_rate??null;
+  if(metric==='hrv')return e.hc?.hrv_rmssd_avg??null;
+  if(metric==='steps')return e.hc?.steps??null;
+  if(metric==='vo2_max')return e.hc?.vo2_max??null;
+  return null;
+}
+
+function bindMetricDetail(){
+  document.getElementById('md-back')?.addEventListener('click',()=>{state.metric=null;state.metricPeriod=null;setScreen('today')});
+  document.querySelectorAll('.md-tab').forEach(b=>b.addEventListener('click',()=>{state.metricPeriod=b.dataset.period;render()}));
+  // Draw the chart
+  setTimeout(()=>drawMetricChart(),50);
+}
+
+function drawMetricChart(){
+  const canvas=document.getElementById('md-chart');
+  if(!canvas||!window.Chart)return;
+  const metric=state.metric||'weight';
+  const def=METRIC_DEFS[metric]||METRIC_DEFS.weight;
+  const period=state.metricPeriod||'week';
+  // Build labels + values based on period
+  let labels=[],values=[];
+  const today_=new Date();today_.setHours(0,0,0,0);
+  let days;
+  if(period==='day')days=1;
+  else if(period==='week')days=7;
+  else if(period==='month')days=30;
+  else days=365;
+  for(let i=days-1;i>=0;i--){
+    const d=new Date(today_);d.setDate(d.getDate()-i);
+    const iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    labels.push(d);
+    values.push(metricValueFor(metric,iso));
+  }
+  // Compute total/average for the period
+  const valid=values.filter(v=>v!=null);
+  let total=null,totalLabel=def.unit||'';
+  if(valid.length>0){
+    if(['weight','rhr','hrv','vo2_max'].includes(metric)){
+      // Use average for these
+      total=(valid.reduce((s,v)=>s+v,0)/valid.length);
+      totalLabel='avg '+(def.unit||'');
+    }else{
+      total=valid.reduce((s,v)=>s+v,0);
+      totalLabel='total '+(def.unit||'');
+    }
+  }
+  // Render the total
+  const totalEl=document.getElementById('md-total');
+  const totalLabelEl=document.getElementById('md-total-label');
+  if(totalEl){
+    if(total==null){totalEl.textContent='—';if(totalLabelEl)totalLabelEl.textContent='no data'}
+    else{
+      const formatted=metric==='weight'||metric==='hrv'||metric==='vo2_max'?total.toFixed(1):Math.round(total).toLocaleString();
+      totalEl.textContent=formatted;
+      if(totalLabelEl)totalLabelEl.textContent=totalLabel;
+    }
+  }
+  // Render chart — bar for totals, line for averages
+  const useBar=['protein','active_kcal','steps'].includes(metric);
+  const ctx=canvas.getContext('2d');
+  // Color helpers
+  const c=def.color||'var(--ink)';
+  // Build labels for axis (short)
+  let axisLabels;
+  if(period==='day'){
+    // No data per-hour stored yet — fall back to a single bar
+    axisLabels=[labels[0].toLocaleDateString(undefined,{weekday:'short'})];
+    values=[values[0]];
+  }else if(period==='week'){
+    axisLabels=labels.map(d=>d.toLocaleDateString(undefined,{weekday:'short'})[0]);
+  }else if(period==='month'){
+    axisLabels=labels.map((d,i)=>i%7===0||i===labels.length-1?d.getDate()+'':'');
+  }else{
+    // year: pick monthly
+    const monthly=[],monthLabels=[];
+    let cur=new Date(today_);cur.setDate(1);
+    for(let i=11;i>=0;i--){
+      const d=new Date(today_);d.setMonth(d.getMonth()-i);d.setDate(1);
+      monthly.push(values.filter((v,idx)=>v!=null && labels[idx].getMonth()===d.getMonth() && labels[idx].getFullYear()===d.getFullYear()));
+      monthLabels.push(d.toLocaleDateString(undefined,{month:'short'}));
+    }
+    values=monthly.map(arr=>{if(arr.length===0)return null;return arr.reduce((s,v)=>s+v,0)/(['weight','rhr','hrv','vo2_max'].includes(metric)?arr.length:1)});
+    axisLabels=monthLabels;
+  }
+  new Chart(ctx,{
+    type:useBar?'bar':'line',
+    data:{labels:axisLabels,datasets:[{
+      label:def.label,
+      data:values,
+      backgroundColor:c,
+      borderColor:c,
+      borderWidth:2,
+      pointRadius:useBar?0:3,
+      tension:0.3,
+      fill:false,
+      borderRadius:useBar?6:0,
+      spanGaps:true,
+    }]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{enabled:true}},
+      scales:{
+        x:{grid:{display:false},ticks:{color:'#B7BCC9',font:{size:10}}},
+        y:{grid:{color:'rgba(217,223,230,0.4)'},ticks:{color:'#B7BCC9',font:{size:10}},beginAtZero:useBar}
+      }
+    }
+  });
+}
 
 function renderSupplements(){
   const t=today(),supp=state.data.supplements[t]||{};
