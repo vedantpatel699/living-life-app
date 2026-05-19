@@ -147,7 +147,7 @@ nav.bnav .tab.active .lbl{color:var(--ink)}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
 <script>
 'use strict';
-const STORAGE_KEY='living-life-config-v2',DATA_KEY='living-life-data-v2',APP_VERSION='3.16.0';
+const STORAGE_KEY='living-life-config-v2',DATA_KEY='living-life-data-v2',APP_VERSION='4.0.0';
 const ACTIVITIES=['Walk','Strength workout','Run','Yoga / stretch','Amazon shift','Rest day'];
 const SUPPLEMENTS=[
   {id:'creatine',name:'Creatine monohydrate',dose:'5 g',timing:'anytime',color:'coral',ini:'C'},
@@ -253,6 +253,53 @@ ${sub?`<div class="gf-ring-sub" style="margin-top:2px">${sub}</div>`:''}
 </div>
 </div>`;
 }
+// v4.0 — DUAL RING: outer single-color arc + inner stacked-segment arc (passive + active kcal in
+// two hues of the same color). Compositionally cleaner than two separate single-value rings.
+function gfDualRing({outerValue=0,outerGoal=10000,outerLabel='STEPS',outerColor='var(--ink)',
+  innerSegments=[],innerGoal=2000,innerLabel='',size=220,thickOuter=10,thickInner=14}){
+  // outerSegments: simple progress vs goal
+  // innerSegments: array of { value, color } stacked toward innerGoal
+  const cx=size/2,cy=size/2;
+  const rOuter=(size-thickOuter)/2;
+  const rInner=rOuter-thickOuter/2-thickInner/2-4;
+  const circOuter=2*Math.PI*rOuter;
+  const circInner=2*Math.PI*rInner;
+  const pctOuter=Math.min(1,outerGoal>0?outerValue/outerGoal:0);
+  // Inner: compute cumulative dashOffsets so each segment starts where the previous ended
+  const innerTotal=innerSegments.reduce((s,seg)=>s+(seg.value||0),0);
+  let cumStart=0;
+  const innerArcs=innerSegments.map(seg=>{
+    const len=Math.min(seg.value/innerGoal,1-cumStart);
+    const start=cumStart;
+    cumStart+=len;
+    return {dasharray:`${len*circInner} ${circInner}`,dashoffset:-start*circInner,color:seg.color};
+  });
+  const outerNum=outerValue>=10000?(outerValue/1000).toFixed(1)+'k':Math.round(outerValue).toLocaleString();
+  return `<div style="width:${size}px;height:${size}px;position:relative;margin:0 auto">
+<svg viewBox="0 0 ${size} ${size}" style="position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)">
+<circle cx="${cx}" cy="${cy}" r="${rOuter}" fill="none" stroke="var(--surface-cream)" stroke-width="${thickOuter}"/>
+<circle cx="${cx}" cy="${cy}" r="${rOuter}" fill="none" stroke="${outerColor}" stroke-width="${thickOuter}" stroke-linecap="round" stroke-dasharray="${pctOuter*circOuter} ${circOuter}" style="transition:stroke-dasharray 0.6s ease-out"/>
+<circle cx="${cx}" cy="${cy}" r="${rInner}" fill="none" stroke="var(--surface-cream)" stroke-width="${thickInner}"/>
+${innerArcs.map(a=>`<circle cx="${cx}" cy="${cy}" r="${rInner}" fill="none" stroke="${a.color}" stroke-width="${thickInner}" stroke-linecap="round" stroke-dasharray="${a.dasharray}" stroke-dashoffset="${a.dashoffset}" style="transition:stroke-dasharray 0.6s ease-out"/>`).join('')}
+</svg>
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 16px">
+<div style="font-size:44px;font-weight:700;letter-spacing:-0.02em;line-height:1;color:${outerColor}">${outerNum}</div>
+<div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:6px">${outerLabel}</div>
+${innerLabel?`<div class="tiny faint" style="margin-top:4px">${innerLabel}</div>`:''}
+</div>
+</div>`;
+}
+
+// v4.0 — compact stat row, no card wrapper, just text columns with vertical dividers
+function gfStatRow(stats){
+  return `<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 16px;border-top:1px solid var(--border-l);border-bottom:1px solid var(--border-l);margin-top:18px">
+${stats.map((st,i)=>`<div style="flex:1;text-align:center;${i>0?'border-left:1px solid var(--border-l);':''}">
+<div style="font-size:18px;font-weight:700;color:${st.color||'var(--ink)'};line-height:1.1">${st.value}${st.unit?`<span style="font-size:11px;font-weight:500;color:var(--muted);margin-left:1px">${st.unit}</span>`:''}</div>
+<div style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px">${st.label}</div>
+</div>`).join('')}
+</div>`;
+}
+
 function gfTile({icon='',label='',value='',unit='',sub='',color='var(--ink)',bg=null}){
   const bgStyle=bg?`background:${bg};`:'';
   return `<div class="gf-tile" style="${bgStyle}">
@@ -357,13 +404,13 @@ function todaySuppCount(){const s=state.data.supplements[today()]||{};return SUP
 
 function setStatusTime(){const t=document.getElementById('status-time');if(!t)return;const d=new Date();t.textContent=`${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`}
 
-const SCREENS_WITH_NAV=new Set(['today','progress','history','settings']);
+const SCREENS_WITH_NAV=new Set(['today','progress','history']);
 function setScreen(name,params={}){state.screen=name;state.draft={};Object.assign(state,params);render();document.getElementById('main')?.scrollTo?.(0,0)}
 
 function renderBottomNav(){
   const c=document.getElementById('bottom-nav-container');
   if(!isConfigured()||!SCREENS_WITH_NAV.has(state.screen)){c.innerHTML='';return}
-  const tabs=[{id:'today',l:'Today',i:ICONS.today},{id:'progress',l:'Progress',i:ICONS.progress},{id:'history',l:'History',i:ICONS.history},{id:'settings',l:'Settings',i:ICONS.settings}];
+  const tabs=[{id:'today',l:'Today',i:ICONS.today},{id:'progress',l:'Progress',i:ICONS.progress},{id:'history',l:'History',i:ICONS.history}];
   c.innerHTML=`<nav class="bnav">${tabs.map(t=>`<button class="tab ${state.screen===t.id?'active':''}" data-s="${t.id}"><div class="ic">${t.i}</div><div class="lbl">${t.l}</div></button>`).join('')}</nav>`;
   c.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>setScreen(b.dataset.s)));
 }
@@ -457,12 +504,17 @@ function renderToday(){
   // Coverage % over last 7 days
   const last7=[];for(let i=0;i<7;i++){const d=new Date();d.setDate(d.getDate()-i);last7.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'))}
   const covered=last7.filter(iso=>state.data.entries[iso]).length;
+  // Steps for outer ring
   const stepsNow=hc.steps||0;
   const stepsGoal=dailyStepGoal();
-  const ringPct=Math.min(100,Math.round((stepsNow/stepsGoal)*100));
+  // Energy for inner ring — passive (BMR so far) + active (HC) stacked toward TDEE goal
   const bmrSoFar=bmrSoFarToday();
   const activeOut=Math.round(hc.active_calories||0);
   const totalOut=bmrSoFar+activeOut;
+  const bmrFull=fullBmr();
+  const activeGoal=dailyActiveKcalGoal();
+  const energyGoal=bmrFull+activeGoal;
+  // Foods
   const foods=(entry&&entry.foods)||[];
   const caloriesIn=foods.reduce((s,f)=>s+(f.kcal||0),0);
   const proteinIn=foods.reduce((s,f)=>s+(f.protein||0),0);
@@ -471,80 +523,89 @@ function renderToday(){
   const waterFoods=foods.filter(f=>f.foodId==='calgary-tap-water');
   const appMl=waterFoods.reduce((s,f)=>s+(f.grams||0),0);
   const ml=Math.max(appMl,hcWaterToday());
-  // Post-shift template hint
+  // Templates
   const tpls=state.data.mealTemplates||[];
   const hr=new Date().getHours();
   const inLandingWindow=shift&&hr>=12&&hr<=14;
   const postShift=tpls.find(t=>(t.tags||[]).includes('post_shift'));
   const showLanding=inLandingWindow&&postShift;
-  return `<div style="padding:0 4px">
+  return `<div style="padding:0 4px 80px">
     <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0 4px">
       <div>
         <div class="muted tiny">${fmtDateLong(t)}</div>
         <h1 style="font-size:24px;font-weight:700;letter-spacing:-0.01em;margin-top:2px">Hi, ${escapeHtml(state.profile.name||'there')}</h1>
         <button class="gf-pill ${shift?'cool':'ok'}" id="t-shift-toggle" style="margin-top:6px;cursor:pointer;border:none">${shift?'🌙 SHIFT DAY (tap to unmark)':'☀ OFF DAY (tap if working tonight)'} · Week ${week}</button>
       </div>
-      <button id="t-avatar" style="width:44px;height:44px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:16px">${(state.profile.name||'V')[0].toUpperCase()}</button>
+      <button id="t-settings" style="width:40px;height:40px;border-radius:50%;background:transparent;display:flex;align-items:center;justify-content:center;color:var(--ink)" title="Settings">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
     </div>
-    <div class="gf-hero" style="margin-top:14px">
-      ${gfRing({value:stepsNow,goal:stepsGoal,size:200,thick:14,color:'var(--coral)',track:'var(--surface-cream)',centerLabel:'STEPS'})}
-      <div class="tiny muted" style="margin-top:-4px">${stepsNow.toLocaleString()} of ${stepsGoal.toLocaleString()} · ${ringPct}%</div>
+    <div style="margin-top:20px;text-align:center">
+      ${gfDualRing({
+        outerValue:stepsNow,outerGoal:stepsGoal,outerLabel:'STEPS',outerColor:'var(--ink)',
+        innerSegments:[
+          {value:bmrSoFar,color:'#F4B59B'},
+          {value:activeOut,color:'var(--coral)'}
+        ],
+        innerGoal:energyGoal,
+        innerLabel:`${totalOut.toLocaleString()} / ${energyGoal.toLocaleString()} kcal`,
+        size:240,thickOuter:8,thickInner:16
+      })}
+      <div style="display:flex;justify-content:center;gap:14px;margin-top:8px;font-size:11px;color:var(--muted)">
+        <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#F4B59B;margin-right:4px;vertical-align:middle"></span>Passive ${bmrSoFar}</span>
+        <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--coral);margin-right:4px;vertical-align:middle"></span>Active ${activeOut}</span>
+      </div>
     </div>
-    ${showLanding?`<div class="gf-card" style="background:linear-gradient(135deg,var(--sky-s),#F8FAFB);border:1px solid rgba(115,178,224,0.3);margin-top:12px">
+    ${gfStatRow([
+      {label:'Weight',value:stats?.latest!=null?stats.latest.toFixed(1):'—',unit:'kg'},
+      {label:'Protein',value:Math.round(proteinIn),unit:'g'},
+      {label:'Net',value:(net>0?'+':'')+net,color:net<0?'var(--success)':net>200?'#B58A0F':'var(--ink)'},
+      {label:'Water',value:ml,unit:'ml'},
+    ])}
+    ${showLanding?`<div class="gf-card" style="background:linear-gradient(135deg,var(--sky-s),#F8FAFB);border:1px solid rgba(115,178,224,0.3);margin-top:18px">
       <div class="tiny" style="color:var(--sky);font-weight:700;margin-bottom:6px">🌙 POST-SHIFT LANDING</div>
       <div style="font-weight:700;font-size:15px;margin-bottom:2px">${escapeHtml(postShift.name)}</div>
       <div class="tiny muted" style="margin-bottom:10px">Run the script — no optimizing.</div>
       <button class="btn btn-primary btn-full" id="t-tpl-log" data-tplid="${postShift.id}">＋ One-tap log</button>
     </div>`:''}
-    <h2 class="gf-section">TODAY</h2>
-    <div class="gf-grid-2">
-      ${gfTile({icon:'⚖️',label:'Weight',value:stats?.latest!=null?stats.latest.toFixed(1):'—',unit:'kg',sub:stats?.avgNow!=null?'7-day avg '+stats.avgNow.toFixed(1):'log today',color:'var(--ink)'})}
-      ${gfTile({icon:'🥩',label:'Protein',value:Math.round(proteinIn),unit:'g',sub:'/ 130 g target',color:'var(--coral)'})}
-      ${gfTile({icon:'⚡',label:'Energy net',value:(net>0?'+':'')+net,unit:'kcal',sub:net<0?'in deficit ✓':net===0?'balanced':'in surplus',color:net<0?'var(--success)':net>200?'#B58A0F':'var(--ink)'})}
-      ${gfTile({icon:'💧',label:'Water',value:ml.toLocaleString(),unit:'ml',sub:'/ '+(state.profile.waterGoalMl||2500)+' ml',color:'var(--sky)'})}
+    <h2 class="gf-section">HYDRATION</h2>
+    <div style="display:flex;gap:8px">
+      <button id="t-water-glass" style="flex:1;background:var(--surface-white);border:1px solid var(--border);color:var(--ink);border-radius:14px;padding:14px;font-size:13px;font-weight:600">＋ 250 ml</button>
+      <button id="t-water-bottle" style="flex:1;background:var(--surface-white);border:1px solid var(--border);color:var(--ink);border-radius:14px;padding:14px;font-size:13px;font-weight:600">＋ 500 ml</button>
+      <button id="t-water-custom" style="flex:1;background:var(--surface-white);border:1px solid var(--border);color:var(--ink);border-radius:14px;padding:14px;font-size:13px;font-weight:600">＋ Custom</button>
     </div>
-    <div style="display:flex;gap:8px;margin-top:10px">
-      <button id="t-water-glass" style="flex:1;background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:10px;font-size:12px;font-weight:600">＋ 250 ml</button>
-      <button id="t-water-bottle" style="flex:1;background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:10px;font-size:12px;font-weight:600">＋ 500 ml</button>
-      <button id="t-water-custom" style="flex:1;background:var(--surface-white);border:1.5px solid var(--sky);color:var(--sky);border-radius:12px;padding:10px;font-size:12px;font-weight:600">＋ Custom</button>
+    <h2 class="gf-section">CONSISTENCY · LAST 7 DAYS</h2>
+    <div style="display:flex;gap:3px">
+      ${last7.reverse().map((iso,i)=>{
+        const d=new Date(iso+'T00:00:00');
+        const dayL=['M','T','W','T','F','S','S'][(d.getDay()+6)%7];
+        return `<div style="flex:1;text-align:center"><div style="height:6px;border-radius:2px;background:${state.data.entries[iso]?'var(--success)':'var(--border)'};margin-bottom:6px"></div><div style="font-size:10px;color:var(--muted);font-weight:600">${dayL}</div></div>`;
+      }).join('')}
     </div>
-    <h2 class="gf-section">CONSISTENCY</h2>
-    <div class="gf-card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <div><div style="font-weight:700;font-size:16px">${covered} of 7 days logged</div><div class="tiny muted">${covered>=5?"I'm running the script":covered>=3?"I protect the plan when I can":"Bad weeks happen. Resume tomorrow."}</div></div>
-      </div>
-      <div style="display:flex;gap:3px">
-        ${last7.reverse().map(iso=>`<div style="flex:1;height:8px;border-radius:2px;background:${state.data.entries[iso]?'var(--success)':'var(--border)'}" title="${iso}"></div>`).join('')}
-      </div>
-    </div>
-    <button class="btn btn-primary btn-full mt-4" id="t-log" style="padding:16px;display:flex;align-items:center;justify-content:center;gap:8px"><span style="font-size:18px">＋</span> <span>Log today</span></button>
+    <div class="tiny muted text-center" style="margin-top:8px">${covered} of 7 days logged · ${covered>=5?"I'm running the script":covered>=3?"I protect the plan when I can":"Bad weeks happen. Resume tomorrow."}</div>
     <h2 class="gf-section">QUICK ACCESS</h2>
     <div style="display:flex;flex-direction:column;gap:8px">
       ${gfRow({icon:'💊',iconBg:'var(--mint-s)',iconColor:'var(--mint)',title:todaySuppCount()+' of '+(DB.supplements?DB.supplements.supplements.filter(s=>s.frequency==='daily').length:SUPPLEMENTS.length)+' supplements taken',sub:'Tap to check off',id:'t-supps'})}
       ${tpls.length>0?gfRow({icon:'💾',iconBg:'var(--sun-s)',iconColor:'#B58A0F',title:'Saved meal templates',sub:tpls.length+' template'+(tpls.length===1?'':'s')+' · one-tap log',id:'t-tpls'}):''}
       ${hasClaudeKey()?gfRow({icon:'✦',iconBg:'var(--cta)',iconColor:'var(--sun)',title:'Ask your coach',sub:'Knows your data',id:'t-coach'}):''}
     </div>
-    <div style="height:32px"></div>
+    <button id="t-fab" style="position:fixed;bottom:88px;right:18px;width:60px;height:60px;border-radius:50%;background:var(--coral);color:white;font-size:32px;font-weight:300;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(237,122,77,0.4);z-index:50">＋</button>
   </div>`;
 }
 function bindToday(){
-  // Energy view + tiles + quick access
-  document.getElementById('t-log')?.addEventListener('click',()=>setScreen('logEntry'));
   document.getElementById('t-supps')?.addEventListener('click',()=>setScreen('supplements'));
   document.getElementById('t-coach')?.addEventListener('click',()=>setScreen('coach'));
-  document.getElementById('t-avatar')?.addEventListener('click',()=>setScreen('settings'));
+  document.getElementById('t-settings')?.addEventListener('click',()=>setScreen('settings'));
+  document.getElementById('t-fab')?.addEventListener('click',()=>setScreen('logEntry'));
   document.getElementById('t-tpls')?.addEventListener('click',()=>openTemplatesList());
-  // Water quick-add
   document.getElementById('t-water-glass')?.addEventListener('click',()=>addWaterEntry(250));
   document.getElementById('t-water-bottle')?.addEventListener('click',()=>addWaterEntry(500));
   document.getElementById('t-water-custom')?.addEventListener('click',()=>{const v=prompt('How many ml?','750');if(!v)return;const ml=parseInt(v,10);if(!ml||ml<=0||ml>3000){toast('Enter 1-3000 ml','error');return}addWaterEntry(ml)});
-  // Post-shift template one-tap
   document.getElementById('t-tpl-log')?.addEventListener('click',e=>{
     const id=e.currentTarget.dataset.tplid;
     const tpl=(state.data.mealTemplates||[]).find(t=>t.id===id);
     if(tpl)logMealTemplate(tpl);
   });
-  // Per-day shift toggle
   document.getElementById('t-shift-toggle')?.addEventListener('click',()=>{
     const t=today();
     state.data.shiftDates=state.data.shiftDates||[];
