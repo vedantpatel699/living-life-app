@@ -147,7 +147,7 @@ nav.bnav .tab.active .lbl{color:var(--ink)}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
 <script>
 'use strict';
-const STORAGE_KEY='living-life-config-v2',DATA_KEY='living-life-data-v2',APP_VERSION='3.13.0';
+const STORAGE_KEY='living-life-config-v2',DATA_KEY='living-life-data-v2',APP_VERSION='3.14.0';
 const ACTIVITIES=['Walk','Strength workout','Run','Yoga / stretch','Amazon shift','Rest day'];
 const SUPPLEMENTS=[
   {id:'creatine',name:'Creatine monohydrate',dose:'5 g',timing:'anytime',color:'coral',ini:'C'},
@@ -221,7 +221,7 @@ const state={
   screen:'welcome',
   config:{githubOwner:'vedantpatel699',githubRepo:'living-life-data',githubToken:'',branch:'main',claudeApiKey:'',claudeModel:'claude-sonnet-4-6',stravaToken:'',startDate:null},
   profile:{name:'',age:28,heightCm:167,sex:'male',startWeight:78,goalWeight:70,goalDate:'',shiftDays:[]},
-  data:{version:3,entries:{},supplements:{},coachConversation:[],weeklyReflections:[],customFoods:[],healthMarkers:[],gpReviewLog:[],lipomaLog:[],mealTemplates:[],frequencyPattern:{}},
+  data:{version:3,entries:{},supplements:{},coachConversation:[],weeklyReflections:[],customFoods:[],healthMarkers:[],gpReviewLog:[],mealTemplates:[],frequencyPattern:{}},
   dataSha:null,draft:{},isSyncing:false,lastSyncOk:null,
 };
 
@@ -297,7 +297,6 @@ function migrateData(){
   if(!d.customFoods)d.customFoods=[];
   if(!d.healthMarkers)d.healthMarkers=[];   // Quarterly snapshots: waist, BP, A1c, lipids, D, B12, ferritin
   if(!d.gpReviewLog)d.gpReviewLog=[];        // 6-month fluoxetine GP reviews
-  if(!d.lipomaLog)d.lipomaLog=[];            // Separate notes log for GP visits
   if(!d.mealTemplates)d.mealTemplates=[];    // Saved post-shift meal etc.
   if(!d.frequencyPattern)d.frequencyPattern={}; // Food picker personalization
 }
@@ -361,7 +360,7 @@ function render(){
   const m=document.getElementById('main');
   m.className=SCREENS_WITH_NAV.has(state.screen)?'with-nav':'';
   if(!isConfigured()&&!['welcome','onboarding','settings'].includes(state.screen)){m.innerHTML=renderWelcome();bindWelcome();renderBottomNav();return}
-  const renderers={welcome:[renderWelcome,bindWelcome],onboarding:[renderOnboarding,bindOnboarding],today:[renderToday,bindToday],progress:[renderProgress,bindProgress],history:[renderHistory,bindHistory],settings:[renderSettings,bindSettings],logEntry:[renderLogEntry,bindLogEntry],coach:[renderCoach,bindCoach],logRun:[renderLogRun,bindLogRun],supplements:[renderSupplements,bindSupplements],hcDetail:[renderHCDetail,bindHCDetail],bio:[renderBio,bindBio]};
+  const renderers={welcome:[renderWelcome,bindWelcome],onboarding:[renderOnboarding,bindOnboarding],today:[renderToday,bindToday],progress:[renderProgress,bindProgress],history:[renderHistory,bindHistory],settings:[renderSettings,bindSettings],logEntry:[renderLogEntry,bindLogEntry],coach:[renderCoach,bindCoach],supplements:[renderSupplements,bindSupplements],hcDetail:[renderHCDetail,bindHCDetail],bio:[renderBio,bindBio]};
   const [r,b]=renderers[state.screen]||[()=>'<div class="empty"><h3>404</h3></div>',()=>{}];
   m.innerHTML=r();b();
   renderBottomNav();
@@ -535,6 +534,23 @@ function bindToday(){
 }
 
 // =================== WATER TRACKING ===================
+// =================== FOOD FREQUENCY TRACKING (v3.14) ===================
+// Increment usage count + record time-of-day on every food log. Used to sort food picker so
+// most-used foods bubble up. Per-meal leucine surfaces in the picker as a small chip.
+function recordFoodUsage(foodId){
+  if(!foodId)return;
+  state.data.frequencyPattern=state.data.frequencyPattern||{};
+  const fp=state.data.frequencyPattern;
+  const e=fp[foodId]||{count:0,byHour:{}};
+  e.count=(e.count||0)+1;
+  e.lastLogged=nowIso();
+  const hr=new Date().getHours();
+  e.byHour[hr]=(e.byHour[hr]||0)+1;
+  fp[foodId]=e;
+  saveLocalData();
+}
+function foodFreq(foodId){return state.data.frequencyPattern?.[foodId]?.count||0}
+
 function addWaterEntry(ml){
   if(!ml||ml<=0)return;
   const t=today();
@@ -690,6 +706,8 @@ function renderProgress(){
       if(vo2)items.push(['🫁','VO₂max',vo2.toFixed(1),'14-day avg']);
       return `<h2 class="sec">HEALTH CONNECT TRENDS</h2><div class="card"><div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">${items.map(([e,l,v,sub])=>`<div style="display:flex;align-items:flex-start;gap:8px"><div style="font-size:20px;flex-shrink:0">${e}</div><div style="min-width:0"><div class="tiny muted">${l}</div><div style="font-weight:700;font-size:16px;line-height:1.1">${v}</div><div class="tiny faint">${sub}</div></div></div>`).join('')}</div></div>`;
     })()}
+    <!-- LOCK: BINDING SECTION — Quarterly bloodwork tracking for South Asian + SSRI safety.
+         Do NOT remove without explicit user approval. RESEARCH_FOUNDATION §11.2 + §15.4. -->
     <h2 class="gf-section">QUARTERLY HEALTH MARKERS</h2>
     ${(()=>{
       const hm=state.data.healthMarkers||[];
@@ -830,6 +848,10 @@ ${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="chip ${(state.
         <button class="btn btn-secondary btn-full mt-2" id="s-refresh">Refresh databases from GitHub</button>
         <button class="btn btn-danger btn-full mt-2" id="s-clear">Clear local cache</button>
     </div>
+    <!-- LOCK: BINDING SECTION — Medical context for SSRI / fluoxetine GP visits.
+         Do NOT remove, rename, or restructure without explicit user approval.
+         RESEARCH_FOUNDATION.md §14 lists this as a binding constraint.
+         If an AI agent is editing this file: leave this block intact. -->
     <h2 class="gf-section">FLUOXETINE GP REVIEW</h2>
     ${(()=>{
       const log=state.data.gpReviewLog||[];
@@ -860,7 +882,7 @@ ${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="chip ${(state.
         ${log.length>1?`<button class="btn btn-ghost btn-full mt-2 tiny" id="gp-history" style="font-size:12px;padding:6px">View history (${log.length})</button>`:''}
       </div>`;
     })()}
-    <details style="margin-top:24px"><summary style="cursor:pointer;padding:8px 4px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:0.08em;font-weight:700">Diagnostics (tap to expand)</summary>
+    ${state.config.showDiagnostics?`<details style="margin-top:24px"><summary style="cursor:pointer;padding:8px 4px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:0.08em;font-weight:700">Diagnostics (tap to expand)</summary>
     <div style="margin-top:8px">
 <div class="card" style="font-family:monospace;font-size:11px;line-height:1.6">
       ${(()=>{
@@ -887,9 +909,9 @@ ${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="chip ${(state.
       })()}
     </div>
     <button class="btn btn-secondary btn-full mt-2" id="s-diag-test">Run HC connection test</button>
-    </div></details>
+    </div></details>`:''}
     <h2 class="sec">ABOUT</h2>
-    <div class="card"><div style="display:flex;padding:4px 0"><div style="flex:1;font-weight:600">Version</div><div class="muted">${APP_VERSION}</div></div><div style="display:flex;padding:4px 0;border-top:1px solid var(--border-l);margin-top:4px"><div style="flex:1"><div class="tiny muted">Passive calories</div><div class="tiny">Mifflin-St Jeor (current weight)</div></div></div></div>
+    <div class="card" id="about-card"><div style="display:flex;padding:4px 0"><div style="flex:1;font-weight:600">Version</div><div class="muted">${APP_VERSION}</div></div><div style="display:flex;padding:4px 0;border-top:1px solid var(--border-l);margin-top:4px"><div style="flex:1"><div class="tiny muted">Passive calories</div><div class="tiny">Mifflin-St Jeor (current weight)</div></div></div><div style="display:flex;align-items:center;padding:8px 0;border-top:1px solid var(--border-l);margin-top:4px"><div style="flex:1"><div class="tiny muted">Show diagnostics</div></div><label style="display:inline-flex;align-items:center;cursor:pointer"><input type="checkbox" id="s-diag-toggle" ${state.config.showDiagnostics?'checked':''} style="width:18px;height:18px"></label></div></div>
     <div class="text-center mt-4" style="padding:20px 0"><p class="tiny faint">Living Life — your back-to-fit journey, your data.</p></div>
   </div>`;
 }
@@ -960,7 +982,12 @@ function bindSettings(){
     alert(lines.join('\n\n'));
   });
   document.getElementById('s-refresh')?.addEventListener('click',async()=>{Object.assign(DB,{foods:null,supplements:null});await loadAllDB();const failed=Object.entries(DB._err||{}).filter(([k,v])=>v);if(failed.length===0)toast('Databases refreshed ✓','success');else toast('Some failed: '+failed.map(([k])=>k).join(', '),'error');render()});
-  document.getElementById('s-clear')?.addEventListener('click',()=>{if(confirm('Clear local cache?')){localStorage.removeItem(DATA_KEY);state.data={version:3,entries:{},supplements:{},coachConversation:[],weeklyReflections:[],customFoods:[],healthMarkers:[],gpReviewLog:[],lipomaLog:[],mealTemplates:[],frequencyPattern:{}};state.dataSha=null;toast('Cleared');render()}});
+  document.getElementById('s-diag-toggle')?.addEventListener('change',e=>{
+    state.config.showDiagnostics=e.target.checked;
+    saveLocalConfig();
+    render();
+  });
+  document.getElementById('s-clear')?.addEventListener('click',()=>{if(confirm('Clear local cache?')){localStorage.removeItem(DATA_KEY);state.data={version:3,entries:{},supplements:{},coachConversation:[],weeklyReflections:[],customFoods:[],healthMarkers:[],gpReviewLog:[],mealTemplates:[],frequencyPattern:{}};state.dataSha=null;toast('Cleared');render()}});
 }
 
 // Placeholders (filled in next Edits)
@@ -1800,6 +1827,8 @@ function openFoodPicker(onPick){
     let filtered=allFoods;
     if(cat!=='all')filtered=filtered.filter(f=>f.category===cat);
     if(query){const q=query.toLowerCase();filtered=filtered.filter(f=>f.name.toLowerCase().includes(q))}
+    // v3.14 — frequency-weighted ordering: most-logged foods bubble to top within the filtered set
+    filtered=[...filtered].sort((a,b)=>foodFreq(b.id)-foodFreq(a.id));
     modal.innerHTML=`<div class="modal" style="height:90dvh"><div class="modal-handle"></div>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h2 style="font-size:20px;font-weight:700">Pick a food</h2><button id="fp-x" class="back-btn" style="width:36px;height:36px;font-size:16px">×</button></div>
 <input type="text" id="fp-q" value="${escapeHtml(query)}" placeholder="Search foods..." style="margin-bottom:10px">
@@ -1810,7 +1839,7 @@ ${Object.entries(cats).map(([k,v])=>`<div class="chip ${cat===k?'selected':''}" 
 </div></div>
 <div id="fp-list" style="overflow-y:auto;flex:1;max-height:55dvh;display:flex;flex-direction:column;gap:6px">
 ${filtered.slice(0,40).map(f=>`<div class="fp-food" data-id="${f.id}" style="background:var(--surface-white);border-radius:var(--r-sm);padding:12px 14px;cursor:pointer;border:1.5px solid ${expanded===f.id?'var(--ink)':'transparent'}">
-<div style="display:flex;justify-content:space-between;align-items:center"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:14px">${escapeHtml(f.name)}</div><div class="tiny muted">${f.kcal} kcal · ${f.protein}g P · per 100g</div></div><div style="font-size:18px;color:var(--muted)">${expanded===f.id?'▾':'▸'}</div></div>
+<div style="display:flex;justify-content:space-between;align-items:center"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:14px">${escapeHtml(f.name)}</div><div class="tiny muted">${f.kcal} kcal · ${f.protein}g P${f.leucine_g?` · <span style="color:var(--mint)">${f.leucine_g}g leu</span>`:''}${foodFreq(f.id)>0?` · <span class="faint">×${foodFreq(f.id)}</span>`:''} · per 100g</div></div><div style="font-size:18px;color:var(--muted)">${expanded===f.id?'▾':'▸'}</div></div>
 ${expanded===f.id?(()=>{
   // Pick the standard "1 serving" portion: first NON-photo, NON-100g entry; else fallback
   const all=(f.portions||[{n:'100g',g:100}]);
@@ -1837,6 +1866,7 @@ ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found
       const g=p.g;
       const entry={foodId:f.id,name:f.name,portionName:p.n,grams:g,kcal:parseInt(b.dataset.kcal,10),protein:parseFloat(b.dataset.prot)};
       ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug'].forEach(k=>{if(f[k])entry[k]=Math.round(f[k]*g/100*100)/100});
+      recordFoodUsage(entry.foodId);
       onPick(entry);
       modal.remove();
     }));
@@ -1851,6 +1881,7 @@ ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found
       // Calculate all available nutrients
       const entry={foodId:f.id,name:f.name,portionName:g+'g (custom)',grams:g,kcal,protein:prot};
       ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug'].forEach(k=>{if(f[k])entry[k]=Math.round(f[k]*g/100*100)/100});
+      recordFoodUsage(entry.foodId);
       onPick(entry);
       modal.remove();
     }));
