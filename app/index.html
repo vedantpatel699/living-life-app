@@ -16,7 +16,7 @@
 :root{--surface-outer:#E6EFF6;--surface-cream:#FAF6EE;--surface-white:#FFFFFF;--surface-sky:#E0EBF4;--ink:#1A1F2E;--muted:#7C8497;--faint:#B7BCC9;--coral:#ED7A4D;--coral-s:#F8D9C9;--sky:#6DA9D6;--sky-s:#D2E2EF;--sun:#F2C84B;--sun-s:#FBEBB6;--mint:#8CCB9C;--mint-s:#D5EBDA;--cta:#0F0F12;--border:#D9DFE6;--border-l:#E8EBF0;--success:#4DA869;--success-s:#E8F3EC;--strava:#FC5200;--danger:#E26060;--r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;--sh-card:0 2px 12px rgba(26,31,46,0.04);--sh-elev:0 8px 24px rgba(26,31,46,0.08);--sh-up:0 -4px 16px rgba(26,31,46,0.05)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overscroll-behavior-y:contain}
-body{font-family:'Sora',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--surface-outer);color:var(--ink);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;padding-bottom:env(safe-area-inset-bottom)}
+body{font-family:'Sora',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--surface-outer);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;padding-bottom:env(safe-area-inset-bottom)}
 input,textarea,button,select{font-family:inherit;color:inherit}
 button{cursor:pointer;border:none;background:none}
 a{color:var(--ink);text-decoration:none}
@@ -104,14 +104,14 @@ nav.bnav .tab.active .lbl{color:var(--ink)}
   --gf-bg:#F5F1E8;
   --gf-card:#FFFFFF;
   --gf-card-soft:#FAF6EE;
-  --r-tile:20px;
-  --r-hero:28px;
-  --sh-tile:0 1px 3px rgba(26,31,46,0.04),0 4px 14px rgba(26,31,46,0.04);
+  --r-tile:22px;
+  --r-hero:32px;
+  --sh-tile:0 1px 2px rgba(26,31,46,0.03),0 6px 18px rgba(26,31,46,0.05);
 }
 .gf-hero{background:var(--gf-card);border-radius:var(--r-hero);padding:24px 20px 20px;box-shadow:var(--sh-tile);text-align:center;position:relative;overflow:hidden}
-.gf-tile{background:var(--gf-card);border-radius:var(--r-tile);padding:16px 14px;box-shadow:var(--sh-tile);position:relative;overflow:hidden}
+.gf-tile{background:var(--gf-card);border-radius:var(--r-tile);padding:18px 16px;box-shadow:var(--sh-tile);position:relative;overflow:hidden}
 .gf-tile-h{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;display:flex;align-items:center;gap:6px;margin-bottom:6px}
-.gf-tile-v{font-size:24px;font-weight:800;line-height:1;letter-spacing:-0.02em}
+.gf-tile-v{font-size:22px;font-weight:800;line-height:1;letter-spacing:-0.02em}
 .gf-tile-u{font-size:13px;font-weight:500;color:var(--muted);margin-left:2px}
 .gf-tile-sub{font-size:11px;color:var(--faint);margin-top:4px}
 .gf-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -126,7 +126,7 @@ nav.bnav .tab.active .lbl{color:var(--ink)}
 .gf-row-title{font-weight:600;font-size:15px;line-height:1.2}
 .gf-row-sub{font-size:12px;color:var(--muted);margin-top:2px}
 .gf-ring-wrap{width:200px;height:200px;margin:8px auto 12px;position:relative}
-.gf-ring-num{font-size:42px;font-weight:800;letter-spacing:-0.03em;line-height:1}
+.gf-ring-num{font-size:38px;font-weight:800;letter-spacing:-0.03em;line-height:1}
 .gf-ring-label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:6px}
 .gf-ring-sub{font-size:11px;color:var(--faint);margin-top:2px}
 .gf-mini-stat{display:flex;flex-direction:column;align-items:center;flex:1}
@@ -147,7 +147,7 @@ nav.bnav .tab.active .lbl{color:var(--ink)}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
 <script>
 'use strict';
-const STORAGE_KEY='living-life-config-v2',DATA_KEY='living-life-data-v2',APP_VERSION='3.14.0';
+const STORAGE_KEY='living-life-config-v2',DATA_KEY='living-life-data-v2',APP_VERSION='3.15.0';
 const ACTIVITIES=['Walk','Strength workout','Run','Yoga / stretch','Amazon shift','Rest day'];
 const SUPPLEMENTS=[
   {id:'creatine',name:'Creatine monohydrate',dose:'5 g',timing:'anytime',color:'coral',ini:'C'},
@@ -220,8 +220,8 @@ const softMap={coral:'var(--coral-s)',mint:'var(--mint-s)',sky:'var(--sky-s)',su
 const state={
   screen:'welcome',
   config:{githubOwner:'vedantpatel699',githubRepo:'living-life-data',githubToken:'',branch:'main',claudeApiKey:'',claudeModel:'claude-sonnet-4-6',stravaToken:'',startDate:null},
-  profile:{name:'',age:28,heightCm:167,sex:'male',startWeight:78,goalWeight:70,goalDate:'',shiftDays:[]},
-  data:{version:3,entries:{},supplements:{},coachConversation:[],weeklyReflections:[],customFoods:[],healthMarkers:[],gpReviewLog:[],mealTemplates:[],frequencyPattern:{}},
+  profile:{name:'',age:28,heightCm:167,sex:'male',startWeight:78,goalWeight:65,goalDate:'',shiftDays:[]},
+  data:{version:3,entries:{},supplements:{},coachConversation:[],weeklyReflections:[],customFoods:[],mealTemplates:[],frequencyPattern:{},shiftDates:[]},
   dataSha:null,draft:{},isSyncing:false,lastSyncOk:null,
 };
 
@@ -272,7 +272,16 @@ function dayOfWeek(d=new Date()){const js=d.getDay();return js===0?6:js-1}
 function daysSinceStart(){if(!state.config.startDate)return 0;return Math.max(0,Math.floor((Date.now()-new Date(state.config.startDate).getTime())/86400000))}
 function weekSinceStart(){return Math.floor(daysSinceStart()/7)+1}
 function isConfigured(){return state.config.githubOwner&&state.config.githubRepo&&state.config.githubToken}
-function isShiftDay(d){const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];const today=days[dayOfWeek(d||new Date())];return(state.profile.shiftDays||[]).includes(today)}
+function isShiftDay(d){
+  const dt=d||new Date();
+  const iso=dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');
+  // Per-day shift tracker (state.data.shiftDates) — primary source
+  if((state.data.shiftDates||[]).includes(iso))return true;
+  // Legacy: state.profile.shiftDays weekly toggle (migration kept for backward compat)
+  const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const dayName=days[dayOfWeek(dt)];
+  return(state.profile.shiftDays||[]).includes(dayName);
+}
 // Current weight = most recent manually-logged weight, fallback to startWeight
 function currentWeight(){const ents=Object.entries(state.data.entries||{}).filter(([d,e])=>typeof e.weight==='number').sort((a,b)=>b[0].localeCompare(a[0]));return ents[0]?ents[0][1].weight:state.profile.startWeight}
 // BMR via Mifflin-St Jeor (validated gold-standard against indirect calorimetry — Frankenfield 2005).
@@ -295,10 +304,14 @@ function migrateData(){
   if(!d.coachConversation)d.coachConversation=[];
   if(!d.weeklyReflections)d.weeklyReflections=[];
   if(!d.customFoods)d.customFoods=[];
-  if(!d.healthMarkers)d.healthMarkers=[];   // Quarterly snapshots: waist, BP, A1c, lipids, D, B12, ferritin
-  if(!d.gpReviewLog)d.gpReviewLog=[];        // 6-month fluoxetine GP reviews
   if(!d.mealTemplates)d.mealTemplates=[];    // Saved post-shift meal etc.
   if(!d.frequencyPattern)d.frequencyPattern={}; // Food picker personalization
+  if(!d.shiftDates)d.shiftDates=[];          // Per-day shift markers (replaces profile.shiftDays)
+  // v3.15 migration — old single entry.photo becomes entry.photoFront (preserves all existing photos)
+  for(const date in (d.entries||{})){
+    const e=d.entries[date];
+    if(e&&e.photo&&!e.photoFront){e.photoFront=e.photo}
+  }
 }
 function saveLocalConfig(){localStorage.setItem(STORAGE_KEY,JSON.stringify({config:state.config,profile:state.profile}))}
 function saveLocalData(){localStorage.setItem(DATA_KEY,JSON.stringify({data:state.data,sha:state.dataSha}))}
@@ -316,7 +329,7 @@ async function ghGetFile(path){const b=state.config.branch||'main';return ghRequ
 async function ghPutFile(path,c,m,sha){const b=state.config.branch||'main';const body={message:m,content:c,branch:b};if(sha)body.sha=sha;return ghRequest('PUT',`contents/${encodeURIComponent(path).replace(/%2F/g,'/')}`,body)}
 async function pullData(){if(!isConfigured())throw new Error('Not configured');state.isSyncing=true;try{const r=await ghGetFile('data/log.json');if(r.notFound){state.dataSha=null}else{const parsed=JSON.parse(b64dec(r.content));state.data=Object.assign(state.data,parsed);state.dataSha=r.sha}migrateData();saveLocalData();state.lastSyncOk=nowIso()}finally{state.isSyncing=false}}
 async function pushData(){if(!isConfigured())throw new Error('Not configured');state.isSyncing=true;try{const c=b64enc(JSON.stringify(state.data,null,2));const r=await ghPutFile('data/log.json',c,`update ${today()}`,state.dataSha);state.dataSha=r.content.sha;saveLocalData();state.lastSyncOk=nowIso()}finally{state.isSyncing=false}}
-async function uploadPhoto(d,du){const b64=du.split(',')[1];const path=`data/photos/${d}.jpg`;let sha=null;try{const e=await ghGetFile(path);if(e&&!e.notFound)sha=e.sha}catch(e){}await ghPutFile(path,b64,`photo ${d}`,sha);return path}
+async function uploadPhoto(d,du,side='front'){const b64=du.split(',')[1];const suffix=side==='side'?'_s':'_f';const path=`data/photos/${d}${suffix}.jpg`;let sha=null;try{const e=await ghGetFile(path);if(e&&!e.notFound)sha=e.sha}catch(e){}await ghPutFile(path,b64,`photo ${d} ${side}`,sha);return path}
 async function downloadPhoto(p){try{const r=await ghGetFile(p);if(r.notFound)return null;return'data:image/jpeg;base64,'+r.content.replace(/\s/g,'')}catch(e){return null}}
 
 function compressImage(file,maxDim=1080,q=0.82){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{let{width:w,height:h}=img;if(w>h&&w>maxDim){h=Math.round(h*maxDim/w);w=maxDim}else if(h>maxDim){w=Math.round(w*maxDim/h);h=maxDim}const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.fillStyle='#000';ctx.fillRect(0,0,w,h);ctx.drawImage(img,0,0,w,h);res(c.toDataURL('image/jpeg',q))};img.onerror=rej;img.src=e.target.result};r.onerror=rej;r.readAsDataURL(file)})}
@@ -345,13 +358,13 @@ function todaySuppCount(){const s=state.data.supplements[today()]||{};return SUP
 
 function setStatusTime(){const t=document.getElementById('status-time');if(!t)return;const d=new Date();t.textContent=`${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`}
 
-const SCREENS_WITH_NAV=new Set(['today','bio','progress','history','settings']);
+const SCREENS_WITH_NAV=new Set(['today','progress','history','settings']);
 function setScreen(name,params={}){state.screen=name;state.draft={};Object.assign(state,params);render();document.getElementById('main')?.scrollTo?.(0,0)}
 
 function renderBottomNav(){
   const c=document.getElementById('bottom-nav-container');
   if(!isConfigured()||!SCREENS_WITH_NAV.has(state.screen)){c.innerHTML='';return}
-  const tabs=[{id:'today',l:'Today',i:ICONS.today},{id:'bio',l:'Bio',i:ICONS.bio},{id:'progress',l:'Progress',i:ICONS.progress},{id:'history',l:'History',i:ICONS.history},{id:'settings',l:'Settings',i:ICONS.settings}];
+  const tabs=[{id:'today',l:'Today',i:ICONS.today},{id:'progress',l:'Progress',i:ICONS.progress},{id:'history',l:'History',i:ICONS.history},{id:'settings',l:'Settings',i:ICONS.settings}];
   c.innerHTML=`<nav class="bnav">${tabs.map(t=>`<button class="tab ${state.screen===t.id?'active':''}" data-s="${t.id}"><div class="ic">${t.i}</div><div class="lbl">${t.l}</div></button>`).join('')}</nav>`;
   c.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>setScreen(b.dataset.s)));
 }
@@ -360,7 +373,7 @@ function render(){
   const m=document.getElementById('main');
   m.className=SCREENS_WITH_NAV.has(state.screen)?'with-nav':'';
   if(!isConfigured()&&!['welcome','onboarding','settings'].includes(state.screen)){m.innerHTML=renderWelcome();bindWelcome();renderBottomNav();return}
-  const renderers={welcome:[renderWelcome,bindWelcome],onboarding:[renderOnboarding,bindOnboarding],today:[renderToday,bindToday],progress:[renderProgress,bindProgress],history:[renderHistory,bindHistory],settings:[renderSettings,bindSettings],logEntry:[renderLogEntry,bindLogEntry],coach:[renderCoach,bindCoach],supplements:[renderSupplements,bindSupplements],hcDetail:[renderHCDetail,bindHCDetail],bio:[renderBio,bindBio]};
+  const renderers={welcome:[renderWelcome,bindWelcome],onboarding:[renderOnboarding,bindOnboarding],today:[renderToday,bindToday],progress:[renderProgress,bindProgress],history:[renderHistory,bindHistory],settings:[renderSettings,bindSettings],logEntry:[renderLogEntry,bindLogEntry],coach:[renderCoach,bindCoach],supplements:[renderSupplements,bindSupplements]};
   const [r,b]=renderers[state.screen]||[()=>'<div class="empty"><h3>404</h3></div>',()=>{}];
   m.innerHTML=r();b();
   renderBottomNav();
@@ -378,7 +391,7 @@ function renderWelcome(){
     </div>
     <h1 style="font-size:clamp(28px,7vw,36px);font-weight:700;line-height:1.15;letter-spacing:-0.02em;padding:0 4px">Living life,<br>one step at a time</h1>
     <p class="muted" style="font-size:16px;margin-top:14px;padding:0 4px">A gentle, honest back-to-fit tracker. Walk, eat, log, repeat.</p>
-    <div style="display:flex;gap:8px;justify-content:center;margin:32px 0 20px"><div style="width:28px;height:8px;border-radius:4px;background:var(--ink)"></div><div style="width:8px;height:8px;border-radius:4px;background:var(--faint)"></div><div style="width:8px;height:8px;border-radius:4px;background:var(--faint)"></div></div>
+    
     <div style="margin-top:auto;padding-bottom:8px">
       <button class="btn btn-primary btn-full" id="w-start">Let's begin →</button>
       <div class="text-center mt-4"><button class="btn btn-ghost" id="w-existing">I have a setup already</button></div>
@@ -396,7 +409,8 @@ function renderOnboarding(){
     <div class="field"><div class="flabel">Height (cm)</div><input type="number" id="onb-height" value="${p.heightCm||''}" placeholder="167" inputmode="numeric"></div>
     <div class="field"><div class="flabel">Starting weight (kg)</div><input type="number" id="onb-weight" step="0.1" value="${p.startWeight||''}" placeholder="78" inputmode="decimal"></div>`;
   else if(step===3)body=`<h1 class="pt">Your goal</h1><p class="muted mb-4">Realistic target — 0.5-0.8 kg/week.</p>
-    <div class="field"><div class="flabel">Goal weight (kg)</div><input type="number" id="onb-gw" step="0.1" value="${p.goalWeight||''}" placeholder="70" inputmode="decimal"></div>
+    <div class="field"><div class="flabel">Goal weight (kg)</div><input type="number" id="onb-gw" step="0.1" value="${p.goalWeight||''}" placeholder="65" inputmode="decimal"></div>
+    <p class="tiny muted" style="margin-top:-8px;margin-bottom:14px">For South Asian phenotype, BMI 23 (≈64-65 kg at your height) is the metabolically healthy upper bound. Waist &lt;85cm matters more than the scale number.</p>
     <div class="field"><div class="flabel">Target date (optional)</div><input type="date" id="onb-gd" value="${p.goalDate||''}"></div>
     <div class="card-tinted mt-4"><div class="tiny" style="line-height:1.5">Plan recommends <strong>0.5-0.8 kg/week</strong> — at your stats roughly <strong>~2,000 kcal/day</strong> with <strong>130-140 g protein</strong>.</div></div>`;
   else if(step===4)body=`<h1 class="pt">Connect your data repo</h1><p class="muted mb-4">Weights, photos, notes save to your private GitHub repo.</p>
@@ -469,7 +483,7 @@ function renderToday(){
       <div>
         <div class="muted tiny">${fmtDateLong(t)}</div>
         <h1 style="font-size:24px;font-weight:700;letter-spacing:-0.01em;margin-top:2px">Hi, ${escapeHtml(state.profile.name||'there')}</h1>
-        <div class="gf-pill ${shift?'cool':'ok'}" style="margin-top:6px">${shift?'🌙 SHIFT DAY':'☀ OFF DAY'} · Week ${week}</div>
+        <button class="gf-pill ${shift?'cool':'ok'}" id="t-shift-toggle" style="margin-top:6px;cursor:pointer;border:none">${shift?'🌙 SHIFT DAY (tap to unmark)':'☀ OFF DAY (tap if working tonight)'} · Week ${week}</button>
       </div>
       <button id="t-avatar" style="width:44px;height:44px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:16px">${(state.profile.name||'V')[0].toUpperCase()}</button>
     </div>
@@ -530,6 +544,17 @@ function bindToday(){
     const id=e.currentTarget.dataset.tplid;
     const tpl=(state.data.mealTemplates||[]).find(t=>t.id===id);
     if(tpl)logMealTemplate(tpl);
+  });
+  // Per-day shift toggle
+  document.getElementById('t-shift-toggle')?.addEventListener('click',()=>{
+    const t=today();
+    state.data.shiftDates=state.data.shiftDates||[];
+    const i=state.data.shiftDates.indexOf(t);
+    if(i>=0)state.data.shiftDates.splice(i,1); else state.data.shiftDates.push(t);
+    saveLocalData();
+    pushData().catch(()=>{});
+    setupShiftRescue();
+    render();
   });
 }
 
@@ -691,6 +716,26 @@ function renderProgress(){
     <div class="card mt-4"><div style="display:flex;justify-content:space-between;align-items:center"><h3>Weight trend</h3><div class="chip-pill" style="background:var(--surface-cream)">30 days</div></div>
       <div style="height:200px;margin-top:14px;position:relative"><canvas id="w-chart"></canvas></div></div>
     ${(()=>{
+      const hc=getHCToday()||{};
+      if(Object.keys(hc).length===0)return '';
+      const items=[];
+      if(hc.steps)items.push(['👟','Steps',hc.steps.toLocaleString()]);
+      if(hc.distance_km)items.push(['📏','Distance',hc.distance_km.toFixed(2)+' km']);
+      if(hc.active_calories)items.push(['🔥','Active kcal',Math.round(hc.active_calories)]);
+      if(hc.resting_heart_rate)items.push(['❤️','Resting HR',Math.round(hc.resting_heart_rate)+' bpm']);
+      if(hc.hrv_rmssd_avg)items.push(['📈','HRV',hc.hrv_rmssd_avg.toFixed(1)+' ms']);
+      if(hc.vo2_max)items.push(['🫁','VO₂max',hc.vo2_max.toFixed(1)]);
+      if(items.length===0)return '';
+      return `<h2 class="gf-section">HEALTH CONNECT — TODAY</h2>
+      <div class="gf-card"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">${items.map(([e,l,v])=>`<div style="display:flex;align-items:center;gap:8px"><div style="font-size:18px">${e}</div><div><div class="tiny muted">${l}</div><div style="font-weight:700;font-size:14px">${v}</div></div></div>`).join('')}</div></div>`;
+    })()}
+    ${(()=>{
+      const hc=getHCToday()||{};
+      const ws=(hc.workouts||[]);
+      if(ws.length===0)return '';
+      return `<h2 class="gf-section">WORKOUTS · TODAY</h2><div class="gf-card">${ws.map(w=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border-l)"><div><div style="font-weight:600;font-size:13px">${escapeHtml(w.title||w.type||'Workout')}</div><div class="tiny muted">${w.sourceApp?escapeHtml(w.sourceApp.split('.').slice(-1)[0]):'manual'}</div></div><div style="text-align:right"><div style="font-weight:700;font-size:13px">${Math.round((w.durationSec||0)/60)} min</div>${w.calories?`<div class="tiny muted">${Math.round(w.calories)} kcal</div>`:''}</div></div>`).join('')}</div>`;
+    })()}
+    ${(()=>{
       const rhr=hcAvg('resting_heart_rate',7);
       const sleep=hcSleepAvg(7);
       const stepsW=hcWeekTotal('steps');
@@ -700,56 +745,12 @@ function renderProgress(){
       if(!hasAny)return '';
       const items=[];
       if(rhr)items.push(['❤️','Resting HR',Math.round(rhr)+' bpm','7-day avg']);
-      if(sleep)items.push(['😴','Sleep',sleep.toFixed(1)+' h','7-day avg']);
       if(stepsW)items.push(['👟','Steps',Math.round(stepsW).toLocaleString(),'last 7 days']);
       if(activeW)items.push(['🔥','Active kcal',Math.round(activeW).toLocaleString(),'last 7 days']);
       if(vo2)items.push(['🫁','VO₂max',vo2.toFixed(1),'14-day avg']);
       return `<h2 class="sec">HEALTH CONNECT TRENDS</h2><div class="card"><div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">${items.map(([e,l,v,sub])=>`<div style="display:flex;align-items:flex-start;gap:8px"><div style="font-size:20px;flex-shrink:0">${e}</div><div style="min-width:0"><div class="tiny muted">${l}</div><div style="font-weight:700;font-size:16px;line-height:1.1">${v}</div><div class="tiny faint">${sub}</div></div></div>`).join('')}</div></div>`;
     })()}
-    <!-- LOCK: BINDING SECTION — Quarterly bloodwork tracking for South Asian + SSRI safety.
-         Do NOT remove without explicit user approval. RESEARCH_FOUNDATION §11.2 + §15.4. -->
-    <h2 class="gf-section">QUARTERLY HEALTH MARKERS</h2>
-    ${(()=>{
-      const hm=state.data.healthMarkers||[];
-      const last=hm[hm.length-1];
-      const monthsSince=last?Math.round((Date.now()-new Date(last.date).getTime())/(86400000*30.4)):null;
-      const stale=monthsSince==null||monthsSince>=3;
-      return `<div class="gf-card">
-        ${last?`<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
-          <div>
-            <div class="tiny muted">Last update</div>
-            <div style="font-weight:700;font-size:15px">${fmtDate(last.date)} <span class="tiny faint">· ${monthsSince}mo ago</span></div>
-          </div>
-          ${stale?'<div class="gf-pill warn">Due</div>':'<div class="gf-pill ok">Current</div>'}
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-bottom:12px">
-          ${last.waist_cm?`<div><div class="tiny muted">Waist</div><div style="font-weight:700;font-size:14px">${last.waist_cm} cm</div></div>`:''}
-          ${last.hba1c?`<div><div class="tiny muted">HbA1c</div><div style="font-weight:700;font-size:14px">${last.hba1c}%</div></div>`:''}
-          ${last.vit_d_nmol?`<div><div class="tiny muted">Vit D</div><div style="font-weight:700;font-size:14px">${last.vit_d_nmol} nmol/L</div></div>`:''}
-          ${last.b12_pmol?`<div><div class="tiny muted">B12</div><div style="font-weight:700;font-size:14px">${last.b12_pmol} pmol/L</div></div>`:''}
-          ${last.ferritin?`<div><div class="tiny muted">Ferritin</div><div style="font-weight:700;font-size:14px">${last.ferritin} µg/L</div></div>`:''}
-          ${last.lipid_ldl?`<div><div class="tiny muted">LDL</div><div style="font-weight:700;font-size:14px">${last.lipid_ldl} mmol/L</div></div>`:''}
-          ${last.blood_pressure_sys?`<div><div class="tiny muted">BP</div><div style="font-weight:700;font-size:14px">${last.blood_pressure_sys}/${last.blood_pressure_dia||'—'}</div></div>`:''}
-          ${last.tsh?`<div><div class="tiny muted">TSH</div><div style="font-weight:700;font-size:14px">${last.tsh} mIU/L</div></div>`:''}
-        </div>
-        ${last.notes?`<div class="tiny muted" style="margin-bottom:10px;white-space:pre-wrap">${escapeHtml(last.notes)}</div>`:''}`:`<div style="text-align:center;padding:14px 0">
-          <div style="font-size:32px;margin-bottom:8px">🩺</div>
-          <div style="font-weight:700;font-size:14px">Track for GP visits</div>
-          <div class="tiny muted" style="margin-top:4px">Waist, HbA1c, lipids, vit D, B12, ferritin every 3 months</div>
-        </div>`}
-        <button class="btn btn-secondary btn-full" id="hm-add">${last?'+ Add new lab/measurement':'+ Add first reading'}</button>
-        ${hm.length>1?`<button class="btn btn-ghost btn-full mt-2 tiny" id="hm-history" style="font-size:12px;padding:6px">View history (${hm.length} entries)</button>`:''}
-      </div>`;
-    })()}
-    <h2 class="sec">WEEKLY REFLECTION</h2>
-    <div class="card-tinted">
-      <div style="display:flex;gap:12px;align-items:flex-start">
-        <div style="width:36px;height:36px;background:var(--cta);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--sun);flex-shrink:0">✦</div>
-        <div style="flex:1"><div style="font-weight:600;font-size:14px">${state.data.weeklyReflections.length?'Week of '+fmtDate(state.data.weeklyReflections.slice(-1)[0].weekStart):'No reflections yet'}</div><div class="tiny muted">${state.data.weeklyReflections.length?'By Claude · '+fmtDateTime(state.data.weeklyReflections.slice(-1)[0].ts):hasClaudeKey()?'Tap to generate':'Add Claude API key in Settings'}</div></div>
-      </div>
-      <div style="font-size:14px;line-height:1.6;margin-top:14px;white-space:pre-wrap">${state.data.weeklyReflections.length?escapeHtml(state.data.weeklyReflections.slice(-1)[0].text):'Log a few days, then tap "Generate now" for your first reflection.'}</div>
-      ${hasClaudeKey()?`<button class="btn btn-secondary btn-sm btn-full mt-4" id="gen-refl">${state.data.weeklyReflections.length?'Refresh':'Generate now'}</button>`:`<button class="btn btn-secondary btn-sm btn-full mt-4" id="goto-set">Add Claude API key</button>`}
-    </div>
+
     <h2 class="sec">RECENT PHOTOS</h2>
     <div id="p-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
   </div>`;
@@ -757,10 +758,9 @@ function renderProgress(){
 function bindProgress(){
   setTimeout(()=>{const c=document.getElementById('w-chart');if(!c||!window.Chart)return;const s=weightStats();if(!s||s.points.length===0){c.parentElement.innerHTML='<div class="empty" style="padding:30px"><p>Log a few days to see your trend.</p></div>';return}const pts=s.points.slice(-30);const avg=pts.map((p,i)=>{const w=pts.slice(Math.max(0,i-6),i+1).map(x=>x.y);return{x:p.x,y:w.reduce((s,v)=>s+v,0)/w.length}});new Chart(c.getContext('2d'),{type:'line',data:{labels:pts.map(p=>p.x),datasets:[{label:'Daily',data:pts.map(p=>p.y),borderColor:'rgba(124,132,151,0.5)',pointRadius:2.5,borderWidth:0,showLine:false},{label:'7d avg',data:avg.map(p=>p.y),borderColor:'#ED7A4D',backgroundColor:'rgba(237,122,77,0.12)',fill:true,tension:0.35,pointRadius:0,borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#B7BCC9',maxTicksLimit:5,font:{size:10}},grid:{color:'rgba(217,223,230,0.4)'}},y:{ticks:{color:'#B7BCC9',font:{size:10},callback:v=>v+'kg'},grid:{color:'rgba(217,223,230,0.4)'}}}}})},50);
   const grid=document.getElementById('p-grid');
-  const photos=Object.entries(state.data.entries).filter(([d,e])=>e.photo).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,12);
+  const photos=Object.entries(state.data.entries).filter(([d,e])=>e.photoFront||e.photo).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,12).map(([d,e])=>[d,{...e,photo:e.photoFront||e.photo}]);
   if(photos.length===0){grid.innerHTML='<div class="empty" style="grid-column:1/-1"><p>No photos yet.</p></div>';}
   else{grid.innerHTML=photos.map(([d,e])=>`<div class="pcell" data-d="${d}" data-p="${e.photo}" style="aspect-ratio:3/4;background:var(--surface-sky);border-radius:10px;overflow:hidden;position:relative;cursor:pointer"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--faint)">…</div><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.7));padding:14px 6px 4px;font-size:10px;font-weight:600;color:white;text-align:center">${fmtDate(d)}</div></div>`).join('');grid.querySelectorAll('.pcell').forEach(async c=>{const u=await downloadPhoto(c.dataset.p);if(u)c.innerHTML=`<img src="${u}" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.7));padding:14px 6px 4px;font-size:10px;font-weight:600;color:white;text-align:center">${fmtDate(c.dataset.d)}</div>`})}
-  document.getElementById('gen-refl')?.addEventListener('click',generateReflection);
   document.getElementById('goto-set')?.addEventListener('click',()=>setScreen('settings'));
   document.getElementById('hm-add')?.addEventListener('click',()=>openHealthMarkersModal());
   document.getElementById('hm-history')?.addEventListener('click',()=>openHealthMarkersHistory());
@@ -771,7 +771,7 @@ function renderHistory(){
   if(ents.length===0)return `<div style="padding:0 4px"><h1 class="pt" style="padding-top:14px">History</h1><div class="empty mt-4"><div class="emoji">📔</div><h3>Start logging</h3><p>Your first entry shows up here.</p></div></div>`;
   return `<div style="padding:0 4px"><h1 class="pt" style="padding-top:14px">History</h1><p class="muted">${ents.length} ${ents.length===1?'entry':'entries'} logged</p>
     <div id="h-list" style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
-      ${ents.map(([d,e])=>`<div class="erow" data-d="${d}" style="background:var(--surface-white);border-radius:var(--r-md);padding:14px;display:flex;gap:14px;align-items:center;box-shadow:var(--sh-card);cursor:pointer"><div class="ethumb" data-p="${e.photo||''}" style="width:56px;height:56px;background:var(--surface-sky);border-radius:12px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--faint)">${e.photo?'…':'—'}</div><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600">${fmtDate(d)} <span class="faint tiny">· ${daysAgo(d)}d ago</span></div><div class="tiny muted" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${e.weight!=null?e.weight.toFixed(1)+' kg':'no weight'}${e.activities&&e.activities.length?' · '+e.activities.join(', '):''}</div></div><div style="font-size:18px;color:var(--muted)">→</div></div>`).join('')}
+      ${ents.map(([d,e])=>`<div class="erow" data-d="${d}" style="background:var(--surface-white);border-radius:var(--r-md);padding:14px;display:flex;gap:14px;align-items:center;box-shadow:var(--sh-card);cursor:pointer"><div class="ethumb" data-p="${e.photoFront||e.photo||''}" style="width:56px;height:56px;background:var(--surface-sky);border-radius:12px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--faint)">${(e.photoFront||e.photo)?'…':'—'}</div><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600">${fmtDate(d)} <span class="faint tiny">· ${daysAgo(d)}d ago</span></div><div class="tiny muted" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${e.weight!=null?e.weight.toFixed(1)+' kg':'no weight'}${e.activities&&e.activities.length?' · '+e.activities.join(', '):''}</div></div><div style="font-size:18px;color:var(--muted)">→</div></div>`).join('')}
     </div></div>`;
 }
 function bindHistory(){
@@ -789,7 +789,7 @@ function openEntryModal(d){
 <div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" id="me-edit">✎ Edit</button><button id="mc" class="back-btn" style="width:36px;height:36px;font-size:16px">×</button></div>
 </div>
 <div class="tiny muted">${daysAgo(d)}d ago${daysAgo(d)===0?' (today)':''}</div>
-${e.photo?'<div id="mp" style="margin:16px 0;text-align:center;min-height:100px;background:var(--surface-sky);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;color:var(--faint)">Loading photo…</div>':''}
+${(e.photoFront||e.photo||e.photoSide)?'<div id="mp" style="margin:16px 0;display:grid;grid-template-columns:'+((e.photoFront||e.photo)&&e.photoSide?'1fr 1fr':'1fr')+';gap:6px;min-height:100px;background:var(--surface-sky);border-radius:var(--r-md);overflow:hidden;color:var(--faint)">Loading…</div>':''}
 <div class="grid-2 mt-4">
 <div class="card-flat"><div class="flabel">Weight</div><div style="font-size:22px;font-weight:700">${e.weight!=null?e.weight.toFixed(1)+' kg':'—'}</div></div>
 <div class="card-flat"><div class="flabel">Energy</div><div style="font-size:22px">${e.energy?['😴','😕','😐','🙂','💪'][e.energy-1]:'—'}</div></div>
@@ -809,18 +809,20 @@ ${(()=>{const hc=e.hc;if(!hc)return '';const bits=[];if(hc.steps)bits.push(['�
   m.querySelector('#me-edit').addEventListener('click',goEdit);
   m.querySelector('#me-edit2').addEventListener('click',goEdit);
   document.body.appendChild(m);
-  if(e.photo)downloadPhoto(e.photo).then(u=>{const t=document.getElementById('mp');if(t&&u)t.innerHTML=`<img src="${u}" style="max-width:100%;border-radius:var(--r-md)">`});
+  (async()=>{const fp=e.photoFront||e.photo,sp=e.photoSide;if(!fp&&!sp)return;const t=document.getElementById('mp');if(!t)return;let html='';if(fp){const u=await downloadPhoto(fp);if(u)html+=`<img src="${u}" style="width:100%;height:100%;object-fit:cover">`}if(sp){const u=await downloadPhoto(sp);if(u)html+=`<img src="${u}" style="width:100%;height:100%;object-fit:cover">`}if(html)t.innerHTML=html;})();
 }
 
 function renderSettings(){
   return `<div style="padding:0 4px"><h1 class="pt" style="padding-top:14px">Settings</h1>
     <div class="card mt-4"><div style="display:flex;align-items:center;gap:14px"><div style="width:56px;height:56px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:22px">${(state.profile.name||'V')[0].toUpperCase()}</div><div style="flex:1"><div style="font-weight:700;font-size:16px">${escapeHtml(state.profile.name||'You')}</div><div class="tiny muted">Goal: ${state.profile.goalWeight||'—'} kg${state.profile.goalDate?' by '+fmtDate(state.profile.goalDate):''}</div></div><button class="btn btn-secondary btn-sm" id="ed-p">Edit</button></div>
 <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border-l)">
-<div class="flabel">AMAZON SHIFT DAYS</div>
-<div class="chip-row" id="shift-chips" style="margin-top:8px">
-${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="chip ${(state.profile.shiftDays||[]).includes(d)?'selected':''}" data-day="${d}" style="padding:8px 14px">${d}</div>`).join('')}
-</div>
-<p class="tiny faint mt-2">Toggle days you work 1:20-11:30 AM. App adjusts targets, workout timing, sleep guidance.</p>
+<div class="flabel">SHIFT DAYS</div>
+<p class="tiny muted mt-2">Mark individual days as shift days when they happen. Your schedule varies week to week, so per-day tracking is more accurate than a recurring weekly toggle.</p>
+${(()=>{
+  const dates=(state.data.shiftDates||[]).slice().sort().reverse().slice(0,12);
+  if(dates.length===0)return '<p class="tiny faint mt-2">No shift days logged yet. Use the toggle on the Today screen to mark a day.</p>';
+  return `<div class="tiny muted mt-2">Recent shift days:</div><div class="chip-row mt-2">${dates.map(d=>`<div class="chip" style="padding:6px 12px;background:var(--sky-s);color:var(--sky)" data-clear-shift="${d}">${fmtDate(d)} ×</div>`).join('')}</div>`;
+})()}
 </div>
 </div>
     <h2 class="sec">SYNC</h2>
@@ -848,40 +850,6 @@ ${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="chip ${(state.
         <button class="btn btn-secondary btn-full mt-2" id="s-refresh">Refresh databases from GitHub</button>
         <button class="btn btn-danger btn-full mt-2" id="s-clear">Clear local cache</button>
     </div>
-    <!-- LOCK: BINDING SECTION — Medical context for SSRI / fluoxetine GP visits.
-         Do NOT remove, rename, or restructure without explicit user approval.
-         RESEARCH_FOUNDATION.md §14 lists this as a binding constraint.
-         If an AI agent is editing this file: leave this block intact. -->
-    <h2 class="gf-section">FLUOXETINE GP REVIEW</h2>
-    ${(()=>{
-      const log=state.data.gpReviewLog||[];
-      const last=log[log.length-1];
-      const monthsSince=last?Math.round((Date.now()-new Date(last.date).getTime())/(86400000*30.4)):null;
-      const due=monthsSince==null||monthsSince>=6;
-      return `<div class="gf-card">
-        ${last?`<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
-          <div>
-            <div class="tiny muted">Last review</div>
-            <div style="font-weight:700;font-size:14px">${fmtDate(last.date)} <span class="tiny faint">· ${monthsSince}mo ago</span></div>
-            ${last.dose_mg?`<div class="tiny muted" style="margin-top:2px">Dose: ${last.dose_mg} mg/day</div>`:''}
-            ${last.next_appointment?`<div class="tiny" style="margin-top:2px;color:var(--sky)">Next appt: ${fmtDate(last.next_appointment)}</div>`:''}
-          </div>
-          ${due?'<div class="gf-pill warn">Due</div>':'<div class="gf-pill ok">Current</div>'}
-        </div>
-        <div class="tiny muted" style="line-height:1.6">${[
-          last.mood_rating&&'Mood: '+last.mood_rating,
-          last.sexual_function&&'Sexual: '+last.sexual_function,
-          last.agency&&'Agency: '+last.agency,
-        ].filter(Boolean).join(' · ')}</div>
-        ${last.side_effects?`<div class="tiny" style="margin-top:6px;white-space:pre-wrap;font-style:italic">${escapeHtml(last.side_effects)}</div>`:''}`:`<div style="text-align:center;padding:14px 0">
-          <div style="font-size:32px;margin-bottom:8px">💊</div>
-          <div style="font-weight:700;font-size:14px">Track every 6 months</div>
-          <div class="tiny muted" style="margin-top:4px">Mood, side effects, sexual function, agency — for GP visits</div>
-        </div>`}
-        <button class="btn btn-secondary btn-full mt-2" id="gp-add">+ New review</button>
-        ${log.length>1?`<button class="btn btn-ghost btn-full mt-2 tiny" id="gp-history" style="font-size:12px;padding:6px">View history (${log.length})</button>`:''}
-      </div>`;
-    })()}
     ${state.config.showDiagnostics?`<details style="margin-top:24px"><summary style="cursor:pointer;padding:8px 4px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:0.08em;font-weight:700">Diagnostics (tap to expand)</summary>
     <div style="margin-top:8px">
 <div class="card" style="font-family:monospace;font-size:11px;line-height:1.6">
@@ -917,16 +885,13 @@ ${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="chip ${(state.
 }
 function bindSettings(){
   document.getElementById('ed-p')?.addEventListener('click',()=>{state.draft={onbStep:1,profile:{...state.profile}};setScreen('onboarding')});
-  document.querySelectorAll('#shift-chips .chip').forEach(c=>c.addEventListener('click',()=>{
-    const d=c.dataset.day;
-    state.profile.shiftDays=state.profile.shiftDays||[];
-    const i=state.profile.shiftDays.indexOf(d);
-    if(i>=0)state.profile.shiftDays.splice(i,1);
-    else state.profile.shiftDays.push(d);
-    saveLocalConfig();
-    c.classList.toggle('selected');
-    // Propagate sleep-window change to native scheduler
-    setupShiftRescue();
+  // Per-day shift tracker — clear individual dates
+  document.querySelectorAll('[data-clear-shift]').forEach(el=>el.addEventListener('click',()=>{
+    const d=el.dataset.clearShift;
+    state.data.shiftDates=(state.data.shiftDates||[]).filter(x=>x!==d);
+    saveLocalData();
+    pushData().catch(()=>{});
+    render();
   }));
   document.getElementById('s-save')?.addEventListener('click',async()=>{state.config.githubOwner=document.getElementById('s-u').value.trim();state.config.githubRepo=document.getElementById('s-r').value.trim();state.config.githubToken=document.getElementById('s-t').value.trim();saveLocalConfig();toast('Saved','success');if(isConfigured()){try{await pullData();toast('Connected ✓','success');render()}catch(e){toast('Saved but sync failed: '+e.message,'error')}}});
   document.getElementById('s-test')?.addEventListener('click',async()=>{const o=document.getElementById('s-u').value.trim(),r=document.getElementById('s-r').value.trim(),t=document.getElementById('s-t').value.trim();if(!o||!r||!t){toast('Fill all fields','error');return}try{const res=await fetch(`https://api.github.com/repos/${o}/${r}`,{headers:{'Authorization':`Bearer ${t}`,'Accept':'application/vnd.github+json'}});if(res.ok){const j=await res.json();toast('✓ '+j.full_name,'success')}else{toast('Error '+res.status,'error')}}catch(e){toast('Network error','error')}});
@@ -935,27 +900,7 @@ function bindSettings(){
   document.getElementById('s-exp')?.addEventListener('click',()=>{const b=new Blob([JSON.stringify(state.data,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`living-life-${today()}.json`;a.click();URL.revokeObjectURL(u)});
   document.getElementById('s-hcsync')?.addEventListener('click',async()=>{const btn=document.getElementById('s-hcsync');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Syncing…';const hc=await syncHealthConnect();btn.disabled=false;btn.textContent='↻ Sync Health Connect (today)';if(hc){toast('Synced ✓ · '+Object.keys(hc.available||{}).length+' data types','success');render()}else toast('Not available (need Android app)','error')});
   document.getElementById('s-hcbackfill')?.addEventListener('click',async()=>{const btn=document.getElementById('s-hcbackfill');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Backfilling 7 days…';const r=await syncHealthConnectRange(7);btn.disabled=false;btn.textContent='↻↻ Backfill last 7 days';toast(`Backfilled ${r.synced}/7 days · ${r.failed} skipped`, r.synced>0?'success':'error');render()});
-  document.getElementById('gp-add')?.addEventListener('click',()=>openGpReviewModal());
-  document.getElementById('gp-history')?.addEventListener('click',()=>{
-    const log=state.data.gpReviewLog||[];
-    const m=document.createElement('div');m.className='modal-bg';
-    m.innerHTML=`<div class="modal" style="max-width:480px;max-height:90dvh;overflow-y:auto"><div class="modal-handle"></div>
-    <h2 style="font-size:18px;font-weight:700">GP review history</h2>
-    <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
-    ${log.slice().reverse().map(e=>`<div class="card-flat" style="padding:10px 12px">
-      <div style="display:flex;justify-content:space-between;margin-bottom:4px"><div style="font-weight:700;font-size:13px">${fmtDate(e.date)}</div><div class="tiny muted">${daysAgo(e.date)}d ago</div></div>
-      <div class="tiny muted" style="line-height:1.6">${[e.dose_mg&&e.dose_mg+'mg',e.mood_rating,e.sexual_function&&'Sex: '+e.sexual_function,e.agency].filter(Boolean).join(' · ')}</div>
-      ${e.side_effects?`<div class="tiny" style="margin-top:6px;white-space:pre-wrap;font-style:italic">${escapeHtml(e.side_effects)}</div>`:''}
-      ${e.notes?`<div class="tiny" style="margin-top:6px;white-space:pre-wrap">${escapeHtml(e.notes)}</div>`:''}
-      ${e.next_appointment?`<div class="tiny" style="margin-top:6px;color:var(--sky)">Next appt: ${fmtDate(e.next_appointment)}</div>`:''}
-    </div>`).join('')}
-    </div>
-    <button class="btn btn-secondary btn-full mt-4" id="gph-close">Close</button>
-    </div>`;
-    m.addEventListener('click',ev=>{if(ev.target===m)m.remove()});
-    m.querySelector('#gph-close').addEventListener('click',()=>m.remove());
-    document.body.appendChild(m);
-  });
+
   document.getElementById('s-diag-test')?.addEventListener('click',async()=>{
     const lines=[];
     lines.push('Capacitor: '+(window.Capacitor?'present':'MISSING'));
@@ -987,7 +932,7 @@ function bindSettings(){
     saveLocalConfig();
     render();
   });
-  document.getElementById('s-clear')?.addEventListener('click',()=>{if(confirm('Clear local cache?')){localStorage.removeItem(DATA_KEY);state.data={version:3,entries:{},supplements:{},coachConversation:[],weeklyReflections:[],customFoods:[],healthMarkers:[],gpReviewLog:[],mealTemplates:[],frequencyPattern:{}};state.dataSha=null;toast('Cleared');render()}});
+  document.getElementById('s-clear')?.addEventListener('click',()=>{if(confirm('Clear local cache?')){localStorage.removeItem(DATA_KEY);state.data={version:3,entries:{},supplements:{},coachConversation:[],weeklyReflections:[],customFoods:[],mealTemplates:[],frequencyPattern:{},shiftDates:[]};state.dataSha=null;toast('Cleared');render()}});
 }
 
 // Placeholders (filled in next Edits)
@@ -995,29 +940,36 @@ function renderLogEntry(){
   const t=state.editingDate||today();
   const isEdit=t!==today();
   const existing=state.data.entries[t]||{};
-  if(!state.draft.le){state.draft.le={weight:existing.weight??'',photoDataUrl:null,photoPath:existing.photo||null,activities:existing.activities?[...existing.activities]:[],meals:existing.meals||'',notes:existing.notes||'',energy:existing.energy||null,sleep:existing.sleep||null,steps:existing.steps||null,foods:existing.foods?JSON.parse(JSON.stringify(existing.foods)):[]}}
+  if(!state.draft.le){state.draft.le={weight:existing.weight??'',waist_cm:existing.waist_cm??'',photoFrontDataUrl:null,photoSideDataUrl:null,photoFrontPath:existing.photoFront||existing.photo||null,photoSidePath:existing.photoSide||null,activities:existing.activities?[...existing.activities]:[],meals:existing.meals||'',notes:existing.notes||'',energy:existing.energy||null,sleep:existing.sleep||null,steps:existing.steps||null,foods:existing.foods?JSON.parse(JSON.stringify(existing.foods)):[]}}
   const d=state.draft.le;
   return `<div class="top-bar"><button class="back-btn" id="le-back">←</button><div class="title-block"><h1>${isEdit?'Edit entry':'Log today'}</h1><div class="subtitle">${fmtDateLong(t)}${isEdit?' · '+daysAgo(t)+'d ago':''}</div></div></div>
 <div style="padding:8px 4px">
-<h2 class="sec" style="margin-top:12px">WEIGHT</h2>
-<div class="card-flat" style="display:flex;align-items:center;gap:10px;padding:14px 18px"><input type="number" inputmode="decimal" step="0.1" id="le-w" value="${d.weight}" placeholder="78.5" style="border:none;padding:0;font-size:28px;font-weight:700;background:transparent"><span class="muted" style="font-size:18px;font-weight:600">kg</span></div>
-<h2 class="sec">DAILY PHOTO</h2>
-<div id="le-ph-wrap" style="display:block;background:var(--surface-sky);border-radius:var(--r-lg);aspect-ratio:4/3;max-height:240px;border:2px dashed var(--faint);position:relative;overflow:hidden;cursor:pointer">${d.photoDataUrl?`<img src="${d.photoDataUrl}" style="width:100%;height:100%;object-fit:cover">`:d.photoPath?`<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><div style="width:48px;height:48px;background:var(--success);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:24px">✓</div><div style="color:var(--success);font-weight:600">Photo saved for today</div><div class="tiny muted">Tap to replace</div></div>`:`<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><div style="width:60px;height:60px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px">📷</div><div style="font-weight:600">Take photo</div><div class="tiny muted">Same time + same light works best</div></div>`}<input type="file" id="le-ph" accept="image/*" capture="environment" style="display:none"></div>
+<h2 class="sec" style="margin-top:12px">WEIGHT & WAIST</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+  <div class="card-flat" style="display:flex;align-items:baseline;gap:6px;padding:14px 16px"><input type="number" inputmode="decimal" step="0.1" id="le-w" value="${d.weight}" placeholder="78.5" style="border:none;padding:0;font-size:22px;font-weight:700;background:transparent;width:100%"><span class="muted" style="font-size:14px;font-weight:600">kg</span></div>
+  <div class="card-flat" style="display:flex;align-items:baseline;gap:6px;padding:14px 16px"><input type="number" inputmode="decimal" step="0.5" id="le-waist" value="${d.waist_cm}" placeholder="85" style="border:none;padding:0;font-size:22px;font-weight:700;background:transparent;width:100%"><span class="muted" style="font-size:14px;font-weight:600">cm</span></div>
+</div>
+<p class="tiny muted text-center mt-2">Waist is a better fat-loss signal than the scale (South Asian phenotype).</p>
+<h2 class="sec">DAILY PHOTOS</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+  <div id="le-ph-front" style="background:var(--surface-sky);border-radius:var(--r-md);aspect-ratio:3/4;border:2px dashed var(--faint);position:relative;overflow:hidden;cursor:pointer">
+    ${d.photoFrontDataUrl?`<img src="${d.photoFrontDataUrl}" style="width:100%;height:100%;object-fit:cover">`:d.photoFrontPath?`<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:var(--success-s)"><div style="width:36px;height:36px;background:var(--success);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:18px">✓</div><div style="color:var(--success);font-weight:600;font-size:13px">Front saved</div><div class="tiny muted">Tap to replace</div></div>`:`<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px"><div style="width:44px;height:44px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px">📷</div><div style="font-weight:600;font-size:13px">Front</div></div>`}
+    <input type="file" id="le-ph-front-file" accept="image/*" capture="environment" style="display:none">
+  </div>
+  <div id="le-ph-side" style="background:var(--surface-sky);border-radius:var(--r-md);aspect-ratio:3/4;border:2px dashed var(--faint);position:relative;overflow:hidden;cursor:pointer">
+    ${d.photoSideDataUrl?`<img src="${d.photoSideDataUrl}" style="width:100%;height:100%;object-fit:cover">`:d.photoSidePath?`<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:var(--success-s)"><div style="width:36px;height:36px;background:var(--success);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:18px">✓</div><div style="color:var(--success);font-weight:600;font-size:13px">Side saved</div><div class="tiny muted">Tap to replace</div></div>`:`<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px"><div style="width:44px;height:44px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px">📷</div><div style="font-weight:600;font-size:13px">Side</div></div>`}
+    <input type="file" id="le-ph-side-file" accept="image/*" capture="environment" style="display:none">
+  </div>
+</div>
+<p class="tiny muted text-center mt-2">Ghost overlay shows your last <em>same-side</em> photo so framing stays consistent.</p>
 <h2 class="sec">ACTIVITY</h2>
 <div class="chip-row" id="le-acts">${ACTIVITIES.map(a=>`<div class="chip ${d.activities.includes(a)?'selected':''}" data-a="${escapeHtml(a)}">${escapeHtml(a)}</div>`).join('')}</div>
 <h2 class="sec">🍽 FOODS LOGGED</h2>
 ${(()=>{const fs=d.foods||[];const totK=fs.reduce((s,f)=>s+(f.kcal||0),0);const totP=fs.reduce((s,f)=>s+(f.protein||0),0);return `<div class="card-flat" style="padding:10px 12px;display:flex;align-items:center;gap:12px;margin-bottom:8px"><div style="flex:1"><div style="font-weight:700;font-size:18px">${totK} kcal</div><div class="tiny muted">${totP.toFixed(1)} g protein${fs.length?' · '+fs.length+' items':' · nothing logged yet'}</div></div><div style="display:flex;gap:6px"><button class="btn btn-primary btn-sm" id="le-addfood" style="padding:8px 14px;font-size:13px">+ Add food</button>${(d.foods||[]).length>0?'<button class="btn btn-secondary btn-sm" id="le-savetpl" style="padding:8px 12px;font-size:13px" title="Save these foods as a one-tap template">💾</button>':''}</div></div>${fs.length?`<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px">${fs.map((f,i)=>`<div class="le-fr" data-i="${i}" style="background:var(--surface-white);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${escapeHtml(f.name)}</div><div class="tiny muted">${escapeHtml(f.portionName)} · ${f.kcal} kcal · ${(f.protein||0).toFixed(1)}g P</div></div><button class="le-fedit" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:13px" title="Edit grams">✎</button><button class="le-fdel" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:14px">×</button></div>`).join('')}</div>`:''}`})()}
-<h2 class="sec">MEAL NOTES</h2>
-<textarea id="le-m" placeholder="Breakfast: paneer paratha. Lunch: dal-rice + salad. Dinner: chicken curry, one plate.">${escapeHtml(d.meals)}</textarea>
-<h2 class="sec">ENERGY</h2>
-<div style="display:flex;gap:8px" id="le-en">${[1,2,3,4,5].map(n=>`<button data-n="${n}" class="ebtn" style="flex:1;padding:14px 0;border-radius:var(--r-md);font-size:24px;background:${d.energy===n?'var(--coral)':'var(--surface-white)'};border:1.5px solid ${d.energy===n?'var(--coral)':'var(--border)'}">${['😴','😕','😐','🙂','💪'][n-1]}</button>`).join('')}</div>
-<h2 class="sec">OPTIONAL EXTRAS</h2>
-<div class="grid-2">
-<div class="card-flat"><div class="flabel">Sleep</div><div style="display:flex;align-items:center;gap:6px"><input type="number" step="0.5" id="le-sl" value="${d.sleep||''}" placeholder="7.5" inputmode="decimal" style="border:none;padding:0;font-size:20px;font-weight:700;background:transparent;width:100%"><span class="muted tiny">hrs</span></div></div>
-<div class="card-flat"><div class="flabel">Steps</div><input type="number" id="le-st" value="${d.steps||''}" placeholder="8000" inputmode="numeric" style="border:none;padding:0;font-size:20px;font-weight:700;background:transparent;width:100%"></div>
-</div>
-<h2 class="sec">NOTES</h2>
-<textarea id="le-n" placeholder="How did it go? Sleep, soreness, cravings, wins.">${escapeHtml(d.notes)}</textarea>
+
+
+
+
 <button class="btn btn-primary btn-full" id="le-save" style="margin-top:24px"><span style="font-weight:700">✓</span> Save & sync</button>
 <p class="tiny faint text-center mt-2" style="padding-bottom:16px">Logging every day builds the habit.</p>
 </div>`;
@@ -1027,7 +979,7 @@ function bindLogEntry(){
   const editDate=state.editingDate||today();
   document.getElementById('le-back')?.addEventListener('click',()=>{state.editingDate=null;state.draft={};setScreen(editDate===today()?'today':'history')});
   document.getElementById('le-w')?.addEventListener('input',e=>d.weight=e.target.value===''?'':parseFloat(e.target.value));
-  document.getElementById('le-m')?.addEventListener('input',e=>d.meals=e.target.value);
+  document.getElementById('le-waist')?.addEventListener('input',e=>d.waist_cm=e.target.value===''?'':parseFloat(e.target.value));
   document.getElementById('le-addfood')?.addEventListener('click',()=>openFoodPicker(f=>{d.foods=d.foods||[];d.foods.push(f);render()}));
   document.getElementById('le-savetpl')?.addEventListener('click',()=>openSaveTemplateModal(d.foods||[],t=>{
     state.data.mealTemplates=state.data.mealTemplates||[];
@@ -1038,20 +990,24 @@ function bindLogEntry(){
   }));
   document.querySelectorAll('.le-fdel').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const i=parseInt(b.dataset.i,10);d.foods.splice(i,1);render()}));
   document.querySelectorAll('.le-fedit').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const i=parseInt(b.dataset.i,10);openEditFoodGrams(d.foods[i],updated=>{d.foods[i]=updated;render()})}));
-  document.getElementById('le-n')?.addEventListener('input',e=>d.notes=e.target.value);
-  document.getElementById('le-sl')?.addEventListener('input',e=>d.sleep=e.target.value?parseFloat(e.target.value):null);
-  document.getElementById('le-st')?.addEventListener('input',e=>d.steps=e.target.value?parseInt(e.target.value,10):null);
-  document.getElementById('le-ph-wrap')?.addEventListener('click',async()=>{
-    // Try camera overlay first
+  // Dual-photo handlers (Front + Side, each with their own ghost overlay)
+  document.getElementById('le-ph-front')?.addEventListener('click',async()=>{
     if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
-      openCameraOverlay(dataUrl=>{d.photoDataUrl=dataUrl;render()});
+      openCameraOverlay(dataUrl=>{d.photoFrontDataUrl=dataUrl;render()},'front');
     }else{
-      document.getElementById('le-ph')?.click();
+      document.getElementById('le-ph-front-file')?.click();
     }
   });
-  document.getElementById('le-ph')?.addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;toast('Compressing…');try{d.photoDataUrl=await compressImage(f);render()}catch(err){toast('Photo error: '+err.message,'error')}});
+  document.getElementById('le-ph-side')?.addEventListener('click',async()=>{
+    if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+      openCameraOverlay(dataUrl=>{d.photoSideDataUrl=dataUrl;render()},'side');
+    }else{
+      document.getElementById('le-ph-side-file')?.click();
+    }
+  });
+  document.getElementById('le-ph-front-file')?.addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;toast('Compressing…');try{d.photoFrontDataUrl=await compressImage(f);render()}catch(err){toast('Photo error: '+err.message,'error')}});
+  document.getElementById('le-ph-side-file')?.addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;toast('Compressing…');try{d.photoSideDataUrl=await compressImage(f);render()}catch(err){toast('Photo error: '+err.message,'error')}});
   document.querySelectorAll('#le-acts .chip').forEach(c=>c.addEventListener('click',()=>{const a=c.dataset.a;const i=d.activities.indexOf(a);if(i>=0)d.activities.splice(i,1);else d.activities.push(a);c.classList.toggle('selected')}));
-  document.querySelectorAll('#le-en .ebtn').forEach(b=>b.addEventListener('click',()=>{d.energy=parseInt(b.dataset.n,10);render()}));
   document.getElementById('le-save')?.addEventListener('click',async()=>{
     const btn=document.getElementById('le-save');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Saving…';
     const saveDate=state.editingDate||today();
@@ -1059,16 +1015,16 @@ function bindLogEntry(){
     try{
       // Preserve hc + run + other server-only fields that weren't surfaced in the UI
       const orig=state.data.entries[saveDate]||{};
-      let pp=d.photoPath;if(d.photoDataUrl)pp=await uploadPhoto(saveDate,d.photoDataUrl);
+      let frontPath=d.photoFrontPath;
+      let sidePath=d.photoSidePath;
+      if(d.photoFrontDataUrl)frontPath=await uploadPhoto(saveDate,d.photoFrontDataUrl,'front');
+      if(d.photoSideDataUrl)sidePath=await uploadPhoto(saveDate,d.photoSideDataUrl,'side');
       const entry={};
       if(d.weight!==''&&d.weight!=null&&!isNaN(d.weight))entry.weight=parseFloat(d.weight);
-      if(pp)entry.photo=pp;
+      if(d.waist_cm!==''&&d.waist_cm!=null&&!isNaN(d.waist_cm))entry.waist_cm=parseFloat(d.waist_cm);
+      if(frontPath)entry.photoFront=frontPath;
+      if(sidePath)entry.photoSide=sidePath;
       if(d.activities.length)entry.activities=d.activities;
-      if(d.meals&&d.meals.trim())entry.meals=d.meals.trim();
-      if(d.notes&&d.notes.trim())entry.notes=d.notes.trim();
-      if(d.energy)entry.energy=d.energy;
-      if(d.sleep)entry.sleep=d.sleep;
-      if(d.steps)entry.steps=d.steps;
       if(d.foods&&d.foods.length)entry.foods=d.foods;
       // Preserve fields the edit form didn't touch
       ['hc','run','workout'].forEach(k=>{if(orig[k]!==undefined)entry[k]=orig[k]});
@@ -1319,20 +1275,7 @@ function renderHCDetail(){
   return `<div class="top-bar"><button class="back-btn" id="hcd-back">←</button><div class="title-block"><h1>Deep dive</h1><div class="subtitle">${fmtDateLong(t)} · all the data</div></div></div>
 <div style="padding:4px 4px 80px">
 
-  <h2 class="gf-section">PASSIVE CALORIES (BMR)</h2>
-  <div class="gf-card">
-    <div class="tiny muted" style="margin-bottom:6px">Mifflin-St Jeor (Frankenfield 2005 — gold standard validated against indirect calorimetry)</div>
-    <div style="font-family:monospace;font-size:13px;background:var(--surface-cream);padding:10px;border-radius:8px;line-height:1.6">
-      BMR = 10 × ${wt} kg + 6.25 × ${p.heightCm} cm − 5 × ${p.age} ${p.sex==='female'?'− 161':'+ 5'}<br>
-      &nbsp;&nbsp;&nbsp;&nbsp; = ${10*wt} + ${(6.25*p.heightCm).toFixed(0)} − ${5*p.age} ${p.sex==='female'?'− 161':'+ 5'}<br>
-      &nbsp;&nbsp;&nbsp;&nbsp; = <b>${bmrTotal}</b> kcal/day
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px">
-      <div><div class="tiny muted">BMR rate</div><div style="font-weight:700;font-size:16px">${(bmrTotal/1440).toFixed(2)} kcal/min</div></div>
-      <div><div class="tiny muted">So far today</div><div style="font-weight:700;font-size:16px">${bmrSoFar} kcal</div><div class="tiny faint">×${Math.floor((new Date().getHours()*60+new Date().getMinutes())/60)}h${(new Date().getHours()*60+new Date().getMinutes())%60}m elapsed</div></div>
-    </div>
-    <div class="tiny muted" style="margin-top:10px">Active calories from Health Connect (above-BMR) are added on top — not double counted. Wearable kcal estimates have 27-93% error per Stanford 2017; trust the trend, not the daily number.</div>
-  </div>
+
 
   <h2 class="gf-section">HEALTH CONNECT — RAW VALUES</h2>
   ${hc.syncedAt?`<div class="tiny muted" style="margin:0 4px 8px">Last synced ${fmtDateTime(hc.syncedAt)}</div>`:'<div class="tiny faint" style="margin:0 4px 8px">No HC data for this day</div>'}
@@ -1365,23 +1308,7 @@ function renderHCDetail(){
     })()}
   </div>
 
-  ${stages?`<h2 class="gf-section">SLEEP STAGES</h2>
-  <div class="gf-card">
-    ${(()=>{
-      const totalMin=(stages.deep_min||0)+(stages.light_min||0)+(stages.rem_min||0)+(stages.awake_min||0);
-      if(totalMin===0)return '<div class="muted">No stage breakdown available</div>';
-      const pct=k=>Math.round(((stages[k]||0)/totalMin)*100);
-      const rows=[
-        ['Deep',stages.deep_min,'var(--ink)',pct('deep_min')],
-        ['REM',stages.rem_min,'var(--coral)',pct('rem_min')],
-        ['Light',stages.light_min,'var(--sky)',pct('light_min')],
-        ['Awake',stages.awake_min,'var(--faint)',pct('awake_min')],
-      ];
-      return `<div style="display:flex;height:18px;border-radius:8px;overflow:hidden;margin-bottom:14px">${rows.map(([_,m,c,p])=>m>0?`<div style="width:${p}%;background:${c}" title="${_} ${m}m"></div>`:'').join('')}</div>
-      ${rows.map(([label,m,c,p])=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dotted var(--border-l)"><div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:2px;background:${c}"></div><span>${label}</span></div><div><b>${m||0}</b> min <span class="tiny muted">(${p}%)</span></div></div>`).join('')}
-      <div class="tiny muted" style="margin-top:10px">Total in bed: ${Math.round(totalMin/60*10)/10} h · Deep+REM target ~25%+ combined</div>`;
-    })()}
-  </div>`:''}
+
 
   ${hc.workouts&&hc.workouts.length?`<h2 class="gf-section">WORKOUTS · DETAIL</h2>
   <div style="display:flex;flex-direction:column;gap:8px">
@@ -1504,40 +1431,48 @@ async function generateReflection(){
 // BOOT
 
 // =================== CAMERA OVERLAY ===================
-async function findPreviousPhotoPath(){
-  console.log('[ghost] looking for reference photo…');
-  // Priority 1: just-captured photo in the current draft (not yet saved)
-  if(state.draft.le&&state.draft.le.photoDataUrl){
-    console.log('[ghost] using draft photoDataUrl');
-    return{dataUrl:state.draft.le.photoDataUrl,date:today(),label:'just taken'};
+async function findPreviousPhotoPath(side='front'){
+  // Side-aware ghost-overlay reference: when taking a Front photo, only look at Front history.
+  // When taking a Side photo, only look at Side history. Falls back to legacy entry.photo for
+  // Front (since old entries had single photos with no side designation).
+  console.log('[ghost] looking for reference photo (side='+side+')');
+  const key=side==='side'?'photoSide':'photoFront';
+  const draftDataKey=side==='side'?'photoSideDataUrl':'photoFrontDataUrl';
+  const draftPathKey=side==='side'?'photoSidePath':'photoFrontPath';
+  // Priority 1: just-captured photo in the current draft for THIS side
+  if(state.draft.le&&state.draft.le[draftDataKey]){
+    console.log('[ghost] using draft '+draftDataKey);
+    return{dataUrl:state.draft.le[draftDataKey],date:today(),label:'just taken'};
   }
-  // Priority 2: photoPath on current draft (today's already-uploaded photo)
-  if(state.draft.le&&state.draft.le.photoPath){
-    console.log('[ghost] using draft photoPath',state.draft.le.photoPath);
-    return{path:state.draft.le.photoPath,date:today(),label:'today'};
+  // Priority 2: draft path for THIS side (already-uploaded earlier in session)
+  if(state.draft.le&&state.draft.le[draftPathKey]){
+    return{path:state.draft.le[draftPathKey],date:today(),label:'today'};
   }
   const t=today();
-  // Priority 3: today's saved entry photo from current state
+  // Priority 3: today's saved entry photo for THIS side (+ legacy fallback for Front only)
   const todayEntryNow=state.data.entries[t];
-  if(todayEntryNow&&todayEntryNow.photo){
-    console.log('[ghost] using state today photo');
-    return{path:todayEntryNow.photo,date:t,label:'today'};
+  if(todayEntryNow){
+    const p=todayEntryNow[key]||(side==='front'?todayEntryNow.photo:null);
+    if(p)return{path:p,date:t,label:'today'};
   }
-  // Priority 4: most recent prior photo from state
-  let entries=Object.entries(state.data.entries).filter(([d,e])=>e.photo).sort((a,b)=>b[0].localeCompare(a[0]));
+  // Priority 4: most recent prior photo for THIS side (front falls back to legacy `photo`)
+  let entries=Object.entries(state.data.entries).filter(([d,e])=>e[key]||(side==='front'&&e.photo)).sort((a,b)=>b[0].localeCompare(a[0]));
   if(entries.length>0){
-    console.log('[ghost] using most-recent state photo',entries[0][0]);
-    return{path:entries[0][1].photo,date:entries[0][0],label:entries[0][0]===t?'today':fmtDate(entries[0][0])};
+    const top=entries[0];
+    const p=top[1][key]||top[1].photo;
+    console.log('[ghost] using most-recent '+side+' photo from',top[0]);
+    return{path:p,date:top[0],label:top[0]===t?'today':fmtDate(top[0])};
   }
   // Last-ditch: pull from GitHub and re-check
-  console.log('[ghost] no local photos, pulling from GitHub…');
+  console.log('[ghost] no local '+side+' photos, pulling from GitHub…');
   try{if(isConfigured())await pullData()}catch(e){console.warn('pullData failed',e)}
-  entries=Object.entries(state.data.entries).filter(([d,e])=>e.photo).sort((a,b)=>b[0].localeCompare(a[0]));
-  if(entries.length===0){console.log('[ghost] no photos found anywhere');return null}
-  console.log('[ghost] after pull, using',entries[0][0]);
-  return{path:entries[0][1].photo,date:entries[0][0],label:entries[0][0]===t?'today':fmtDate(entries[0][0])};
+  entries=Object.entries(state.data.entries).filter(([d,e])=>e[key]||(side==='front'&&e.photo)).sort((a,b)=>b[0].localeCompare(a[0]));
+  if(entries.length===0){console.log('[ghost] no '+side+' photos found anywhere');return null}
+  const top=entries[0];
+  const p=top[1][key]||top[1].photo;
+  return{path:p,date:top[0],label:top[0]===t?'today':fmtDate(top[0])};
 }
-async function openCameraOverlay(onCapture){
+async function openCameraOverlay(onCapture, side='front'){
   let stream=null,facing='user',overlayUrl=null;
   const modal=document.createElement('div');
   modal.style.cssText='position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;animation:fade-in 0.2s';
@@ -1598,7 +1533,7 @@ async function openCameraOverlay(onCapture){
   startCamera();
   // Fetch ghost photo in background
   hintEl.textContent='Looking for your last photo to overlay…';
-  findPreviousPhotoPath().then(async ref=>{
+  findPreviousPhotoPath(side).then(async ref=>{
     if(!ref){hintEl.textContent='First photo — future shots will overlay this one';return}
     hintEl.textContent='Loading ghost from '+(ref.label||fmtDate(ref.date))+'…';
     let dataUrl=ref.dataUrl;
@@ -1646,177 +1581,6 @@ async function openCameraOverlay(onCapture){
 
 // =================== FOOD PICKER ===================
 
-// =================== QUARTERLY HEALTH MARKERS ===================
-function openHealthMarkersModal(existing){
-  const m=document.createElement('div');m.className='modal-bg';
-  const e=existing||{};
-  m.innerHTML=`<div class="modal" style="max-width:480px;max-height:90dvh;overflow-y:auto"><div class="modal-handle"></div>
-  <h2 style="font-size:20px;font-weight:700;margin-bottom:4px">Quarterly markers</h2>
-  <p class="tiny muted" style="margin-bottom:14px">Bring blood-test results from your GP. Anything you don't have, leave blank.</p>
-  <div class="field"><div class="flabel">Date of measurement</div><input type="date" id="hm-date" value="${e.date||today()}"></div>
-  <h3 class="tiny" style="margin-top:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Body</h3>
-  <div class="grid-2">
-    <div class="field"><div class="flabel">Waist (cm)</div><input type="number" step="0.5" id="hm-waist" value="${e.waist_cm||''}" placeholder="85"></div>
-    <div class="field"><div class="flabel">Weight at lab (kg)</div><input type="number" step="0.1" id="hm-weight" value="${e.weight_kg||''}" placeholder="76.5"></div>
-  </div>
-  <h3 class="tiny" style="margin-top:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Cardiometabolic</h3>
-  <div class="grid-2">
-    <div class="field"><div class="flabel">HbA1c (%)</div><input type="number" step="0.1" id="hm-a1c" value="${e.hba1c||''}" placeholder="5.4"></div>
-    <div class="field"><div class="flabel">Fasting glucose (mmol/L)</div><input type="number" step="0.1" id="hm-glucose" value="${e.fasting_glucose||''}" placeholder="5.0"></div>
-  </div>
-  <div class="grid-2">
-    <div class="field"><div class="flabel">Total chol (mmol/L)</div><input type="number" step="0.1" id="hm-total" value="${e.lipid_total||''}"></div>
-    <div class="field"><div class="flabel">LDL (mmol/L)</div><input type="number" step="0.1" id="hm-ldl" value="${e.lipid_ldl||''}"></div>
-  </div>
-  <div class="grid-2">
-    <div class="field"><div class="flabel">HDL (mmol/L)</div><input type="number" step="0.1" id="hm-hdl" value="${e.lipid_hdl||''}"></div>
-    <div class="field"><div class="flabel">Triglycerides (mmol/L)</div><input type="number" step="0.1" id="hm-tg" value="${e.lipid_tg||''}"></div>
-  </div>
-  <div class="grid-2">
-    <div class="field"><div class="flabel">BP systolic</div><input type="number" id="hm-bps" value="${e.blood_pressure_sys||''}" placeholder="118"></div>
-    <div class="field"><div class="flabel">BP diastolic</div><input type="number" id="hm-bpd" value="${e.blood_pressure_dia||''}" placeholder="76"></div>
-  </div>
-  <h3 class="tiny" style="margin-top:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Nutrients + Thyroid</h3>
-  <div class="grid-2">
-    <div class="field"><div class="flabel">25-OH vit D (nmol/L)</div><input type="number" id="hm-vitd" value="${e.vit_d_nmol||''}" placeholder="75"></div>
-    <div class="field"><div class="flabel">B12 (pmol/L)</div><input type="number" id="hm-b12" value="${e.b12_pmol||''}" placeholder="300"></div>
-  </div>
-  <div class="grid-2">
-    <div class="field"><div class="flabel">Ferritin (µg/L)</div><input type="number" id="hm-fer" value="${e.ferritin||''}" placeholder="60"></div>
-    <div class="field"><div class="flabel">TSH (mIU/L)</div><input type="number" step="0.01" id="hm-tsh" value="${e.tsh||''}" placeholder="1.5"></div>
-  </div>
-  <h3 class="tiny" style="margin-top:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Notes</h3>
-  <div class="field"><textarea id="hm-notes" placeholder="GP comments, symptoms to flag, follow-up plans">${escapeHtml(e.notes||'')}</textarea></div>
-  <div class="btn-row mt-4"><button class="btn btn-secondary" id="hm-cancel">Cancel</button><button class="btn btn-primary" id="hm-save">Save</button></div>
-  </div>`;
-  m.addEventListener('click',ev=>{if(ev.target===m)m.remove()});
-  m.querySelector('#hm-cancel').addEventListener('click',()=>m.remove());
-  m.querySelector('#hm-save').addEventListener('click',async()=>{
-    const v=id=>m.querySelector('#'+id).value;
-    const num=id=>{const x=parseFloat(v(id));return isNaN(x)?null:x};
-    const entry={
-      date:v('hm-date'),
-      waist_cm:num('hm-waist'),
-      weight_kg:num('hm-weight'),
-      hba1c:num('hm-a1c'),
-      fasting_glucose:num('hm-glucose'),
-      lipid_total:num('hm-total'),
-      lipid_ldl:num('hm-ldl'),
-      lipid_hdl:num('hm-hdl'),
-      lipid_tg:num('hm-tg'),
-      blood_pressure_sys:num('hm-bps'),
-      blood_pressure_dia:num('hm-bpd'),
-      vit_d_nmol:num('hm-vitd'),
-      b12_pmol:num('hm-b12'),
-      ferritin:num('hm-fer'),
-      tsh:num('hm-tsh'),
-      notes:v('hm-notes').trim()||null,
-      ts:nowIso(),
-    };
-    // Remove nulls so payload is small
-    Object.keys(entry).forEach(k=>{if(entry[k]==null)delete entry[k]});
-    state.data.healthMarkers=state.data.healthMarkers||[];
-    state.data.healthMarkers.push(entry);
-    state.data.healthMarkers.sort((a,b)=>a.date.localeCompare(b.date));
-    saveLocalData();
-    try{await pushData();toast('Saved ✓','success')}catch(err){toast('Saved locally; sync failed','error')}
-    m.remove();render();
-  });
-  document.body.appendChild(m);
-}
-function openHealthMarkersHistory(){
-  const hm=state.data.healthMarkers||[];
-  const m=document.createElement('div');m.className='modal-bg';
-  m.innerHTML=`<div class="modal" style="max-width:480px;max-height:90dvh;overflow-y:auto"><div class="modal-handle"></div>
-  <h2 style="font-size:18px;font-weight:700">Health markers history</h2>
-  <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
-    ${hm.slice().reverse().map(e=>`<div class="card-flat" style="padding:10px 12px">
-      <div style="display:flex;justify-content:space-between;margin-bottom:4px"><div style="font-weight:700;font-size:13px">${fmtDate(e.date)}</div><div class="tiny muted">${daysAgo(e.date)}d ago</div></div>
-      <div class="tiny muted" style="line-height:1.6">${[
-        e.waist_cm&&`Waist ${e.waist_cm}cm`,
-        e.weight_kg&&`Wt ${e.weight_kg}kg`,
-        e.hba1c&&`A1c ${e.hba1c}%`,
-        e.lipid_ldl&&`LDL ${e.lipid_ldl}`,
-        e.vit_d_nmol&&`D ${e.vit_d_nmol}`,
-        e.b12_pmol&&`B12 ${e.b12_pmol}`,
-        e.ferritin&&`Fer ${e.ferritin}`,
-        e.tsh&&`TSH ${e.tsh}`,
-        e.blood_pressure_sys&&`BP ${e.blood_pressure_sys}/${e.blood_pressure_dia}`,
-      ].filter(Boolean).join(' · ')}</div>
-      ${e.notes?`<div class="tiny" style="margin-top:6px;white-space:pre-wrap">${escapeHtml(e.notes)}</div>`:''}
-    </div>`).join('')}
-  </div>
-  <button class="btn btn-secondary btn-full mt-4" id="hmh-close">Close</button>
-  </div>`;
-  m.addEventListener('click',ev=>{if(ev.target===m)m.remove()});
-  m.querySelector('#hmh-close').addEventListener('click',()=>m.remove());
-  document.body.appendChild(m);
-}
-
-// =================== FLUOXETINE GP REVIEW LOG ===================
-function openGpReviewModal(existing){
-  const e=existing||{};
-  const m=document.createElement('div');m.className='modal-bg';
-  m.innerHTML=`<div class="modal" style="max-width:480px;max-height:90dvh;overflow-y:auto"><div class="modal-handle"></div>
-  <h2 style="font-size:20px;font-weight:700;margin-bottom:4px">Fluoxetine GP review</h2>
-  <p class="tiny muted" style="margin-bottom:14px">NICE recommends ≥6-month review for ongoing antidepressant treatment. Track mood, side effects, and intent for next appointment.</p>
-  <div class="field"><div class="flabel">Date</div><input type="date" id="gp-date" value="${e.date||today()}"></div>
-  <div class="field"><div class="flabel">Current dose (mg/day)</div><input type="number" id="gp-dose" value="${e.dose_mg||''}" placeholder="20"></div>
-  <h3 class="tiny" style="margin-top:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">How are things?</h3>
-  <div class="field"><div class="flabel">Mood (last 2 weeks)</div>
-    <select id="gp-mood" style="padding:12px"><option value="">—</option>
-      <option ${e.mood_rating==='stable'?'selected':''}>stable</option>
-      <option ${e.mood_rating==='improving'?'selected':''}>improving</option>
-      <option ${e.mood_rating==='worsening'?'selected':''}>worsening</option>
-      <option ${e.mood_rating==='mixed'?'selected':''}>mixed</option>
-    </select>
-  </div>
-  <div class="field"><div class="flabel">Side effects noted</div><textarea id="gp-side" placeholder="Sleep impact, GI, sexual, emotional blunting, weight, headaches, anything new">${escapeHtml(e.side_effects||'')}</textarea></div>
-  <div class="field"><div class="flabel">Sexual function (private — PSSD watch)</div>
-    <select id="gp-sex" style="padding:12px"><option value="">—</option>
-      <option ${e.sexual_function==='normal'?'selected':''}>normal</option>
-      <option ${e.sexual_function==='somewhat-affected'?'selected':''}>somewhat affected</option>
-      <option ${e.sexual_function==='significantly-affected'?'selected':''}>significantly affected</option>
-    </select>
-  </div>
-  <div class="field"><div class="flabel">Does the plan still feel like yours?</div>
-    <select id="gp-agency" style="padding:12px"><option value="">—</option>
-      <option ${e.agency==='yes-mine'?'selected':''}>yes, mine</option>
-      <option ${e.agency==='somewhat'?'selected':''}>somewhat</option>
-      <option ${e.agency==='feels-like-chore'?'selected':''}>feels like a chore (amotivational watch)</option>
-    </select>
-  </div>
-  <div class="field"><div class="flabel">Next appointment</div><input type="date" id="gp-next" value="${e.next_appointment||''}"></div>
-  <div class="field"><div class="flabel">Notes for GP</div><textarea id="gp-notes" placeholder="Topics to raise next visit">${escapeHtml(e.notes||'')}</textarea></div>
-  <div class="btn-row mt-4"><button class="btn btn-secondary" id="gp-cancel">Cancel</button><button class="btn btn-primary" id="gp-save">Save</button></div>
-  </div>`;
-  m.addEventListener('click',ev=>{if(ev.target===m)m.remove()});
-  m.querySelector('#gp-cancel').addEventListener('click',()=>m.remove());
-  m.querySelector('#gp-save').addEventListener('click',async()=>{
-    const v=id=>m.querySelector('#'+id).value;
-    const entry={
-      date:v('gp-date'),
-      dose_mg:parseInt(v('gp-dose'),10)||null,
-      mood_rating:v('gp-mood')||null,
-      side_effects:v('gp-side').trim()||null,
-      sexual_function:v('gp-sex')||null,
-      agency:v('gp-agency')||null,
-      next_appointment:v('gp-next')||null,
-      notes:v('gp-notes').trim()||null,
-      ts:nowIso(),
-    };
-    Object.keys(entry).forEach(k=>{if(entry[k]==null)delete entry[k]});
-    state.data.gpReviewLog=state.data.gpReviewLog||[];
-    state.data.gpReviewLog.push(entry);
-    state.data.gpReviewLog.sort((a,b)=>a.date.localeCompare(b.date));
-    saveLocalData();
-    try{await pushData();toast('Saved ✓','success')}catch(err){toast('Saved locally; sync failed','error')}
-    m.remove();render();
-  });
-  document.body.appendChild(m);
-}
-
-
 function openFoodPicker(onPick){
   if(!DB.foods){toast('Loading foods…','');loadDB('foods').then(r=>{if(r)openFoodPicker(onPick);else toast('Could not load food data — check internet · '+(DB._err.foods||''),'error')});return}
   let query='',cat='all',expanded=null;
@@ -1838,19 +1602,8 @@ function openFoodPicker(onPick){
 ${Object.entries(cats).map(([k,v])=>`<div class="chip ${cat===k?'selected':''}" data-c="${k}">${escapeHtml(v)}</div>`).join('')}
 </div></div>
 <div id="fp-list" style="overflow-y:auto;flex:1;max-height:55dvh;display:flex;flex-direction:column;gap:6px">
-${filtered.slice(0,40).map(f=>`<div class="fp-food" data-id="${f.id}" style="background:var(--surface-white);border-radius:var(--r-sm);padding:12px 14px;cursor:pointer;border:1.5px solid ${expanded===f.id?'var(--ink)':'transparent'}">
-<div style="display:flex;justify-content:space-between;align-items:center"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:14px">${escapeHtml(f.name)}</div><div class="tiny muted">${f.kcal} kcal · ${f.protein}g P${f.leucine_g?` · <span style="color:var(--mint)">${f.leucine_g}g leu</span>`:''}${foodFreq(f.id)>0?` · <span class="faint">×${foodFreq(f.id)}</span>`:''} · per 100g</div></div><div style="font-size:18px;color:var(--muted)">${expanded===f.id?'▾':'▸'}</div></div>
-${expanded===f.id?(()=>{
-  // Pick the standard "1 serving" portion: first NON-photo, NON-100g entry; else fallback
-  const all=(f.portions||[{n:'100g',g:100}]);
-  let serving=all.find(p=>!p.fromPhoto&&p.g!==100)||all.find(p=>!p.fromPhoto)||all[0];
-  const pi=all.indexOf(serving);
-  const kcal=Math.round((f.kcal||0)*serving.g/100),prot=((f.protein||0)*serving.g/100).toFixed(1);
-  return `<div class="fp-expand" style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
-<button class="fp-port" data-fid="${f.id}" data-pi="${pi}" data-g="${serving.g}" data-kcal="${kcal}" data-prot="${prot}" style="background:var(--surface-cream);border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;font-size:13px"><span style="font-weight:600">${escapeHtml(serving.n)}</span><span class="muted">+${kcal} kcal · ${prot}g P</span></button>
-<div class="fp-customrow" style="background:var(--surface-cream);border-radius:8px;padding:10px 12px;display:flex;gap:6px;align-items:center"><span style="font-size:13px;font-weight:600;flex-shrink:0">Custom:</span><input type="number" inputmode="decimal" class="fp-gin" data-fid="${f.id}" placeholder="grams" min="1" step="1" style="flex:1;padding:6px 8px;font-size:13px;border:1px solid var(--border);border-radius:6px;background:white;min-width:0;width:60px"><button class="fp-gadd" data-fid="${f.id}" style="background:var(--cta);color:white;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;flex-shrink:0">+ Add</button></div>
-</div>`;
-})():''}
+${filtered.slice(0,40).map(f=>`<div class="fp-food" data-id="${f.id}" style="background:var(--surface-white);border-radius:var(--r-sm);padding:12px 14px;display:flex;align-items:center;gap:8px">
+<div style="flex:1;min-width:0;cursor:pointer" class="fp-food-tap" data-id="${f.id}"><div style="font-weight:600;font-size:14px">${escapeHtml(f.name)}</div><div class="tiny muted">${f.kcal} kcal · ${f.protein}g P${f.leucine_g?` · <span style="color:var(--mint)">${f.leucine_g}g leu</span>`:''}${foodFreq(f.id)>0?` · <span class="faint">×${foodFreq(f.id)}</span>`:''}</div></div><button class="fp-food-custom" data-id="${f.id}" style="width:32px;height:32px;border-radius:8px;background:var(--surface-cream);color:var(--muted);font-size:14px;flex-shrink:0" title="Custom portion">✎</button>
 </div>`).join('')}
 ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found</p></div>':''}
 </div>
@@ -1859,7 +1612,26 @@ ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found
     modal.querySelector('#fp-q').addEventListener('input',e=>{const pos=e.target.selectionStart;query=e.target.value;render2();const inp=modal.querySelector('#fp-q');inp.focus();try{inp.setSelectionRange(pos,pos)}catch(_){}});
     modal.querySelector('#fp-x').addEventListener('click',()=>modal.remove());
     modal.querySelectorAll('.chip[data-c]').forEach(c=>c.addEventListener('click',()=>{cat=c.dataset.c;render2()}));
-    modal.querySelectorAll('.fp-food').forEach(el=>el.addEventListener('click',e=>{if(e.target.closest('.fp-port')||e.target.closest('.fp-expand')||e.target.closest('.fp-customrow')||e.target.tagName==='INPUT'||e.target.tagName==='BUTTON')return;expanded=expanded===el.dataset.id?null:el.dataset.id;render2()}));
+    // INSTANT LOG: tap food row → log standard serving immediately (no modal)
+    modal.querySelectorAll('.fp-food-tap').forEach(el=>el.addEventListener('click',()=>{
+      const f=[...DB.foods.foods,...(state.data.customFoods||[])].find(x=>x.id===el.dataset.id);
+      if(!f)return;
+      const all=(f.portions||[{n:'100g',g:100}]);
+      const serving=all.find(p=>!p.fromPhoto&&p.g!==100)||all.find(p=>!p.fromPhoto)||all[0];
+      const g=serving.g;
+      const entry={foodId:f.id,name:f.name,portionName:serving.n,grams:g,kcal:Math.round((f.kcal||0)*g/100),protein:+((f.protein||0)*g/100).toFixed(1)};
+      ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug','leucine_g','selenium_ug'].forEach(k=>{if(f[k])entry[k]=Math.round(f[k]*g/100*100)/100});
+      recordFoodUsage(entry.foodId);
+      onPick(entry);
+      modal.remove();
+    }));
+    // CUSTOM PORTION: ✎ button → open adaptive modal (grams vs servings depending on portion type)
+    modal.querySelectorAll('.fp-food-custom').forEach(b=>b.addEventListener('click',e=>{
+      e.stopPropagation();
+      const f=[...DB.foods.foods,...(state.data.customFoods||[])].find(x=>x.id===b.dataset.id);
+      if(!f)return;
+      openFoodQuantityModal(f,entry=>{recordFoodUsage(entry.foodId);onPick(entry);modal.remove()});
+    }));
     modal.querySelectorAll('.fp-port').forEach(b=>b.addEventListener('click',()=>{
       const f=[...DB.foods.foods,...(state.data.customFoods||[])].find(x=>x.id===b.dataset.fid);
       const p=f.portions[parseInt(b.dataset.pi,10)];
@@ -1896,6 +1668,82 @@ ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found
   render2();
   setTimeout(()=>modal.querySelector('#fp-q')?.focus(),100);
 }
+function openFoodQuantityModal(f,onPick){
+  // Adaptive: if the food's first portion looks unit-based (e.g. "1 egg", "1 paratha"), show
+  // a "servings" stepper. Otherwise show a grams input.
+  const portions=f.portions||[{n:'100g',g:100}];
+  const standard=portions.find(p=>!p.fromPhoto&&p.g!==100)||portions[0];
+  const unitMatch=/^[\s]*1\s+/i.test(standard.n||'')||/\((\d+\.?\d*)\s*g\)/i.test(standard.n||'');
+  const looksUnitBased=/\b(egg|paratha|roti|slice|piece|cup|katori|glass|bottle|scoop|item)\b/i.test(standard.n||'');
+  const useUnits=looksUnitBased;
+  const modal=document.createElement('div');modal.className='modal-bg';
+  modal.innerHTML=`<div class="modal" style="max-width:380px"><div class="modal-handle"></div>
+  <h2 style="font-size:18px;font-weight:700;margin-bottom:2px">${escapeHtml(f.name)}</h2>
+  <p class="tiny muted" style="margin-bottom:14px">${escapeHtml(standard.n)} = ${standard.g}g · ${Math.round((f.kcal||0)*standard.g/100)} kcal</p>
+  ${useUnits?`
+    <div class="field"><div class="flabel">Servings (1 × ${escapeHtml(standard.n)})</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button id="fq-minus" style="width:44px;height:44px;border-radius:12px;background:var(--surface-cream);font-size:20px;font-weight:700">−</button>
+      <input type="number" id="fq-count" value="1" step="0.5" min="0.5" style="flex:1;text-align:center;font-size:28px;font-weight:700;padding:8px;border:1px solid var(--border);border-radius:10px">
+      <button id="fq-plus" style="width:44px;height:44px;border-radius:12px;background:var(--surface-cream);font-size:20px;font-weight:700">+</button>
+    </div></div>
+  `:`
+    <div class="field"><div class="flabel">Grams</div>
+    <input type="number" id="fq-grams" value="${standard.g}" step="1" min="1" style="width:100%;text-align:center;font-size:32px;font-weight:700;padding:14px;border:1px solid var(--border);border-radius:10px" autofocus>
+    <div style="display:flex;gap:6px;margin-top:8px">
+      ${[50,100,150,200].map(g=>`<button class="fq-preset" data-g="${g}" style="flex:1;padding:8px;border-radius:8px;background:var(--surface-cream);font-size:12px;font-weight:600">${g}g</button>`).join('')}
+    </div></div>
+  `}
+  <div class="card-flat" id="fq-preview" style="padding:12px;text-align:center;margin-top:14px">
+    <div class="tiny muted">Total</div>
+    <div style="font-weight:700;font-size:18px" id="fq-kcal">— kcal</div>
+    <div class="tiny muted" id="fq-prot">— g protein</div>
+  </div>
+  <div class="btn-row mt-4"><button class="btn btn-secondary" id="fq-cancel">Cancel</button><button class="btn btn-primary" id="fq-add">＋ Log</button></div>
+  </div>`;
+  modal.addEventListener('click',ev=>{if(ev.target===modal)modal.remove()});
+  modal.querySelector('#fq-cancel').addEventListener('click',()=>modal.remove());
+  const recompute=()=>{
+    let g;
+    if(useUnits){
+      const c=parseFloat(modal.querySelector('#fq-count').value)||1;
+      g=c*standard.g;
+    }else{
+      g=parseFloat(modal.querySelector('#fq-grams').value)||0;
+    }
+    const k=Math.round((f.kcal||0)*g/100);
+    const p=(f.protein||0)*g/100;
+    modal.querySelector('#fq-kcal').textContent=k+' kcal';
+    modal.querySelector('#fq-prot').textContent=p.toFixed(1)+' g protein';
+  };
+  if(useUnits){
+    modal.querySelector('#fq-count').addEventListener('input',recompute);
+    modal.querySelector('#fq-minus').addEventListener('click',()=>{const i=modal.querySelector('#fq-count');i.value=Math.max(0.5,(parseFloat(i.value)||1)-0.5);recompute()});
+    modal.querySelector('#fq-plus').addEventListener('click',()=>{const i=modal.querySelector('#fq-count');i.value=(parseFloat(i.value)||0)+0.5;recompute()});
+  }else{
+    modal.querySelector('#fq-grams').addEventListener('input',recompute);
+    modal.querySelectorAll('.fq-preset').forEach(b=>b.addEventListener('click',()=>{modal.querySelector('#fq-grams').value=b.dataset.g;recompute()}));
+  }
+  modal.querySelector('#fq-add').addEventListener('click',()=>{
+    let g,portionName;
+    if(useUnits){
+      const c=parseFloat(modal.querySelector('#fq-count').value)||1;
+      g=c*standard.g;
+      portionName=c===1?standard.n:`${c} × ${standard.n}`;
+    }else{
+      g=parseFloat(modal.querySelector('#fq-grams').value)||0;
+      if(g<=0){toast('Enter grams > 0','error');return}
+      portionName=`${g}g (custom)`;
+    }
+    const entry={foodId:f.id,name:f.name,portionName,grams:g,kcal:Math.round((f.kcal||0)*g/100),protein:+((f.protein||0)*g/100).toFixed(1)};
+    ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug','leucine_g','selenium_ug'].forEach(k=>{if(f[k])entry[k]=Math.round(f[k]*g/100*100)/100});
+    onPick(entry);
+    modal.remove();
+  });
+  recompute();
+  document.body.appendChild(modal);
+}
+
 function openCustomFood(onSave){
   const modal=document.createElement('div');modal.className='modal-bg';
   modal.innerHTML=`<div class="modal"><div class="modal-handle"></div>
