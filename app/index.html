@@ -1775,36 +1775,18 @@ async function openCameraOverlay(onCapture, side='front'){
 
 function openFoodPicker(onPick){
   if(!DB.foods){toast('Loading foods…','');loadDB('foods').then(r=>{if(r)openFoodPicker(onPick);else toast('Could not load food data — check internet · '+(DB._err.foods||''),'error')});return}
-  // v3.21 — multi-select filters: categories / brands / tags. OR within a row, AND between rows.
+  // v3.23 — back to single category row (multi-select). Brand/tag filtering still works via the search box (v3.16 search matches name+brand+tags).
   let query='';
-  const sel={cats:new Set(),brands:new Set(),tags:new Set()};
-  // Curated tag list (not the full 126-tag vocab — just the actionable ones)
-  const TAG_OPTIONS=['high_leucine','post_shift_anchor','low_gi','high_gi','ultra_processed','low_confidence','restaurant','indian_main','indian_sweet'];
+  const sel={cats:new Set()};
   const modal=document.createElement('div');modal.className='modal-bg';
   const render2=()=>{
-    // v3.15 — preserve scroll positions across re-renders (chip-tap shouldn't reset the picker)
     const prevCatScroll=modal.querySelector('.fp-row-cat')?.scrollLeft||0;
-    const prevBrandScroll=modal.querySelector('.fp-row-brand')?.scrollLeft||0;
-    const prevTagScroll=modal.querySelector('.fp-row-tag')?.scrollLeft||0;
     const prevListScroll=modal.querySelector('#fp-list')?.scrollTop||0;
     const cats=DB.foods.categories;
     const allFoods=[...DB.foods.foods,...(state.data.customFoods||[])];
     let filtered=allFoods;
     // Category filter (OR within row)
     if(sel.cats.size>0)filtered=filtered.filter(f=>sel.cats.has(f.category));
-    // Brand filter (OR within row)
-    if(sel.brands.size>0)filtered=filtered.filter(f=>f.brand&&sel.brands.has(f.brand));
-    // Tag filter (OR within row); 'low_confidence' is virtual → source.confidence==='low'
-    if(sel.tags.size>0){
-      filtered=filtered.filter(f=>{
-        const ft=f.tags||[];
-        for(const t of sel.tags){
-          if(t==='low_confidence'){if(f.source?.confidence==='low')return true}
-          else if(ft.includes(t))return true;
-        }
-        return false;
-      });
-    }
     if(query){
       const q=query.toLowerCase();
       // v3.16 — search across name, brand, and tags
@@ -1828,20 +1810,12 @@ function openFoodPicker(onPick){
 ${savedMealsBlock}
 <input type="text" id="fp-q" value="${escapeHtml(query)}" placeholder="Search foods..." style="margin-bottom:8px">
 ${(()=>{
-  // v3.21 — three filter rows (category / brand / tag). Each chip toggles.
+  // v3.23 — single category row (multi-select). Empty categories hidden.
   const counts={};
   for(const f of allFoods)counts[f.category]=(counts[f.category]||0)+1;
   const catRow=Object.entries(cats).filter(([k])=>(counts[k]||0)>0).map(([k,v])=>`<div class="chip fp-chip-cat ${sel.cats.has(k)?'selected':''}" data-c="${k}">${escapeHtml(v)}</div>`).join('');
-  const brandsSet=new Set();for(const f of allFoods){if(f.brand)brandsSet.add(f.brand)}
-  const brandList=[...brandsSet].sort((a,b)=>a.localeCompare(b));
-  const brandRow=brandList.map(b=>`<div class="chip fp-chip-brand ${sel.brands.has(b)?'selected':''}" data-b="${escapeHtml(b)}">${escapeHtml(b)}</div>`).join('');
-  const tagRow=TAG_OPTIONS.map(t=>`<div class="chip fp-chip-tag ${sel.tags.has(t)?'selected':''}" data-t="${t}">${t.replace(/_/g,' ')}</div>`).join('');
-  const activeCount=sel.cats.size+sel.brands.size+sel.tags.size;
-  const clearBtn=activeCount>0?`<button id="fp-clear" class="tiny" style="margin-bottom:6px;color:var(--coral);font-weight:700;background:transparent;padding:2px 4px">× Clear ${activeCount} filter${activeCount===1?'':'s'}</button>`:'';
-  return clearBtn+
-    `<div class="fp-row-cat" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:4px"><div class="chip-row" style="flex-wrap:nowrap;padding-bottom:2px">${catRow}</div></div>`+
-    (brandRow?`<div class="fp-row-brand" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:4px"><div class="chip-row" style="flex-wrap:nowrap;padding-bottom:2px">${brandRow}</div></div>`:'')+
-    `<div class="fp-row-tag" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:8px"><div class="chip-row" style="flex-wrap:nowrap;padding-bottom:2px">${tagRow}</div></div>`;
+  const clearBtn=sel.cats.size>0?`<button id="fp-clear" class="tiny" style="margin-bottom:6px;color:var(--coral);font-weight:700;background:transparent;padding:2px 4px">× Clear ${sel.cats.size} filter${sel.cats.size===1?'':'s'}</button>`:'';
+  return clearBtn+`<div class="fp-row-cat" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:8px"><div class="chip-row" style="flex-wrap:nowrap;padding-bottom:2px">${catRow}</div></div>`;
 })()}
 <div id="fp-list" style="overflow-y:auto;flex:1;max-height:55dvh;display:flex;flex-direction:column;gap:6px">
 ${filtered.slice(0,40).map(f=>`<div class="fp-food" data-id="${f.id}" style="background:var(--surface-white);border-radius:var(--r-sm);padding:12px 14px;display:flex;align-items:center;gap:8px">
@@ -1851,19 +1825,15 @@ ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found
 </div>
 <button class="btn btn-secondary btn-full mt-2" id="fp-custom">+ Add custom food</button>
 </div>`;
-    // v3.21 — restore scroll positions across all three filter rows + list
+    // v3.23 — restore scroll positions (category row + list)
     const catWrap=modal.querySelector('.fp-row-cat');if(catWrap)catWrap.scrollLeft=prevCatScroll;
-    const brandWrap=modal.querySelector('.fp-row-brand');if(brandWrap)brandWrap.scrollLeft=prevBrandScroll;
-    const tagWrap=modal.querySelector('.fp-row-tag');if(tagWrap)tagWrap.scrollLeft=prevTagScroll;
     const listEl=modal.querySelector('#fp-list');
     if(listEl)listEl.scrollTop=prevListScroll;
     modal.querySelector('#fp-q').addEventListener('input',e=>{const pos=e.target.selectionStart;query=e.target.value;render2();const inp=modal.querySelector('#fp-q');inp.focus();try{inp.setSelectionRange(pos,pos)}catch(_){}});
     modal.querySelector('#fp-x').addEventListener('click',()=>modal.remove());
-    // Filter chips — toggle on/off
+    // Category chips — toggle (multi-select; brand/tag filtering now happens via the search box)
     modal.querySelectorAll('.fp-chip-cat').forEach(c=>c.addEventListener('click',()=>{const k=c.dataset.c;sel.cats.has(k)?sel.cats.delete(k):sel.cats.add(k);render2()}));
-    modal.querySelectorAll('.fp-chip-brand').forEach(c=>c.addEventListener('click',()=>{const k=c.dataset.b;sel.brands.has(k)?sel.brands.delete(k):sel.brands.add(k);render2()}));
-    modal.querySelectorAll('.fp-chip-tag').forEach(c=>c.addEventListener('click',()=>{const k=c.dataset.t;sel.tags.has(k)?sel.tags.delete(k):sel.tags.add(k);render2()}));
-    modal.querySelector('#fp-clear')?.addEventListener('click',()=>{sel.cats.clear();sel.brands.clear();sel.tags.clear();render2()});
+    modal.querySelector('#fp-clear')?.addEventListener('click',()=>{sel.cats.clear();render2()});
     // v3.22 — saved-meal tap: log at photoEstimate.grams (or first portion fallback)
     modal.querySelectorAll('.fp-saved').forEach(el=>el.addEventListener('click',()=>{
       const f=[...DB.foods.foods,...(state.data.customFoods||[])].find(x=>x.id===el.dataset.id);
@@ -1959,4 +1929,36 @@ function openFoodQuantityModal(f,onPick){
     srcText?escapeHtml(srcText):null,
     prepText?escapeHtml(prepText):null,
     f.glycemic_index!=null?('GI '+f.glycemic_index):null,
-    f.protein_quality_tag?escapeHtml(S
+    f.protein_quality_tag?escapeHtml(String(f.protein_quality_tag).replace(/_/g,' ')):null
+  ].filter(Boolean).join(' · ');
+  modal.innerHTML=`<div class="modal" style="max-width:380px"><div class="modal-handle"></div>
+  <h2 style="font-size:18px;font-weight:700;margin-bottom:2px">${escapeHtml(f.name)}</h2>
+  <p class="tiny muted" style="margin-bottom:2px">${escapeHtml(standard.n)} = ${standard.g}g · ${Math.round((f.kcal||0)*standard.g/100)} kcal</p>
+  ${meta?`<p class="tiny faint" style="margin-bottom:14px">${meta}</p>`:'<div style="height:12px"></div>'}
+  ${useUnits?`
+    <div class="field"><div class="flabel">Servings (1 × ${escapeHtml(standard.n)})</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button id="fq-minus" style="width:44px;height:44px;border-radius:12px;background:var(--surface-cream);font-size:20px;font-weight:700">−</button>
+      <input type="number" id="fq-count" value="1" step="0.5" min="0.5" style="flex:1;text-align:center;font-size:28px;font-weight:700;padding:8px;border:1px solid var(--border);border-radius:10px">
+      <button id="fq-plus" style="width:44px;height:44px;border-radius:12px;background:var(--surface-cream);font-size:20px;font-weight:700">+</button>
+    </div></div>
+  `:`
+    <div class="field"><div class="flabel">Grams</div>
+    <input type="number" id="fq-grams" value="${standard.g}" step="1" min="1" style="width:100%;text-align:center;font-size:32px;font-weight:700;padding:14px;border:1px solid var(--border);border-radius:10px" autofocus>
+    <div style="display:flex;gap:6px;margin-top:8px">
+      ${[50,100,150,200].map(g=>`<button class="fq-preset" data-g="${g}" style="flex:1;padding:8px;border-radius:8px;background:var(--surface-cream);font-size:12px;font-weight:600">${g}g</button>`).join('')}
+    </div></div>
+  `}
+  <div class="card-flat" id="fq-preview" style="padding:12px;text-align:center;margin-top:14px">
+    <div class="tiny muted">Total</div>
+    <div style="font-weight:700;font-size:18px" id="fq-kcal">— kcal</div>
+    <div class="tiny muted" id="fq-prot">— g protein</div>
+  </div>
+  <div class="btn-row mt-4"><button class="btn btn-secondary" id="fq-cancel">Cancel</button><button class="btn btn-primary" id="fq-add">＋ Log</button></div>
+  </div>`;
+  modal.addEventListener('click',ev=>{if(ev.target===modal)modal.remove()});
+  modal.querySelector('#fq-cancel').addEventListener('click',()=>modal.remove());
+  const recompute=()=>{
+    let g;
+    if(useUnits){
+      const c=parseFloat(moda
