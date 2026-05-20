@@ -9012,6 +9012,69 @@
         "confidence": "medium",
         "note": "Calculated using standard hot-case bakery metrics for South Asian savoury puff pastries sold at commercial Canadian retail locations, yielding an average weight of 92g per turnover. Leucine is calculated based on wheat gluten dominating the pastry shell matrix (approx. 7.0% of total protein value)."
       }
+    },
+    {
+      "id": "cobs-bread-strawberry-danish",
+      "name": "COBS Bread Strawberry Danish",
+      "category": "snack",
+      "kcal": 234,
+      "protein": 4.3,
+      "carbs": 28.7,
+      "fat": 11.7,
+      "fiber": 2.1,
+      "sat_fat": 6.4,
+      "sugar": 4.3,
+      "sodium_mg": 170,
+      "potassium_mg": 80,
+      "calcium_mg": 11,
+      "iron_mg": 1.6,
+      "magnesium_mg": 12,
+      "zinc_mg": 0.4,
+      "vit_a_iu": 200,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.1,
+      "folate_ug": 55,
+      "leucine_g": 0.33,
+      "selenium_ug": 22,
+      "glycemic_index": 65,
+      "source": {
+        "type": "label",
+        "citation": "COBS Bread nutrition panel for Strawberry Danish scaled per 100g from 94g base serving; mg/zn/sel/b12/folate/vit_a backfilled from wheat pastry + butter+egg+dairy composition",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": "COBS Bread",
+      "tags": [
+        "snack",
+        "sweet",
+        "ultra_processed",
+        "grain",
+        "dairy",
+        "high_sat_fat",
+        "medium_gi"
+      ],
+      "portions": [
+        {
+          "n": "as in photo (1 Danish)",
+          "g": 94,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 Danish",
+          "g": 94
+        }
+      ],
+      "photoEstimate": {
+        "grams": 94,
+        "confidence": "high",
+        "note": "Text input explicitly matches standard label portion of 94g for one retail unit. Leucine profile calculated using an estimated blend of wheat gluten (~7.5% leucine) and butter/egg/milk solids (~9.5% leucine), totaling ~7.7% of overall protein mass."
+      }
     }
   ]
 }
