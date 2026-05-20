@@ -438,6 +438,12 @@ function nutritionBandColor(band){
   if(band==='green')return '#4CAF6E';
   return '#B7BCC9';
 }
+// v3.20 — confidence for a food entry. Prefers snapshot on the entry, falls back to live DB lookup.
+function foodConfidence(entry){
+  if(entry && entry.confidence)return entry.confidence;
+  const db=DB.foodsBySlug?.[entry?.foodId];
+  return db?.source?.confidence||null;
+}
 function suppStreak(){let s=0,d=new Date(today()+'T00:00:00');while(true){const iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');const sup=state.data.supplements[iso];const list=DB.supplements?DB.supplements.supplements.filter(x=>x.frequency==='daily'):SUPPLEMENTS;if(sup&&list.every(x=>sup[x.id])){s++;d.setDate(d.getDate()-1)}else break}return s}
 function todaySuppCount(){const s=state.data.supplements[today()]||{};return SUPPLEMENTS.filter(x=>s[x.id]).length}
 
@@ -968,7 +974,7 @@ function openEntryModal(d){
     const underMPS=label!=='—' && l<2.5;
     return `<div style="margin-top:8px">
       <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0 4px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted)">${escapeHtml(label)}${underMPS?' <span style="background:#FCE5E5;color:#E63946;padding:2px 6px;font-size:10px;font-weight:700;border-radius:6px;margin-left:6px" title="Below 2.5g leucine per-meal MPS threshold">↓MPS</span>':''}</div><div class="tiny faint">${k} kcal · ${p.toFixed(1)}g P${l>0?' · '+l.toFixed(1)+'g leu':''}</div></div>
-      ${items.map(f=>`<div class="tiny muted" style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border-l)"><span>${escapeHtml(f.name)} · ${escapeHtml(f.portionName)}</span><span>${f.kcal} kcal · ${(f.protein||0).toFixed(1)}g P</span></div>`).join('')}
+      ${items.map(f=>{const conf=foodConfidence(f);const badge=conf==='low'?`<span class="conf-q" data-conf-q="1" style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#FCE5E5;color:#E63946;font-size:9px;font-weight:700;margin-left:4px;cursor:pointer" title="Restaurant estimate or AI blend — actual values may vary">?</span>`:'';return `<div class="tiny muted" style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border-l)"><span>${escapeHtml(f.name)} · ${escapeHtml(f.portionName)}</span><span>${f.kcal} kcal${badge} · ${(f.protein||0).toFixed(1)}g P</span></div>`}).join('')}
     </div>`;
   }).join('');
   const totalKcal=(e.foods||[]).reduce((s,f)=>s+(f.kcal||0),0);
@@ -998,6 +1004,11 @@ ${(()=>{const hc=e.hc;if(!hc)return '';const bits=[];if(hc.steps)bits.push(['�
   m.querySelector('#me-edit').addEventListener('click',goEdit);
   m.querySelector('#me-edit2').addEventListener('click',goEdit);
   document.body.appendChild(m);
+  // v3.20 — confidence badge tap → toast
+  m.querySelectorAll('.conf-q[data-conf-q]').forEach(b=>b.addEventListener('click',ev=>{
+    ev.stopPropagation();
+    toast('Restaurant estimate or AI blend — actual values may vary','');
+  }));
   (async()=>{const fp=e.photoFront||e.photo,sp=e.photoSide;if(!fp&&!sp)return;const t=document.getElementById('mp');if(!t)return;let html='';if(fp){const u=await downloadPhoto(fp);if(u)html+=`<img src="${u}" style="width:100%;height:100%;object-fit:cover">`}if(sp){const u=await downloadPhoto(sp);if(u)html+=`<img src="${u}" style="width:100%;height:100%;object-fit:cover">`}if(html)t.innerHTML=html;})();
 }
 
@@ -1168,7 +1179,7 @@ ${(()=>{
     const underMPS = label!=='—' && l<2.5;
     return `<div style="margin-bottom:10px">
       <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 4px 6px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted)">${escapeHtml(label)}${underMPS?' <span class="chip-pill" style="background:#FCE5E5;color:#E63946;padding:2px 6px;font-size:10px;font-weight:700;margin-left:6px" title="Below 2.5g leucine per-meal MPS threshold">↓MPS</span>':''}</div><div class="tiny faint">${k} kcal · ${p.toFixed(1)}g P · ${l.toFixed(1)}g leu</div></div>
-      ${items.map(({f,i})=>`<div class="le-fr" data-i="${i}" style="background:var(--surface-white);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:4px"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${escapeHtml(f.name)}</div><div class="tiny muted">${escapeHtml(f.portionName)} · ${f.kcal} kcal · ${(f.protein||0).toFixed(1)}g P${f.leucine_g?' · '+f.leucine_g.toFixed(2)+'g leu':''}</div></div><button class="le-fedit" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:13px" title="Edit grams">✎</button><button class="le-fdel" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:14px">×</button></div>`).join('')}
+      ${items.map(({f,i})=>{const conf=foodConfidence(f);const badge=conf==='low'?`<span class="conf-q" data-conf-q="1" style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#FCE5E5;color:#E63946;font-size:10px;font-weight:700;margin-left:6px;cursor:pointer" title="Restaurant estimate or AI blend — actual values may vary">?</span>`:'';return `<div class="le-fr" data-i="${i}" style="background:var(--surface-white);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:4px"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${escapeHtml(f.name)}</div><div class="tiny muted">${escapeHtml(f.portionName)} · ${f.kcal} kcal${badge} · ${(f.protein||0).toFixed(1)}g P${f.leucine_g?' · '+f.leucine_g.toFixed(2)+'g leu':''}</div></div><button class="le-fedit" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:13px" title="Edit grams">✎</button><button class="le-fdel" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:14px">×</button></div>`}).join('')}
     </div>`;
   };
   return `<div class="card-flat" style="padding:10px 12px;display:flex;align-items:center;gap:12px;margin-bottom:8px"><div style="flex:1"><div style="font-weight:700;font-size:18px">${totK} kcal</div><div class="tiny muted">${totP.toFixed(1)} g protein${totL>0?' · '+totL.toFixed(1)+'g leu':''}${fs.length?' · '+fs.length+' items':' · nothing logged yet'}</div></div><div style="display:flex;gap:6px"><button class="btn btn-primary btn-sm" id="le-addfood" style="padding:8px 14px;font-size:13px">+ Add food</button>${fs.length>0?'<button class="btn btn-secondary btn-sm" id="le-savetpl" style="padding:8px 12px;font-size:13px" title="Save these foods as a one-tap template">💾</button>':''}</div></div>
@@ -1193,6 +1204,11 @@ function bindLogEntry(){
   document.querySelectorAll('.le-meal-chip').forEach(c=>c.addEventListener('click',()=>{
     d.currentMeal=(d.currentMeal===c.dataset.m)?null:c.dataset.m;
     render();
+  }));
+  // v3.20 — low-confidence badge tap → toast
+  document.querySelectorAll('.conf-q[data-conf-q]').forEach(b=>b.addEventListener('click',e=>{
+    e.stopPropagation();
+    toast('Restaurant estimate or AI blend — actual values may vary','');
   }));
   document.getElementById('le-addfood')?.addEventListener('click',()=>openFoodPicker(f=>{d.foods=d.foods||[];if(d.currentMeal)f.mealName=d.currentMeal;d.foods.push(f);render()}));
   document.getElementById('le-savetpl')?.addEventListener('click',()=>openSaveTemplateModal(d.foods||[],t=>{
@@ -1817,6 +1833,8 @@ ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found
       const g=serving.g;
       const entry={foodId:f.id,name:f.name,portionName:serving.n,grams:g,kcal:Math.round((f.kcal||0)*g/100),protein:+((f.protein||0)*g/100).toFixed(1)};
       ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug','leucine_g','selenium_ug'].forEach(k=>{if(f[k])entry[k]=Math.round(f[k]*g/100*100)/100});
+      // v3.20 — snapshot source confidence on log entry (survives DB unavailability)
+      if(f.source&&typeof f.source==='object'&&f.source.confidence)entry.confidence=f.source.confidence;
       recordFoodUsage(entry.foodId);
       onPick(entry);
       modal.remove();
@@ -1834,6 +1852,7 @@ ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found
       const g=p.g;
       const entry={foodId:f.id,name:f.name,portionName:p.n,grams:g,kcal:parseInt(b.dataset.kcal,10),protein:parseFloat(b.dataset.prot)};
       ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug'].forEach(k=>{if(f[k])entry[k]=Math.round(f[k]*g/100*100)/100});
+      if(f.source&&typeof f.source==='object'&&f.source.confidence)entry.confidence=f.source.confidence;
       recordFoodUsage(entry.foodId);
       onPick(entry);
       modal.remove();
@@ -1849,6 +1868,7 @@ ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found
       // Calculate all available nutrients
       const entry={foodId:f.id,name:f.name,portionName:g+'g (custom)',grams:g,kcal,protein:prot};
       ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug'].forEach(k=>{if(f[k])entry[k]=Math.round(f[k]*g/100*100)/100});
+      if(f.source&&typeof f.source==='object'&&f.source.confidence)entry.confidence=f.source.confidence;
       recordFoodUsage(entry.foodId);
       onPick(entry);
       modal.remove();
@@ -1949,6 +1969,7 @@ function openFoodQuantityModal(f,onPick){
     }
     const entry={foodId:f.id,name:f.name,portionName,grams:g,kcal:Math.round((f.kcal||0)*g/100),protein:+((f.protein||0)*g/100).toFixed(1)};
     ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug','leucine_g','selenium_ug'].forEach(k=>{if(f[k])entry[k]=Math.round(f[k]*g/100*100)/100});
+    if(f.source&&typeof f.source==='object'&&f.source.confidence)entry.confidence=f.source.confidence;
     onPick(entry);
     modal.remove();
   });
@@ -1965,30 +1986,4 @@ function openCustomFood(onSave){
 <div class="field"><div class="flabel">Calories per 100g</div><input type="number" id="cf-k" inputmode="numeric" placeholder="150"></div>
 <div class="field"><div class="flabel">Protein per 100g</div><input type="number" step="0.1" id="cf-p" inputmode="decimal" placeholder="8"></div>
 </div>
-<div class="field"><div class="flabel">Common portion name</div><input type="text" id="cf-pn" placeholder="1 katori (150g)"></div>
-<div class="field"><div class="flabel">Common portion grams</div><input type="number" id="cf-pg" inputmode="numeric" placeholder="150"></div>
-<div class="btn-row"><button class="btn btn-secondary" id="cf-x">Cancel</button><button class="btn btn-primary" id="cf-save">Save</button></div>
-</div>`;
-  modal.addEventListener('click',e=>{if(e.target===modal)modal.remove()});
-  modal.querySelector('#cf-x').addEventListener('click',()=>modal.remove());
-  modal.querySelector('#cf-save').addEventListener('click',()=>{
-    const n=modal.querySelector('#cf-n').value.trim();
-    const k=parseFloat(modal.querySelector('#cf-k').value);
-    const p=parseFloat(modal.querySelector('#cf-p').value);
-    const pn=modal.querySelector('#cf-pn').value.trim()||'100g';
-    const pg=parseInt(modal.querySelector('#cf-pg').value,10)||100;
-    if(!n||!k){toast('Name + kcal required','error');return}
-    const id='c-'+Date.now();
-    onSave({id,name:n,category:'other',kcal:k,protein:p||0,carbs:0,fat:0,portions:[{n:pn,g:pg},{n:'100g',g:100}]});
-    modal.remove();
-  });
-  document.body.appendChild(modal);
-}
-
-
-// =================== HEALTH CONNECT — COMPREHENSIVE SYNC ===================
-let healthConnectReady=false;
-const HC_PERMS=['READ_STEPS','READ_HEART_RATE','READ_RESTING_HEART_RATE','READ_ACTIVE_CALORIES','READ_TOTAL_CALORIES','READ_DISTANCE','READ_EXERCISE','READ_WEIGHT','READ_BODY_FAT','READ_HEIGHT','READ_FLOORS_CLIMBED','READ_VO2_MAX','READ_SLEEP','WRITE_WEIGHT','WRITE_EXERCISE'];
-const HC_DATA_TYPES=['steps','distance','active-calories','total-calories','floors-climbed','water','heart-rate','resting-heart-rate','oxygen-saturation','respiratory-rate','heart-rate-variability','vo2-max','weight','body-fat','height','blood-pressure-systolic','blood-pressure-diastolic','blood-glucose','body-temperature'];
-
-function hcPlugin(){return window.Capacitor?.Plugins?.HealthPlugin||window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health
+<div class="field">
