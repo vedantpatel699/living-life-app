@@ -796,97 +796,117 @@ function undoLastWater(){
   pushData().catch(err=>console.warn('water sync',err));
 }
 
+// v3.27 — EDITORIAL Progress page. Every chart routes through buildMetricChart (graph engine).
+// Every sub-row + stat tile is tappable → setScreen('metricDetail', {metric}).
 function renderProgress(){
-  const stats=weightStats(),streak=calcStreak();
-  return `<div style="padding:0 4px">
-    <h1 class="pt" style="padding-top:14px">Progress</h1>
-    <p class="muted">Trust the trend, not the day</p>
-    <div class="grid-3" style="margin-top:20px">
-      <div class="card-flat"><div class="flabel">CURRENT</div><div style="font-size:19px;font-weight:700;margin-top:2px">${stats?.latest!=null?stats.latest.toFixed(1):'—'}</div><div class="tiny muted">${stats?.totalChange!=null?(stats.totalChange>0?'+':'')+stats.totalChange.toFixed(1)+' kg':'kg'}</div></div>
-      <div class="card-flat"><div class="flabel">GOAL</div><div style="font-size:19px;font-weight:700;margin-top:2px">${state.profile.goalWeight||'—'}</div><div class="tiny muted">${state.profile.goalDate?'by '+fmtDate(state.profile.goalDate):'set in settings'}</div></div>
-      <div class="card-flat"><div class="flabel">COVERAGE</div><div style="font-size:19px;font-weight:700;margin-top:2px;color:var(--coral)">${(()=>{const last7=[];for(let i=0;i<7;i++){const dt=new Date();dt.setDate(dt.getDate()-i);last7.push(dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0'))}return last7.filter(iso=>state.data.entries[iso]).length})()}/7</div><div class="tiny muted">last 7 days</div></div>
+  const stats=weightStats();
+  const currentW=stats?.latest;
+  const totalChange=stats?.totalChange;
+  let weekDeltaW=null;
+  if(currentW!=null && stats?.points){
+    const pts=stats.points;
+    if(pts.length>=8) weekDeltaW=currentW-pts[pts.length-8].y;
+    else if(pts.length>=2) weekDeltaW=currentW-pts[0].y;
+  }
+  const goalW=state.profile.goalWeight;
+  const weight7=metricAvg('weight',7);
+  const waistNow=(()=>{const a=Object.entries(state.data.entries||{}).filter(([d,e])=>typeof e.waist_cm==='number').sort((a,b)=>b[0].localeCompare(a[0]));return a.length?a[0][1].waist_cm:null})();
+  const stepsAvg=metricAvg('steps',7);
+  const stepsWeek=metricSum('steps',7);
+  const activeAvg=metricAvg('active_kcal',7);
+  const rhrAvg=metricAvg('rhr',7);
+  const hrAvgVal=metricAvg('hr_avg',7);
+  const proteinAvg=metricAvg('protein',7);
+  const netAvg=metricAvg('energy_net',7);
+  const nut=nutritionTotalsForDay(today());
+  const subRow=(metric,label,value,sub)=>{
+    const def=METRIC_DEFS[metric];const unit=def?.unit||'';
+    let valStr='—';
+    if(value!=null){
+      valStr=['weight','waist','hrv','vo2_max'].includes(metric)?value.toFixed(1):(metric==='distance'?value.toFixed(2):(metric==='energy_net'?(value>0?'+':'')+Math.round(value).toLocaleString():Math.round(value).toLocaleString()));
+    }
+    const valColor=(metric==='energy_net'&&value!=null)?(value<=0?'#4DA869':'#E63946'):'inherit';
+    return `<div class="sub-row" data-metric="${metric}" style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border-l);cursor:pointer;gap:16px"><div style="flex:1;min-width:0"><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;margin-bottom:4px">${escapeHtml(label)}</div><div style="font-size:20px;font-weight:700;line-height:1;color:${valColor}">${valStr}${unit?` <span style="font-size:12px;color:var(--muted);font-weight:500">${escapeHtml(unit)}</span>`:''}</div>${sub?`<div style="font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4">${escapeHtml(sub)}</div>`:''}</div><div style="width:90px;height:36px;flex-shrink:0;position:relative"><canvas data-spark-metric="${metric}" style="position:absolute;inset:0;width:100% !important;height:100% !important"></canvas></div></div>`;
+  };
+  const sectionH=t=>`<h2 style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin:32px 0 12px">${t}</h2>`;
+  const stat=(metric,val,unit,label,color)=>`<div class="ed-stat" data-metric="${metric}" style="flex:1;text-align:center;cursor:pointer;border-left:1px solid var(--border-l)"><div style="font-size:18px;font-weight:700;line-height:1.1;color:${color||'inherit'}">${val}<span style="font-size:11px;font-weight:500;color:var(--muted);margin-left:1px">${unit}</span></div><div style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px">${label}</div></div>`;
+  const dateStr=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
+  return `<div style="padding-bottom:100px">
+    <div style="padding:6px 24px 0">
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">${escapeHtml(dateStr)}</div>
+      <h1 style="font-size:32px;font-weight:700;letter-spacing:-0.02em;margin:4px 0 22px">Progress</h1>
     </div>
-    <div class="card mt-4"><div style="display:flex;justify-content:space-between;align-items:center"><h3>Weight trend</h3><div class="chip-pill" style="background:var(--surface-cream)">30 days</div></div>
-      <div style="height:200px;margin-top:14px;position:relative"><canvas id="w-chart"></canvas></div></div>
-    ${(()=>{
-      // v3.18 — Nutrition today: leucine / selenium / glycemic load drill-down rows
-      const nut=nutritionTotalsForDay(today());
-      if(nut.leucine==null && nut.selenium==null && nut.glycemicLoad==null)return '';
-      const row=(label,metric,value,target,unit,suffix)=>{
-        if(value==null)return `<div class="nutri-row" data-m="${metric}" style="display:flex;align-items:center;justify-content:space-between;padding:12px 4px;border-bottom:1px solid var(--border-l);cursor:pointer;opacity:0.45"><div><div style="font-weight:600;font-size:14px">${label}</div><div class="tiny faint">no data yet</div></div><div style="font-size:12px;color:var(--faint)">—</div></div>`;
-        const band=nutritionBand(metric,value);
-        const color=nutritionBandColor(band);
-        const pct=Math.min(100,Math.round((value/target)*100));
-        const display=metric==='leucine'?value.toFixed(1):(metric==='selenium'?Math.round(value):Math.round(value));
-        return `<div class="nutri-row" data-m="${metric}" style="padding:12px 4px;border-bottom:1px solid var(--border-l);cursor:pointer">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-            <div style="font-weight:600;font-size:14px">${label}${suffix?' <span class="tiny faint">'+suffix+'</span>':''}</div>
-            <div style="font-size:14px;font-weight:700;color:${color}">${display} <span class="tiny faint" style="font-weight:500">/ ${target} ${unit}</span></div>
-          </div>
-          <div style="height:4px;background:var(--border-l);border-radius:2px;overflow:hidden">
-            <div style="width:${pct}%;height:100%;background:${color};transition:width 0.3s"></div>
-          </div>
-        </div>`;
-      };
-      return `<h2 class="sec">NUTRITION TODAY</h2><div class="card" style="padding:6px 14px">
-        ${row('Leucine','leucine',nut.leucine,10,'g','2.5g × 4 meals')}
-        ${row('Selenium','selenium',nut.selenium,55,'µg','daily target')}
-        ${row('Glycemic load','glycemicLoad',nut.glycemicLoad,100,'GL','daily ceiling 120')}
-      </div>`;
-    })()}
-    ${(()=>{
-      const hc=getHCToday()||{};
-      if(Object.keys(hc).length===0)return '';
-      const items=[];
-      if(hc.steps)items.push(['👟','Steps',hc.steps.toLocaleString()]);
-      if(hc.distance_km)items.push(['📏','Distance',hc.distance_km.toFixed(2)+' km']);
-      if(hc.active_calories)items.push(['🔥','Active kcal',Math.round(hc.active_calories)]);
-      if(hc.resting_heart_rate)items.push(['❤️','Resting HR',Math.round(hc.resting_heart_rate)+' bpm']);
-      if(hc.hrv_rmssd_avg)items.push(['📈','HRV',hc.hrv_rmssd_avg.toFixed(1)+' ms']);
-      if(hc.vo2_max)items.push(['🫁','VO₂max',hc.vo2_max.toFixed(1)]);
-      if(items.length===0)return '';
-      return `<h2 class="gf-section">HEALTH CONNECT — TODAY</h2>
-      <div class="gf-card"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">${items.map(([e,l,v])=>`<div style="display:flex;align-items:center;gap:8px"><div style="font-size:18px">${e}</div><div><div class="tiny muted">${l}</div><div style="font-weight:700;font-size:14px">${v}</div></div></div>`).join('')}</div></div>`;
-    })()}
-    ${(()=>{
-      const hc=getHCToday()||{};
-      const ws=(hc.workouts||[]);
-      if(ws.length===0)return '';
-      return `<h2 class="gf-section">WORKOUTS · TODAY</h2><div class="gf-card">${ws.map(w=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border-l)"><div><div style="font-weight:600;font-size:13px">${escapeHtml(w.title||w.type||'Workout')}</div><div class="tiny muted">${w.sourceApp?escapeHtml(w.sourceApp.split('.').slice(-1)[0]):'manual'}</div></div><div style="text-align:right"><div style="font-weight:700;font-size:13px">${Math.round((w.durationSec||0)/60)} min</div>${w.calories?`<div class="tiny muted">${Math.round(w.calories)} kcal</div>`:''}</div></div>`).join('')}</div>`;
-    })()}
-    ${(()=>{
-      const rhr=hcAvg('resting_heart_rate',7);
-      const sleep=hcSleepAvg(7);
-      const stepsW=hcWeekTotal('steps');
-      const activeW=hcWeekTotal('active_calories');
-      const vo2=hcAvg('vo2_max',14);
-      const hasAny=rhr||sleep||stepsW||activeW||vo2;
-      if(!hasAny)return '';
-      const items=[];
-      if(rhr)items.push(['❤️','Resting HR',Math.round(rhr)+' bpm','7-day avg']);
-      if(stepsW)items.push(['👟','Steps',Math.round(stepsW).toLocaleString(),'last 7 days']);
-      if(activeW)items.push(['🔥','Active kcal',Math.round(activeW).toLocaleString(),'last 7 days']);
-      if(vo2)items.push(['🫁','VO₂max',vo2.toFixed(1),'14-day avg']);
-      return `<h2 class="sec">HEALTH CONNECT TRENDS</h2><div class="card"><div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">${items.map(([e,l,v,sub])=>`<div style="display:flex;align-items:flex-start;gap:8px"><div style="font-size:20px;flex-shrink:0">${e}</div><div style="min-width:0"><div class="tiny muted">${l}</div><div style="font-weight:700;font-size:16px;line-height:1.1">${v}</div><div class="tiny faint">${sub}</div></div></div>`).join('')}</div></div>`;
-    })()}
-
-    <h2 class="sec">RECENT PHOTOS</h2>
-    <div id="p-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px"></div>
+    <div class="hero-tap" data-metric="weight" style="padding:18px 24px 8px;cursor:pointer">
+      <div style="font-size:13px;color:var(--muted);font-weight:600;margin-bottom:2px">Weight · 30 days</div>
+      <div style="font-size:36px;font-weight:700;letter-spacing:-0.02em;line-height:1.1">${currentW!=null?currentW.toFixed(1):'—'} <span style="font-size:18px;color:var(--muted);font-weight:500">kg</span></div>
+      ${weekDeltaW!=null?`<div style="font-size:12px;color:${weekDeltaW<=0?'#4DA869':'#E63946'};margin-top:2px">${weekDeltaW>0?'+':''}${weekDeltaW.toFixed(1)} kg vs prior week</div>`:'<div style="height:16px"></div>'}
+      <div style="height:160px;margin-top:14px;position:relative"><canvas id="w-chart"></canvas></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border-l);border-bottom:1px solid var(--border-l);padding:14px 0;margin:6px 24px 0">
+      <div class="ed-stat" data-metric="weight" style="flex:1;text-align:center;cursor:pointer"><div style="font-size:18px;font-weight:700;line-height:1.1">${currentW!=null?currentW.toFixed(1):'—'}<span style="font-size:11px;font-weight:500;color:var(--muted);margin-left:1px">kg</span></div><div style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px">Current</div></div>
+      ${stat('weight',weekDeltaW!=null?(weekDeltaW>0?'+':'')+weekDeltaW.toFixed(1):'—','kg','Week Δ',weekDeltaW!=null&&weekDeltaW<=0?'#4DA869':(weekDeltaW>0?'#E63946':'inherit'))}
+      ${stat('weight',totalChange!=null?(totalChange>0?'+':'')+totalChange.toFixed(1):'—','kg','Since start')}
+      ${stat('weight',goalW||'—','kg','Goal')}
+    </div>
+    <div style="padding:0 24px">
+      ${sectionH('Body composition')}
+      ${subRow('waist','Waist circumference',waistNow,waistNow!=null?'Goal <85 cm':'Log via Today')}
+      ${subRow('weight','7-day weight avg',weight7,'Trust the trend, not the day')}
+      ${sectionH('Activity')}
+      ${subRow('steps','Steps · 7-day avg',stepsAvg,stepsWeek?Math.round(stepsWeek/1000)+'k this week':'7-day average')}
+      ${subRow('active_kcal','Active calories · 7-day avg',activeAvg,'Trust the trend, not the daily')}
+      ${subRow('rhr','Resting HR · 7-day avg',rhrAvg,'Lower = better recovery')}
+      ${subRow('hr_avg','Heart rate · day avg',hrAvgVal,'24-hour average')}
+      ${sectionH('Nutrition')}
+      ${subRow('protein','Protein · 7-day avg',proteinAvg,'Floor 130 g')}
+      ${subRow('energy_net','Energy net · 7-day avg',netAvg,'Target ~−400 for 0.5 kg/wk')}
+      ${subRow('leucine','Leucine · today',nut.leucine,'Target 10 g · MPS floor 2.5g/meal')}
+      ${subRow('selenium','Selenium · today',nut.selenium,'Target 55 µg')}
+      ${subRow('glycemic_load','Glycemic load · today',nut.glycemicLoad,'<100 = low-impact pattern')}
+      ${sectionH('Photos')}
+      <div id="p-toggle" style="display:flex;gap:6px;background:var(--surface-white);padding:4px;border-radius:12px;width:fit-content;margin-bottom:10px;border:1px solid var(--border-l)">
+        <button data-pside="front" class="p-side-btn active" style="padding:6px 14px;font-size:12px;font-weight:600;border:none;border-radius:8px;background:var(--ink);color:white;cursor:pointer">Front</button>
+        <button data-pside="side" class="p-side-btn" style="padding:6px 14px;font-size:12px;font-weight:600;border:none;border-radius:8px;background:transparent;color:var(--muted);cursor:pointer">Side</button>
+      </div>
+      <div id="p-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px"></div>
+    </div>
   </div>`;
 }
 function bindProgress(){
-  // v3.18 — make sure foods DB is loaded so GL can be computed. Re-render once loaded.
+  // Foods DB needed for glycemic-load. Re-render once loaded so GL sparkline + value populate.
   if(!DB.foods){loadDB('foods').then(r=>{if(r&&state.screen==='progress')render()}).catch(()=>{})}
-  // v3.18 — nutrition-row tap → breakdown modal
-  document.querySelectorAll('.nutri-row[data-m]').forEach(r=>r.addEventListener('click',()=>openNutritionBreakdown(r.dataset.m)));
-  setTimeout(()=>{const c=document.getElementById('w-chart');if(!c||!window.Chart)return;const s=weightStats();if(!s||s.points.length===0){c.parentElement.innerHTML='<div class="empty" style="padding:30px"><p>Log a few days to see your trend.</p></div>';return}const pts=s.points.slice(-30);const avg=pts.map((p,i)=>{const w=pts.slice(Math.max(0,i-6),i+1).map(x=>x.y);return{x:p.x,y:w.reduce((s,v)=>s+v,0)/w.length}});new Chart(c.getContext('2d'),{type:'line',data:{labels:pts.map(p=>p.x),datasets:[{label:'Daily',data:pts.map(p=>p.y),borderColor:'rgba(124,132,151,0.5)',pointRadius:2.5,borderWidth:0,showLine:false},{label:'7d avg',data:avg.map(p=>p.y),borderColor:'#ED7A4D',backgroundColor:'rgba(237,122,77,0.12)',fill:true,tension:0.35,pointRadius:0,borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#B7BCC9',maxTicksLimit:5,font:{size:10}},grid:{color:'rgba(217,223,230,0.4)'}},y:{ticks:{color:'#B7BCC9',font:{size:10},callback:v=>v+'kg'},grid:{color:'rgba(217,223,230,0.4)'}}}}})},50);
-  const grid=document.getElementById('p-grid');
-  const photos=Object.entries(state.data.entries).filter(([d,e])=>e.photoFront||e.photo).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,12).map(([d,e])=>[d,{...e,photo:e.photoFront||e.photo}]);
-  if(photos.length===0){grid.innerHTML='<div class="empty" style="grid-column:1/-1"><p>No photos yet.</p></div>';}
-  else{grid.innerHTML=photos.map(([d,e])=>`<div class="pcell" data-d="${d}" data-p="${e.photo}" style="aspect-ratio:3/4;background:var(--surface-sky);border-radius:10px;overflow:hidden;position:relative;cursor:pointer"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--faint)">…</div><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.7));padding:14px 6px 4px;font-size:10px;font-weight:600;color:white;text-align:center">${fmtDate(d)}</div></div>`).join('');grid.querySelectorAll('.pcell').forEach(async c=>{const u=await downloadPhoto(c.dataset.p);if(u)c.innerHTML=`<img src="${u}" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.7));padding:14px 6px 4px;font-size:10px;font-weight:600;color:white;text-align:center">${fmtDate(c.dataset.d)}</div>`})}
-  document.getElementById('goto-set')?.addEventListener('click',()=>setScreen('settings'));
-  document.getElementById('hm-add')?.addEventListener('click',()=>openHealthMarkersModal());
-  document.getElementById('hm-history')?.addEventListener('click',()=>openHealthMarkersHistory());
+  // Render hero + every sparkline through the graph engine. data-spark-metric drives metric choice.
+  setTimeout(()=>{
+    const hero=document.getElementById('w-chart');
+    if(hero)buildMetricChart(hero,{metric:'weight',mode:'hero'});
+    document.querySelectorAll('canvas[data-spark-metric]').forEach(c=>{
+      buildMetricChart(c,{metric:c.dataset.sparkMetric,mode:'spark'});
+    });
+  },50);
+  // Every element with data-metric (hero, stat, sub-row) routes to metric detail
+  document.querySelectorAll('[data-metric]').forEach(el=>el.addEventListener('click',e=>{
+    if(e.target.closest('.p-side-btn'))return;
+    const m=el.dataset.metric;
+    if(m)setScreen('metricDetail',{metric:m});
+  }));
+  // Photo strip — Front / Side toggle
+  let pside='front';
+  const renderPhotos=()=>{
+    const grid=document.getElementById('p-grid');if(!grid)return;
+    const pickKey=e=>pside==='side'?e.photoSide:(e.photoFront||e.photo);
+    const photos=Object.entries(state.data.entries).filter(([d,e])=>pickKey(e)).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,4).map(([d,e])=>[d,pickKey(e)]);
+    if(photos.length===0){grid.innerHTML='<div class="empty" style="grid-column:1/-1;padding:24px;text-align:center;color:var(--faint);font-size:12px">No '+pside+' photos yet.</div>';return}
+    grid.innerHTML=photos.map(([d,p])=>`<div class="pcell" data-d="${d}" data-p="${p}" style="aspect-ratio:3/4;background:var(--surface-sky);border-radius:10px;overflow:hidden;position:relative;cursor:pointer"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--faint)">…</div><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.7));padding:10px 4px 4px;font-size:9px;font-weight:600;color:white;text-align:center">${fmtDate(d)}</div></div>`).join('');
+    grid.querySelectorAll('.pcell').forEach(async c=>{const u=await downloadPhoto(c.dataset.p);if(u)c.innerHTML=`<img src="${u}" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.7));padding:10px 4px 4px;font-size:9px;font-weight:600;color:white;text-align:center">${fmtDate(c.dataset.d)}</div>`});
+  };
+  renderPhotos();
+  document.querySelectorAll('.p-side-btn').forEach(b=>b.addEventListener('click',e=>{
+    e.stopPropagation();
+    pside=b.dataset.pside;
+    document.querySelectorAll('.p-side-btn').forEach(x=>{x.style.background='transparent';x.style.color='var(--muted)';x.classList.remove('active')});
+    b.style.background='var(--ink)';b.style.color='white';b.classList.add('active');
+    renderPhotos();
+  }));
 }
 
 function renderHistory(){
@@ -1543,27 +1563,61 @@ function bindMetricDetail(){
   setTimeout(()=>drawMetricChart(),50);
 }
 
-// v3.24 — daily values at 50% opacity (dots if avg, bars if sum) + 7-day rolling average line.
+// v3.27 — GRAPH ENGINE. Single function renders any metric in any context.
+// Driven entirely by METRIC_DEFS — adding a metric just needs an entry + a metricValueFor case.
+// modes: 'spark' (no axes, MA line only), 'hero' (30-day, daily dots + MA, light axis), 'detail' (period+offset, full).
+function buildMetricChart(canvas,opts){
+  if(!canvas||!window.Chart)return null;
+  const {metric,period='week',offset=0,mode='detail'}=opts||{};
+  const def=METRIC_DEFS[metric];
+  if(!def)return null;
+  const isoOf=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  let days,xLabelFor;
+  if(mode==='spark'){
+    const t=new Date();t.setHours(0,0,0,0);days=[];for(let i=6;i>=0;i--){const d=new Date(t);d.setDate(d.getDate()-i);days.push(d)}
+    xLabelFor=()=>'';
+  }else if(mode==='hero'){
+    const t=new Date();t.setHours(0,0,0,0);days=[];for(let i=29;i>=0;i--){const d=new Date(t);d.setDate(d.getDate()-i);days.push(d)}
+    xLabelFor=(d,i)=>(i===0||i===days.length-1||i%6===0)?d.toLocaleDateString(undefined,{month:'short',day:'numeric'}):'';
+  }else{
+    const {start,end}=metricRangeBounds(period,offset);
+    days=[];const cur=new Date(start);cur.setHours(0,0,0,0);while(cur<=end){days.push(new Date(cur));cur.setDate(cur.getDate()+1)}
+    if(period==='week')xLabelFor=d=>d.toLocaleDateString(undefined,{weekday:'short'})[0];
+    else{const last=days[days.length-1];xLabelFor=d=>(d.getDate()===1||d.getDate()%7===0||d.getDate()===last.getDate())?String(d.getDate()):''}
+  }
+  const raw=days.map(d=>metricValueFor(metric,isoOf(d)));
+  const lookback=[];for(let i=6;i>0;i--){const d=new Date(days[0]);d.setDate(d.getDate()-i);lookback.push(metricValueFor(metric,isoOf(d)))}
+  const full=[...lookback,...raw];
+  const ma7=raw.map((_,i)=>{const w=full.slice(i,i+7).filter(v=>v!=null);return w.length?w.reduce((a,b)=>a+b,0)/w.length:null});
+  const c=def.color||'#1A1F2E';
+  const fade=(hex,a)=>{const m=hex.replace('#','');const r=parseInt(m.slice(0,2),16),g=parseInt(m.slice(2,4),16),b=parseInt(m.slice(4,6),16);return `rgba(${r},${g},${b},${a})`};
+  const useBar=def.type==='sum';
+  const dailyDataset=useBar
+    ? {type:'bar',label:'Daily',data:raw,backgroundColor:fade(c,mode==='spark'?0:0.4),borderColor:fade(c,0.4),borderWidth:0,borderRadius:3,barPercentage:0.7,categoryPercentage:0.85,order:2}
+    : {type:'line',label:'Daily',data:raw,borderColor:'transparent',backgroundColor:fade(c,0.5),pointRadius:mode==='spark'?0:3,pointBackgroundColor:fade(c,0.5),showLine:false,spanGaps:false,order:2};
+  const maDataset={type:'line',label:'7-day avg',data:ma7,borderColor:c,backgroundColor:fade(c,mode==='spark'?0.22:0.12),fill:(!useBar||mode==='spark'),tension:0.35,pointRadius:0,borderWidth:mode==='spark'?1.8:(useBar?2:2.5),spanGaps:true,order:1};
+  const datasets=mode==='spark'?[maDataset]:[dailyDataset,maDataset];
+  const xConfig=mode==='spark'?{display:false}:{grid:{display:false},ticks:{color:'#7C8497',font:{size:10},autoSkip:false,maxRotation:0}};
+  const yConfig=mode==='spark'?{display:false}:{position:'right',grid:{color:'rgba(217,223,230,0.5)',drawTicks:false},ticks:{color:'#7C8497',font:{size:10},maxTicksLimit:5},beginAtZero:useBar};
+  const tooltip=mode==='spark'?{enabled:false}:{enabled:true,mode:'index',intersect:false};
+  if(canvas._chart){try{canvas._chart.destroy()}catch(_){}}
+  canvas._chart=new Chart(canvas.getContext('2d'),{
+    data:{labels:days.map(xLabelFor),datasets},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip},scales:{x:xConfig,y:yConfig}}
+  });
+  return {chart:canvas._chart,raw,ma7,days};
+}
+// Thin wrapper: compute hero number, defer chart to buildMetricChart.
 function drawMetricChart(){
   const canvas=document.getElementById('md-chart');
-  if(!canvas||!window.Chart)return;
+  if(!canvas)return;
   const metric=state.metric||'weight';
   const def=METRIC_DEFS[metric]||METRIC_DEFS.weight;
   const period=state.metricPeriod||'week';
   const offset=state.metricOffset||0;
-  const {start,end}=metricRangeBounds(period,offset);
-  // Build day list for the range
-  const days=[];
-  const cur=new Date(start);cur.setHours(0,0,0,0);
-  while(cur<=end){days.push(new Date(cur));cur.setDate(cur.getDate()+1)}
-  const isoOf=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-  const raw=days.map(d=>metricValueFor(metric,isoOf(d)));
-  // 7-day rolling avg, with 6-day lookback before the range so the curve isn't empty at the start.
-  const lookback=[];for(let i=6;i>0;i--){const d=new Date(start);d.setDate(d.getDate()-i);lookback.push(metricValueFor(metric,isoOf(d)))}
-  const full=[...lookback,...raw];
-  const ma7=raw.map((_,i)=>{const w=full.slice(i,i+7).filter(v=>v!=null);return w.length?w.reduce((a,b)=>a+b,0)/w.length:null});
-  // Hero number
-  const valid=raw.filter(v=>v!=null);
+  const res=buildMetricChart(canvas,{metric,period,offset,mode:'detail'});
+  if(!res){const el=document.getElementById('md-total');if(el)el.textContent='—';return}
+  const valid=res.raw.filter(v=>v!=null);
   let hero=null,heroSub=def.unit||'';
   if(valid.length>0){
     if(def.type==='sum'){hero=valid.reduce((s,v)=>s+v,0);heroSub='total '+(def.unit||'')}
@@ -1579,28 +1633,6 @@ function drawMetricChart(){
       if(heroLabelEl)heroLabelEl.textContent=heroSub;
     }
   }
-  const axisLabels=days.map(d=>period==='week'?d.toLocaleDateString(undefined,{weekday:'short'})[0]:(d.getDate()===1||d.getDate()%7===0||d.getDate()===end.getDate()?String(d.getDate()):''));
-  const c=def.color||'#1A1F2E';
-  const fade=(hex,a)=>{const m=hex.replace('#','');const r=parseInt(m.slice(0,2),16),g=parseInt(m.slice(2,4),16),b=parseInt(m.slice(4,6),16);return `rgba(${r},${g},${b},${a})`};
-  const useBar=def.type==='sum';
-  const datasets=[
-    useBar
-      ? {type:'bar',label:'Daily',data:raw,backgroundColor:fade(c,0.4),borderColor:fade(c,0.4),borderWidth:0,borderRadius:3,barPercentage:0.7,categoryPercentage:0.85,order:2}
-      : {type:'line',label:'Daily',data:raw,borderColor:'transparent',backgroundColor:fade(c,0.5),pointRadius:3,pointBackgroundColor:fade(c,0.5),showLine:false,spanGaps:false,order:2},
-    {type:'line',label:'7-day avg',data:ma7,borderColor:c,backgroundColor:fade(c,0.12),fill:!useBar,tension:0.35,pointRadius:0,borderWidth:useBar?2:2.5,spanGaps:true,order:1}
-  ];
-  const ctx=canvas.getContext('2d');
-  new Chart(ctx,{
-    data:{labels:axisLabels,datasets},
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{enabled:true,mode:'index',intersect:false}},
-      scales:{
-        x:{grid:{display:false},ticks:{color:'#7C8497',font:{size:10},autoSkip:false,maxRotation:0}},
-        y:{position:'right',grid:{color:'rgba(217,223,230,0.5)',drawTicks:false},ticks:{color:'#7C8497',font:{size:10},maxTicksLimit:5},beginAtZero:useBar}
-      }
-    }
-  });
 }
 
 function renderSupplements(){
