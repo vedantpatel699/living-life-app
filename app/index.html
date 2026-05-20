@@ -884,10 +884,14 @@ function bindProgress(){
     });
   },50);
   // Every element with data-metric (hero, stat, sub-row) routes to metric detail
+  // Nutrition metrics get per-food breakdown modal (more useful than a trend chart)
+  const NUTRITION_METRICS=new Set(['leucine','selenium','glycemic_load']);
   document.querySelectorAll('[data-metric]').forEach(el=>el.addEventListener('click',e=>{
     if(e.target.closest('.p-side-btn'))return;
     const m=el.dataset.metric;
-    if(m)setScreen('metricDetail',{metric:m});
+    if(!m)return;
+    if(NUTRITION_METRICS.has(m))openNutritionBreakdown(m);
+    else setScreen('metricDetail',{metric:m});
   }));
   // Photo strip — Front / Side toggle
   let pside='front';
@@ -922,17 +926,20 @@ function bindHistory(){
   document.querySelectorAll('.ethumb[data-p]').forEach(async t=>{if(!t.dataset.p)return;const u=await downloadPhoto(t.dataset.p);if(u)t.innerHTML=`<img src="${u}" style="width:100%;height:100%;object-fit:cover">`;else t.innerHTML='—'});
 }
 // v3.18 — drill-down for the Nutrition Today rows. Shows per-food contribution + 7-day trend bar chart.
-function openNutritionBreakdown(metric){
+function openNutritionBreakdown(metric,iso){
+  // Accept either snake_case (glycemic_load from METRIC_DEFS) or camelCase (legacy)
+  if(metric==='glycemic_load')metric='glycemicLoad';
   const cfg={
     leucine:{label:'Leucine',unit:'g',target:10,fmt:v=>v.toFixed(2),blurb:'Witard 2014: 2.5g leucine per meal is the MPS-stimulation minimum. ~10g/day total spread over 4 meals is the practical aim.'},
     selenium:{label:'Selenium',unit:'µg',target:55,fmt:v=>v.toFixed(1),blurb:'55µg/day RDA. SSRI users: keep dietary intake adequate but avoid high-dose supplements (interaction risk).'},
     glycemicLoad:{label:'Glycemic Load',unit:'GL',target:100,fmt:v=>v.toFixed(0),blurb:'Daily GL <100 = low-impact pattern. 100-120 borderline. >120 elevates metabolic risk, esp. on shift work.'}
   }[metric]||{label:metric,unit:'',target:0,fmt:v=>String(v),blurb:''};
-  const todayIso=today();
-  const nut=nutritionTotalsForDay(todayIso);
-  const todayVal=metric==='glycemicLoad'?nut.glycemicLoad:nut[metric];
-  // Per-food contribution today
-  const entry=state.data.entries[todayIso];
+  const targetIso = iso || today();
+  const todayIso = today();  // kept for the 7-day strip orientation
+  const nut=nutritionTotalsForDay(targetIso);
+  const targetVal=metric==='glycemicLoad'?nut.glycemicLoad:nut[metric];
+  // Per-food contribution for the target day
+  const entry=state.data.entries[targetIso];
   const foods=(entry?.foods||[]).map(f=>{
     let v=null;
     if(metric==='leucine')v=f.leucine_g;
@@ -953,7 +960,7 @@ function openNutritionBreakdown(metric){
     hist.push({iso,date:d,value:v});
   }
   const maxHist=Math.max(cfg.target,...hist.map(h=>h.value||0))||cfg.target;
-  const band=nutritionBand(metric,todayVal);
+  const band=nutritionBand(metric,targetVal);
   const color=nutritionBandColor(band);
   const m=document.createElement('div');m.className='modal-bg';
   m.innerHTML=`<div class="modal"><div class="modal-handle"></div>
@@ -961,13 +968,14 @@ function openNutritionBreakdown(metric){
     <h2 style="font-size:20px;font-weight:700">${cfg.label}</h2>
     <button id="nb-x" class="back-btn" style="width:36px;height:36px;font-size:16px">×</button>
   </div>
-  <div style="font-size:32px;font-weight:700;color:${color};letter-spacing:-0.02em">${todayVal!=null?cfg.fmt(todayVal):'—'} <span class="tiny faint" style="font-weight:500">/ ${cfg.target} ${cfg.unit}</span></div>
-  <p class="tiny muted" style="margin-top:4px">today · ${band==='red'?'below target':band==='amber'?'getting there':band==='green'?'on target':'no data'}</p>
+  <div class="tiny muted" style="margin-bottom:2px">${targetIso===todayIso?'Today':fmtDateLong(targetIso)}</div>
+  <div style="font-size:32px;font-weight:700;color:${color};letter-spacing:-0.02em">${targetVal!=null?cfg.fmt(targetVal):'—'} <span class="tiny faint" style="font-weight:500">/ ${cfg.target} ${cfg.unit}</span></div>
+  <p class="tiny muted" style="margin-top:4px">${band==='red'?'below target':band==='amber'?'getting there':band==='green'?'on target':'no data'}</p>
   <h3 class="mt-4" style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted)">Last 7 days</h3>
   <div style="display:flex;align-items:flex-end;gap:6px;height:80px;margin-top:10px;padding:0 2px">
     ${hist.map(h=>{const v=h.value||0;const hp=Math.max(2,Math.round((v/maxHist)*72));const isToday=h.iso===todayIso;const b=nutritionBand(metric,v);const c=v?nutritionBandColor(b):'var(--border-l)';return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;height:${hp}px;background:${c};border-radius:3px;${isToday?'outline:2px solid var(--ink);outline-offset:1px':''}"></div><div class="tiny faint">${h.date.toLocaleDateString(undefined,{weekday:'narrow'})}</div></div>`}).join('')}
   </div>
-  <h3 class="mt-4" style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted)">Today's contributors</h3>
+  <h3 class="mt-4" style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted)">Biggest contributors</h3>
   ${foods.length===0?'<p class="tiny muted mt-2">No foods contributing yet.</p>':`<div style="margin-top:10px">
     ${foods.map(f=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border-l)"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${escapeHtml(f.name)}</div><div class="tiny faint">${escapeHtml(f.portion||'')}</div></div><div style="font-weight:700;font-size:13px;color:${color}">${cfg.fmt(f.value)} ${cfg.unit}</div></div>`).join('')}
   </div>`}
@@ -1010,6 +1018,7 @@ ${(e.photoFront||e.photo||e.photoSide)?'<div id="mp" style="margin:16px 0;displa
 <div class="card-flat"><div class="flabel">Energy</div><div style="font-size:22px">${e.energy?['😴','😕','😐','🙂','💪'][e.energy-1]:'—'}</div></div>
 </div>
 ${e.activities&&e.activities.length?`<h3 class="mt-4" style="font-size:14px;font-weight:700">Activity</h3><div class="chip-row mt-2">${e.activities.map(a=>`<div class="chip selected">${escapeHtml(a)}</div>`).join('')}</div>`:''}
+${(()=>{const nut=nutritionTotalsForDay(d);const items=[];if(nut.leucine!=null)items.push(['leucine','Leucine','g',nut.leucine,10,nut.leucine.toFixed(1)]);if(nut.selenium!=null)items.push(['selenium','Selenium','µg',nut.selenium,55,Math.round(nut.selenium)]);if(nut.glycemicLoad!=null)items.push(['glycemic_load','Glycemic load','GL',nut.glycemicLoad,100,Math.round(nut.glycemicLoad)]);if(items.length===0)return '';return `<h3 class="mt-4" style="font-size:14px;font-weight:700">Nutrition</h3><div class="mt-2" style="display:flex;flex-direction:column;gap:6px">${items.map(([key,label,unit,val,tgt,disp])=>{const cKey=key==='glycemic_load'?'glycemicLoad':key;const band=nutritionBand(cKey,val);const color=nutritionBandColor(band);return `<div class="nut-row" data-metric="${key}" style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--surface-cream);border-radius:10px;cursor:pointer"><div style="flex:1"><div style="font-weight:600;font-size:13px">${label}</div><div class="tiny faint">target ${tgt} ${unit}</div></div><div style="font-weight:700;font-size:16px;color:${color}">${disp} <span class="tiny faint" style="font-weight:500">${unit}</span></div></div>`}).join('')}</div>`})()}
 ${e.foods&&e.foods.length?`<h3 class="mt-4" style="font-size:14px;font-weight:700">Foods (${totalKcal} kcal)</h3><div class="mt-2">${foodList}</div>`:''}
 ${e.meals?`<h3 class="mt-4" style="font-size:14px;font-weight:700">Meal notes</h3><p class="muted" style="white-space:pre-wrap;margin-top:6px;font-size:13px">${escapeHtml(e.meals)}</p>`:''}
 ${e.notes?`<h3 class="mt-4" style="font-size:14px;font-weight:700">Notes</h3><p class="muted" style="white-space:pre-wrap;margin-top:6px;font-size:13px">${escapeHtml(e.notes)}</p>`:''}
@@ -1024,6 +1033,8 @@ ${(()=>{const hc=e.hc;if(!hc)return '';const bits=[];if(hc.steps)bits.push(['�
   m.querySelector('#me-edit').addEventListener('click',goEdit);
   m.querySelector('#me-edit2').addEventListener('click',goEdit);
   document.body.appendChild(m);
+  // v3.33 — nutrition row tap → per-food breakdown for THIS day
+  m.querySelectorAll('.nut-row[data-metric]').forEach(r=>r.addEventListener('click',ev=>{ev.stopPropagation();openNutritionBreakdown(r.dataset.metric,d)}));
   // v3.20 — confidence badge tap → toast
   m.querySelectorAll('.conf-q[data-conf-q]').forEach(b=>b.addEventListener('click',ev=>{
     ev.stopPropagation();
@@ -1862,9 +1873,9 @@ function openFoodPicker(onPick){
     if(sel.cats.size>0)filtered=filtered.filter(f=>sel.cats.has(f.category));
     if(query){
       const q=query.toLowerCase();
-      // v3.24 — search across name, brand, tags, and id (id catches aliases like sev-usal-misal)
+      // v3.16 — search across name, brand, and tags
       filtered=filtered.filter(f=>{
-        const hay=(f.name+' '+(f.brand||'')+' '+((f.tags||[]).join(' '))+' '+(f.id||'').replace(/-/g,' ')).toLowerCase();
+        const hay=(f.name+' '+(f.brand||'')+' '+((f.tags||[]).join(' '))).toLowerCase();
         return hay.includes(q);
       });
     }
