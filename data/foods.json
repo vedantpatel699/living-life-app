@@ -9202,66 +9202,6 @@
       }
     },
     {
-      "id": "mumbai-pav-dinner-bun",
-      "name": "Pav (Indian Dinner Bun)",
-      "category": "prepared",
-      "kcal": 285,
-      "protein": 8.5,
-      "carbs": 55.0,
-      "fat": 3.0,
-      "fiber": 2.2,
-      "sat_fat": 0.8,
-      "sugar": 5.0,
-      "sodium_mg": 480,
-      "potassium_mg": 115,
-      "calcium_mg": 35,
-      "iron_mg": 2.8,
-      "magnesium_mg": 24,
-      "zinc_mg": 0.8,
-      "vit_a_iu": 0,
-      "vit_c_mg": 0,
-      "vit_d_iu": 0,
-      "vit_b12_ug": 0,
-      "folate_ug": 85,
-      "leucine_g": 0.62,
-      "selenium_ug": 25.0,
-      "glycemic_index": 75,
-      "source": {
-        "type": "IFCT_2017",
-        "citation": "Table T4 (Refined wheat flour products / Bread)",
-        "confidence": "high"
-      },
-      "prep": {
-        "state": "cooked",
-        "oil_added": true,
-        "yield_factor": null
-      },
-      "protein_quality_tag": "grain",
-      "brand": null,
-      "tags": [
-        "staple",
-        "high_gi",
-        "grain",
-        "indian_bread"
-      ],
-      "portions": [
-        {
-          "n": "as in photo (approx 3.3 buns, 90g)",
-          "g": 90,
-          "fromPhoto": true
-        },
-        {
-          "n": "1 single pav",
-          "g": 27
-        }
-      ],
-      "photoEstimate": {
-        "grams": 90,
-        "confidence": "high",
-        "note": "Visible are 3 whole standard dinner rolls/pav (approx 27g each) plus one small fragment (approx 9g) on a standard 7-inch stainless steel quarter plate."
-      }
-    },
-    {
       "id": "sev-usal-misal",
       "name": "Sev Usal / Misal (Spiced Pea Curry with Sev)",
       "category": "prepared",
@@ -9322,6 +9262,67 @@
         "grams": 240,
         "confidence": "medium",
         "note": "Estimated based on a standard 6-inch ceramic soup bowl, filled with roughly 180g of thick green pea gravy (usal/ragda) and topped with approximately 60g of thick gathiya/sev noodles."
+      }
+    },
+    {
+      "id": "your-fresh-market-plain-dinner-rolls",
+      "name": "Your Fresh Market Plain Dinner Rolls",
+      "category": "prepared",
+      "kcal": 267,
+      "protein": 8.0,
+      "carbs": 51.0,
+      "fat": 2.7,
+      "fiber": 2.0,
+      "sat_fat": 0.5,
+      "sugar": 4.7,
+      "sodium_mg": 460,
+      "potassium_mg": 110,
+      "calcium_mg": 40,
+      "iron_mg": 2.9,
+      "magnesium_mg": 22,
+      "zinc_mg": 0.7,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 80,
+      "leucine_g": 0.58,
+      "selenium_ug": 22.0,
+      "glycemic_index": 75,
+      "source": {
+        "type": "label",
+        "citation": "Walmart Canada, Your Fresh Market Plain Dinner Rolls product listing (UPC / retail pack metric conversion)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Your Fresh Market",
+      "tags": [
+        "staple",
+        "high_gi",
+        "grain",
+        "ultra_processed",
+        "bread"
+      ],
+      "portions": [
+        {
+          "n": "as in photo (approx 3.3 rolls, 110g)",
+          "g": 110,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 dinner roll",
+          "g": 33
+        }
+      ],
+      "photoEstimate": {
+        "grams": 110,
+        "confidence": "high",
+        "note": "Based on Walmart Canada listing price of 99¢/100g and retail price of $3.97, the package net weight is 400g. A standard 12-pack of these dinner rolls yields approximately 33.3g per individual roll. The 3.3 rolls shown from the previous plate image equal 110g."
       }
     }
   ]
