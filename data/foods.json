@@ -9139,6 +9139,67 @@
         "confidence": "high",
         "note": "The 250g box contains exactly 20 individually wrapped chocolate sticks, establishing a standard retail unit weight of 12.5g per stick. Leucine content calculated at 8.5% of total protein mass reflecting the high concentration of milk solids and cocoa/hazelnut protein profiles."
       }
+    },
+    {
+      "id": "fresh-raspberries-clamshell",
+      "name": "Fresh Raspberries",
+      "category": "fruit",
+      "kcal": 52,
+      "protein": 1.2,
+      "carbs": 11.9,
+      "fat": 0.7,
+      "fiber": 6.5,
+      "sat_fat": 0.0,
+      "sugar": 4.4,
+      "sodium_mg": 1,
+      "potassium_mg": 151,
+      "calcium_mg": 25,
+      "iron_mg": 0.7,
+      "magnesium_mg": 22,
+      "zinc_mg": 0.4,
+      "vit_a_iu": 33,
+      "vit_c_mg": 26.2,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0.0,
+      "folate_ug": 21.0,
+      "leucine_g": 0.07,
+      "selenium_ug": 0.2,
+      "glycemic_index": 25,
+      "source": {
+        "type": "USDA_FDC",
+        "citation": "USDA FoodData Central FDC ID 167755 (Raspberries, raw)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "raw",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "unknown",
+      "brand": null,
+      "tags": [
+        "raw",
+        "staple",
+        "low_gi",
+        "high_fiber",
+        "high_vit_c"
+      ],
+      "portions": [
+        {
+          "n": "as in photo (170g clamshell)",
+          "g": 170,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 cup",
+          "g": 123
+        }
+      ],
+      "photoEstimate": {
+        "grams": 170,
+        "confidence": "high",
+        "note": "Text and packaging description explicitly states a net weight of 6oz / 170g for the retail clamshell. Leucine is calculated from standard USDA raspberry amino acid distribution data (~5.8% of total protein weight)."
+      }
     }
   ]
 }
