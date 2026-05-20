@@ -1815,8 +1815,17 @@ function openFoodPicker(onPick){
     }
     // v3.14 — frequency-weighted ordering: most-logged foods bubble to top within the filtered set
     filtered=[...filtered].sort((a,b)=>foodFreq(b.id)-foodFreq(a.id));
+    // v3.22 — saved meals (foods tagged personal_meal). Renders as horizontal-scroll cards at top.
+    const savedMeals=allFoods.filter(f=>(f.tags||[]).includes('personal_meal'));
+    const savedMealsBlock=savedMeals.length?`<div style="margin-bottom:10px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);padding:2px 4px 6px">Saved meals · tap to log</div>
+      <div style="display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px">
+        ${savedMeals.map(f=>{const g=f.photoEstimate?.grams||f.portions?.[0]?.g||100;const k=Math.round((f.kcal||0)*g/100);const p=+((f.protein||0)*g/100).toFixed(1);return `<div class="fp-saved" data-id="${f.id}" style="flex-shrink:0;min-width:160px;background:var(--surface-mint);border-radius:12px;padding:10px 12px;cursor:pointer;border:1px solid var(--border-l)"><div style="font-weight:600;font-size:13px;line-height:1.2">${escapeHtml(f.name)}</div><div class="tiny muted" style="margin-top:4px">${g}g · ${k} kcal · ${p}g P</div></div>`}).join('')}
+      </div>
+    </div>`:'';
     modal.innerHTML=`<div class="modal" style="height:90dvh"><div class="modal-handle"></div>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h2 style="font-size:20px;font-weight:700">Pick a food</h2><button id="fp-x" class="back-btn" style="width:36px;height:36px;font-size:16px">×</button></div>
+${savedMealsBlock}
 <input type="text" id="fp-q" value="${escapeHtml(query)}" placeholder="Search foods..." style="margin-bottom:8px">
 ${(()=>{
   // v3.21 — three filter rows (category / brand / tag). Each chip toggles.
@@ -1855,6 +1864,19 @@ ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found
     modal.querySelectorAll('.fp-chip-brand').forEach(c=>c.addEventListener('click',()=>{const k=c.dataset.b;sel.brands.has(k)?sel.brands.delete(k):sel.brands.add(k);render2()}));
     modal.querySelectorAll('.fp-chip-tag').forEach(c=>c.addEventListener('click',()=>{const k=c.dataset.t;sel.tags.has(k)?sel.tags.delete(k):sel.tags.add(k);render2()}));
     modal.querySelector('#fp-clear')?.addEventListener('click',()=>{sel.cats.clear();sel.brands.clear();sel.tags.clear();render2()});
+    // v3.22 — saved-meal tap: log at photoEstimate.grams (or first portion fallback)
+    modal.querySelectorAll('.fp-saved').forEach(el=>el.addEventListener('click',()=>{
+      const f=[...DB.foods.foods,...(state.data.customFoods||[])].find(x=>x.id===el.dataset.id);
+      if(!f)return;
+      const g=f.photoEstimate?.grams||f.portions?.[0]?.g||100;
+      const portionName=f.photoEstimate?.grams?`saved meal (${g}g)`:(f.portions?.[0]?.n||`${g}g`);
+      const entry={foodId:f.id,name:f.name,portionName,grams:g,kcal:Math.round((f.kcal||0)*g/100),protein:+((f.protein||0)*g/100).toFixed(1)};
+      ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug','leucine_g','selenium_ug'].forEach(k=>{if(f[k])entry[k]=Math.round(f[k]*g/100*100)/100});
+      if(f.source&&typeof f.source==='object'&&f.source.confidence)entry.confidence=f.source.confidence;
+      recordFoodUsage(entry.foodId);
+      onPick(entry);
+      modal.remove();
+    }));
     // INSTANT LOG: tap food row → log standard serving immediately (no modal)
     modal.querySelectorAll('.fp-food-tap').forEach(el=>el.addEventListener('click',()=>{
       const f=[...DB.foods.foods,...(state.data.customFoods||[])].find(x=>x.id===el.dataset.id);
@@ -1937,29 +1959,4 @@ function openFoodQuantityModal(f,onPick){
     srcText?escapeHtml(srcText):null,
     prepText?escapeHtml(prepText):null,
     f.glycemic_index!=null?('GI '+f.glycemic_index):null,
-    f.protein_quality_tag?escapeHtml(String(f.protein_quality_tag).replace(/_/g,' ')):null
-  ].filter(Boolean).join(' · ');
-  modal.innerHTML=`<div class="modal" style="max-width:380px"><div class="modal-handle"></div>
-  <h2 style="font-size:18px;font-weight:700;margin-bottom:2px">${escapeHtml(f.name)}</h2>
-  <p class="tiny muted" style="margin-bottom:2px">${escapeHtml(standard.n)} = ${standard.g}g · ${Math.round((f.kcal||0)*standard.g/100)} kcal</p>
-  ${meta?`<p class="tiny faint" style="margin-bottom:14px">${meta}</p>`:'<div style="height:12px"></div>'}
-  ${useUnits?`
-    <div class="field"><div class="flabel">Servings (1 × ${escapeHtml(standard.n)})</div>
-    <div style="display:flex;align-items:center;gap:8px">
-      <button id="fq-minus" style="width:44px;height:44px;border-radius:12px;background:var(--surface-cream);font-size:20px;font-weight:700">−</button>
-      <input type="number" id="fq-count" value="1" step="0.5" min="0.5" style="flex:1;text-align:center;font-size:28px;font-weight:700;padding:8px;border:1px solid var(--border);border-radius:10px">
-      <button id="fq-plus" style="width:44px;height:44px;border-radius:12px;background:var(--surface-cream);font-size:20px;font-weight:700">+</button>
-    </div></div>
-  `:`
-    <div class="field"><div class="flabel">Grams</div>
-    <input type="number" id="fq-grams" value="${standard.g}" step="1" min="1" style="width:100%;text-align:center;font-size:32px;font-weight:700;padding:14px;border:1px solid var(--border);border-radius:10px" autofocus>
-    <div style="display:flex;gap:6px;margin-top:8px">
-      ${[50,100,150,200].map(g=>`<button class="fq-preset" data-g="${g}" style="flex:1;padding:8px;border-radius:8px;background:var(--surface-cream);font-size:12px;font-weight:600">${g}g</button>`).join('')}
-    </div></div>
-  `}
-  <div class="card-flat" id="fq-preview" style="padding:12px;text-align:center;margin-top:14px">
-    <div class="tiny muted">Total</div>
-    <div style="font-weight:700;font-size:18px" id="fq-kcal">— kcal</div>
-    <div class="tiny muted" id="fq-prot">— g protein</div>
-  </div>
-  <div class="btn-row mt-4"><button class="btn btn-secondary" id="fq-cancel">Cancel</button><button class="btn btn-primary" id="fq-add">＋ Log<
+    f.protein_quality_tag?escapeHtml(S
