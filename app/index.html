@@ -1775,16 +1775,36 @@ async function openCameraOverlay(onCapture, side='front'){
 
 function openFoodPicker(onPick){
   if(!DB.foods){toast('Loading foods…','');loadDB('foods').then(r=>{if(r)openFoodPicker(onPick);else toast('Could not load food data — check internet · '+(DB._err.foods||''),'error')});return}
-  let query='',cat='all',expanded=null;
+  // v3.21 — multi-select filters: categories / brands / tags. OR within a row, AND between rows.
+  let query='';
+  const sel={cats:new Set(),brands:new Set(),tags:new Set()};
+  // Curated tag list (not the full 126-tag vocab — just the actionable ones)
+  const TAG_OPTIONS=['high_leucine','post_shift_anchor','low_gi','high_gi','ultra_processed','low_confidence','restaurant','indian_main','indian_sweet'];
   const modal=document.createElement('div');modal.className='modal-bg';
   const render2=()=>{
     // v3.15 — preserve scroll positions across re-renders (chip-tap shouldn't reset the picker)
-    const prevChipScroll=modal.querySelector('.chip-row')?.parentElement?.scrollLeft||0;
+    const prevCatScroll=modal.querySelector('.fp-row-cat')?.scrollLeft||0;
+    const prevBrandScroll=modal.querySelector('.fp-row-brand')?.scrollLeft||0;
+    const prevTagScroll=modal.querySelector('.fp-row-tag')?.scrollLeft||0;
     const prevListScroll=modal.querySelector('#fp-list')?.scrollTop||0;
     const cats=DB.foods.categories;
     const allFoods=[...DB.foods.foods,...(state.data.customFoods||[])];
     let filtered=allFoods;
-    if(cat!=='all')filtered=filtered.filter(f=>f.category===cat);
+    // Category filter (OR within row)
+    if(sel.cats.size>0)filtered=filtered.filter(f=>sel.cats.has(f.category));
+    // Brand filter (OR within row)
+    if(sel.brands.size>0)filtered=filtered.filter(f=>f.brand&&sel.brands.has(f.brand));
+    // Tag filter (OR within row); 'low_confidence' is virtual → source.confidence==='low'
+    if(sel.tags.size>0){
+      filtered=filtered.filter(f=>{
+        const ft=f.tags||[];
+        for(const t of sel.tags){
+          if(t==='low_confidence'){if(f.source?.confidence==='low')return true}
+          else if(ft.includes(t))return true;
+        }
+        return false;
+      });
+    }
     if(query){
       const q=query.toLowerCase();
       // v3.16 — search across name, brand, and tags
@@ -1797,17 +1817,23 @@ function openFoodPicker(onPick){
     filtered=[...filtered].sort((a,b)=>foodFreq(b.id)-foodFreq(a.id));
     modal.innerHTML=`<div class="modal" style="height:90dvh"><div class="modal-handle"></div>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h2 style="font-size:20px;font-weight:700">Pick a food</h2><button id="fp-x" class="back-btn" style="width:36px;height:36px;font-size:16px">×</button></div>
-<input type="text" id="fp-q" value="${escapeHtml(query)}" placeholder="Search foods..." style="margin-bottom:10px">
-<div style="overflow-x:auto;margin-bottom:8px;-webkit-overflow-scrolling:touch">
-<div class="chip-row" style="flex-wrap:nowrap;padding-bottom:4px">
-<div class="chip ${cat==='all'?'selected':''}" data-c="all">All</div>
+<input type="text" id="fp-q" value="${escapeHtml(query)}" placeholder="Search foods..." style="margin-bottom:8px">
 ${(()=>{
-  // v3.16 — only show category chips that have ≥1 food (after user pruned raw ingredients)
+  // v3.21 — three filter rows (category / brand / tag). Each chip toggles.
   const counts={};
   for(const f of allFoods)counts[f.category]=(counts[f.category]||0)+1;
-  return Object.entries(cats).filter(([k])=>(counts[k]||0)>0).map(([k,v])=>`<div class="chip ${cat===k?'selected':''}" data-c="${k}">${escapeHtml(v)}</div>`).join('');
+  const catRow=Object.entries(cats).filter(([k])=>(counts[k]||0)>0).map(([k,v])=>`<div class="chip fp-chip-cat ${sel.cats.has(k)?'selected':''}" data-c="${k}">${escapeHtml(v)}</div>`).join('');
+  const brandsSet=new Set();for(const f of allFoods){if(f.brand)brandsSet.add(f.brand)}
+  const brandList=[...brandsSet].sort((a,b)=>a.localeCompare(b));
+  const brandRow=brandList.map(b=>`<div class="chip fp-chip-brand ${sel.brands.has(b)?'selected':''}" data-b="${escapeHtml(b)}">${escapeHtml(b)}</div>`).join('');
+  const tagRow=TAG_OPTIONS.map(t=>`<div class="chip fp-chip-tag ${sel.tags.has(t)?'selected':''}" data-t="${t}">${t.replace(/_/g,' ')}</div>`).join('');
+  const activeCount=sel.cats.size+sel.brands.size+sel.tags.size;
+  const clearBtn=activeCount>0?`<button id="fp-clear" class="tiny" style="margin-bottom:6px;color:var(--coral);font-weight:700;background:transparent;padding:2px 4px">× Clear ${activeCount} filter${activeCount===1?'':'s'}</button>`:'';
+  return clearBtn+
+    `<div class="fp-row-cat" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:4px"><div class="chip-row" style="flex-wrap:nowrap;padding-bottom:2px">${catRow}</div></div>`+
+    (brandRow?`<div class="fp-row-brand" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:4px"><div class="chip-row" style="flex-wrap:nowrap;padding-bottom:2px">${brandRow}</div></div>`:'')+
+    `<div class="fp-row-tag" style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:8px"><div class="chip-row" style="flex-wrap:nowrap;padding-bottom:2px">${tagRow}</div></div>`;
 })()}
-</div></div>
 <div id="fp-list" style="overflow-y:auto;flex:1;max-height:55dvh;display:flex;flex-direction:column;gap:6px">
 ${filtered.slice(0,40).map(f=>`<div class="fp-food" data-id="${f.id}" style="background:var(--surface-white);border-radius:var(--r-sm);padding:12px 14px;display:flex;align-items:center;gap:8px">
 <div style="flex:1;min-width:0;cursor:pointer" class="fp-food-tap" data-id="${f.id}"><div style="font-weight:600;font-size:14px">${escapeHtml(f.name)}</div><div class="tiny muted">${f.kcal} kcal · ${f.protein}g P${f.leucine_g?` · <span style="color:var(--mint)">${f.leucine_g}g leu</span>`:''}${foodFreq(f.id)>0?` · <span class="faint">×${foodFreq(f.id)}</span>`:''}</div></div><button class="fp-food-custom" data-id="${f.id}" style="width:32px;height:32px;border-radius:8px;background:var(--surface-cream);color:var(--muted);font-size:14px;flex-shrink:0" title="Custom portion">✎</button>
@@ -1816,14 +1842,19 @@ ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found
 </div>
 <button class="btn btn-secondary btn-full mt-2" id="fp-custom">+ Add custom food</button>
 </div>`;
-    // v3.15 — restore preserved scroll positions
-    const chipWrap=modal.querySelector('.chip-row')?.parentElement;
-    if(chipWrap)chipWrap.scrollLeft=prevChipScroll;
+    // v3.21 — restore scroll positions across all three filter rows + list
+    const catWrap=modal.querySelector('.fp-row-cat');if(catWrap)catWrap.scrollLeft=prevCatScroll;
+    const brandWrap=modal.querySelector('.fp-row-brand');if(brandWrap)brandWrap.scrollLeft=prevBrandScroll;
+    const tagWrap=modal.querySelector('.fp-row-tag');if(tagWrap)tagWrap.scrollLeft=prevTagScroll;
     const listEl=modal.querySelector('#fp-list');
     if(listEl)listEl.scrollTop=prevListScroll;
     modal.querySelector('#fp-q').addEventListener('input',e=>{const pos=e.target.selectionStart;query=e.target.value;render2();const inp=modal.querySelector('#fp-q');inp.focus();try{inp.setSelectionRange(pos,pos)}catch(_){}});
     modal.querySelector('#fp-x').addEventListener('click',()=>modal.remove());
-    modal.querySelectorAll('.chip[data-c]').forEach(c=>c.addEventListener('click',()=>{cat=c.dataset.c;render2()}));
+    // Filter chips — toggle on/off
+    modal.querySelectorAll('.fp-chip-cat').forEach(c=>c.addEventListener('click',()=>{const k=c.dataset.c;sel.cats.has(k)?sel.cats.delete(k):sel.cats.add(k);render2()}));
+    modal.querySelectorAll('.fp-chip-brand').forEach(c=>c.addEventListener('click',()=>{const k=c.dataset.b;sel.brands.has(k)?sel.brands.delete(k):sel.brands.add(k);render2()}));
+    modal.querySelectorAll('.fp-chip-tag').forEach(c=>c.addEventListener('click',()=>{const k=c.dataset.t;sel.tags.has(k)?sel.tags.delete(k):sel.tags.add(k);render2()}));
+    modal.querySelector('#fp-clear')?.addEventListener('click',()=>{sel.cats.clear();sel.brands.clear();sel.tags.clear();render2()});
     // INSTANT LOG: tap food row → log standard serving immediately (no modal)
     modal.querySelectorAll('.fp-food-tap').forEach(el=>el.addEventListener('click',()=>{
       const f=[...DB.foods.foods,...(state.data.customFoods||[])].find(x=>x.id===el.dataset.id);
@@ -1931,59 +1962,4 @@ function openFoodQuantityModal(f,onPick){
     <div style="font-weight:700;font-size:18px" id="fq-kcal">— kcal</div>
     <div class="tiny muted" id="fq-prot">— g protein</div>
   </div>
-  <div class="btn-row mt-4"><button class="btn btn-secondary" id="fq-cancel">Cancel</button><button class="btn btn-primary" id="fq-add">＋ Log</button></div>
-  </div>`;
-  modal.addEventListener('click',ev=>{if(ev.target===modal)modal.remove()});
-  modal.querySelector('#fq-cancel').addEventListener('click',()=>modal.remove());
-  const recompute=()=>{
-    let g;
-    if(useUnits){
-      const c=parseFloat(modal.querySelector('#fq-count').value)||1;
-      g=c*standard.g;
-    }else{
-      g=parseFloat(modal.querySelector('#fq-grams').value)||0;
-    }
-    const k=Math.round((f.kcal||0)*g/100);
-    const p=(f.protein||0)*g/100;
-    modal.querySelector('#fq-kcal').textContent=k+' kcal';
-    modal.querySelector('#fq-prot').textContent=p.toFixed(1)+' g protein';
-  };
-  if(useUnits){
-    modal.querySelector('#fq-count').addEventListener('input',recompute);
-    modal.querySelector('#fq-minus').addEventListener('click',()=>{const i=modal.querySelector('#fq-count');i.value=Math.max(0.5,(parseFloat(i.value)||1)-0.5);recompute()});
-    modal.querySelector('#fq-plus').addEventListener('click',()=>{const i=modal.querySelector('#fq-count');i.value=(parseFloat(i.value)||0)+0.5;recompute()});
-  }else{
-    modal.querySelector('#fq-grams').addEventListener('input',recompute);
-    modal.querySelectorAll('.fq-preset').forEach(b=>b.addEventListener('click',()=>{modal.querySelector('#fq-grams').value=b.dataset.g;recompute()}));
-  }
-  modal.querySelector('#fq-add').addEventListener('click',()=>{
-    let g,portionName;
-    if(useUnits){
-      const c=parseFloat(modal.querySelector('#fq-count').value)||1;
-      g=c*standard.g;
-      portionName=c===1?standard.n:`${c} × ${standard.n}`;
-    }else{
-      g=parseFloat(modal.querySelector('#fq-grams').value)||0;
-      if(g<=0){toast('Enter grams > 0','error');return}
-      portionName=`${g}g (custom)`;
-    }
-    const entry={foodId:f.id,name:f.name,portionName,grams:g,kcal:Math.round((f.kcal||0)*g/100),protein:+((f.protein||0)*g/100).toFixed(1)};
-    ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug','leucine_g','selenium_ug'].forEach(k=>{if(f[k])entry[k]=Math.round(f[k]*g/100*100)/100});
-    if(f.source&&typeof f.source==='object'&&f.source.confidence)entry.confidence=f.source.confidence;
-    onPick(entry);
-    modal.remove();
-  });
-  recompute();
-  document.body.appendChild(modal);
-}
-
-function openCustomFood(onSave){
-  const modal=document.createElement('div');modal.className='modal-bg';
-  modal.innerHTML=`<div class="modal"><div class="modal-handle"></div>
-<h2 style="font-size:20px;font-weight:700;margin-bottom:14px">Add a custom food</h2>
-<div class="field"><div class="flabel">Name</div><input type="text" id="cf-n" placeholder="e.g. Mom's dal"></div>
-<div class="grid-2">
-<div class="field"><div class="flabel">Calories per 100g</div><input type="number" id="cf-k" inputmode="numeric" placeholder="150"></div>
-<div class="field"><div class="flabel">Protein per 100g</div><input type="number" step="0.1" id="cf-p" inputmode="decimal" placeholder="8"></div>
-</div>
-<div class="field">
+  <div class="btn-row mt-4"><button class="btn btn-secondary" id="fq-cancel">Cancel</button><button class="btn btn-primary" id="fq-add">＋ Log<
