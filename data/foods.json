@@ -8823,6 +8823,68 @@
           "g": 250
         }
       ]
+    },
+    {
+      "id": "cobs-bread-strawberry-passion-fruit-scone",
+      "name": "COBS Bread Strawberry Passion Fruit Scone",
+      "category": "snack",
+      "kcal": 264,
+      "protein": 6.6,
+      "carbs": 47.3,
+      "fat": 9.9,
+      "fiber": 2.2,
+      "sat_fat": 5.5,
+      "sugar": 15.4,
+      "sodium_mg": 462,
+      "potassium_mg": 137,
+      "calcium_mg": 55,
+      "iron_mg": 2.2,
+      "magnesium_mg": 0,
+      "zinc_mg": 0,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 0,
+      "leucine_g": 0.51,
+      "selenium_ug": 0.0,
+      "glycemic_index": 65,
+      "source": {
+        "type": "label",
+        "citation": "COBS Bread official nutritional panel for Strawberry Passion Fruit Scone (91g base)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": false,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "COBS Bread",
+      "tags": [
+        "snack",
+        "sweet",
+        "ultra_processed",
+        "grain",
+        "high_gi",
+        "high_sat_fat"
+      ],
+      "portions": [
+        {
+          "n": "as in photo (3 scones)",
+          "g": 273,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 scone",
+          "g": 91
+        }
+      ],
+      "photoEstimate": {
+        "grams": 273,
+        "confidence": "high",
+        "note": "Text request indicates 3 units of the COBS Strawberry Passion Fruit Scone. Standard product weight per unit is 91g from the official nutrition label data."
+      }
     }
   ]
 }
