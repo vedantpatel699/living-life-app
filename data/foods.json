@@ -9263,7 +9263,7 @@
     },
     {
       "id": "sev-usal-misal",
-      "name": "Sev Usal (Spiced Green Pea Curry with Sev)",
+      "name": "Sev Usal / Misal (Spiced Pea Curry with Sev)",
       "category": "prepared",
       "kcal": 195,
       "protein": 6.8,
@@ -9304,7 +9304,8 @@
         "snack",
         "complementary",
         "medium_gi",
-        "gujarati"
+        "gujarati",
+        "misal"
       ],
       "portions": [
         {
