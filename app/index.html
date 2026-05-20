@@ -173,7 +173,33 @@ function loadDB(name){
       if(!r.ok)throw new Error('HTTP '+r.status);
       DB[name]=await r.json();
       DB._err[name]=null;
-      if(name==='foods'){DB.foodsBySlug={};for(const f of DB.foods.foods){DB.foodsBySlug[f.id]=f}}
+      if(name==='foods'){DB.foodsBySlug={};for(const f of DB.foods.foods){DB.foodsBySlug[f.id]=f}
+        // v3.34 — one-shot backfill: prior to v3.34, openEditFoodGrams didn't rescale
+        // leucine_g/selenium_ug when grams changed, so edited entries kept stale values.
+        // Recompute from the DB using each entry's current grams. Idempotent.
+        try{
+          if(!state.data.nutrientBackfillV1){
+            let fixed=0;
+            for(const d in (state.data.entries||{})){
+              const ent=state.data.entries[d];if(!ent?.foods)continue;
+              for(const fe of ent.foods){
+                if(!fe.foodId||typeof fe.grams!=='number')continue;
+                const db=DB.foodsBySlug[fe.foodId];if(!db)continue;
+                const g=fe.grams;
+                if(typeof db.leucine_g==='number'){const v=+((db.leucine_g||0)*g/100).toFixed(2);if(fe.leucine_g!==v){fe.leucine_g=v;fixed++}}
+                if(typeof db.selenium_ug==='number'){const v=+((db.selenium_ug||0)*g/100).toFixed(2);if(fe.selenium_ug!==v){fe.selenium_ug=v;fixed++}}
+              }
+            }
+            state.data.nutrientBackfillV1=true;
+            saveLocalData();
+            if(fixed>0){
+              console.log('v3.34 nutrient backfill: corrected',fixed,'leucine/selenium values');
+              if(isConfigured())pushData().catch(e=>console.warn('backfill push failed',e));
+              if(typeof render==='function')render();
+            }
+          }
+        }catch(e){console.warn('nutrient backfill err',e)}
+      }
       return DB[name];
     }catch(e){console.warn('DB load',name,e);DB._err[name]=e.message||String(e);return null}
     finally{delete DB._loading[name]}
@@ -1306,7 +1332,7 @@ function openEditFoodGrams(food,onSave){
   // Re-derive per-100g values from the entry: divide stored values by (grams/100)
   const g0=food.grams||100;
   const per100={kcal:food.kcal/(g0/100),protein:(food.protein||0)/(g0/100)};
-  ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug'].forEach(k=>{if(food[k]!==undefined)per100[k]=food[k]/(g0/100)});
+  ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug','leucine_g','selenium_ug'].forEach(k=>{if(food[k]!==undefined)per100[k]=food[k]/(g0/100)});
   modal.innerHTML=`<div class="modal" style="max-width:420px"><div class="modal-handle"></div>
 <h2 style="font-size:18px;font-weight:700;margin-bottom:4px">Edit grams</h2>
 <p class="tiny muted">${escapeHtml(food.name)}</p>
@@ -1324,7 +1350,7 @@ function openEditFoodGrams(food,onSave){
     const g=parseFloat(inp.value);
     if(!g||g<=0){toast('Enter grams > 0','error');return}
     const updated={...food,grams:g,portionName:g+'g (custom)',kcal:Math.round(per100.kcal*g/100),protein:+(per100.protein*g/100).toFixed(1)};
-    ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug'].forEach(k=>{if(per100[k]!==undefined)updated[k]=+(per100[k]*g/100).toFixed(2)});
+    ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug','leucine_g','selenium_ug'].forEach(k=>{if(per100[k]!==undefined)updated[k]=+(per100[k]*g/100).toFixed(2)});
     onSave(updated);
     modal.remove();
   });
