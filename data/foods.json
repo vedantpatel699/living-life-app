@@ -8949,6 +8949,69 @@
         "confidence": "high",
         "note": "Text request identifies a standard full-size Oh Henry! bar sold in Canada, which has a standardized packaging net weight of 58g."
       }
+    },
+    {
+      "id": "walmart-aloo-puff-pastry-turnover",
+      "name": "Walmart Bakery Aloo Puff Pastry",
+      "category": "snack",
+      "kcal": 370,
+      "protein": 5.4,
+      "carbs": 39.1,
+      "fat": 21.7,
+      "fiber": 2.2,
+      "sat_fat": 5.4,
+      "sugar": 1.1,
+      "sodium_mg": 413,
+      "potassium_mg": 180,
+      "calcium_mg": 43,
+      "iron_mg": 1.5,
+      "magnesium_mg": 22,
+      "zinc_mg": 0.7,
+      "vit_a_iu": 0,
+      "vit_c_mg": 9,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 30,
+      "leucine_g": 0.38,
+      "selenium_ug": 22,
+      "glycemic_index": 65,
+      "source": {
+        "type": "label",
+        "citation": "Walmart Canada bakery counter frozen-to-baked service profile / commercial aloo turnover label; mg/zn/sel/k/folate backfilled from wheat pastry + potato composition",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": "Walmart",
+      "tags": [
+        "snack",
+        "ultra_processed",
+        "fried",
+        "high_fat",
+        "high_sat_fat",
+        "high_sodium",
+        "medium_gi"
+      ],
+      "portions": [
+        {
+          "n": "as in photo (1 puff)",
+          "g": 92,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 puff patty",
+          "g": 92
+        }
+      ],
+      "photoEstimate": {
+        "grams": 92,
+        "confidence": "medium",
+        "note": "Calculated using standard hot-case bakery metrics for South Asian savoury puff pastries sold at commercial Canadian retail locations, yielding an average weight of 92g per turnover. Leucine is calculated based on wheat gluten dominating the pastry shell matrix (approx. 7.0% of total protein value)."
+      }
     }
   ]
 }
