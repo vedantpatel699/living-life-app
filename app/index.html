@@ -404,6 +404,40 @@ function weightStats(){
   return{latest:latest[1].weight,latestDate:latest[0],first:first[1].weight,firstDate:first[0],totalChange:latest[1].weight-first[1].weight,avgNow,avgPrev,weekChange:(avgNow!==null&&avgPrev!==null)?avgNow-avgPrev:null,points:ents.map(([d,e])=>({x:d,y:e.weight}))};
 }
 function calcStreak(){let s=0,d=new Date(today()+'T00:00:00'),first=true;while(true){const iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');if(state.data.entries[iso]){s++;d.setDate(d.getDate()-1)}else{if(first&&iso===today()){d.setDate(d.getDate()-1);first=false;continue}break}first=false}return s}
+// v3.18 — nutrition totals (leucine / selenium / glycemic load) for a given ISO date.
+// GI is intensive (not portion-scaled) — look it up from DB.foodsBySlug when computing GL.
+// Returns null fields when no data available (avoids "0" when nothing was logged).
+function nutritionTotalsForDay(iso){
+  const e=state.data.entries[iso];
+  if(!e||!e.foods||e.foods.length===0)return {leucine:null,selenium:null,glycemicLoad:null};
+  let leu=0,sel=0,gl=0,hasLeu=false,hasSel=false,hasGl=false;
+  for(const food of e.foods){
+    if(typeof food.leucine_g==='number'){leu+=food.leucine_g;hasLeu=true}
+    if(typeof food.selenium_ug==='number'){sel+=food.selenium_ug;hasSel=true}
+    // GL contribution = GI × food.carbs(g) / 100  — entry.carbs already has portion-adjusted carbs
+    const dbFood=DB.foodsBySlug?.[food.foodId];
+    const gi=dbFood?.glycemic_index;
+    if(gi!=null && typeof food.carbs==='number'){gl+=gi*food.carbs/100;hasGl=true}
+  }
+  return {leucine:hasLeu?leu:null,selenium:hasSel?sel:null,glycemicLoad:hasGl?gl:null};
+}
+// Color band per RESEARCH_FOUNDATION §nutrition + spec doc.
+// leucine: red<8, amber 8-10, green>=10  (Witard 2014 MPS-min 2.5g/meal × 4 meals = 10g/day)
+// selenium: amber<55, green 55-400, red>400 (toxicity ceiling)
+// gl: green<100, amber 100-120, red>120
+function nutritionBand(metric,v){
+  if(v==null)return 'gray';
+  if(metric==='leucine')return v<8?'red':v<10?'amber':'green';
+  if(metric==='selenium')return v<55?'amber':v<=400?'green':'red';
+  if(metric==='glycemicLoad'||metric==='gl')return v<100?'green':v<=120?'amber':'red';
+  return 'gray';
+}
+function nutritionBandColor(band){
+  if(band==='red')return '#E63946';
+  if(band==='amber')return '#F2A65A';
+  if(band==='green')return '#4CAF6E';
+  return '#B7BCC9';
+}
 function suppStreak(){let s=0,d=new Date(today()+'T00:00:00');while(true){const iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');const sup=state.data.supplements[iso];const list=DB.supplements?DB.supplements.supplements.filter(x=>x.frequency==='daily'):SUPPLEMENTS;if(sup&&list.every(x=>sup[x.id])){s++;d.setDate(d.getDate()-1)}else break}return s}
 function todaySuppCount(){const s=state.data.supplements[today()]||{};return SUPPLEMENTS.filter(x=>s[x.id]).length}
 
@@ -769,6 +803,32 @@ function renderProgress(){
     <div class="card mt-4"><div style="display:flex;justify-content:space-between;align-items:center"><h3>Weight trend</h3><div class="chip-pill" style="background:var(--surface-cream)">30 days</div></div>
       <div style="height:200px;margin-top:14px;position:relative"><canvas id="w-chart"></canvas></div></div>
     ${(()=>{
+      // v3.18 — Nutrition today: leucine / selenium / glycemic load drill-down rows
+      const nut=nutritionTotalsForDay(today());
+      if(nut.leucine==null && nut.selenium==null && nut.glycemicLoad==null)return '';
+      const row=(label,metric,value,target,unit,suffix)=>{
+        if(value==null)return `<div class="nutri-row" data-m="${metric}" style="display:flex;align-items:center;justify-content:space-between;padding:12px 4px;border-bottom:1px solid var(--border-l);cursor:pointer;opacity:0.45"><div><div style="font-weight:600;font-size:14px">${label}</div><div class="tiny faint">no data yet</div></div><div style="font-size:12px;color:var(--faint)">—</div></div>`;
+        const band=nutritionBand(metric,value);
+        const color=nutritionBandColor(band);
+        const pct=Math.min(100,Math.round((value/target)*100));
+        const display=metric==='leucine'?value.toFixed(1):(metric==='selenium'?Math.round(value):Math.round(value));
+        return `<div class="nutri-row" data-m="${metric}" style="padding:12px 4px;border-bottom:1px solid var(--border-l);cursor:pointer">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <div style="font-weight:600;font-size:14px">${label}${suffix?' <span class="tiny faint">'+suffix+'</span>':''}</div>
+            <div style="font-size:14px;font-weight:700;color:${color}">${display} <span class="tiny faint" style="font-weight:500">/ ${target} ${unit}</span></div>
+          </div>
+          <div style="height:4px;background:var(--border-l);border-radius:2px;overflow:hidden">
+            <div style="width:${pct}%;height:100%;background:${color};transition:width 0.3s"></div>
+          </div>
+        </div>`;
+      };
+      return `<h2 class="sec">NUTRITION TODAY</h2><div class="card" style="padding:6px 14px">
+        ${row('Leucine','leucine',nut.leucine,10,'g','2.5g × 4 meals')}
+        ${row('Selenium','selenium',nut.selenium,55,'µg','daily target')}
+        ${row('Glycemic load','glycemicLoad',nut.glycemicLoad,100,'GL','daily ceiling 120')}
+      </div>`;
+    })()}
+    ${(()=>{
       const hc=getHCToday()||{};
       if(Object.keys(hc).length===0)return '';
       const items=[];
@@ -809,6 +869,10 @@ function renderProgress(){
   </div>`;
 }
 function bindProgress(){
+  // v3.18 — make sure foods DB is loaded so GL can be computed. Re-render once loaded.
+  if(!DB.foods){loadDB('foods').then(r=>{if(r&&state.screen==='progress')render()}).catch(()=>{})}
+  // v3.18 — nutrition-row tap → breakdown modal
+  document.querySelectorAll('.nutri-row[data-m]').forEach(r=>r.addEventListener('click',()=>openNutritionBreakdown(r.dataset.m)));
   setTimeout(()=>{const c=document.getElementById('w-chart');if(!c||!window.Chart)return;const s=weightStats();if(!s||s.points.length===0){c.parentElement.innerHTML='<div class="empty" style="padding:30px"><p>Log a few days to see your trend.</p></div>';return}const pts=s.points.slice(-30);const avg=pts.map((p,i)=>{const w=pts.slice(Math.max(0,i-6),i+1).map(x=>x.y);return{x:p.x,y:w.reduce((s,v)=>s+v,0)/w.length}});new Chart(c.getContext('2d'),{type:'line',data:{labels:pts.map(p=>p.x),datasets:[{label:'Daily',data:pts.map(p=>p.y),borderColor:'rgba(124,132,151,0.5)',pointRadius:2.5,borderWidth:0,showLine:false},{label:'7d avg',data:avg.map(p=>p.y),borderColor:'#ED7A4D',backgroundColor:'rgba(237,122,77,0.12)',fill:true,tension:0.35,pointRadius:0,borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#B7BCC9',maxTicksLimit:5,font:{size:10}},grid:{color:'rgba(217,223,230,0.4)'}},y:{ticks:{color:'#B7BCC9',font:{size:10},callback:v=>v+'kg'},grid:{color:'rgba(217,223,230,0.4)'}}}}})},50);
   const grid=document.getElementById('p-grid');
   const photos=Object.entries(state.data.entries).filter(([d,e])=>e.photoFront||e.photo).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,12).map(([d,e])=>[d,{...e,photo:e.photoFront||e.photo}]);
@@ -830,6 +894,62 @@ function renderHistory(){
 function bindHistory(){
   document.querySelectorAll('.erow').forEach(r=>r.addEventListener('click',()=>openEntryModal(r.dataset.d)));
   document.querySelectorAll('.ethumb[data-p]').forEach(async t=>{if(!t.dataset.p)return;const u=await downloadPhoto(t.dataset.p);if(u)t.innerHTML=`<img src="${u}" style="width:100%;height:100%;object-fit:cover">`;else t.innerHTML='—'});
+}
+// v3.18 — drill-down for the Nutrition Today rows. Shows per-food contribution + 7-day trend bar chart.
+function openNutritionBreakdown(metric){
+  const cfg={
+    leucine:{label:'Leucine',unit:'g',target:10,fmt:v=>v.toFixed(2),blurb:'Witard 2014: 2.5g leucine per meal is the MPS-stimulation minimum. ~10g/day total spread over 4 meals is the practical aim.'},
+    selenium:{label:'Selenium',unit:'µg',target:55,fmt:v=>v.toFixed(1),blurb:'55µg/day RDA. SSRI users: keep dietary intake adequate but avoid high-dose supplements (interaction risk).'},
+    glycemicLoad:{label:'Glycemic Load',unit:'GL',target:100,fmt:v=>v.toFixed(0),blurb:'Daily GL <100 = low-impact pattern. 100-120 borderline. >120 elevates metabolic risk, esp. on shift work.'}
+  }[metric]||{label:metric,unit:'',target:0,fmt:v=>String(v),blurb:''};
+  const todayIso=today();
+  const nut=nutritionTotalsForDay(todayIso);
+  const todayVal=metric==='glycemicLoad'?nut.glycemicLoad:nut[metric];
+  // Per-food contribution today
+  const entry=state.data.entries[todayIso];
+  const foods=(entry?.foods||[]).map(f=>{
+    let v=null;
+    if(metric==='leucine')v=f.leucine_g;
+    else if(metric==='selenium')v=f.selenium_ug;
+    else if(metric==='glycemicLoad'){
+      const db=DB.foodsBySlug?.[f.foodId];
+      if(db?.glycemic_index!=null && typeof f.carbs==='number')v=db.glycemic_index*f.carbs/100;
+    }
+    return {name:f.name,portion:f.portionName,value:v||0};
+  }).filter(x=>x.value>0).sort((a,b)=>b.value-a.value);
+  // 7-day history
+  const hist=[];
+  for(let i=6;i>=0;i--){
+    const d=new Date();d.setDate(d.getDate()-i);
+    const iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    const t=nutritionTotalsForDay(iso);
+    const v=metric==='glycemicLoad'?t.glycemicLoad:t[metric];
+    hist.push({iso,date:d,value:v});
+  }
+  const maxHist=Math.max(cfg.target,...hist.map(h=>h.value||0))||cfg.target;
+  const band=nutritionBand(metric,todayVal);
+  const color=nutritionBandColor(band);
+  const m=document.createElement('div');m.className='modal-bg';
+  m.innerHTML=`<div class="modal"><div class="modal-handle"></div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+    <h2 style="font-size:20px;font-weight:700">${cfg.label}</h2>
+    <button id="nb-x" class="back-btn" style="width:36px;height:36px;font-size:16px">×</button>
+  </div>
+  <div style="font-size:32px;font-weight:700;color:${color};letter-spacing:-0.02em">${todayVal!=null?cfg.fmt(todayVal):'—'} <span class="tiny faint" style="font-weight:500">/ ${cfg.target} ${cfg.unit}</span></div>
+  <p class="tiny muted" style="margin-top:4px">today · ${band==='red'?'below target':band==='amber'?'getting there':band==='green'?'on target':'no data'}</p>
+  <h3 class="mt-4" style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted)">Last 7 days</h3>
+  <div style="display:flex;align-items:flex-end;gap:6px;height:80px;margin-top:10px;padding:0 2px">
+    ${hist.map(h=>{const v=h.value||0;const hp=Math.max(2,Math.round((v/maxHist)*72));const isToday=h.iso===todayIso;const b=nutritionBand(metric,v);const c=v?nutritionBandColor(b):'var(--border-l)';return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;height:${hp}px;background:${c};border-radius:3px;${isToday?'outline:2px solid var(--ink);outline-offset:1px':''}"></div><div class="tiny faint">${h.date.toLocaleDateString(undefined,{weekday:'narrow'})}</div></div>`}).join('')}
+  </div>
+  <h3 class="mt-4" style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted)">Today's contributors</h3>
+  ${foods.length===0?'<p class="tiny muted mt-2">No foods contributing yet.</p>':`<div style="margin-top:10px">
+    ${foods.map(f=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border-l)"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${escapeHtml(f.name)}</div><div class="tiny faint">${escapeHtml(f.portion||'')}</div></div><div style="font-weight:700;font-size:13px;color:${color}">${cfg.fmt(f.value)} ${cfg.unit}</div></div>`).join('')}
+  </div>`}
+  <p class="tiny faint" style="margin-top:16px;line-height:1.5">${escapeHtml(cfg.blurb)}</p>
+  </div>`;
+  m.addEventListener('click',ev=>{if(ev.target===m)m.remove()});
+  m.querySelector('#nb-x').addEventListener('click',()=>m.remove());
+  document.body.appendChild(m);
 }
 function openEntryModal(d){
   const e=state.data.entries[d];if(!e)return;
@@ -1896,216 +2016,4 @@ async function syncHealthConnect(dateIso){
   // Pull every aggregatable data type
   for(const type of HC_DATA_TYPES){
     const v=await _hcAgg(HC,startIso,endIso,type);
-    if(v!=null){hc[type.replace(/-/g,'_')]=v;hc.available[type]=true}
-  }
-  // Convert distance from meters to km if present
-  if(hc.distance!=null)hc.distance_km=Math.round(hc.distance/10)/100;
-
-  // Workouts/exercise sessions
-  try{
-    const r=await HC.queryWorkouts?.({startDate:startIso,endDate:endIso,includeHeartRate:true,includeRoute:false});
-    hc.workouts=(r?.workouts||r?.sessions||[]).map(w=>({
-      type:w.workoutType||w.type||w.exerciseType,
-      sourceApp:w.sourceAppId||w.sourceName||w.source,
-      start:w.startDate||w.startTime,
-      end:w.endDate||w.endTime,
-      durationSec:w.duration||w.durationSeconds,
-      calories:w.calories||w.activeCalories,
-      distance_m:w.distance,
-      hrAvg:w.heartRateAvg||w.avgHeartRate,
-      hrMax:w.heartRateMax||w.maxHeartRate,
-      title:w.title||w.name,
-    }));
-    if(hc.workouts.length)hc.available.workouts=true;
-  }catch(e){console.warn('HC workouts',e)}
-
-  // Sleep — prefer the native Sleep bridge (added v4.0) which returns full stage data
-  try{
-    const sleepP=window.Capacitor?.Plugins?.Sleep;
-    const sleepStart=new Date(start.getTime()-30*3600*1000);
-    if(sleepP&&typeof sleepP.querySleep==='function'){
-      const r=await sleepP.querySleep({startDate:sleepStart.toISOString(),endDate:endIso});
-      const sessions=r?.sessions||[];
-      if(sessions.length>0){
-        const last=sessions[sessions.length-1];
-        hc.sleep={
-          start:last.startTime,
-          end:last.endTime,
-          hours:Math.round((last.durationMinutes/60)*10)/10,
-          stages:last.stages||null,
-        };
-        hc.available.sleep=true;
-      }
-    }else if(typeof HC.querySleep==='function'){
-      const r=await HC.querySleep({startDate:sleepStart.toISOString(),endDate:endIso});
-      const sessions=r?.sleepData||r?.sleepSessions||r?.sessions||[];
-      if(sessions.length>0){
-        const last=sessions[sessions.length-1];
-        const sd=new Date(last.startDate||last.startTime),ed=new Date(last.endDate||last.endTime);
-        hc.sleep={start:sd.toISOString(),end:ed.toISOString(),hours:Math.round((ed-sd)/360000)/10,stages:last.stages||last.sleepStages||null};
-        hc.available.sleep=true;
-      }
-    }else{
-      const r=await HC.queryAggregated?.({startDate:startIso,endDate:endIso,dataType:'sleep',bucket:'day'}).catch(()=>null);
-      const v=r?.aggregatedData?.[0]?.value;
-      if(v){hc.sleep={hours:Math.round((v/3600)*10)/10};hc.available.sleep=true}
-    }
-  }catch(e){console.warn('HC sleep',e)}
-
-  // HRV — native Sleep bridge exposes queryHrv
-  try{
-    const sleepP=window.Capacitor?.Plugins?.Sleep;
-    if(sleepP&&typeof sleepP.queryHrv==='function'){
-      const r=await sleepP.queryHrv({startDate:startIso,endDate:endIso});
-      const samples=r?.samples||[];
-      if(samples.length){
-        const vals=samples.map(s=>s.rmssd_ms).filter(v=>v>0);
-        if(vals.length){
-          hc.hrv_rmssd_avg=Math.round((vals.reduce((a,b)=>a+b,0)/vals.length)*10)/10;
-          hc.hrv_samples=vals.length;
-          hc.available.hrv=true;
-        }
-      }
-    }
-  }catch(e){console.warn('HC hrv',e)}
-
-  // RHR — native Sleep bridge exposes queryRestingHeartRate (override aggregated if available)
-  try{
-    const sleepP=window.Capacitor?.Plugins?.Sleep;
-    if(sleepP&&typeof sleepP.queryRestingHeartRate==='function'){
-      const r=await sleepP.queryRestingHeartRate({startDate:startIso,endDate:endIso});
-      const vals=(r?.values||[]).map(v=>v.bpm).filter(v=>v>0);
-      if(vals.length){
-        hc.resting_heart_rate=Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
-        hc.available['resting-heart-rate']=true;
-      }
-    }
-  }catch(e){console.warn('HC rhr native',e)}
-
-  // HR streams — capacitor-health@8.1.2 doesn't expose a top-level HR query.
-  // Heart-rate data comes through queryWorkouts with includeHeartRate:true (above).
-  // Aggregate min/avg/max from any workout HR samples we collected.
-  try{
-    const hrVals=[];
-    for(const w of hc.workouts||[]){
-      if(w.hrAvg)hrVals.push(w.hrAvg);
-      if(w.hrMax)hrVals.push(w.hrMax);
-      if(Array.isArray(w.heartRate))for(const sample of w.heartRate){const b=sample.bpm||sample.value;if(b>0)hrVals.push(b)}
-    }
-    if(hrVals.length){
-      hc.hr_min=Math.min(...hrVals);
-      hc.hr_max=Math.max(...hrVals);
-      hc.hr_avg=Math.round(hrVals.reduce((a,b)=>a+b,0)/hrVals.length);
-      hc.hr_samples=hrVals.length;
-    }
-  }catch(e){}
-
-  // Store in entry + push
-  const e=state.data.entries[date]||{};
-  e.hc=hc;
-  e.hcSyncedAt=nowIso();
-  // Note: we intentionally do NOT auto-populate entry.weight from HC.
-  // Weight is manual-only — the app remains the source of truth and writes
-  // back to HC via writeWeightToHC on save. HC weight is still recorded
-  // under entry.hc.weight for reference / future trend cross-checks.
-  state.data.entries[date]=e;
-  saveLocalData();
-  state.lastHcSyncAt=nowIso();
-  if(isConfigured()){pushData().catch(err=>console.warn('hc push failed',err))}
-  return hc;
-}
-
-// Multi-day backfill — useful on first run or after a gap. Syncs N days ending today.
-async function syncHealthConnectRange(days=7){
-  if(!IS_NATIVE)return {synced:0,failed:0};
-  if(!healthConnectReady){const ok=await setupHealthConnect();if(!ok)return {synced:0,failed:0}}
-  let synced=0,failed=0;
-  for(let i=days-1;i>=0;i--){
-    const d=new Date();d.setDate(d.getDate()-i);
-    const iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-    try{const r=await syncHealthConnect(iso);if(r)synced++;else failed++}catch(e){failed++}
-  }
-  return {synced,failed};
-}
-
-// Quick reads (kept for UI convenience — pull from cached HC sync)
-function getHCToday(){return state.data.entries[today()]?.hc||null}
-// =================== SHIFT RESCUE BRIDGE (v4.0 native plugin) ===================
-function shiftRescuePlugin(){return window.Capacitor?.Plugins?.ShiftRescue}
-
-// Compute today's daytime-sleep window (only meaningful on shift days). Returns
-// {startMs, endMs} or null if not a shift day.
-function todaySleepWindow(){
-  if(!isShiftDay())return null;
-  const now=new Date();
-  // Shift sleep target: 2:00 PM to 9:30 PM (matches the corrected schedule)
-  const start=new Date(now);start.setHours(14,0,0,0);
-  const end=new Date(now);end.setHours(21,30,0,0);
-  return {startMs:start.getTime(),endMs:end.getTime()};
-}
-
-async function setupShiftRescue(){
-  const SR=shiftRescuePlugin();
-  if(!SR)return false;
-  const w=todaySleepWindow();
-  if(!w)return true; // not a shift day → no window to set
-  try{
-    await SR.setSleepWindow({startMs:w.startMs,endMs:w.endMs});
-    return true;
-  }catch(e){console.warn('setSleepWindow',e);return false}
-}
-
-async function scheduleRescuePrompt({id,fireAtMs,title,body,deepLinkRoute='today',tag='default'}){
-  const SR=shiftRescuePlugin();
-  if(!SR){console.info('ShiftRescue not native — prompt skipped:',id);return false}
-  try{
-    await SR.schedulePrompt({id,fireAtMs,title,body,deepLinkRoute,tag});
-    return true;
-  }catch(e){console.warn('schedulePrompt',e);return false}
-}
-
-async function cancelRescuePrompt(id){
-  const SR=shiftRescuePlugin();
-  if(!SR)return false;
-  try{await SR.cancelPrompt({id});return true}catch(e){return false}
-}
-
-
-function hcWaterToday(){const hc=getHCToday()||{};return hc.water||0}  // ml from HC if logged elsewhere
-function hcAvg(field,days=7){
-  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,days);
-  const vals=ents.map(([d,e])=>e.hc?.[field]).filter(v=>v!=null&&!isNaN(v));
-  if(vals.length===0)return null;
-  return vals.reduce((s,v)=>s+v,0)/vals.length;
-}
-function hcSleepAvg(days=7){
-  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,days);
-  const vals=ents.map(([d,e])=>e.hc?.sleep?.hours).filter(v=>v!=null);
-  if(vals.length===0)return null;
-  return vals.reduce((s,v)=>s+v,0)/vals.length;
-}
-function hcWeekTotal(field){
-  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,7);
-  return ents.reduce((s,[d,e])=>s+(e.hc?.[field]||0),0);
-}
-
-loadLocal();
-if(isConfigured())state.screen='today';else state.screen='welcome';
-render();
-loadAllDB().then(()=>{state.todayRec=null;render()});
-if(IS_NATIVE){
-  setupHealthConnect().then(ok=>{
-    if(!ok)return;
-    // Decide between single-day and multi-day backfill.
-    const last=state.data.entries[today()]?.hcSyncedAt;
-    const stale=!last||((Date.now()-new Date(last).getTime())>12*3600*1000);
-    const job=stale?syncHealthConnectRange(7):syncHealthConnect();
-    Promise.resolve(job).then(r=>{render()});
-  });
-  // Set the sleep-sovereign gate on the native scheduler so notifications respect daytime sleep
-  setupShiftRescue();
-}
-if(isConfigured())pullData().then(()=>render()).catch(e=>console.warn('boot sync failed',e));
-</script>
-</body>
-</html>
+    if(v!=null){hc[type.replace(/-/g,'_')]=v;hc.ava
