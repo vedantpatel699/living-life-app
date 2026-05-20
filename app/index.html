@@ -21,7 +21,7 @@ input,textarea,button,select{font-family:inherit;color:inherit}
 button{cursor:pointer;border:none;background:none}
 a{color:var(--ink);text-decoration:none}
 #root{max-width:480px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;position:relative;background:var(--surface-cream)}
-.status-bar{height:50px;padding:max(16px,env(safe-area-inset-top)) 24px 0;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.status-bar{min-height:64px;padding:calc(max(16px,env(safe-area-inset-top)) + 8px) 24px 10px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
 .status-bar .time{font-size:15px;font-weight:600}
 .status-bar .icons{font-size:13px;font-weight:600;opacity:0.85;letter-spacing:2px}
 .top-bar{display:flex;align-items:center;gap:14px;padding:14px 20px 8px;flex-shrink:0}
