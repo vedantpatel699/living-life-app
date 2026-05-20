@@ -1703,13 +1703,20 @@ function openFoodQuantityModal(f,onPick){
   const looksUnitBased=/\b(egg|paratha|roti|slice|piece|cup|katori|glass|bottle|scoop|item)\b/i.test(standard.n||'');
   const useUnits=looksUnitBased;
   const modal=document.createElement('div');modal.className='modal-bg';
-  // v3.16 — meta line from new foods.json fields (graceful no-op when fields are absent)
+  // v3.17 — meta line from foods.json v3 (source/prep are OBJECTS not strings).
+  // Falls back gracefully to string shape if a pre-v3 DB is ever loaded.
+  const srcText=(f.source && typeof f.source==='object')
+    ? `${f.source.type||''}${f.source.confidence?' · '+f.source.confidence+' confidence':''}`
+    : (f.source?String(f.source):'');
+  const prepText=(f.prep && typeof f.prep==='object')
+    ? `${f.prep.state||''}${f.prep.oil_added?' · with oil':''}`
+    : (f.prep?String(f.prep):'');
   const meta=[
     f.brand?escapeHtml(f.brand):null,
-    f.source?escapeHtml(f.source):null,
-    f.prep?escapeHtml(f.prep):null,
-    f.glycemic_index?('GI '+f.glycemic_index):null,
-    f.protein_quality_tag?escapeHtml(f.protein_quality_tag.replace(/_/g,' ')):null
+    srcText?escapeHtml(srcText):null,
+    prepText?escapeHtml(prepText):null,
+    f.glycemic_index!=null?('GI '+f.glycemic_index):null,
+    f.protein_quality_tag?escapeHtml(String(f.protein_quality_tag).replace(/_/g,' ')):null
   ].filter(Boolean).join(' · ');
   modal.innerHTML=`<div class="modal" style="max-width:380px"><div class="modal-handle"></div>
   <h2 style="font-size:18px;font-weight:700;margin-bottom:2px">${escapeHtml(f.name)}</h2>
@@ -2066,4 +2073,39 @@ async function cancelRescuePrompt(id){
 
 function hcWaterToday(){const hc=getHCToday()||{};return hc.water||0}  // ml from HC if logged elsewhere
 function hcAvg(field,days=7){
-  const ents=Object.entries(state.data.entries).sort((a,b)
+  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,days);
+  const vals=ents.map(([d,e])=>e.hc?.[field]).filter(v=>v!=null&&!isNaN(v));
+  if(vals.length===0)return null;
+  return vals.reduce((s,v)=>s+v,0)/vals.length;
+}
+function hcSleepAvg(days=7){
+  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,days);
+  const vals=ents.map(([d,e])=>e.hc?.sleep?.hours).filter(v=>v!=null);
+  if(vals.length===0)return null;
+  return vals.reduce((s,v)=>s+v,0)/vals.length;
+}
+function hcWeekTotal(field){
+  const ents=Object.entries(state.data.entries).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,7);
+  return ents.reduce((s,[d,e])=>s+(e.hc?.[field]||0),0);
+}
+
+loadLocal();
+if(isConfigured())state.screen='today';else state.screen='welcome';
+render();
+loadAllDB().then(()=>{state.todayRec=null;render()});
+if(IS_NATIVE){
+  setupHealthConnect().then(ok=>{
+    if(!ok)return;
+    // Decide between single-day and multi-day backfill.
+    const last=state.data.entries[today()]?.hcSyncedAt;
+    const stale=!last||((Date.now()-new Date(last).getTime())>12*3600*1000);
+    const job=stale?syncHealthConnectRange(7):syncHealthConnect();
+    Promise.resolve(job).then(r=>{render()});
+  });
+  // Set the sleep-sovereign gate on the native scheduler so notifications respect daytime sleep
+  setupShiftRescue();
+}
+if(isConfigured())pullData().then(()=>render()).catch(e=>console.warn('boot sync failed',e));
+</script>
+</body>
+</html>
