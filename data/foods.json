@@ -9200,6 +9200,128 @@
         "confidence": "high",
         "note": "Text and packaging description explicitly states a net weight of 6oz / 170g for the retail clamshell. Leucine is calculated from standard USDA raspberry amino acid distribution data (~5.8% of total protein weight)."
       }
+    },
+    {
+      "id": "mumbai-pav-dinner-bun",
+      "name": "Pav (Indian Dinner Bun)",
+      "category": "prepared",
+      "kcal": 285,
+      "protein": 8.5,
+      "carbs": 55.0,
+      "fat": 3.0,
+      "fiber": 2.2,
+      "sat_fat": 0.8,
+      "sugar": 5.0,
+      "sodium_mg": 480,
+      "potassium_mg": 115,
+      "calcium_mg": 35,
+      "iron_mg": 2.8,
+      "magnesium_mg": 24,
+      "zinc_mg": 0.8,
+      "vit_a_iu": 0,
+      "vit_c_mg": 0,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 85,
+      "leucine_g": 0.62,
+      "selenium_ug": 25.0,
+      "glycemic_index": 75,
+      "source": {
+        "type": "IFCT_2017",
+        "citation": "Table T4 (Refined wheat flour products / Bread)",
+        "confidence": "high"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "grain",
+      "brand": null,
+      "tags": [
+        "staple",
+        "high_gi",
+        "grain",
+        "indian_bread"
+      ],
+      "portions": [
+        {
+          "n": "as in photo (approx 3.3 buns, 90g)",
+          "g": 90,
+          "fromPhoto": true
+        },
+        {
+          "n": "1 single pav",
+          "g": 27
+        }
+      ],
+      "photoEstimate": {
+        "grams": 90,
+        "confidence": "high",
+        "note": "Visible are 3 whole standard dinner rolls/pav (approx 27g each) plus one small fragment (approx 9g) on a standard 7-inch stainless steel quarter plate."
+      }
+    },
+    {
+      "id": "sev-usal-misal",
+      "name": "Sev Usal (Spiced Green Pea Curry with Sev)",
+      "category": "prepared",
+      "kcal": 195,
+      "protein": 6.8,
+      "carbs": 21.5,
+      "fat": 9.2,
+      "fiber": 4.5,
+      "sat_fat": 2.1,
+      "sugar": 2.5,
+      "sodium_mg": 520,
+      "potassium_mg": 230,
+      "calcium_mg": 45,
+      "iron_mg": 2.1,
+      "magnesium_mg": 32,
+      "zinc_mg": 0.9,
+      "vit_a_iu": 180,
+      "vit_c_mg": 4.5,
+      "vit_d_iu": 0,
+      "vit_b12_ug": 0,
+      "folate_ug": 42,
+      "leucine_g": 0.45,
+      "selenium_ug": 4.5,
+      "glycemic_index": 55,
+      "source": {
+        "type": "ai_estimate",
+        "citation": "Composite recipe estimate based on INDB 2021 cooked pulses and fried sev snack topping",
+        "confidence": "medium"
+      },
+      "prep": {
+        "state": "cooked",
+        "oil_added": true,
+        "yield_factor": null
+      },
+      "protein_quality_tag": "mixed",
+      "brand": null,
+      "tags": [
+        "indian_main",
+        "legume",
+        "snack",
+        "complementary",
+        "medium_gi",
+        "gujarati"
+      ],
+      "portions": [
+        {
+          "n": "as in photo (1 medium bowl, 240g)",
+          "g": 240,
+          "fromPhoto": true
+        },
+        {
+          "n": "100g portion",
+          "g": 100
+        }
+      ],
+      "photoEstimate": {
+        "grams": 240,
+        "confidence": "medium",
+        "note": "Estimated based on a standard 6-inch ceramic soup bowl, filled with roughly 180g of thick green pea gravy (usal/ragda) and topped with approximately 60g of thick gathiya/sev noodles."
+      }
     }
   ]
 }
