@@ -625,7 +625,7 @@ function renderToday(){
       ${tpls.length>0?gfRow({icon:'💾',iconBg:'var(--sun-s)',iconColor:'#B58A0F',title:'Saved meal templates',sub:tpls.length+' template'+(tpls.length===1?'':'s')+' · one-tap log',id:'t-tpls'}):''}
       ${hasClaudeKey()?gfRow({icon:'✦',iconBg:'var(--cta)',iconColor:'var(--sun)',title:'Ask your coach',sub:'Knows your data',id:'t-coach'}):''}
     </div>
-    <button id="t-fab" style="position:fixed;bottom:96px;right:18px;height:54px;padding:0 22px;border-radius:27px;background:var(--coral);color:white;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 24px rgba(237,122,77,0.4);z-index:50"><span style="font-size:22px;line-height:1;font-weight:300">＋</span> <span>Log</span></button>
+    <button id="t-fab" style="position:fixed;bottom:calc(108px + env(safe-area-inset-bottom));right:18px;height:54px;padding:0 22px;border-radius:27px;background:var(--coral);color:white;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 8px 24px rgba(237,122,77,0.4);z-index:50"><span style="font-size:22px;line-height:1;font-weight:300">＋</span> <span>Log</span></button>
   </div>`;
 }
 function bindToday(){
