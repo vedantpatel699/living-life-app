@@ -1409,161 +1409,195 @@ function bindCoach(){
 
 
 // =================== METRIC DETAIL SCREEN (Google-Fit-style drill-down) ===================
+// v3.24 — METRIC_DEFS expanded with type ('sum' vs 'avg') and color per metric. Drives bar-vs-line chart choice + range aggregation.
 const METRIC_DEFS = {
-  weight: {label:'Weight',unit:'kg',color:'var(--ink)',source:'manual',blurb:'Body weight logged daily. Daily noise comes from water, food, glycogen. The 7-day moving average is the real signal.'},
-  protein: {label:'Protein',unit:'g',color:'var(--coral)',source:'food log',blurb:'Daily protein intake from logged foods. Target 130-140g/day for muscle preservation in deficit (Witard 2014).'},
-  active_kcal: {label:'Active calories',unit:'kcal',color:'var(--coral)',source:'Health Connect',blurb:'Active calories burned above your resting metabolism. Wearable estimates have 27-93% error (Stanford 2017) — trust the trend, not the daily number.'},
-  rhr: {label:'Resting heart rate',unit:'bpm',color:'var(--coral)',source:'Health Connect',blurb:'Your morning resting heart rate. Trend up over weeks can mean illness, overtraining, or sleep debt.'},
-  hrv: {label:'Heart rate variability',unit:'ms',color:'var(--sky)',source:'Health Connect',blurb:'RMSSD HRV from Garmin. Within-day variability is high — interpret only the 7-day average trend.'},
-  steps: {label:'Steps',unit:'',color:'var(--ink)',source:'Health Connect',blurb:'Daily step count. Useful for spotting changes in your overall activity, not as a strict goal.'},
-  vo2_max: {label:'VO₂max',unit:'',color:'var(--mint)',source:'Health Connect',blurb:'Cardiorespiratory fitness estimate from Garmin. Move 8-12 week direction only.'},
+  weight:     {label:'Weight',           unit:'kg',  color:'#ED7A4D',type:'avg',source:'manual',         blurb:'Body weight logged daily. Daily noise comes from water, food, glycogen. The 7-day moving average is the real signal.'},
+  waist:      {label:'Waist',            unit:'cm',  color:'#1A1F2E',type:'avg',source:'manual',         blurb:'Waist circumference at the navel. South Asian male target is <90 cm for cardiometabolic risk; aim for <85 cm.'},
+  protein:    {label:'Protein',          unit:'g',   color:'#ED7A4D',type:'sum',source:'food log',       blurb:'Daily protein intake from logged foods. Floor 130-140g/day for muscle preservation in deficit (Witard 2014).'},
+  energy_net: {label:'Energy net',       unit:'kcal',color:'#4DA869',type:'avg',source:'food + HC',      blurb:'Calories in minus calories out (BMR + active). Target around −400 kcal/day for ~0.5 kg/week loss.'},
+  active_kcal:{label:'Active calories',  unit:'kcal',color:'#ED7A4D',type:'sum',source:'Health Connect', blurb:'Active calories burned above resting metabolism. Wearable estimates have 27–93% error (Stanford 2017) — trust the trend, not the daily number.'},
+  steps:      {label:'Steps',            unit:'',    color:'#3266BE',type:'sum',source:'Health Connect', blurb:'Daily step count. Useful for spotting changes in your overall activity, not as a strict goal.'},
+  distance:   {label:'Distance',         unit:'km',  color:'#3266BE',type:'sum',source:'Health Connect', blurb:'Daily distance walked + run. Counts ambient movement, not just deliberate exercise.'},
+  rhr:        {label:'Resting heart rate',unit:'bpm',color:'#ED7A4D',type:'avg',source:'Health Connect', blurb:'Morning resting heart rate. Trend up over weeks can mean illness, overtraining, or sleep debt.'},
+  hr_avg:     {label:'Heart rate · day avg',unit:'bpm',color:'#ED7A4D',type:'avg',source:'Health Connect',blurb:'Average heart rate across the day. Dropping into the high 60s–70s at rest is a fitness signal.'},
+  hrv:        {label:'Heart rate variability',unit:'ms',color:'#3266BE',type:'avg',source:'Health Connect',blurb:'RMSSD HRV from Garmin. Within-day variability is high — interpret only the 7-day average trend.'},
+  vo2_max:    {label:'VO₂max',           unit:'',    color:'#8CCB9C',type:'avg',source:'Health Connect', blurb:'Cardiorespiratory fitness estimate. Move 8-12 week direction only.'},
+  leucine:    {label:'Leucine',          unit:'g',   color:'#ED7A4D',type:'sum',source:'food log',       blurb:'Witard 2014: 2.5g leucine per meal is the MPS minimum. ~10g/day total across 4 meals.'},
+  selenium:   {label:'Selenium',         unit:'µg',  color:'#8CCB9C',type:'sum',source:'food log',       blurb:'55µg/day RDA. SSRI users: keep dietary intake adequate but avoid high-dose supplements (interaction risk).'},
+  glycemic_load:{label:'Glycemic load',  unit:'GL',  color:'#F2A65A',type:'sum',source:'food log',       blurb:'Daily GL <100 = low-impact pattern. 100-120 borderline. >120 elevates metabolic risk, especially on shift work.'},
 };
 
+// v3.24 — Google Fit-style metric detail. Week + Month tabs only (no Day, no Year per user).
+//         Week = Sunday-to-Saturday. Month = calendar month. ‹ › arrows step through ranges.
 function renderMetricDetail(){
   const metric=state.metric||'weight';
   const def=METRIC_DEFS[metric]||METRIC_DEFS.weight;
   const period=state.metricPeriod||'week';
+  const offset=state.metricOffset||0;  // 0 = current week/month, -1 = prior, +1 = next (clamped at 0)
   return `<div class="top-bar"><button class="back-btn" id="md-back">←</button><div class="title-block"><h1>${escapeHtml(def.label)}</h1></div><div style="width:44px"></div></div>
 <div style="padding:0 4px 80px">
   <div style="display:flex;border-bottom:1px solid var(--border-l)">
-    ${['day','week','month','year'].map(p=>`<button class="md-tab" data-period="${p}" style="flex:1;padding:14px 0;background:transparent;font-size:14px;font-weight:${period===p?'700':'500'};color:${period===p?'var(--ink)':'var(--muted)'};border-bottom:2px solid ${period===p?'var(--ink)':'transparent'};text-transform:capitalize">${p}</button>`).join('')}
+    ${['week','month'].map(p=>`<button class="md-tab" data-period="${p}" style="flex:1;padding:14px 0;background:transparent;font-size:14px;font-weight:${period===p?'700':'500'};color:${period===p?'var(--ink)':'var(--muted)'};border-bottom:2px solid ${period===p?'var(--ink)':'transparent'};text-transform:capitalize">${p}</button>`).join('')}
   </div>
   <div style="text-align:center;padding:24px 0 8px">
-    <div class="tiny muted" id="md-range-label">${metricRangeLabel(period)}</div>
-    <div id="md-total" style="font-size:32px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-top:4px">—</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;font-size:14px;color:var(--ink);font-weight:600">
+      <button id="md-prev" style="background:transparent;color:var(--faint);font-size:22px;padding:4px 8px">‹</button>
+      <span id="md-range-label">${escapeHtml(metricRangeLabel(period,offset))}</span>
+      <button id="md-next" style="background:transparent;color:${offset>=0?'rgba(183,188,201,0.3)':'var(--faint)'};font-size:22px;padding:4px 8px"${offset>=0?' disabled':''}>›</button>
+    </div>
+    <div id="md-total" style="font-size:30px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-top:10px;color:${def.color}">—</div>
     <div class="tiny muted" id="md-total-label">${def.unit?def.unit:''}</div>
   </div>
-  <div style="height:280px;margin:8px 0 20px;position:relative">
+  <div style="height:260px;margin:8px 0 20px;position:relative">
     <canvas id="md-chart"></canvas>
   </div>
-  <div style="padding:0 16px">
+  <div style="padding:0 24px">
     <p class="muted" style="font-size:14px;line-height:1.6">${escapeHtml(def.blurb)}</p>
     <p class="tiny faint" style="margin-top:14px">Source: ${escapeHtml(def.source)}</p>
   </div>
 </div>`;
 }
-
-function metricRangeLabel(period){
-  const d=new Date();
-  if(period==='day')return d.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
-  if(period==='week')return 'Last 7 days';
-  if(period==='month')return 'Last 30 days';
-  if(period==='year')return 'Last 12 months';
-  return '';
+// v3.24 — week is Sunday-to-Saturday, month is calendar month. Offset shifts back (negative).
+function metricRangeBounds(period,offset){
+  const t=new Date();t.setHours(0,0,0,0);
+  if(period==='week'){
+    // Find Sunday of current week
+    const sunday=new Date(t);sunday.setDate(t.getDate()-t.getDay());
+    sunday.setDate(sunday.getDate()+(offset*7));
+    const saturday=new Date(sunday);saturday.setDate(sunday.getDate()+6);
+    return {start:sunday,end:saturday};
+  }else{
+    const first=new Date(t.getFullYear(),t.getMonth()+offset,1);
+    const last=new Date(t.getFullYear(),t.getMonth()+offset+1,0);
+    return {start:first,end:last};
+  }
+}
+function metricRangeLabel(period,offset){
+  const {start,end}=metricRangeBounds(period,offset);
+  if(period==='week'){
+    const sameMonth=start.getMonth()===end.getMonth();
+    if(sameMonth)return start.toLocaleDateString(undefined,{month:'short'})+' '+start.getDate()+'–'+end.getDate();
+    return start.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' – '+end.toLocaleDateString(undefined,{month:'short',day:'numeric'});
+  }
+  return start.toLocaleDateString(undefined,{month:'long',year:'numeric'});
 }
 
-// Pull a value for a metric on a given ISO date from state.data.entries
+// v3.24 — pull a value for a metric on a given ISO date. Null = no data, NOT zero.
 function metricValueFor(metric,iso){
   const e=state.data.entries[iso];
   if(!e)return null;
   if(metric==='weight')return typeof e.weight==='number'?e.weight:null;
+  if(metric==='waist')return typeof e.waist_cm==='number'?e.waist_cm:null;
   if(metric==='protein'){const foods=e.foods||[];const v=foods.reduce((s,f)=>s+(f.protein||0),0);return foods.length>0?v:null}
+  if(metric==='energy_net'){
+    const foods=e.foods||[];if(foods.length===0)return null;
+    const intake=foods.reduce((s,f)=>s+(f.kcal||0),0);
+    // BMR for the day (estimate using current profile + weight)
+    const wt=(typeof e.weight==='number')?e.weight:currentWeight();
+    const p=state.profile;
+    const bmr24=10*wt+6.25*p.heightCm-5*p.age+(p.sex==='female'?-161:5);
+    const active=e.hc?.active_calories||0;
+    return Math.round(intake-(bmr24+active));
+  }
   if(metric==='active_kcal')return e.hc?.active_calories??null;
-  if(metric==='rhr')return e.hc?.resting_heart_rate??null;
-  if(metric==='hrv')return e.hc?.hrv_rmssd_avg??null;
   if(metric==='steps')return e.hc?.steps??null;
+  if(metric==='distance')return e.hc?.distance_km??null;
+  if(metric==='rhr')return e.hc?.resting_heart_rate??null;
+  if(metric==='hr_avg')return e.hc?.heart_rate_avg??e.hc?.heart_rate??null;
+  if(metric==='hrv')return e.hc?.hrv_rmssd_avg??null;
   if(metric==='vo2_max')return e.hc?.vo2_max??null;
+  if(metric==='leucine'){const v=(e.foods||[]).reduce((s,f)=>s+(f.leucine_g||0),0);return v>0?v:null}
+  if(metric==='selenium'){const v=(e.foods||[]).reduce((s,f)=>s+(f.selenium_ug||0),0);return v>0?v:null}
+  if(metric==='glycemic_load'){
+    let gl=0,has=false;
+    for(const f of (e.foods||[])){
+      const db=DB.foodsBySlug?.[f.foodId];const gi=db?.glycemic_index;
+      if(gi!=null&&typeof f.carbs==='number'){gl+=gi*f.carbs/100;has=true}
+    }
+    return has?gl:null;
+  }
   return null;
 }
+// v3.24 — pull last N days of values as a series (newest last). Used for sparklines.
+function metricSeries(metric,days){
+  const out=[];
+  const t=new Date();t.setHours(0,0,0,0);
+  for(let i=days-1;i>=0;i--){
+    const d=new Date(t);d.setDate(d.getDate()-i);
+    const iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    out.push(metricValueFor(metric,iso));
+  }
+  return out;
+}
+// v3.24 — avg/total across the last N days (null when no data).
+function metricAvg(metric,days){const s=metricSeries(metric,days).filter(v=>v!=null);if(s.length===0)return null;return s.reduce((a,b)=>a+b,0)/s.length}
+function metricSum(metric,days){const s=metricSeries(metric,days).filter(v=>v!=null);if(s.length===0)return null;return s.reduce((a,b)=>a+b,0)}
 
 function bindMetricDetail(){
-  document.getElementById('md-back')?.addEventListener('click',()=>{state.metric=null;state.metricPeriod=null;setScreen('today')});
-  document.querySelectorAll('.md-tab').forEach(b=>b.addEventListener('click',()=>{state.metricPeriod=b.dataset.period;render()}));
-  // Draw the chart
+  document.getElementById('md-back')?.addEventListener('click',()=>{state.metric=null;state.metricPeriod=null;state.metricOffset=0;setScreen('progress')});
+  document.querySelectorAll('.md-tab').forEach(b=>b.addEventListener('click',()=>{
+    if(state.metricPeriod!==b.dataset.period){state.metricPeriod=b.dataset.period;state.metricOffset=0;render()}
+  }));
+  document.getElementById('md-prev')?.addEventListener('click',()=>{state.metricOffset=(state.metricOffset||0)-1;render()});
+  document.getElementById('md-next')?.addEventListener('click',()=>{const o=state.metricOffset||0;if(o<0){state.metricOffset=o+1;render()}});
   setTimeout(()=>drawMetricChart(),50);
 }
 
+// v3.24 — daily values at 50% opacity (dots if avg, bars if sum) + 7-day rolling average line.
 function drawMetricChart(){
   const canvas=document.getElementById('md-chart');
   if(!canvas||!window.Chart)return;
   const metric=state.metric||'weight';
   const def=METRIC_DEFS[metric]||METRIC_DEFS.weight;
   const period=state.metricPeriod||'week';
-  // Build labels + values based on period
-  let labels=[],values=[];
-  const today_=new Date();today_.setHours(0,0,0,0);
-  let days;
-  if(period==='day')days=1;
-  else if(period==='week')days=7;
-  else if(period==='month')days=30;
-  else days=365;
-  for(let i=days-1;i>=0;i--){
-    const d=new Date(today_);d.setDate(d.getDate()-i);
-    const iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-    labels.push(d);
-    values.push(metricValueFor(metric,iso));
-  }
-  // Compute total/average for the period
-  const valid=values.filter(v=>v!=null);
-  let total=null,totalLabel=def.unit||'';
+  const offset=state.metricOffset||0;
+  const {start,end}=metricRangeBounds(period,offset);
+  // Build day list for the range
+  const days=[];
+  const cur=new Date(start);cur.setHours(0,0,0,0);
+  while(cur<=end){days.push(new Date(cur));cur.setDate(cur.getDate()+1)}
+  const isoOf=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const raw=days.map(d=>metricValueFor(metric,isoOf(d)));
+  // 7-day rolling avg, with 6-day lookback before the range so the curve isn't empty at the start.
+  const lookback=[];for(let i=6;i>0;i--){const d=new Date(start);d.setDate(d.getDate()-i);lookback.push(metricValueFor(metric,isoOf(d)))}
+  const full=[...lookback,...raw];
+  const ma7=raw.map((_,i)=>{const w=full.slice(i,i+7).filter(v=>v!=null);return w.length?w.reduce((a,b)=>a+b,0)/w.length:null});
+  // Hero number
+  const valid=raw.filter(v=>v!=null);
+  let hero=null,heroSub=def.unit||'';
   if(valid.length>0){
-    if(['weight','rhr','hrv','vo2_max'].includes(metric)){
-      // Use average for these
-      total=(valid.reduce((s,v)=>s+v,0)/valid.length);
-      totalLabel='avg '+(def.unit||'');
-    }else{
-      total=valid.reduce((s,v)=>s+v,0);
-      totalLabel='total '+(def.unit||'');
-    }
+    if(def.type==='sum'){hero=valid.reduce((s,v)=>s+v,0);heroSub='total '+(def.unit||'')}
+    else{hero=valid.reduce((s,v)=>s+v,0)/valid.length;heroSub='avg '+(def.unit||'')}
   }
-  // Render the total
-  const totalEl=document.getElementById('md-total');
-  const totalLabelEl=document.getElementById('md-total-label');
-  if(totalEl){
-    if(total==null){totalEl.textContent='—';if(totalLabelEl)totalLabelEl.textContent='no data'}
+  const heroEl=document.getElementById('md-total');
+  const heroLabelEl=document.getElementById('md-total-label');
+  if(heroEl){
+    if(hero==null){heroEl.textContent='—';if(heroLabelEl)heroLabelEl.textContent='no data'}
     else{
-      const formatted=metric==='weight'||metric==='hrv'||metric==='vo2_max'?total.toFixed(1):Math.round(total).toLocaleString();
-      totalEl.textContent=formatted;
-      if(totalLabelEl)totalLabelEl.textContent=totalLabel;
+      const fmt=['weight','waist','hrv','vo2_max'].includes(metric)?hero.toFixed(1):(metric==='distance'?hero.toFixed(2):Math.round(hero).toLocaleString());
+      heroEl.textContent=fmt;
+      if(heroLabelEl)heroLabelEl.textContent=heroSub;
     }
   }
-  // Render chart — bar for totals, line for averages
-  const useBar=['protein','active_kcal','steps'].includes(metric);
+  const axisLabels=days.map(d=>period==='week'?d.toLocaleDateString(undefined,{weekday:'short'})[0]:(d.getDate()===1||d.getDate()%7===0||d.getDate()===end.getDate()?String(d.getDate()):''));
+  const c=def.color||'#1A1F2E';
+  const fade=(hex,a)=>{const m=hex.replace('#','');const r=parseInt(m.slice(0,2),16),g=parseInt(m.slice(2,4),16),b=parseInt(m.slice(4,6),16);return `rgba(${r},${g},${b},${a})`};
+  const useBar=def.type==='sum';
+  const datasets=[
+    useBar
+      ? {type:'bar',label:'Daily',data:raw,backgroundColor:fade(c,0.4),borderColor:fade(c,0.4),borderWidth:0,borderRadius:3,barPercentage:0.7,categoryPercentage:0.85,order:2}
+      : {type:'line',label:'Daily',data:raw,borderColor:'transparent',backgroundColor:fade(c,0.5),pointRadius:3,pointBackgroundColor:fade(c,0.5),showLine:false,spanGaps:false,order:2},
+    {type:'line',label:'7-day avg',data:ma7,borderColor:c,backgroundColor:fade(c,0.12),fill:!useBar,tension:0.35,pointRadius:0,borderWidth:useBar?2:2.5,spanGaps:true,order:1}
+  ];
   const ctx=canvas.getContext('2d');
-  // Color helpers
-  const c=def.color||'var(--ink)';
-  // Build labels for axis (short)
-  let axisLabels;
-  if(period==='day'){
-    // No data per-hour stored yet — fall back to a single bar
-    axisLabels=[labels[0].toLocaleDateString(undefined,{weekday:'short'})];
-    values=[values[0]];
-  }else if(period==='week'){
-    axisLabels=labels.map(d=>d.toLocaleDateString(undefined,{weekday:'short'})[0]);
-  }else if(period==='month'){
-    axisLabels=labels.map((d,i)=>i%7===0||i===labels.length-1?d.getDate()+'':'');
-  }else{
-    // year: pick monthly
-    const monthly=[],monthLabels=[];
-    let cur=new Date(today_);cur.setDate(1);
-    for(let i=11;i>=0;i--){
-      const d=new Date(today_);d.setMonth(d.getMonth()-i);d.setDate(1);
-      monthly.push(values.filter((v,idx)=>v!=null && labels[idx].getMonth()===d.getMonth() && labels[idx].getFullYear()===d.getFullYear()));
-      monthLabels.push(d.toLocaleDateString(undefined,{month:'short'}));
-    }
-    values=monthly.map(arr=>{if(arr.length===0)return null;return arr.reduce((s,v)=>s+v,0)/(['weight','rhr','hrv','vo2_max'].includes(metric)?arr.length:1)});
-    axisLabels=monthLabels;
-  }
   new Chart(ctx,{
-    type:useBar?'bar':'line',
-    data:{labels:axisLabels,datasets:[{
-      label:def.label,
-      data:values,
-      backgroundColor:c,
-      borderColor:c,
-      borderWidth:2,
-      pointRadius:useBar?0:3,
-      tension:0.3,
-      fill:false,
-      borderRadius:useBar?6:0,
-      spanGaps:true,
-    }]},
+    data:{labels:axisLabels,datasets},
     options:{
       responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{enabled:true}},
+      plugins:{legend:{display:false},tooltip:{enabled:true,mode:'index',intersect:false}},
       scales:{
-        x:{grid:{display:false},ticks:{color:'#B7BCC9',font:{size:10}}},
-        y:{grid:{color:'rgba(217,223,230,0.4)'},ticks:{color:'#B7BCC9',font:{size:10}},beginAtZero:useBar}
+        x:{grid:{display:false},ticks:{color:'#7C8497',font:{size:10},autoSkip:false,maxRotation:0}},
+        y:{position:'right',grid:{color:'rgba(217,223,230,0.5)',drawTicks:false},ticks:{color:'#7C8497',font:{size:10},maxTicksLimit:5},beginAtZero:useBar}
       }
     }
   });
@@ -1880,85 +1914,3 @@ ${filtered.length===0?'<div class="empty" style="padding:30px"><p>No foods found
       onPick(entry);
       modal.remove();
     }));
-    modal.querySelectorAll('.fp-gadd').forEach(b=>b.addEventListener('click',()=>{
-      const fid=b.dataset.fid;
-      const inp=modal.querySelector('.fp-gin[data-fid="'+fid+'"]');
-      const g=parseFloat(inp.value);
-      if(!g||g<=0){inp.focus();return}
-      const f=[...DB.foods.foods,...(state.data.customFoods||[])].find(x=>x.id===fid);
-      const kcal=Math.round((f.kcal||0)*g/100);
-      const prot=Math.round((f.protein||0)*g/100*10)/10;
-      // Calculate all available nutrients
-      const entry={foodId:f.id,name:f.name,portionName:g+'g (custom)',grams:g,kcal,protein:prot};
-      ['carbs','fat','fiber','sat_fat','sugar','sodium_mg','potassium_mg','calcium_mg','iron_mg','magnesium_mg','zinc_mg','vit_a_iu','vit_c_mg','vit_d_iu','vit_b12_ug','folate_ug'].forEach(k=>{if(f[k])entry[k]=Math.round(f[k]*g/100*100)/100});
-      if(f.source&&typeof f.source==='object'&&f.source.confidence)entry.confidence=f.source.confidence;
-      recordFoodUsage(entry.foodId);
-      onPick(entry);
-      modal.remove();
-    }));
-    // Enter key on the custom input triggers add
-    modal.querySelectorAll('.fp-gin').forEach(inp=>inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();const btn=modal.querySelector('.fp-gadd[data-fid="'+inp.dataset.fid+'"]');btn?.click()}}));
-    modal.querySelector('#fp-custom').addEventListener('click',()=>{
-      openCustomFood(food=>{state.data.customFoods=state.data.customFoods||[];state.data.customFoods.push(food);saveLocalData();expanded=food.id;render2()});
-    });
-  };
-  modal.addEventListener('click',e=>{if(e.target===modal)modal.remove()});
-  document.body.appendChild(modal);
-  render2();
-  setTimeout(()=>modal.querySelector('#fp-q')?.focus(),100);
-}
-function openFoodQuantityModal(f,onPick){
-  // Adaptive: if the food's first portion looks unit-based (e.g. "1 egg", "1 paratha"), show
-  // a "servings" stepper. Otherwise show a grams input.
-  const portions=f.portions||[{n:'100g',g:100}];
-  const standard=portions.find(p=>!p.fromPhoto&&p.g!==100)||portions[0];
-  const unitMatch=/^[\s]*1\s+/i.test(standard.n||'')||/\((\d+\.?\d*)\s*g\)/i.test(standard.n||'');
-  const looksUnitBased=/\b(egg|paratha|roti|slice|piece|cup|katori|glass|bottle|scoop|item)\b/i.test(standard.n||'');
-  const useUnits=looksUnitBased;
-  const modal=document.createElement('div');modal.className='modal-bg';
-  // v3.17 — meta line from foods.json v3 (source/prep are OBJECTS not strings).
-  // Falls back gracefully to string shape if a pre-v3 DB is ever loaded.
-  const srcText=(f.source && typeof f.source==='object')
-    ? `${f.source.type||''}${f.source.confidence?' · '+f.source.confidence+' confidence':''}`
-    : (f.source?String(f.source):'');
-  const prepText=(f.prep && typeof f.prep==='object')
-    ? `${f.prep.state||''}${f.prep.oil_added?' · with oil':''}`
-    : (f.prep?String(f.prep):'');
-  const meta=[
-    f.brand?escapeHtml(f.brand):null,
-    srcText?escapeHtml(srcText):null,
-    prepText?escapeHtml(prepText):null,
-    f.glycemic_index!=null?('GI '+f.glycemic_index):null,
-    f.protein_quality_tag?escapeHtml(String(f.protein_quality_tag).replace(/_/g,' ')):null
-  ].filter(Boolean).join(' · ');
-  modal.innerHTML=`<div class="modal" style="max-width:380px"><div class="modal-handle"></div>
-  <h2 style="font-size:18px;font-weight:700;margin-bottom:2px">${escapeHtml(f.name)}</h2>
-  <p class="tiny muted" style="margin-bottom:2px">${escapeHtml(standard.n)} = ${standard.g}g · ${Math.round((f.kcal||0)*standard.g/100)} kcal</p>
-  ${meta?`<p class="tiny faint" style="margin-bottom:14px">${meta}</p>`:'<div style="height:12px"></div>'}
-  ${useUnits?`
-    <div class="field"><div class="flabel">Servings (1 × ${escapeHtml(standard.n)})</div>
-    <div style="display:flex;align-items:center;gap:8px">
-      <button id="fq-minus" style="width:44px;height:44px;border-radius:12px;background:var(--surface-cream);font-size:20px;font-weight:700">−</button>
-      <input type="number" id="fq-count" value="1" step="0.5" min="0.5" style="flex:1;text-align:center;font-size:28px;font-weight:700;padding:8px;border:1px solid var(--border);border-radius:10px">
-      <button id="fq-plus" style="width:44px;height:44px;border-radius:12px;background:var(--surface-cream);font-size:20px;font-weight:700">+</button>
-    </div></div>
-  `:`
-    <div class="field"><div class="flabel">Grams</div>
-    <input type="number" id="fq-grams" value="${standard.g}" step="1" min="1" style="width:100%;text-align:center;font-size:32px;font-weight:700;padding:14px;border:1px solid var(--border);border-radius:10px" autofocus>
-    <div style="display:flex;gap:6px;margin-top:8px">
-      ${[50,100,150,200].map(g=>`<button class="fq-preset" data-g="${g}" style="flex:1;padding:8px;border-radius:8px;background:var(--surface-cream);font-size:12px;font-weight:600">${g}g</button>`).join('')}
-    </div></div>
-  `}
-  <div class="card-flat" id="fq-preview" style="padding:12px;text-align:center;margin-top:14px">
-    <div class="tiny muted">Total</div>
-    <div style="font-weight:700;font-size:18px" id="fq-kcal">— kcal</div>
-    <div class="tiny muted" id="fq-prot">— g protein</div>
-  </div>
-  <div class="btn-row mt-4"><button class="btn btn-secondary" id="fq-cancel">Cancel</button><button class="btn btn-primary" id="fq-add">＋ Log</button></div>
-  </div>`;
-  modal.addEventListener('click',ev=>{if(ev.target===modal)modal.remove()});
-  modal.querySelector('#fq-cancel').addEventListener('click',()=>modal.remove());
-  const recompute=()=>{
-    let g;
-    if(useUnits){
-      const c=parseFloat(moda
