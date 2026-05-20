@@ -954,7 +954,23 @@ function openNutritionBreakdown(metric){
 function openEntryModal(d){
   const e=state.data.entries[d];if(!e)return;
   const m=document.createElement('div');m.className='modal-bg';
-  const foodList=(e.foods||[]).map(f=>`<div class="tiny muted" style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border-l)"><span>${escapeHtml(f.name)} · ${escapeHtml(f.portionName)}</span><span>${f.kcal} kcal · ${(f.protein||0).toFixed(1)}g P</span></div>`).join('');
+  // v3.19 — group foods by mealName, show per-meal subtotal + MPS flag
+  const MEALS=['Breakfast','Lunch','Dinner','Snack'];
+  const groups={};
+  (e.foods||[]).forEach(f=>{const k=f.mealName||'__none';(groups[k]=groups[k]||[]).push(f)});
+  const ordered=[];
+  for(const mm of MEALS) if(groups[mm]) ordered.push([mm,groups[mm]]);
+  if(groups['__none']) ordered.push(['—',groups['__none']]);
+  const foodList=ordered.map(([label,items])=>{
+    const k=items.reduce((s,f)=>s+(f.kcal||0),0);
+    const p=items.reduce((s,f)=>s+(f.protein||0),0);
+    const l=items.reduce((s,f)=>s+(f.leucine_g||0),0);
+    const underMPS=label!=='—' && l<2.5;
+    return `<div style="margin-top:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0 4px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted)">${escapeHtml(label)}${underMPS?' <span style="background:#FCE5E5;color:#E63946;padding:2px 6px;font-size:10px;font-weight:700;border-radius:6px;margin-left:6px" title="Below 2.5g leucine per-meal MPS threshold">↓MPS</span>':''}</div><div class="tiny faint">${k} kcal · ${p.toFixed(1)}g P${l>0?' · '+l.toFixed(1)+'g leu':''}</div></div>
+      ${items.map(f=>`<div class="tiny muted" style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border-l)"><span>${escapeHtml(f.name)} · ${escapeHtml(f.portionName)}</span><span>${f.kcal} kcal · ${(f.protein||0).toFixed(1)}g P</span></div>`).join('')}
+    </div>`;
+  }).join('');
   const totalKcal=(e.foods||[]).reduce((s,f)=>s+(f.kcal||0),0);
   m.innerHTML=`<div class="modal"><div class="modal-handle"></div>
 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
@@ -1129,7 +1145,36 @@ function renderLogEntry(){
 <h2 class="sec">ACTIVITY</h2>
 <div class="chip-row" id="le-acts">${ACTIVITIES.map(a=>`<div class="chip ${d.activities.includes(a)?'selected':''}" data-a="${escapeHtml(a)}">${escapeHtml(a)}</div>`).join('')}</div>
 <h2 class="sec">🍽 FOODS LOGGED</h2>
-${(()=>{const fs=d.foods||[];const totK=fs.reduce((s,f)=>s+(f.kcal||0),0);const totP=fs.reduce((s,f)=>s+(f.protein||0),0);return `<div class="card-flat" style="padding:10px 12px;display:flex;align-items:center;gap:12px;margin-bottom:8px"><div style="flex:1"><div style="font-weight:700;font-size:18px">${totK} kcal</div><div class="tiny muted">${totP.toFixed(1)} g protein${fs.length?' · '+fs.length+' items':' · nothing logged yet'}</div></div><div style="display:flex;gap:6px"><button class="btn btn-primary btn-sm" id="le-addfood" style="padding:8px 14px;font-size:13px">+ Add food</button>${(d.foods||[]).length>0?'<button class="btn btn-secondary btn-sm" id="le-savetpl" style="padding:8px 12px;font-size:13px" title="Save these foods as a one-tap template">💾</button>':''}</div></div>${fs.length?`<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px">${fs.map((f,i)=>`<div class="le-fr" data-i="${i}" style="background:var(--surface-white);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${escapeHtml(f.name)}</div><div class="tiny muted">${escapeHtml(f.portionName)} · ${f.kcal} kcal · ${(f.protein||0).toFixed(1)}g P</div></div><button class="le-fedit" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:13px" title="Edit grams">✎</button><button class="le-fdel" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:14px">×</button></div>`).join('')}</div>`:''}`})()}
+${(()=>{
+  const fs=d.foods||[];
+  const totK=fs.reduce((s,f)=>s+(f.kcal||0),0);
+  const totP=fs.reduce((s,f)=>s+(f.protein||0),0);
+  const totL=fs.reduce((s,f)=>s+(f.leucine_g||0),0);
+  // v3.19 — meal-grouping. Foods get .mealName from the currently-selected meal chip.
+  // Per-group leucine < 2.5g triggers an MPS-threshold badge (Witard 2014).
+  const MEALS=['Breakfast','Lunch','Dinner','Snack'];
+  const cur=d.currentMeal||null;
+  const mealChips=`<div class="chip-row" style="gap:6px;margin-bottom:8px;flex-wrap:wrap">${MEALS.map(m=>`<div class="le-meal-chip chip ${cur===m?'selected':''}" data-m="${m}">${m}</div>`).join('')}</div>`;
+  // Group foods by mealName. Untagged → "—" bucket shown last.
+  const groups={};
+  fs.forEach((f,i)=>{const k=f.mealName||'__none';(groups[k]=groups[k]||[]).push({f,i})});
+  const ordered=[];
+  for(const m of MEALS) if(groups[m]) ordered.push([m,groups[m]]);
+  if(groups['__none']) ordered.push(['—',groups['__none']]);
+  const groupBlock=([label,items])=>{
+    const k=items.reduce((s,x)=>s+(x.f.kcal||0),0);
+    const p=items.reduce((s,x)=>s+(x.f.protein||0),0);
+    const l=items.reduce((s,x)=>s+(x.f.leucine_g||0),0);
+    const underMPS = label!=='—' && l<2.5;
+    return `<div style="margin-bottom:10px">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 4px 6px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted)">${escapeHtml(label)}${underMPS?' <span class="chip-pill" style="background:#FCE5E5;color:#E63946;padding:2px 6px;font-size:10px;font-weight:700;margin-left:6px" title="Below 2.5g leucine per-meal MPS threshold">↓MPS</span>':''}</div><div class="tiny faint">${k} kcal · ${p.toFixed(1)}g P · ${l.toFixed(1)}g leu</div></div>
+      ${items.map(({f,i})=>`<div class="le-fr" data-i="${i}" style="background:var(--surface-white);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:4px"><div style="flex:1;min-width:0"><div style="font-weight:600;font-size:13px">${escapeHtml(f.name)}</div><div class="tiny muted">${escapeHtml(f.portionName)} · ${f.kcal} kcal · ${(f.protein||0).toFixed(1)}g P${f.leucine_g?' · '+f.leucine_g.toFixed(2)+'g leu':''}</div></div><button class="le-fedit" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:13px" title="Edit grams">✎</button><button class="le-fdel" data-i="${i}" style="width:28px;height:28px;border-radius:50%;background:var(--surface-cream);color:var(--muted);font-size:14px">×</button></div>`).join('')}
+    </div>`;
+  };
+  return `<div class="card-flat" style="padding:10px 12px;display:flex;align-items:center;gap:12px;margin-bottom:8px"><div style="flex:1"><div style="font-weight:700;font-size:18px">${totK} kcal</div><div class="tiny muted">${totP.toFixed(1)} g protein${totL>0?' · '+totL.toFixed(1)+'g leu':''}${fs.length?' · '+fs.length+' items':' · nothing logged yet'}</div></div><div style="display:flex;gap:6px"><button class="btn btn-primary btn-sm" id="le-addfood" style="padding:8px 14px;font-size:13px">+ Add food</button>${fs.length>0?'<button class="btn btn-secondary btn-sm" id="le-savetpl" style="padding:8px 12px;font-size:13px" title="Save these foods as a one-tap template">💾</button>':''}</div></div>
+  ${mealChips}
+  ${fs.length?`<div style="display:flex;flex-direction:column;margin-bottom:8px">${ordered.map(groupBlock).join('')}</div>`:''}`;
+})()}
 
 
 
@@ -1144,7 +1189,12 @@ function bindLogEntry(){
   document.getElementById('le-back')?.addEventListener('click',()=>{state.editingDate=null;state.draft={};setScreen(editDate===today()?'today':'history')});
   document.getElementById('le-w')?.addEventListener('input',e=>d.weight=e.target.value===''?'':parseFloat(e.target.value));
   document.getElementById('le-waist')?.addEventListener('input',e=>d.waist_cm=e.target.value===''?'':parseFloat(e.target.value));
-  document.getElementById('le-addfood')?.addEventListener('click',()=>openFoodPicker(f=>{d.foods=d.foods||[];d.foods.push(f);render()}));
+  // v3.19 — meal-name chip selector; new foods inherit d.currentMeal
+  document.querySelectorAll('.le-meal-chip').forEach(c=>c.addEventListener('click',()=>{
+    d.currentMeal=(d.currentMeal===c.dataset.m)?null:c.dataset.m;
+    render();
+  }));
+  document.getElementById('le-addfood')?.addEventListener('click',()=>openFoodPicker(f=>{d.foods=d.foods||[];if(d.currentMeal)f.mealName=d.currentMeal;d.foods.push(f);render()}));
   document.getElementById('le-savetpl')?.addEventListener('click',()=>openSaveTemplateModal(d.foods||[],t=>{
     state.data.mealTemplates=state.data.mealTemplates||[];
     state.data.mealTemplates.push(t);
@@ -1941,79 +1991,4 @@ let healthConnectReady=false;
 const HC_PERMS=['READ_STEPS','READ_HEART_RATE','READ_RESTING_HEART_RATE','READ_ACTIVE_CALORIES','READ_TOTAL_CALORIES','READ_DISTANCE','READ_EXERCISE','READ_WEIGHT','READ_BODY_FAT','READ_HEIGHT','READ_FLOORS_CLIMBED','READ_VO2_MAX','READ_SLEEP','WRITE_WEIGHT','WRITE_EXERCISE'];
 const HC_DATA_TYPES=['steps','distance','active-calories','total-calories','floors-climbed','water','heart-rate','resting-heart-rate','oxygen-saturation','respiratory-rate','heart-rate-variability','vo2-max','weight','body-fat','height','blood-pressure-systolic','blood-pressure-diastolic','blood-glucose','body-temperature'];
 
-function hcPlugin(){return window.Capacitor?.Plugins?.HealthPlugin||window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health||window.Capacitor?.Plugins?.HealthConnect}
-
-// Write-back helpers. Plugin's exact write API varies across versions; we try multiple shapes.
-async function writeWeightToHC(kg,dateIso){
-  if(!IS_NATIVE)return false;
-  if(!healthConnectReady){const ok=await setupHealthConnect();if(!ok)return false}
-  const HC=hcPlugin();if(!HC||!kg)return false;
-  // Feature-detect — capacitor-health@8.1.2 is read-only. Bail quietly if no write method exists.
-  if(!HC.write&&!HC.writeData&&!HC.writeWeight&&!HC.insertWeight){console.info('HC: weight write not supported in this plugin version');return false}
-  const ts=new Date(dateIso+'T12:00:00').toISOString();
-  // Try the documented patterns in capacitor-health@8.x and fall through.
-  const attempts=[
-    ()=>HC.write?.({dataType:'weight',value:kg,startDate:ts,endDate:ts}),
-    ()=>HC.writeData?.({dataType:'weight',value:kg,startDate:ts,endDate:ts}),
-    ()=>HC.writeWeight?.({value:kg,date:ts}),
-    ()=>HC.insertWeight?.({weight:kg,timestamp:ts}),
-  ];
-  for(const fn of attempts){
-    try{const r=await fn();if(r!==undefined)return true}catch(e){/* try next */}
-  }
-  return false;
-}
-async function writeHydrationToHC(ml,dateIso){
-  if(!IS_NATIVE||!ml)return false;
-  if(!healthConnectReady){const ok=await setupHealthConnect();if(!ok)return false}
-  const HC=hcPlugin();if(!HC)return false;
-  if(!HC.write&&!HC.writeData&&!HC.writeHydration){console.info('HC: hydration write not supported');return false}
-  const ts=new Date().toISOString();
-  const attempts=[
-    ()=>HC.write?.({dataType:'water',value:ml,startDate:ts,endDate:ts}),
-    ()=>HC.writeData?.({dataType:'water',value:ml,startDate:ts,endDate:ts}),
-    ()=>HC.writeHydration?.({volume:ml,date:ts}),
-  ];
-  for(const fn of attempts){try{const r=await fn();if(r!==undefined)return true}catch(e){}}
-  return false;
-}
-async function setupHealthConnect(){
-  if(!IS_NATIVE)return false;
-  const HC=hcPlugin();
-  if(!HC){console.warn('HC plugin missing');return false}
-  try{
-    const avail=await(HC.isHealthAvailable?.());
-    if(avail&&avail.available===false){console.warn('HC unavailable');return false}
-    await(HC.requestHealthPermissions?.({permissions:HC_PERMS}));
-    healthConnectReady=true;
-    return true;
-  }catch(e){console.warn('HC setup',e);return false}
-}
-
-async function _hcAgg(HC,startIso,endIso,type){
-  try{
-    const r=await HC.queryAggregated?.({startDate:startIso,endDate:endIso,dataType:type,bucket:'day'});
-    const arr=r?.aggregatedData||[];
-    if(arr.length===0)return null;
-    // sum across buckets or pick latest if non-summable
-    if(['steps','distance','active-calories','total-calories','floors-climbed','water'].includes(type)){
-      return arr.reduce((s,x)=>s+(x.value||0),0);
-    }
-    return arr[arr.length-1]?.value??null;
-  }catch(e){return null}
-}
-
-async function syncHealthConnect(dateIso){
-  if(!IS_NATIVE)return null;
-  if(!healthConnectReady){const ok=await setupHealthConnect();if(!ok)return null}
-  const HC=hcPlugin();if(!HC)return null;
-  const date=dateIso||today();
-  const start=new Date(date+'T00:00:00');
-  const end=new Date(date+'T23:59:59');
-  const startIso=start.toISOString(),endIso=end.toISOString();
-  const hc={syncedAt:nowIso(),available:{}};
-
-  // Pull every aggregatable data type
-  for(const type of HC_DATA_TYPES){
-    const v=await _hcAgg(HC,startIso,endIso,type);
-    if(v!=null){hc[type.replace(/-/g,'_')]=v;hc.ava
+function hcPlugin(){return window.Capacitor?.Plugins?.HealthPlugin||window.Capacitor?.Plugins?.CapacitorHealth||window.Capacitor?.Plugins?.Health
