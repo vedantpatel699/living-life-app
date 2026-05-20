@@ -178,7 +178,7 @@ function loadDB(name){
         // leucine_g/selenium_ug when grams changed, so edited entries kept stale values.
         // Recompute from the DB using each entry's current grams. Idempotent.
         try{
-          if(!state.data.nutrientBackfillV1){
+          if(!state.data.nutrientBackfillV2){
             let fixed=0;
             for(const d in (state.data.entries||{})){
               const ent=state.data.entries[d];if(!ent?.foods)continue;
@@ -190,8 +190,20 @@ function loadDB(name){
                 if(typeof db.selenium_ug==='number'){const v=+((db.selenium_ug||0)*g/100).toFixed(2);if(fe.selenium_ug!==v){fe.selenium_ug=v;fixed++}}
               }
             }
-            state.data.nutrientBackfillV1=true;
+            state.data.nutrientBackfillV2=true;
             saveLocalData();
+            // v3.35 — also fix the live edit draft if user is on Log Entry; otherwise the screen shows stale values
+            try{
+              if(state.draft?.le?.foods){
+                for(const fe of state.draft.le.foods){
+                  if(!fe.foodId||typeof fe.grams!=='number')continue;
+                  const db=DB.foodsBySlug[fe.foodId];if(!db)continue;
+                  const g=fe.grams;
+                  if(typeof db.leucine_g==='number'){fe.leucine_g=+((db.leucine_g||0)*g/100).toFixed(2)}
+                  if(typeof db.selenium_ug==='number'){fe.selenium_ug=+((db.selenium_ug||0)*g/100).toFixed(2)}
+                }
+              }
+            }catch(_){}
             if(fixed>0){
               console.log('v3.34 nutrient backfill: corrected',fixed,'leucine/selenium values');
               if(isConfigured())pushData().catch(e=>console.warn('backfill push failed',e));
@@ -405,7 +417,55 @@ function b64dec(s){try{return decodeURIComponent(escape(atob(s.replace(/\s/g,'')
 async function ghGetFile(path){const b=state.config.branch||'main';return ghRequest('GET',`contents/${encodeURIComponent(path).replace(/%2F/g,'/')}?ref=${b}`)}
 async function ghPutFile(path,c,m,sha){const b=state.config.branch||'main';const body={message:m,content:c,branch:b};if(sha)body.sha=sha;return ghRequest('PUT',`contents/${encodeURIComponent(path).replace(/%2F/g,'/')}`,body)}
 async function pullData(){if(!isConfigured())throw new Error('Not configured');state.isSyncing=true;try{const r=await ghGetFile('data/log.json');if(r.notFound){state.dataSha=null}else{const parsed=JSON.parse(b64dec(r.content));state.data=Object.assign(state.data,parsed);state.dataSha=r.sha}migrateData();saveLocalData();state.lastSyncOk=nowIso()}finally{state.isSyncing=false}}
-async function pushData(){if(!isConfigured())throw new Error('Not configured');state.isSyncing=true;try{const c=b64enc(JSON.stringify(state.data,null,2));const r=await ghPutFile('data/log.json',c,`update ${today()}`,state.dataSha);state.dataSha=r.content.sha;saveLocalData();state.lastSyncOk=nowIso()}finally{state.isSyncing=false}}
+async function pushData(){
+  if(!isConfigured())throw new Error('Not configured');
+  state.isSyncing=true;
+  try{
+    const doPush=async()=>{
+      const enc=b64enc(JSON.stringify(state.data,null,2));
+      return await ghPutFile('data/log.json',enc,`update ${today()}`,state.dataSha);
+    };
+    let r;
+    try{
+      r=await doPush();
+    }catch(err){
+      // v3.35 — SHA conflict (409): pull fresh remote, merge in any entries we don't have, retry once
+      if(String(err.message||err).includes('409')){
+        console.warn('pushData 409 — refreshing sha + merging remote, retrying once');
+        const fresh=await ghGetFile('data/log.json');
+        if(fresh&&!fresh.notFound){
+          try{
+            const remote=JSON.parse(b64dec(fresh.content));
+            for(const d in (remote.entries||{})){
+              if(!state.data.entries[d])state.data.entries[d]=remote.entries[d];
+            }
+            // Merge customFoods + mealTemplates as well (additive)
+            const mergeArr=(localArr,remoteArr,keyFn)=>{
+              if(!Array.isArray(remoteArr))return localArr||[];
+              const out=Array.isArray(localArr)?[...localArr]:[];
+              const have=new Set(out.map(keyFn));
+              for(const item of remoteArr){if(!have.has(keyFn(item)))out.push(item)}
+              return out;
+            };
+            state.data.customFoods=mergeArr(state.data.customFoods,remote.customFoods,x=>x.id);
+            state.data.mealTemplates=mergeArr(state.data.mealTemplates,remote.mealTemplates,x=>x.id);
+          }catch(e){console.warn('merge remote failed',e)}
+          state.dataSha=fresh.sha;
+          r=await doPush();
+        }else{
+          throw err;
+        }
+      }else{
+        throw err;
+      }
+    }
+    state.dataSha=r.content.sha;
+    saveLocalData();
+    state.lastSyncOk=nowIso();
+  }finally{
+    state.isSyncing=false;
+  }
+}
 async function uploadPhoto(d,du,side='front'){const b64=du.split(',')[1];const suffix=side==='side'?'_s':'_f';const path=`data/photos/${d}${suffix}.jpg`;let sha=null;try{const e=await ghGetFile(path);if(e&&!e.notFound)sha=e.sha}catch(e){}await ghPutFile(path,b64,`photo ${d} ${side}`,sha);return path}
 async function downloadPhoto(p){try{const r=await ghGetFile(p);if(r.notFound)return null;return'data:image/jpeg;base64,'+r.content.replace(/\s/g,'')}catch(e){return null}}
 
