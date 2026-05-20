@@ -1585,10 +1585,16 @@ function buildMetricChart(canvas,opts){
     if(period==='week')xLabelFor=d=>d.toLocaleDateString(undefined,{weekday:'short'})[0];
     else{const last=days[days.length-1];xLabelFor=d=>(d.getDate()===1||d.getDate()%7===0||d.getDate()===last.getDate())?String(d.getDate()):''}
   }
-  const raw=days.map(d=>metricValueFor(metric,isoOf(d)));
+  // v3.28 — never extend past today. The MA7 stops on the current day; future days are null on both daily AND MA series.
+  const todayMid=new Date();todayMid.setHours(0,0,0,0);
+  const raw=days.map(d=>d.getTime()>todayMid.getTime()?null:metricValueFor(metric,isoOf(d)));
   const lookback=[];for(let i=6;i>0;i--){const d=new Date(days[0]);d.setDate(d.getDate()-i);lookback.push(metricValueFor(metric,isoOf(d)))}
   const full=[...lookback,...raw];
-  const ma7=raw.map((_,i)=>{const w=full.slice(i,i+7).filter(v=>v!=null);return w.length?w.reduce((a,b)=>a+b,0)/w.length:null});
+  const ma7=raw.map((_,i)=>{
+    if(days[i].getTime()>todayMid.getTime())return null;  // never compute MA for future dates
+    const w=full.slice(i,i+7).filter(v=>v!=null);
+    return w.length?w.reduce((a,b)=>a+b,0)/w.length:null;
+  });
   const c=def.color||'#1A1F2E';
   const fade=(hex,a)=>{const m=hex.replace('#','');const r=parseInt(m.slice(0,2),16),g=parseInt(m.slice(2,4),16),b=parseInt(m.slice(4,6),16);return `rgba(${r},${g},${b},${a})`};
   const useBar=def.type==='sum';
