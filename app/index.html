@@ -1862,9 +1862,9 @@ function openFoodPicker(onPick){
     if(sel.cats.size>0)filtered=filtered.filter(f=>sel.cats.has(f.category));
     if(query){
       const q=query.toLowerCase();
-      // v3.16 — search across name, brand, and tags
+      // v3.24 — search across name, brand, tags, and id (id catches aliases like sev-usal-misal)
       filtered=filtered.filter(f=>{
-        const hay=(f.name+' '+(f.brand||'')+' '+((f.tags||[]).join(' '))).toLowerCase();
+        const hay=(f.name+' '+(f.brand||'')+' '+((f.tags||[]).join(' '))+' '+(f.id||'').replace(/-/g,' ')).toLowerCase();
         return hay.includes(q);
       });
     }
