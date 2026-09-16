@@ -1,35 +1,72 @@
 # Living Life
 
-A personal back-to-fit tracking system — plan, app, and a private data repo.
+Living Life is a personal Android-first body-tracking and workout app built as a PWA wrapped with Capacitor.
 
-> ⚠️ **If you are an AI agent (Gemini-in-Studio, Claude, ChatGPT, etc.) reading this:**
-> **Read [CHANGE_POLICY.md](CHANGE_POLICY.md) first.** It's binding. It exists because previous AI agents made destructive rewrites that cost ~85% of the codebase. Don't be the next one.
+## What the app does
 
-## What's in here
+- Weight and waist tracking
+- Front and side progress photos
+- Progress charts and body-history views
+- Health Connect read data
+- Workout scheduling, execution, timers, and history
+- Prescribed-vs-actual workout tracking
+- Offline-first local storage with GitHub sync
 
-- **CHANGE_POLICY.md** — **READ FIRST** before any edit. Hard rules + path map + binding sections + anti-patterns.
-- **RESEARCH_FOUNDATION.md** — every design decision traced to a citation. Read before suggesting features.
-- **PLAN.md** — the framing: goals, nutrition rules, lipoma medical note.
-- **METHODOLOGY.md** — the "why" with citations (BMR, protein targets, HR zones, sleep, lipomas).
-- **SHIFT_WORK.md** — the night-shift adaptation playbook.
-- **SUPPLEMENTS.md** — Tier 1-3 protocol (Indian lacto-veg, Canadian, SSRI-aware).
-- **FOOD_RECOGNITION.md** — Gemini photo → JSON → food DB workflow.
-- **SETUP.md** — one-time setup instructions for the tracking app.
-- **app/index.html** — the tracking app. PWA + Capacitor wrapper.
+## Repositories
 
-## Quick start
+This repository contains the app code. `app/index.html` is the canonical web-layer source.
 
-1. Read **PLAN.md** end to end (~15 min). Important sections: the medical/lipoma note in section 0, the three nutrition rules in section 4, and the first-week checklist in section 10.
-2. Follow **SETUP.md** to wire up the app to your private GitHub repo.
-3. Open the app, log day 1.
-4. Show up tomorrow.
+Personal data lives separately in the private `living-life-data` repository.
 
-## Day-to-day
+Important data paths:
 
-Open the app on your phone. **Today** screen: weight, photo, activity chip, a line about meals, energy emoji, save. Under a minute.
+```text
+data/log.json
+data/photos/
+data/workouts/current.json
+data/workouts/manifest.json
+data/workouts/scheduled/
+data/workouts/archive/
+data/workouts/completions/
+```
 
-Once a week, look at the **Progress** screen — the 7-day moving average is what matters, not the daily number.
+## Workout model
 
-## The principle
+Living Life is the display, execution, and history layer. Workout prescriptions are generated externally and delivered as JSON.
 
-> Day 1 is the hardest. Day 30 is when this starts to feel like who you are.
+- `current.json` = current assignment
+- `manifest.json` + `scheduled/` = upcoming workouts
+- `archive/` = historical prescriptions
+- `completions/` = actual performed workouts
+
+Prescription and execution data stay separate so the app can compare what was planned with what actually happened.
+
+## Main screens
+
+- **Today** — body metrics, activity summary, and today's workout
+- **Progress** — body and activity trends
+- **Workouts** — upcoming, today, and past workouts
+- **History** — body-log history and progress photos
+- **Settings** — profile, GitHub data sync, and Health Connect status
+
+## Sync
+
+The app is local-first. Body data syncs to `data/log.json`. Workout completions are cached locally first, then synced to `data/workouts/completions/<workoutId>.json` with SHA-aware updates.
+
+Offline workout edits remain local and sync later.
+
+## Health Connect
+
+Health Connect is currently used for supported read data. Workout write/export is not currently implemented with the installed plugin.
+
+## Development notes
+
+1. Treat `app/index.html` as the source of truth.
+2. Keep workout prescriptions separate from completion records.
+3. Preserve weight, waist, photos, Progress, History, and Health Connect reads when changing workout features.
+4. Do not overwrite unsynced local workout changes with remote data.
+5. Re-sync/rebuild the Capacitor Android wrapper after updating the web layer.
+
+## Product direction
+
+Living Life is intentionally focused on **body tracking + workout execution + workout history** rather than food logging, supplements, or an in-app AI coach.
